@@ -1,0 +1,49 @@
+<mat-toolbar class="justify-content-between">
+
+    <!--MOVIL-->
+    <ng-container *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">
+        <div class="d-flex align-items-center">
+            <button mat-icon-button aria-label="Menu lateral" (click)="onToggleSidenav()">
+                <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+            </button>
+            <img id="logoMovil" src="../../../../assets/img/logo.svg">
+        </div>
+    </ng-container>
+
+    <!--PC-->
+    <ng-container *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium">
+        <div class="d-flex justify-content-around align-items-center col-md-4 h-100">
+            <a class="d-flex align-items-center h-100" routerLink="/clubes">Clubes</a>
+            <a class="d-flex align-items-center h-100" routerLink="/biblioteca">Biblioteca</a>
+        </div>
+
+        <a routerLink="/" class="col-md-4 text-center h-100"><img id="logoPC" src="../../../../assets/img/logo.svg"></a>
+
+        <div class="d-flex justify-content-around align-items-center col-md-4 h-100">
+            <!-- Mostrar elementos para usuario anónimo -->
+            <ng-container *ngIf="!userRole">
+                <a class="d-flex align-items-center h-100" routerLink="/quienes-somos">Quiénes somos</a>
+                <a class="d-flex align-items-center h-100" routerLink="/registrarse">Registrarse</a>
+                <button mat-icon-button color="primary" aria-label="Login" (click)="toLogin()">
+                    <fa-icon [icon]="['far', 'user']"></fa-icon>
+                </button>
+            </ng-container>
+
+            <!-- Mostrar elementos para usuario normal -->
+            <ng-container *ngIf="userRole === 'NORMAL'">
+                <a routerLink="/mi-despacho">Mi Despacho</a>
+                <a routerLink="/mi-perfil">Mi Perfil</a>
+                <a routerLink="/logout">Logout</a>
+                <button mat-icon-button aria-label="Notificaciones">
+                    <mat-icon>notifications</mat-icon>
+                </button>
+            </ng-container>
+
+            <!-- Mostrar elementos para usuario administrador -->
+            <ng-container *ngIf="userRole === 'ADMIN'">
+                <!-- Aquí coloca los elementos específicos para el usuario administrador -->
+            </ng-container>
+        </div>
+    </ng-container>
+
+</mat-toolbar>

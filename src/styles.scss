@@ -1,1 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import 'ngx-toastr/toastr';
+
+@include mat.core();
+
+$custom-primary-map: (
+  50: #fff,
+  100: #f1eae0,
+  200: #e2d5c2,
+  300: #dbcdb9,
+  400: #d1c2ac,
+  500: #553D2A,
+  600: #856b57,
+  700: #72553d,
+  800: #684c35,
+  900: #553D2A,
+  contrast: (
+    50: #553D2A,
+    100: #553D2A,
+    200: #553D2A,
+    300: #553D2A,
+    400: #553D2A,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+
+$my-app-primary: mat.define-palette($custom-primary-map);
+$my-app-accent: mat.define-palette(mat.$yellow-palette, A200, A100, A400);
+$my-app-warm: mat.define-palette(mat.$pink-palette);
+
+$my-app-theme: mat.define-light-theme((
+ color: (
+   primary: $my-app-primary,
+   accent: $my-app-accent,
+   warm: $my-app-warm
+ ),
+ typography: mat.define-typography-config(ui-rounded),
+ density: 0,
+));
+
+@include mat.all-component-themes($my-app-theme);
+
+#toast-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#container-app {
+    margin: 0;
+    padding: 0;
+}
+
+
+html,
+body{
+  height: 100%;
+  font-family: ui-rounded;
+}
+body{
+  margin:0;
+  font-family: ui-rounded;
+}

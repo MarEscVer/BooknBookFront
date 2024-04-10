@@ -1,0 +1,36 @@
+    <mat-card >
+      <mat-card-content  class="d-flex justify-content-center">
+        <form [formGroup]="formLogin" (submit)="$event.preventDefault()" class="w-75 pt-5 pb-5">
+          
+            <mat-form-field class="w-100 ">
+              <mat-label>Email</mat-label>
+              <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3" ng-reflect-name="email" id="email"
+                formControlName="email" (cdkAutofill)="firstNameAutofilled = $event.isAutofilled"/>
+            </mat-form-field>
+            <mat-hint *ngIf="firstNameAutofilled">Autofilled!</mat-hint>
+              <div class="alert alert-danger" *ngIf="formLogin.get('email')?.touched && formLogin.get('email')?.errors">
+                <div *ngIf="this.specificError('email','required')">
+                  email is required.
+                </div>
+                <div *ngIf="this.formLogin?.get('email')?.getError('email')">
+                  email must be a good form.
+                </div>
+              </div>
+            <br/>
+            <mat-form-field class="w-100">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput class="form-control ng-untouched ng-pristine ng-invalid mt-3" ng-reflect-name="password"
+                id="password" formControlName="password" (cdkAutofill)="lastNameAutofilled = $event.isAutofilled"/>
+              <mat-hint *ngIf="lastNameAutofilled">Autofilled!</mat-hint>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="formLogin.get('password')?.touched && formLogin.get('password')?.errors">
+              <div *ngIf="this.specificError('password','required')">
+                password is required.
+              </div>
+            </div>
+            <br/>
+            <button mat-raised-button (click)="submit()" [disabled]="!formLogin.valid" class="w-100 border border-primary">Iniciar Sesion</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  

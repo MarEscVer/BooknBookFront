@@ -1,0 +1,6 @@
+<app-navbar (SidenavToggle)="sidenav.toggle()"></app-navbar>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation" [fixedInViewport]="true">
+        <app-sidenav (click)="closeSidenav()"></app-sidenav>
+    </mat-sidenav>
+</mat-sidenav-container>
