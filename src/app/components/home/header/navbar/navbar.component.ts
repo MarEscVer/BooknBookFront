@@ -35,7 +35,8 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //this.userRole = 'NORMAL';
+    //MOCK
+    this.userRole = 'ADMIN';
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
@@ -45,8 +46,21 @@ export class NavbarComponent implements OnInit {
     this.SidenavToggle.emit();
   }
 
-  public toLogin(){
+  toLogin(){
     this.router.navigate(['/login']);
+  }
+
+  toPerfil(){
+    this.router.navigate(['/perfil']);
+  }
+
+  //TODO hacer el metodo para logout
+  toLogout(){
+    
+  }
+
+  toAdmin(){
+    this.router.navigate(['/admin']);
   }
 
   private breakpointChanged() {

@@ -32,16 +32,30 @@
             <!-- Mostrar elementos para usuario normal -->
             <ng-container *ngIf="userRole === 'NORMAL'">
                 <a routerLink="/mi-despacho">Mi Despacho</a>
-                <a routerLink="/mi-perfil">Mi Perfil</a>
-                <a routerLink="/logout">Logout</a>
-                <button mat-icon-button aria-label="Notificaciones">
-                    <mat-icon>notifications</mat-icon>
-                </button>
+                <div>
+                    <button mat-icon-button color="primary" aria-label="Login" (click)="toPerfil()">
+                        <fa-icon [icon]="['far', 'user']"></fa-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Logout" (click)="toLogout()">
+                        <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+                    </button>
+                </div>
             </ng-container>
 
             <!-- Mostrar elementos para usuario administrador -->
             <ng-container *ngIf="userRole === 'ADMIN'">
-                <!-- Aquí coloca los elementos específicos para el usuario administrador -->
+                <a routerLink="/mi-despacho">Mi Despacho</a>
+                <div>
+                    <button mat-icon-button color="primary" aria-label="Login" (click)="toPerfil()">
+                        <fa-icon [icon]="['far', 'user']"></fa-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Logout" (click)="toLogout()">
+                        <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Administrar" (click)="toAdmin()">
+                        <fa-icon [icon]="['fas', 'gear']"></fa-icon>
+                    </button>
+                </div>
             </ng-container>
         </div>
     </ng-container>
