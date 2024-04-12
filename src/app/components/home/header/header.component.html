@@ -1,6 +1,46 @@
 <app-navbar (SidenavToggle)="sidenav.toggle()"></app-navbar>
 <mat-sidenav-container>
-    <mat-sidenav #sidenav role="navigation" [fixedInViewport]="true">
-        <app-sidenav (click)="closeSidenav()"></app-sidenav>
+    <mat-sidenav #sidenav role="navigation" mode="side" position="start" [fixedInViewport]="true"
+        (click)="closeSidenav()">
+        <div class="container">
+            <div class="text-center">
+                <button mat-icon-button aria-label="Menu lateral" (click)="setActive()">
+                    <fa-icon [icon]="['fas', 'xmark']"></fa-icon>
+                </button>
+            </div>
+
+            <mat-nav-list>
+                <mat-list-item>
+                    <a routerLink="/">Inicio</a>
+                </mat-list-item>
+                <mat-list-item>
+                    <a routerLink="/clubes">Clubes</a>
+                </mat-list-item>
+                <mat-list-item>
+                    <a routerLink="/biblioteca">Biblioteca</a>
+                </mat-list-item>
+
+                <!-- Mostrar elementos para usuario anónimo -->
+                <ng-container *ngIf="!userRole">
+                    <mat-list-item><a routerLink="/quienes-somos">Quiénes somos</a></mat-list-item>
+                    <mat-list-item><a routerLink="/registrarse">Registrarse</a></mat-list-item>
+                    <mat-list-item><a routerLink="/login">Iniciar Sesion</a></mat-list-item>
+                </ng-container>
+
+                <!-- Mostrar elementos para usuario normal -->
+                <ng-container *ngIf="userRole === 'NORMAL'">
+                    <mat-list-item><a routerLink="/mi-despacho">Mi Despacho</a></mat-list-item>
+                    <mat-list-item><a routerLink="/mi-perfil">Mi Perfil</a></mat-list-item>
+                    <mat-list-item><a routerLink="/logout">Logout</a></mat-list-item>
+                    <mat-list-item><a routerLink="/notificaciones">Notificaciones</a></mat-list-item>
+
+                </ng-container>
+
+                <!-- Mostrar elementos para usuario administrador -->
+                <ng-container *ngIf="userRole === 'ADMIN'">
+                    <!-- Aquí coloca los elementos específicos para el usuario administrador -->
+                </ng-container>
+            </mat-nav-list>
+        </div>
     </mat-sidenav>
 </mat-sidenav-container>

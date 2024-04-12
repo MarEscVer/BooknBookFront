@@ -7,15 +7,24 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  
+  public active: boolean = false;
+  userRole?: string;
+
   @ViewChild('sidenav') sidenav?: MatSidenav;
 
-  constructor() {}
-  
-  ngOnInit(): void {
+  constructor() {
+  }
+
+  setActive(): void {
+    this.active = !this.active
   }
 
   closeSidenav(): void {
     this.sidenav?.close();
   }
+
+  ngOnInit() {
+  }
+
+
 }

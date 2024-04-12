@@ -1,0 +1,24 @@
+.mat-drawer.mat-drawer-opened{
+    box-shadow: 0px 1px 10px 0px #553D2A !important;
+}
+.container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+
+    a {
+        color: #553D2A;
+        text-decoration: none;
+        width: 100%;
+        padding: 5px;
+
+        &:hover {
+            color: #C7B69F;
+        }
+    }
+
+    
+    .mat-mdc-list-base {
+        --mdc-list-list-item-hover-state-layer-color: none !important;
+    }
+}

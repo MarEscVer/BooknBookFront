@@ -32,8 +32,8 @@ import { NavbarComponent } from './components/home/header/navbar/navbar.componen
 import { ListClicksComponent } from './components/home/listClicks/list-clicks.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { SidenavComponent } from './components/home/header/sidenav/sidenav.component';
 import { HeaderComponent } from './components/home/header/header.component';
+import { MatListModule } from "@angular/material/list"
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -46,7 +46,6 @@ import { HeaderComponent } from './components/home/header/header.component';
     MessageErrorComponent,
     NavbarComponent,
     ListClicksComponent,
-    SidenavComponent,
     HeaderComponent,
   ],
   /* LIBRARIES */
@@ -72,7 +71,8 @@ import { HeaderComponent } from './components/home/header/header.component';
     MatToolbarModule,
     FontAwesomeModule,
     SharedModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule
   ],
   /* SERVICE */
   providers: [
