@@ -1,0 +1,5 @@
+<mat-toolbar color="accent" class="d-flex justify-content-around">
+  <ng-container *ngFor="let menuItem of menuItems">
+    <app-menu-item [menuItem]="menuItem"></app-menu-item>
+  </ng-container>
+</mat-toolbar>

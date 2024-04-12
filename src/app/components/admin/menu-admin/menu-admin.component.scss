@@ -1,0 +1,21 @@
+/* Estilos para pantallas de ordenador */
+@media only screen and (min-width: 768px) {
+    .admin--menu-icon {
+      font-size: 30px;
+      margin-right: 10px;
+    }
+    .admin--menu-text {
+      display: inline-block;
+    }
+  }
+  
+  /* Estilos para pantallas pequeñas (p. ej., dispositivos móviles) */
+  @media only screen and (max-width: 767px) {
+    .admin--menu-icon {
+      font-size: 20px;
+    }
+    .admin--menu-text {
+      display: none;
+    }
+  }
+  

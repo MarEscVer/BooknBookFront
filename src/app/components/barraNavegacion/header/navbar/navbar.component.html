@@ -1,0 +1,70 @@
+<mat-toolbar class="justify-content-between">
+    <!--MOVIL-->
+    <div class="navbar-mobile">
+      <div class="d-flex align-items-center">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Menu lateral"
+          (click)="onToggleSidenav()"
+        >
+          <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+        </button>
+        <img id="logoMovil" src="../../../../assets/img/logo.svg" />
+      </div>
+    </div>
+  
+    <!--PC-->
+    <div class="navbar-desktop w-100">
+      <div class="row">
+        <!-- Columna para Clubes y Biblioteca -->
+        <div class="col-md-4 d-flex align-items-center justify-content-around">
+          <a routerLink="/clubes">Clubes</a>
+          <a routerLink="/biblioteca">Biblioteca</a>
+        </div>
+        <!-- Columna para el logo -->
+        <a routerLink="/" class="col-md-4 text-center"><img id="logoPC" src="../../../../assets/img/logo.svg" /></a>
+        <!-- Columna para elementos de usuario -->
+        <div class="col-md-4 d-flex align-items-center justify-content-around">
+          <!-- Mostrar elementos para usuario anónimo -->
+          <ng-container *ngIf="!userRole">
+            <a routerLink="/quienes-somos">Quiénes somos</a>
+            <a routerLink="/registrarse">Registrarse</a>
+            <button mat-icon-button color="primary" aria-label="Login" (click)="toLogin()">
+              <fa-icon [icon]="['far', 'user']"></fa-icon>
+            </button>
+          </ng-container>
+  
+          <!-- Mostrar elementos para usuario normal -->
+          <ng-container *ngIf="userRole === 'NORMAL'">
+            <a routerLink="/mi-despacho">Mi Despacho</a>
+            <div>
+              <button mat-icon-button color="primary" aria-label="Perfil" (click)="toPerfil()">
+                <fa-icon [icon]="['far', 'user']"></fa-icon>
+              </button>
+              <button mat-icon-button color="primary" aria-label="Logout" (click)="toLogout()">
+                <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+              </button>
+            </div>
+          </ng-container>
+  
+          <!-- Mostrar elementos para usuario administrador -->
+          <ng-container *ngIf="userRole === 'ADMIN'">
+            <a routerLink="/mi-despacho">Mi Despacho</a>
+            <div>
+              <button mat-icon-button color="primary" aria-label="Perfil" (click)="toPerfil()">
+                <fa-icon [icon]="['far', 'user']"></fa-icon>
+              </button>
+              <button mat-icon-button color="primary" aria-label="Logout" (click)="toLogout()">
+                <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+              </button>
+              <button mat-icon-button color="primary" aria-label="Administrar" (click)="toAdmin()">
+                <fa-icon [icon]="['fas', 'gear']"></fa-icon>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+  

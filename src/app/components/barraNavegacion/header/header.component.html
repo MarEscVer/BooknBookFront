@@ -1,4 +1,4 @@
-<app-navbar (SidenavToggle)="sidenav.toggle()"></app-navbar>
+<app-navbar (SidenavToggle)="sidenav.toggle()" userRole="{{this.userRole}}"></app-navbar>
 <mat-sidenav-container>
     <mat-sidenav #sidenav role="navigation" mode="side" position="start" [fixedInViewport]="true"
         (click)="closeSidenav()">
@@ -32,13 +32,15 @@
                     <mat-list-item><a routerLink="/mi-despacho">Mi Despacho</a></mat-list-item>
                     <mat-list-item><a routerLink="/mi-perfil">Mi Perfil</a></mat-list-item>
                     <mat-list-item><a routerLink="/logout">Logout</a></mat-list-item>
-                    <mat-list-item><a routerLink="/notificaciones">Notificaciones</a></mat-list-item>
 
                 </ng-container>
 
                 <!-- Mostrar elementos para usuario administrador -->
                 <ng-container *ngIf="userRole === 'ADMIN'">
-                    <!-- Aquí coloca los elementos específicos para el usuario administrador -->
+                    <mat-list-item><a routerLink="/mi-despacho">Mi Despacho</a></mat-list-item>
+                    <mat-list-item><a routerLink="/mi-perfil">Mi Perfil</a></mat-list-item>
+                    <mat-list-item><a routerLink="/logout">Logout</a></mat-list-item>
+                    <mat-list-item><a routerLink="/admin">Administrar</a></mat-list-item>
                 </ng-container>
             </mat-nav-list>
         </div>

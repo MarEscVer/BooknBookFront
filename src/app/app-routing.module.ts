@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginAndRegisterComponent } from './components/loginAndRegister/login-and-register/login-and-register.component';
 import { HomeComponent } from './components/home/home/home.component';
 import { ListClicksComponent } from './components/home/listClicks/list-clicks.component';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 
 const routes: Routes = [
   {path: "", component: LoginAndRegisterComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: "register", component: RegisterComponent},
   {path: "home", component: HomeComponent },
   {path: "listClick", component: ListClicksComponent},
+  {path: "admin", component: AdminPageComponent},
   //{path: "/libros/{id}/details", component: ListClicksComponent}
   //{path: "admin", component: ZonaAdminComponent, canActivate: [AdminAuthGuardService] },
 ];

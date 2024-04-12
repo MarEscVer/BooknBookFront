@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   @ViewChild('sidenav') sidenav?: MatSidenav;
 
   constructor() {
+     //MOCK
+     this.userRole = 'ADMIN';
   }
 
   setActive(): void {
@@ -25,6 +27,5 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
-
 
 }

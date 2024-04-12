@@ -28,12 +28,16 @@ import { MessageErrorComponent } from './components/messages/message-error/messa
 import { GlobalErrorHandler } from './interceptors/global-error-handler';
 import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
 import { SharedModule } from './shared/shared.module';
-import { NavbarComponent } from './components/home/header/navbar/navbar.component';
+import { NavbarComponent } from './components/barraNavegacion/header/navbar/navbar.component';
 import { ListClicksComponent } from './components/home/listClicks/list-clicks.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { HeaderComponent } from './components/home/header/header.component';
-import { MatListModule } from "@angular/material/list"
+import { HeaderComponent } from './components/barraNavegacion/header/header.component';
+import { MatListModule } from "@angular/material/list";
+import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.component';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
+import { MenuItemComponent } from './components/barraNavegacion/menu/menu-item/menu-item.component';
+import { MenuComponent } from './components/barraNavegacion/menu/menu.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -47,6 +51,10 @@ import { MatListModule } from "@angular/material/list"
     NavbarComponent,
     ListClicksComponent,
     HeaderComponent,
+    MenuAdminComponent,
+    AdminPageComponent,
+    MenuItemComponent,
+    MenuComponent,
   ],
   /* LIBRARIES */
   imports: [

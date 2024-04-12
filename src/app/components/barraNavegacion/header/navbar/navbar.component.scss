@@ -1,0 +1,32 @@
+.mat-toolbar {
+    background-color: white;
+    padding: 0;
+    box-shadow: 0px 1px 10px 0px #553D2A;
+    z-index: 10;
+    position: relative;
+
+    #logoPC {
+        min-width: 190px;
+        max-width: 260px;
+    }
+
+    #logoMovil {
+        min-width: 190px;
+        max-width: 200px;
+    }
+
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 767px) {
+    .navbar-desktop {
+        display: none;
+    }
+}
+
+/* Estilos para pantallas grandes */
+@media (min-width: 768px) {
+    .navbar-mobile {
+        display: none;
+    }
+}
