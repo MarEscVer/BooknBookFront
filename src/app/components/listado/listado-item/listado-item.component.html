@@ -1,0 +1,56 @@
+<div class="table-responsive">
+    <table mat-table [dataSource]="items" class="mat-elevation-z8">
+
+        <!--Card Usuario-->
+        <ng-container *ngIf="isUserType()">
+            <!-- Definición de columnas -->
+            <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef> Nombre de usuario </th>
+                <td mat-cell *matCellDef="let item"> {{ item.username }} </td>
+            </ng-container>
+            <!-- Nombre -->
+            <ng-container matColumnDef="fullname">
+                <th mat-header-cell *matHeaderCellDef> Nombre completo </th>
+                <td mat-cell *matCellDef="let item" class="fullname-column">{{ item.name }} {{ item.surname1 }} {{ item.surname2 }}</td>
+              </ng-container>              
+            <!-- Correo electrónico -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Correo electrónico </th>
+                <td mat-cell *matCellDef="let item"> {{ item.email }} </td>
+            </ng-container>
+            <!-- Rol -->
+            <ng-container matColumnDef="rol">
+                <th mat-header-cell *matHeaderCellDef> Rol </th>
+                <td mat-cell *matCellDef="let item"> {{ item.rol }} </td>
+            </ng-container>
+        </ng-container>
+
+        <!--Card Book-->
+        <ng-container *ngIf="isBookType()">
+            <!-- Define las columnas para el tipo de dato "Book" -->
+        </ng-container>
+
+        <!--Card Club-->
+        <ng-container *ngIf="isClubType()">
+            <!-- Define las columnas para el tipo de dato "Club" -->
+        </ng-container>
+
+        <!-- Columna de acciones -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let item">
+                <button mat-icon-button color="primary" aria-label="Editar" (click)="edit(item)">
+                    <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
+                </button>
+                <button mat-icon-button color="primary" aria-label="Eliminar" (click)="delete(item)">
+                    <fa-icon [icon]="['fas', 'trash']" class="--listado-icon"></fa-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Fila de encabezado -->
+        <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+        <!-- Fila de datos -->
+        <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+    </table>
+</div>

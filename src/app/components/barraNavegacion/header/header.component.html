@@ -3,44 +3,40 @@
     <mat-sidenav #sidenav role="navigation" mode="side" position="start" [fixedInViewport]="true"
         (click)="closeSidenav()">
         <div class="container">
-            <div class="text-center">
-                <button mat-icon-button aria-label="Menu lateral" (click)="setActive()">
-                    <fa-icon [icon]="['fas', 'xmark']"></fa-icon>
-                </button>
-            </div>
+            <div class="mb-5"></div>
 
             <mat-nav-list>
-                <mat-list-item>
-                    <a routerLink="/">Inicio</a>
+                <mat-list-item routerLink="/">
+                    <a>Inicio</a>
                 </mat-list-item>
-                <mat-list-item>
-                    <a routerLink="/clubes">Clubes</a>
+                <mat-list-item routerLink="/clubes">
+                    <a>Clubes</a>
                 </mat-list-item>
-                <mat-list-item>
-                    <a routerLink="/biblioteca">Biblioteca</a>
+                <mat-list-item routerLink="/biblioteca">
+                    <a>Biblioteca</a>
                 </mat-list-item>
 
                 <!-- Mostrar elementos para usuario anónimo -->
                 <ng-container *ngIf="!userRole">
-                    <mat-list-item><a routerLink="/quienes-somos">Quiénes somos</a></mat-list-item>
-                    <mat-list-item><a routerLink="/registrarse">Registrarse</a></mat-list-item>
-                    <mat-list-item><a routerLink="/login">Iniciar Sesion</a></mat-list-item>
+                    <mat-list-item routerLink="/quienes-somos"><a>Quiénes somos</a></mat-list-item>
+                    <mat-list-item routerLink="/registrarse"><a>Registrarse</a></mat-list-item>
+                    <mat-list-item routerLink="/login"><a>Iniciar Sesion</a></mat-list-item>
                 </ng-container>
 
                 <!-- Mostrar elementos para usuario normal -->
                 <ng-container *ngIf="userRole === 'NORMAL'">
-                    <mat-list-item><a routerLink="/mi-despacho">Mi Despacho</a></mat-list-item>
-                    <mat-list-item><a routerLink="/mi-perfil">Mi Perfil</a></mat-list-item>
-                    <mat-list-item><a routerLink="/logout">Logout</a></mat-list-item>
+                    <mat-list-item routerLink="/mi-despacho"><a>Mi Despacho</a></mat-list-item>
+                    <mat-list-item routerLink="/mi-perfil"><a>Mi Perfil</a></mat-list-item>
+                    <mat-list-item routerLink="/logout"><a>Logout</a></mat-list-item>
 
                 </ng-container>
 
                 <!-- Mostrar elementos para usuario administrador -->
                 <ng-container *ngIf="userRole === 'ADMIN'">
-                    <mat-list-item><a routerLink="/mi-despacho">Mi Despacho</a></mat-list-item>
-                    <mat-list-item><a routerLink="/mi-perfil">Mi Perfil</a></mat-list-item>
-                    <mat-list-item><a routerLink="/logout">Logout</a></mat-list-item>
-                    <mat-list-item><a routerLink="/admin">Administrar</a></mat-list-item>
+                    <mat-list-item routerLink="/mi-despacho"><a>Mi Despacho</a></mat-list-item>
+                    <mat-list-item routerLink="/mi-perfil"><a>Mi Perfil</a></mat-list-item>
+                    <mat-list-item routerLink="/logout"><a>Logout</a></mat-list-item>
+                    <mat-list-item routerLink="/admin"><a>Administrar</a></mat-list-item>
                 </ng-container>
             </mat-nav-list>
         </div>

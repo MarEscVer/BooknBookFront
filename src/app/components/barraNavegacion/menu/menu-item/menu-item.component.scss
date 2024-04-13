@@ -1,15 +1,19 @@
 .icon-link {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+
+  &:hover{
+    color: #553D2A;
   }
-  
-  .--menu-icon {
-    margin-right: 5px;
+
+}
+
+.--menu-icon {
+  margin-right: 5px;
+}
+
+@media (max-width: 767px) {
+  .icon-link .--menu-text {
+    display: none;
   }
-  
-  @media (max-width: 767px) {
-    .icon-link .--menu-text {
-      display: none;
-    }
-  }
-  
+}

@@ -9,3 +9,15 @@ export interface Register {
     name:string,
     phone:string
 }
+
+export interface UserItemList {
+    id: number;
+    //TODO Imagenes BLOB
+    img: any;
+    username: string;
+    name: string;
+    surname1: string;
+    surname2: string;
+    email: string;
+    rol: string;
+}

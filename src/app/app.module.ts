@@ -38,6 +38,8 @@ import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.com
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { MenuItemComponent } from './components/barraNavegacion/menu/menu-item/menu-item.component';
 import { MenuComponent } from './components/barraNavegacion/menu/menu.component';
+import { ListadoItemComponent } from './components/listado/listado-item/listado-item.component';
+import { ListadoUsuarioAdminComponent } from './components/admin/listado-usuario-admin/listado-usuario-admin.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -55,6 +57,8 @@ import { MenuComponent } from './components/barraNavegacion/menu/menu.component'
     AdminPageComponent,
     MenuItemComponent,
     MenuComponent,
+    ListadoItemComponent,
+    ListadoUsuarioAdminComponent,
   ],
   /* LIBRARIES */
   imports: [
