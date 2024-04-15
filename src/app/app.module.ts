@@ -38,8 +38,11 @@ import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.com
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { MenuItemComponent } from './components/barraNavegacion/menu/menu-item/menu-item.component';
 import { MenuComponent } from './components/barraNavegacion/menu/menu.component';
-import { ListadoItemComponent } from './components/listado/listado-item/listado-item.component';
 import { ListadoUsuarioAdminComponent } from './components/admin/listado-usuario-admin/listado-usuario-admin.component';
+import { ListadoItemsUsersComponent } from './components/listado/listado-items-users/listado-items-users.component';
+import { ListadoItemsBooksComponent } from './components/listado/listado-items-books/listado-items-books.component';
+import { ListadoItemsClubsComponent } from './components/listado/listado-items-clubs/listado-items-clubs.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -57,8 +60,10 @@ import { ListadoUsuarioAdminComponent } from './components/admin/listado-usuario
     AdminPageComponent,
     MenuItemComponent,
     MenuComponent,
-    ListadoItemComponent,
     ListadoUsuarioAdminComponent,
+    ListadoItemsUsersComponent,
+    ListadoItemsBooksComponent,
+    ListadoItemsClubsComponent,
   ],
   /* LIBRARIES */
   imports: [
@@ -84,7 +89,8 @@ import { ListadoUsuarioAdminComponent } from './components/admin/listado-usuario
     FontAwesomeModule,
     SharedModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule
   ],
   /* SERVICE */
   providers: [
