@@ -1,0 +1,14 @@
+.container {
+    margin: 0 auto;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+/* Estilos para dispositivos móviles */
+@media only screen and (max-width: 768px) {
+    .container {
+        margin: 0 auto;
+    }
+}
