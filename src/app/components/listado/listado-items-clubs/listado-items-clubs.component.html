@@ -1,1 +1,60 @@
-<p>listado-items-clubs works!</p>
+<div class="table-responsive">
+    <mat-form-field color="primary" appearance="outline" class="m-2">
+        <mat-label>FILTRADO</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipe">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO </th>
+                <td mat-cell *matCellDef="let row"> {{row.tipe}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> GÉNERO </th>
+                <td mat-cell *matCellDef="let row">{{row.gender}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="users">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIOS </th>
+                <td mat-cell *matCellDef="let row">{{row.users}}</td>
+            </ng-container>
+
+            <!-- Columna de acciones -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCIONES </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="primary" aria-label="Editar">
+                        <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Eliminar" (click)="delete(row)">
+                        <fa-icon [icon]="['fas', 'trash']" class="--listado-icon"></fa-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matfching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">Ningún usuario encontrado con: "{{input.value}}"</td>
+            </tr>
+        </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Cantidad de usuarios por página"></mat-paginator>
+
+</div>

@@ -46,6 +46,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { AdminPageUsersComponent } from './components/admin/admin-page-users/admin-page-users.component';
 import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/listado-libros-admin/listado-libros-admin.component';
+import { ListadoClubesAdminComponent } from './components/admin/listados-admin/listado-clubes-admin/listado-clubes-admin.component';
+import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/admin-page-clubs.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -68,7 +70,9 @@ import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/l
     ListadoItemsBooksComponent,
     ListadoItemsClubsComponent,
     AdminPageUsersComponent,
-    ListadoLibrosAdminComponent
+    ListadoLibrosAdminComponent,
+    ListadoClubesAdminComponent,
+    AdminPageClubsComponent
   ],
   /* LIBRARIES */
   imports: [
