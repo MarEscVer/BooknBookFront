@@ -26,15 +26,4 @@ export class ListadoUsuarioAdminComponent {
     }
   }
 
-
-  // Método para manejar la edición de un ítem
-  editItem(item: any) {
-    console.log("editado -->", item.username);
-  }
-
-  // Método para manejar la eliminación de un ítem
-  deleteItem(item: any) {
-    console.log("eliminado -->", item.username);
-  }
-
 }

@@ -1,7 +1,7 @@
 <div class="table-responsive">
-  <mat-form-field color="primary">
-    <mat-label>Filtro</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo " #input>
+  <mat-form-field color="primary" appearance="outline" class="m-2">
+    <mat-label>FILTRADO</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
   </mat-form-field>
 
   <div class="mat-elevation-z8">
@@ -13,31 +13,49 @@
       </ng-container>
 
       <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de usuario </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
         <td mat-cell *matCellDef="let row"> {{row.username}} </td>
       </ng-container>
 
       <ng-container matColumnDef="fullname">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre completo </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let row" class="fullname-column"> {{ row.name }} {{ row.surname1 }} {{ row.surname2 }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo electrónico </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> EMAIL </th>
         <td mat-cell *matCellDef="let row"> {{row.email}} </td>
       </ng-container>
 
       <ng-container matColumnDef="rol">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Rol </th>
-        <td mat-cell *matCellDef="let row"> {{row.rol}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ROL </th>
+        <td mat-cell *matCellDef="let row">
+          <!-- Mostrar el rol actual -->
+          <ng-container *ngIf="!row.editMode; else editModeTemplate">
+            {{ row.rol }}
+          </ng-container>
+          <!-- Mostrar el selector de edición -->
+          <ng-template #editModeTemplate>
+            <mat-form-field color="primary" appearance="outline" class="role-select-field">
+              <mat-label>{{ row.rol }}</mat-label>
+              <mat-select [(value)]="row.rol">
+                <mat-option value="admin">Admin</mat-option>
+                <mat-option value="user">User</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-template>
+        </td>
       </ng-container>
 
       <!-- Columna de acciones -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCIONES </th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary" aria-label="Editar" (click)="edit(row)">
+          <button mat-icon-button color="primary" aria-label="Guardar" (click)="saveChanges(row)" *ngIf="row.editMode">
+            <fa-icon [icon]="['fas', 'floppy-disk']" class="--listado-icon"></fa-icon>
+          </button>
+          <button mat-icon-button color="primary" aria-label="Editar" (click)="toggleEditMode(row)">
             <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
           </button>
           <button mat-icon-button color="primary" aria-label="Eliminar" (click)="delete(row)">

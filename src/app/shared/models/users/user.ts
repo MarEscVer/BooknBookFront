@@ -20,4 +20,5 @@ export interface UserItemList {
     surname2: string;
     email: string;
     rol: string;
+    editMode?: boolean; 
 }

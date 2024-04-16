@@ -8,13 +8,29 @@
 }
 
 .mat-column-actions {
-    width: 130px;
+    width: auto;
 }
 
 tr.mat-mdc-header-row {
     background-color: #C7B69F !important;
 }
 
-tr, td {
+tr,
+td {
     border-color: #C7B69F !important;
+}
+
+.role-select-field {
+    margin-top: 5px;
+    margin-bottom: -15px;
+    width: 120px;
+}
+
+/* Estilos para dispositivos móviles */
+@media only screen and (max-width: 768px) {
+    .role-select-field {
+        margin-top: 5px;
+        margin-bottom: -15px;
+        width: 80px;
+    }
 }

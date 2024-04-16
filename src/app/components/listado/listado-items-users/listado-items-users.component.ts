@@ -10,37 +10,37 @@ import { UserItemList } from 'src/app/shared/models/users/user';
   styleUrls: ['./listado-items-users.component.scss']
 })
 export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['id', 'username', 'fullname', 'email', 'rol', 'actions'];;
-  
+  displayedColumns: string[] = ['id', 'username', 'fullname', 'email', 'rol', 'actions'];
+
   @Input() data?: UserItemList[];
 
   dataSource: MatTableDataSource<UserItemList>;
+  editedItems: UserItemList[] = [];
+  originalRol: string = '';
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  @Output() editItem = new EventEmitter<any>();
-  @Output() deleteItem = new EventEmitter<any>();
 
   constructor() {
     this.dataSource = new MatTableDataSource<UserItemList>([]);
   }
-  
+
   ngOnInit() {
     if (this.data) {
       this.dataSource = new MatTableDataSource<UserItemList>(this.data);
     }
   }
-  
+
 
   ngAfterViewInit() {
     if (this.dataSource && this.paginator) {
       this.dataSource.paginator = this.paginator;
-    } 
-    
+    }
+
     if (this.dataSource && this.sort) {
       this.dataSource.sort = this.sort;
     }
-    
+
   }
 
   applyFilter(event: Event) {
@@ -52,11 +52,26 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
     }
   }
 
-  edit(item: any) {
-    this.editItem.emit(item);
+  saveChanges(row: UserItemList) {
+    // Aquí puedes enviar los cambios al backend
+    console.log('Guardando cambios:', row);
   }
 
-  delete(item: any) {
-    this.deleteItem.emit(item);
+  delete(row: UserItemList) {
+    // Aquí puedes implementar la lógica para eliminar un usuario
+    console.log('Eliminando usuario:', row);
   }
+  
+  toggleEditMode(row: UserItemList) {
+    row.editMode = !row.editMode;
+    // Guardar el valor original del rol temporalmente al activar el modo de edición
+    if (row.editMode) {
+      this.originalRol = row.rol;
+    } else {
+      // Restaurar el valor original del rol al cancelar la edición
+      row.rol = this.originalRol;
+      this.originalRol = ''; // Limpiar la variable después de restaurar el valor
+    }
+  }
+
 }

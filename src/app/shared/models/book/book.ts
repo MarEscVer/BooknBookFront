@@ -7,5 +7,5 @@ export interface BookItemList {
     tipe: string;
     gender: string;
     isbn: number;
-    year: number; 
+    year: number;
 }
