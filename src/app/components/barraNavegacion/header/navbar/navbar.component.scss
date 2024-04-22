@@ -1,18 +1,20 @@
+@import '../../../../../style/variables.scss';
+
 .mat-toolbar {
-    background-color: white;
+    background-color: $white-color;
     padding: 0;
-    box-shadow: 0px 1px 10px 0px #553D2A;
+    box-shadow: $box-shadow;
     z-index: 10;
     position: relative;
 
     #logoPC {
-        min-width: 190px;
-        max-width: 260px;
+        min-width: $logo-pc-mobile-min;
+        max-width: $logo-pc-max;
     }
 
     #logoMovil {
-        min-width: 190px;
-        max-width: 200px;
+        min-width: $logo-pc-mobile-min;
+        max-width: $logo-mobile-max;
     }
 
 }
@@ -25,14 +27,14 @@
 
 
 /* Estilos para pantallas pequeñas */
-@media (max-width: 767px) {
+@media (max-width: $max-width) {
     .navbar-desktop {
         display: none;
     }
 }
 
 /* Estilos para pantallas grandes */
-@media (min-width: 768px) {
+@media (min-width: $min-width) {
     .navbar-mobile {
         display: none;
     }

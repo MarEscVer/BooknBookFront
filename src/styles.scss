@@ -1,12 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@use '@angular/material' as mat;
+@use '@angular/material'as mat;
 @import 'ngx-toastr/toastr';
 @import './style/stylesGroup.scss';
 
 @include mat.core();
 
-$custom-primary-map: (
-  50: #fff,
+$custom-primary-map: (50: #fff,
   100: #f1eae0,
   200: #e2d5c2,
   300: #dbcdb9,
@@ -16,8 +15,7 @@ $custom-primary-map: (
   700: #72553d,
   800: #684c35,
   900: #553D2A,
-  contrast: (
-    50: #553D2A,
+  contrast: (50: #553D2A,
     100: #553D2A,
     200: #553D2A,
     300: #553D2A,
@@ -31,8 +29,7 @@ $custom-primary-map: (
 );
 
 
-$custom-accent-map: (
-  50: #fff,
+$custom-accent-map: (50: #fff,
   100: #f1eae0,
   200: #e2d5c2,
   300: #dbcdb9,
@@ -42,8 +39,7 @@ $custom-accent-map: (
   700: #C7B69F,
   800: #C7B69F,
   900: #C7B69F,
-  contrast: (
-    50: #553D2A,
+  contrast: (50: #553D2A,
     100: #553D2A,
     200: #553D2A,
     300: #553D2A,
@@ -60,32 +56,29 @@ $my-app-primary: mat.define-palette($custom-primary-map);
 $my-app-accent: mat.define-palette($custom-accent-map);
 $my-app-warm: mat.define-palette(mat.$pink-palette);
 
-$my-app-theme: mat.define-light-theme((
- color: (
-   primary: $my-app-primary,
-   accent: $my-app-accent,
-   warm: $my-app-warm
- ),
- typography: mat.define-typography-config(ui-rounded),
- density: 0,
-));
+$my-app-theme: mat.define-light-theme((color: (primary: $my-app-primary,
+      accent: $my-app-accent,
+      warm: $my-app-warm),
+    typography: mat.define-typography-config(ui-rounded),
+    density: 0,
+  ));
 
 @include mat.all-component-themes($my-app-theme);
 
-#toast-container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+#toast-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 #container-app {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 
 html,
-body{
+body {
   height: 100%;
   font-family: ui-rounded;
   margin: 0;
@@ -93,5 +86,8 @@ body{
 }
 
 h2 {
-  color:  #553D2A;
+  color: $base-color;
 }
+
+//OCULTAR BARRA SCROLL
+::-webkit-scrollbar {display: none;}

@@ -1,9 +1,12 @@
+@import '../../../../../style/variables.scss';
+
+
 .icon-link {
   display: flex;
   align-items: center;
 
   &:hover{
-    color: #553D2A;
+    color: $base-color;
   }
 
 }
@@ -12,7 +15,7 @@
   margin-right: 5px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: $max-width) {
   .icon-link .--menu-text {
     display: none;
   }

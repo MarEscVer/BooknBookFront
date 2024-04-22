@@ -1,24 +1,6 @@
-.table-responsive {
-    overflow-x: auto;
-    max-width: 100%;
-}
+@import '../../../../style/mixin.scss';
 
-.fullname-column {
-    color: #636366;
-}
-
-.mat-column-actions {
-    width: auto;
-}
-
-tr.mat-mdc-header-row {
-    background-color: #C7B69F !important;
-}
-
-tr,
-td {
-    border-color: #C7B69F !important;
-}
+@include listado-items-estilo-comun;
 
 .role-select-field {
     margin-top: 5px;

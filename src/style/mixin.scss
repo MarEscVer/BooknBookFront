@@ -1,0 +1,33 @@
+@import 'variables.scss';
+
+//MIXIN
+//LISTADOS ADMINISTRADOR
+@mixin container-listado {
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+@mixin title-listado {
+    margin-top: 20px;
+}
+
+//LISTADO-ITEMS
+@mixin listado-items-estilo-comun {
+    .table-responsive {
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    .mat-column-actions {
+        width: auto;
+    }
+
+    tr.mat-mdc-header-row {
+        background-color: $claro-color !important;
+    }
+
+    tr,
+    td {
+        border-color: $claro-color !important;
+    }
+}

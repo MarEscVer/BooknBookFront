@@ -1,5 +1,5 @@
 export interface ComentarioDenunciadoItemList {
-    //TODO Imagenes BLOB
+    id: number;
     username: string;
     date: string;
     comentario: string;

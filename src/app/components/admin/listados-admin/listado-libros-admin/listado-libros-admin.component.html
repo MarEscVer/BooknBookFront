@@ -3,9 +3,9 @@
     <!-- Contenedor para los botones -->
     <div class="d-flex justify-content-end align-items-center">
         <!-- Botón para agregar nuevo libro -->
-        <button mat-button color="primary" (click)="agregarLibro()">NUEVO LIBRO</button>
+        <button mat-button class="estilo-claro" (click)="agregarLibro()">NUEVO LIBRO</button>
          <!-- Botón para agregar nuevo libro -->
-         <button mat-button color="primary" (click)="agregarAutor()">NUEVO AUTOR</button>
+         <button mat-button class="estilo-claro ms-1" (click)="agregarAutor()">NUEVO AUTOR</button>
     </div>
     <app-listado-items-books [data]="data"></app-listado-items-books>
 </div>

@@ -53,6 +53,6 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit {
 
   delete(row: ClubItemList) {
     // Aquí puedes implementar la lógica para eliminar un usuario
-    console.log('Eliminando libro:', row);
+    console.log('Eliminando club:', row);
   }
 }

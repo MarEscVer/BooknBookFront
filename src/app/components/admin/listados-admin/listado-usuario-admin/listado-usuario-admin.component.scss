@@ -1,15 +1,9 @@
+@import '../../../../../style/mixin.scss';
+
 .container {
-    margin: 0 auto;
-    padding: 0%;
+    @include container-listado;
 }
 
 .title {
-    margin-top: 20px;
-}
-
-/* Estilos para dispositivos móviles */
-@media only screen and (max-width: 768px) {
-    .container {
-        margin: 0 auto;
-    }
+    @include title-listado;
 }

@@ -48,6 +48,9 @@ import { AdminPageUsersComponent } from './components/admin/admin-page-users/adm
 import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/listado-libros-admin/listado-libros-admin.component';
 import { ListadoClubesAdminComponent } from './components/admin/listados-admin/listado-clubes-admin/listado-clubes-admin.component';
 import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/admin-page-clubs.component';
+import { ListadoItemsComentariosComponent } from './components/listado/listado-items-comentarios/listado-items-comentarios.component';
+import { AdminPageModeracionComponent } from './components/admin/admin-page-moderacion/admin-page-moderacion.component';
+import { ListadoModeracionAdminComponent } from './components/admin/listados-admin/listado-moderacion-admin/listado-moderacion-admin.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -72,7 +75,10 @@ import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/adm
     AdminPageUsersComponent,
     ListadoLibrosAdminComponent,
     ListadoClubesAdminComponent,
-    AdminPageClubsComponent
+    AdminPageClubsComponent,
+    ListadoItemsComentariosComponent,
+    ListadoModeracionAdminComponent,
+    AdminPageModeracionComponent
   ],
   /* LIBRARIES */
   imports: [
