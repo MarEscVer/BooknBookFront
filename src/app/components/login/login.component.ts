@@ -9,6 +9,7 @@ import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error
 import { UserService } from 'src/app/services/user/user.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formControl: InputErrorStateMatcherExample,
     private userService: UserService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private authService: AuthService
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -53,9 +55,12 @@ export class LoginComponent implements OnInit {
   }
   
   submit() {
-    this.subscriptions.add(this.userService.login(this.formLogin.getRawValue()).subscribe({
+    this.userService.login(this.formLogin.getRawValue()).subscribe({
       next: (data) => {
         if (data) {
+          this.authService.setCookie("token", data.bearer, 7);
+          this.authService.setCookie("rol", data.rol, 7);
+          this.authService.setCookie("username", data.username, 7);
           this.notification.show(
             'Se ha iniciado Sesion Correctamente',
             'success'
@@ -63,7 +68,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         }
       }
-    }));
+    });
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {

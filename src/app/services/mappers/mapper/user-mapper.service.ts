@@ -5,22 +5,21 @@ import { Login, Register } from 'src/app/shared/models/users/user';
   providedIn: 'root'
 })
 export class UserMapperService {
-
   constructor() { }
 
-  mapToLoginRequest(bodyForm: any):Login {
+  mapToLoginRequest(bodyForm: any): Login {
     return {
-        email:bodyForm.email,
-        password:bodyForm.password
-    }
-}
+      username: bodyForm.usuario,
+      password: bodyForm.password,
+    };
+  }
 
-mapToRegisterRequest(bodyForm: any):Register {
+  mapToRegisterRequest(bodyForm: any): Register {
     return {
-        email:bodyForm.g,
-        password: bodyForm.password,
-        name: bodyForm.name,
-        phone: bodyForm?.phone
+      email: bodyForm.email,
+      password: bodyForm.password,
+      name: bodyForm.name,
+      phone: bodyForm?.phone
     }
-}
+  }
 }

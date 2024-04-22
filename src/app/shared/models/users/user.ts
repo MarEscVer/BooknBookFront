@@ -1,13 +1,19 @@
 export interface Login {
-    email:string,
-    password:string
+    username: string;
+    password: string;
+}
+
+export interface LoginResponse {
+    username: string;
+    rol: string;
+    bearer: string;
 }
 
 export interface Register {
-    email:string,
-    password:string,
-    name:string,
-    phone:string
+    email: string,
+    password: string,
+    name: string,
+    phone: string
 }
 
 export interface UserItemList {
@@ -20,5 +26,5 @@ export interface UserItemList {
     surname2: string;
     email: string;
     rol: string;
-    editMode?: boolean; 
+    editMode?: boolean;
 }

@@ -19,9 +19,7 @@ const routes: Routes = [
   {path: "admin/usuarios", component: AdminPageUsersComponent},
   {path: "admin/clubes", component: AdminPageClubsComponent},
   {path: "admin/moderacion", component: AdminPageModeracionComponent},
-  //{path: "/libros/{id}/details", component: ListClicksComponent}
-  //{path: "admin", component: ZonaAdminComponent, canActivate: [AdminAuthGuardService] },
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
