@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AdminService } from './services/admin/admin.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +6,4 @@ import { AdminService } from './services/admin/admin.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private adminService: AdminService) {}
 }

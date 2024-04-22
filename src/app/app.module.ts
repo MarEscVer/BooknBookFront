@@ -29,7 +29,6 @@ import { GlobalErrorHandler } from './interceptors/global-error-handler';
 import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { NavbarComponent } from './components/barraNavegacion/header/navbar/navbar.component';
-import { ListClicksComponent } from './components/home/listClicks/list-clicks.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from './components/barraNavegacion/header/header.component';
@@ -51,6 +50,7 @@ import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/adm
 import { ListadoItemsComentariosComponent } from './components/listado/listado-items-comentarios/listado-items-comentarios.component';
 import { AdminPageModeracionComponent } from './components/admin/admin-page-moderacion/admin-page-moderacion.component';
 import { ListadoModeracionAdminComponent } from './components/admin/listados-admin/listado-moderacion-admin/listado-moderacion-admin.component';
+import { DeleteModalComponent } from './components/modal/delete-modal/delete-modal.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -62,7 +62,6 @@ import { ListadoModeracionAdminComponent } from './components/admin/listados-adm
     HomeComponent,
     MessageErrorComponent,
     NavbarComponent,
-    ListClicksComponent,
     HeaderComponent,
     MenuAdminComponent,
     AdminPageComponent,
@@ -78,7 +77,8 @@ import { ListadoModeracionAdminComponent } from './components/admin/listados-adm
     AdminPageClubsComponent,
     ListadoItemsComentariosComponent,
     ListadoModeracionAdminComponent,
-    AdminPageModeracionComponent
+    AdminPageModeracionComponent,
+    DeleteModalComponent
   ],
   /* LIBRARIES */
   imports: [
