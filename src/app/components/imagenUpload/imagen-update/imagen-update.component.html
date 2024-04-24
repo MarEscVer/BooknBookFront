@@ -1,13 +1,11 @@
 <div class="container">
-    <div *ngIf="selectedFile">
-        <span>{{ progressInfo.fileName }}</span>
-        <mat-toolbar class="p-0" color="accent">
-            <mat-progress-bar color="primary" [value]="progressInfo.value"></mat-progress-bar>
-            <span class="w-auto ms-1">{{ progressInfo.value }}%</span>
-        </mat-toolbar>
-    </div>
+    <span>{{ progressInfo.fileName }}</span>
+    <mat-toolbar class="p-0" color="accent">
+        <mat-progress-bar color="primary" [value]="progressInfo.value"></mat-progress-bar>
+        <span class="w-auto ms-1">{{ progressInfo.value }}%</span>
+    </mat-toolbar>
 
-    <mat-form-field color="accent" class="mt-1">
+    <mat-form-field color="accent">
         <div>
             <mat-toolbar>
                 <input matInput [value]="

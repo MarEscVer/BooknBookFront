@@ -34,7 +34,6 @@ export class DeleteModalComponent implements OnDestroy{
 
   //TODO comprobar que servicio instace of intrfaz --> servicio delete
   onConfirmClick(): void {
-
     //if(this.deleteService instanceof deleteObject)
     this.subscriptions.add(this.deleteService.delete(this.modalInfo.id).subscribe(() => {
       this.dialogRef.close(true);

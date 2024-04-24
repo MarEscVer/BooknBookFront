@@ -61,7 +61,7 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
   selectFiles(event: any): void {
     const files = event.target.files;
     if (files && files.length > 0) {
-      const blob = files[0];
+      const blob = files[0]; // Obtener el primer archivo si hay múltiples archivos seleccionados
       const file = new File([blob], blob.name, { type: blob.type });
       if (file instanceof Blob) {
 
@@ -72,7 +72,7 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
 
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          //console.log(e.target.result);
+          console.log(e.target.result);
         };
         reader.readAsDataURL(this.selectedFile);
       }
@@ -96,9 +96,8 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
           }
         })
       ).subscribe();
-      
-      this.imageSelected.emit(true);
 
+      this.imageSelected.emit(true);
       this.subscriptions.push(subscription);
     }
   }

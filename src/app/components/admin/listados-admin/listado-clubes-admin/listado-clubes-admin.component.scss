@@ -7,3 +7,10 @@
 .title {
     @include title-listado;
 }
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    .add-club {
+        display: none;
+    }
+}

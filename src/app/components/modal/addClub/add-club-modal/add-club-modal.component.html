@@ -1,13 +1,8 @@
-<mat-dialog-content class="p-5">
+<mat-dialog-content class="dialog-text">
     <form [formGroup]="formAddClub" (submit)="$event.preventDefault()">
 
-        <div class="text-center mb-3">
-            <div class="title">¿Quieres crear un CLUB?</div>
-            <div class="subtitle">Cumplimenta el siguiente formulario:</div>
-        </div>
-
         <mat-form-field class="w-100">
-            <mat-label for="name">Nombre del club</mat-label>
+            <mat-label>Nombre del club</mat-label>
             <input matInput formControlName="name" id="name" />
         </mat-form-field>
         <div class="alert alert-danger" *ngIf="formAddClub.get('name')?.touched && formAddClub.get('name')?.errors">
@@ -17,7 +12,7 @@
         </div>
 
         <mat-form-field class="w-100">
-            <mat-label for="description">Descripción</mat-label>
+            <mat-label>Descripción</mat-label>
             <textarea matInput formControlName="description" id="description"></textarea>
         </mat-form-field>
         <div class="alert alert-danger"
@@ -30,40 +25,37 @@
             </div>
         </div>
 
-        <div>
-            <div class="preference">Selecciona tu preferencia:</div>
-            <div class="row">
-                <div class="col">
-                    <span class="option-label">Tipo:</span>
-                    <mat-radio-group formControlName="type" id="type" color="primary">
-                        <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption" class="row">
-                            {{typeOption}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <div class="alert alert-danger" *ngIf="formAddClub.get('type')?.touched && formAddClub.get('type')?.errors">
-                        <div *ngIf="this.specificError('type','required')">
-                            Tipo requerido.
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <span class="option-label">Género:</span>
-                    <mat-radio-group formControlName="gender" id="gender" color="primary">
-                        <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption" class="row">
-                            {{genderOption}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <div class="alert alert-danger" *ngIf="formAddClub.get('gender')?.touched && formAddClub.get('gender')?.errors">
-                        <div *ngIf="this.specificError('gender','required')">
-                            Género requerido.
-                        </div>
-                    </div>
-                </div>
+        <div class="w-100">
+            <label>Selecciona tu preferencia:</label>
+            <mat-radio-group formControlName="type" id="type">
+                <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption">
+                    {{typeOption}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="alert alert-danger" *ngIf="formAddClub.get('type')?.touched && formAddClub.get('type')?.errors">
+            <div *ngIf="this.specificError('type','required')">
+                Tipo requerido.
             </div>
         </div>
 
-        <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
+        <div class="w-100">
+            <label>Género:</label>
+            <mat-radio-group formControlName="gender" id="gender">
+                <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption">
+                    {{genderOption}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="alert alert-danger"
+            *ngIf="formAddClub.get('gender')?.touched && formAddClub.get('gender')?.errors">
+            <div *ngIf="this.specificError('gender','required')">
+                Género requerido.
+            </div>
+        </div>
 
-        <button mat-raised-button color="primary" (click)="submit()" class="w-20" [disabled]="!formAddClub.valid || !imageSelected">AÑADIR</button>
+        <app-imagen-update formControlName="imagen" (imageSelected)="handleImageSelected($event)"></app-imagen-update>
+
+        <button mat-raised-button (click)="submit()" class="w-100 border border-primary" [disabled]="!formAddClub.valid && !imageSelected">AÑADIR</button>
     </form>
 </mat-dialog-content>
