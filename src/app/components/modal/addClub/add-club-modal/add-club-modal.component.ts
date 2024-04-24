@@ -57,7 +57,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
         next: (data) => {
           if (data) {
             this.notification.show(
-              'Clun añadido correctamente!',
+              'Club añadido correctamente!',
               'success'
             );
             this.router.navigate(['/home']);

@@ -43,6 +43,7 @@ import { ListadoItemsBooksComponent } from './components/listado/listado-items-b
 import { ListadoItemsClubsComponent } from './components/listado/listado-items-clubs/listado-items-clubs.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
 import { AdminPageUsersComponent } from './components/admin/admin-page-users/admin-page-users.component';
 import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/listado-libros-admin/listado-libros-admin.component';
 import { ListadoClubesAdminComponent } from './components/admin/listados-admin/listado-clubes-admin/listado-clubes-admin.component';
@@ -56,6 +57,7 @@ import { DeleteModalComponent } from './components/modal/deleteModal/delete-moda
 import { AddClubModalComponent } from './components/modal/addClub/add-club-modal/add-club-modal.component';
 import { AddClubButtonComponent } from './components/modal/addClub/add-club-button/add-club-button.component';
 import { ImagenUpdateComponent } from './components/imagenUpload/imagen-update/imagen-update.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -117,6 +119,8 @@ import { ImagenUpdateComponent } from './components/imagenUpload/imagen-update/i
     MatPaginatorModule,
     MatSelectModule,
     MatDialogModule,
+    MatRadioModule,
+    MatProgressBarModule,
   ],
   /* SERVICE */
   providers: [
