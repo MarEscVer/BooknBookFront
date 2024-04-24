@@ -1,6 +1,27 @@
 @import 'variables.scss';
 
 //MIXIN
+
+//DIALOG
+@mixin dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: $base-color;
+    margin-bottom: 10px;
+}
+
+@mixin dialog-subtitle {
+    font-size: 18px;
+    color: $black-color;
+    margin-bottom: 10px;
+}
+
+@mixin dialog-threetitle {
+    font-size: 15px;
+    color: $black-color;
+    margin-bottom: 10px;
+}
+
 //LISTADOS ADMINISTRADOR
 @mixin container-listado {
     margin: 0 auto;

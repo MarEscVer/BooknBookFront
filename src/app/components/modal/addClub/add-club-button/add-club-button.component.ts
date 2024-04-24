@@ -20,10 +20,7 @@ export class AddClubButtonComponent implements OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddClubModalComponent, {
-      data: {
-
-      }
-    });
+      width: '50%'});
   }
   
   ngOnDestroy(): void {

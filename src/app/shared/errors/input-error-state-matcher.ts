@@ -19,13 +19,18 @@ export class InputErrorStateMatcherExample {
       return new FormControl('', [Validators.minLength(9), Validators.maxLength(9)]);
     }
 
-    getFormControl_imagen():FormControl {
-      return new FormControl('', [Validators.required]);
-    }
-
     getFormControl_description():FormControl {
       return new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
     }
+
+    getFormControl_gender():FormControl {
+      return new FormControl('ROMANTICA', [Validators.required]);
+    }
+
+    getFormControl_type():FormControl {
+      return new FormControl('JUVENIL', [Validators.required]);
+    }
+
 
     matcher = new FormErrorStateMatcher();
 
@@ -44,11 +49,10 @@ export class InputErrorStateMatcherExample {
     }
 
     addClub = {
-      imagen: this.getFormControl_imagen(),
       name: this.getFormControl_required(),
       description: this.getFormControl_description(),
-      type: this.getFormControl_required(),
-      gender: this.getFormControl_required(),
+      type: this.getFormControl_type(),
+      gender: this.getFormControl_gender(),
     }
 
   }

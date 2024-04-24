@@ -66,8 +66,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
           } else {
             this.notification.show(data, 'error');
           }
-        },
-        error: (error) => { },
+        }
       }));
   }
 

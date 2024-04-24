@@ -1,0 +1,14 @@
+@import '../../../../../style/mixin.scss';
+
+.title {
+    @include dialog-title;
+}
+
+.subtitle {
+    @include dialog-subtitle;
+}
+
+.preference {
+    @include dialog-threetitle;
+    display: block;
+}
