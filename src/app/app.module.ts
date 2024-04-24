@@ -58,6 +58,7 @@ import { AddClubModalComponent } from './components/modal/addClub/add-club-modal
 import { AddClubButtonComponent } from './components/modal/addClub/add-club-button/add-club-button.component';
 import { ImagenUpdateComponent } from './components/imagenUpload/imagen-update/imagen-update.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AdminPageAddBookComponent } from './components/admin/admin-page-add-book/admin-page-add-book.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -89,7 +90,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     DeleteModalComponent,
     AddClubModalComponent,
     AddClubButtonComponent,
-    ImagenUpdateComponent
+    ImagenUpdateComponent,
+    AdminPageAddBookComponent
   ],
   /* LIBRARIES */
   imports: [

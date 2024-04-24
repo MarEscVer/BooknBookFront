@@ -31,7 +31,7 @@ export class ListadoLibrosAdminComponent {
 
   agregarLibro(): void {
     //TODO redireccionar a add libro
-    this.router.navigate(['/']);
+    this.router.navigate(['/admin/book']);
   }
 
   agregarAutor(): void {

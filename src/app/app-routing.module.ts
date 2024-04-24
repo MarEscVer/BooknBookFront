@@ -9,6 +9,7 @@ import { AdminPageComponent } from './components/admin/admin-page/admin-page.com
 import { AdminPageUsersComponent } from './components/admin/admin-page-users/admin-page-users.component';
 import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/admin-page-clubs.component';
 import { AdminPageModeracionComponent } from './components/admin/admin-page-moderacion/admin-page-moderacion.component';
+import { AdminPageAddBookComponent } from './components/admin/admin-page-add-book/admin-page-add-book.component';
 
 const routes: Routes = [
   {path: "", component: LoginAndRegisterComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: "admin/usuarios", component: AdminPageUsersComponent},
   {path: "admin/clubes", component: AdminPageClubsComponent},
   {path: "admin/moderacion", component: AdminPageModeracionComponent},
+  {path: "admin/book", component: AdminPageAddBookComponent},
   ];
 
 @NgModule({

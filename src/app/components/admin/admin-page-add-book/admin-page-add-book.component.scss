@@ -1,0 +1,9 @@
+@import '../../../../style/mixin.scss';
+
+.container {
+    @include container-listado;
+}
+
+.title {
+    @include title-listado;
+}
