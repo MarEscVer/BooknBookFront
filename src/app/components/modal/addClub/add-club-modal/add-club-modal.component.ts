@@ -20,6 +20,8 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
   clubData?: ClubData;
   matcher!: FormErrorStateMatcher;
 
+  imageSelected: boolean = false;
+
   favoriteType?: string;
   favoriteGender?: string;
   typeOptions: string[] = ['JUVENIL', 'INFANTIL', 'FICCION', 'NO FICCION'];
@@ -75,6 +77,10 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
       modelAttribute,
       errorAttribute
     );
+  }
+
+  handleImageSelected(imageSelected: boolean) {
+    this.imageSelected = imageSelected;
   }
 
   ngOnDestroy(): void {

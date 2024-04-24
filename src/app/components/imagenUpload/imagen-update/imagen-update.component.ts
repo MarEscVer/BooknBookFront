@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit, forwardRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, forwardRef, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -18,10 +18,10 @@ import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload
   ]
 })
 export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  selectedFiles?: FileList;
+  selectedFile?: File;
   progress = 0;
-  selectedFileNames: string[] = [];
-  progressInfos: any[] = [];
+  selectedFileName?: string;
+  progressInfo: { fileName: string, value: number } = { fileName: '', value: 0 };
   imageInfos?: Observable<any>;
 
   showProgressBar: boolean = false;
@@ -29,12 +29,18 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
   onChange: any = () => { };
   onTouch: any = () => { };
 
+  @Output() imageSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
   */
   private subscriptions: Subscription[] = [];
 
   constructor(private uploadService: ImagenUploadService) { }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
 
   writeValue(value: any): void { }
 
@@ -49,56 +55,51 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
   setDisabledState?(isDisabled: boolean): void { }
 
   ngOnInit(): void {
-    this.imageInfos = this.uploadService.getFiles();
+    this.imageInfos = this.uploadService.getFilesMOCK();
   }
 
   selectFiles(event: any): void {
-    this.progressInfos = [];
-    this.selectedFileNames = [];
-    this.selectedFiles = event.target.files;
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const blob = files[0]; // Obtener el primer archivo si hay múltiples archivos seleccionados
+      const file = new File([blob], blob.name, { type: blob.type });
+      if (file instanceof Blob) {
 
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {
+        this.progressInfo = { fileName: '', value: 0 };
+        this.selectedFile = file;
+        this.selectedFileName = this.selectedFile.name;
+        this.progress = 0;
+
         const reader = new FileReader();
         reader.onload = (e: any) => {
           console.log(e.target.result);
         };
-        reader.readAsDataURL(this.selectedFiles[i]);
-        this.selectedFileNames.push(this.selectedFiles[i].name);
+        reader.readAsDataURL(this.selectedFile);
       }
     }
   }
 
-  upload(idx: number, file: File): void {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
+  upload(): void {
+    if (this.selectedFileName) {
+      this.progressInfo = { fileName: this.selectedFileName, value: 0 };
+    }
 
-    if (file) {
-      const subscription = this.uploadService.upload(file).pipe(
+    if (this.selectedFile) {
+      const subscription = this.uploadService.uploadMOCK(this.selectedFile).pipe(
         tap((event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round(
+            this.progressInfo.value = Math.round(
               (100 * event.loaded) / event.total
             );
           } else if (event instanceof HttpResponse) {
-            this.imageInfos = this.uploadService.getFiles();
+            this.imageInfos = this.uploadService.getFilesMOCK();
           }
         })
       ).subscribe();
 
+      this.imageSelected.emit(true);
       this.subscriptions.push(subscription);
     }
   }
 
-  uploadFiles(): void {
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
-      }
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
 }

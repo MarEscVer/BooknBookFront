@@ -54,8 +54,8 @@
             </div>
         </div>
 
-        <app-imagen-update formControlName="imagen"></app-imagen-update>
+        <app-imagen-update formControlName="imagen" (imageSelected)="handleImageSelected($event)"></app-imagen-update>
 
-        <button mat-raised-button (click)="submit()" class="w-100 border border-primary" [disabled]="!formAddClub.valid">AÑADIR</button>
+        <button mat-raised-button (click)="submit()" class="w-100 border border-primary" [disabled]="!formAddClub.valid && !imageSelected">AÑADIR</button>
     </form>
 </mat-dialog-content>
