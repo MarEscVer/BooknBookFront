@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from 'src/app/services/user/user.service';
 import { UserItemList } from 'src/app/shared/models/users/user';
 
 @Component({
@@ -21,7 +22,9 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor() {
+  constructor(
+    public userService: UserService
+  ) {
     this.dataSource = new MatTableDataSource<UserItemList>([]);
   }
 
@@ -57,11 +60,6 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
     console.log('Guardando cambios:', row);
   }
 
-  delete(row: UserItemList) {
-    // Aquí puedes implementar la lógica para eliminar un usuario
-    console.log('Eliminando usuario:', row);
-  }
-  
   toggleEditMode(row: UserItemList) {
     row.editMode = !row.editMode;
     // Guardar el valor original del rol temporalmente al activar el modo de edición

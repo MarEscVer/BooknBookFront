@@ -1,0 +1,9 @@
+<mat-dialog-content class="dialog-text">
+	<p>
+        ¿Estás seguro de eliminar: {{modalInfo.title.toUpperCase()}}?
+	</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+	<button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">SI</button>
+	<button mat-raised-button mat-dialog-close tabindex="-1">NO</button>
+</mat-dialog-actions>

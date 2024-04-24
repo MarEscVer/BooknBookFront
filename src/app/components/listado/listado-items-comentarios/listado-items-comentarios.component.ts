@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ComentarioService } from 'src/app/services/comentario/comentario.service';
 import { ComentarioDenunciadoItemList } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
@@ -21,7 +22,9 @@ export class ListadoItemsComentariosComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor() {
+  constructor(
+    public comentarioService: ComentarioService
+  ) {
     this.dataSource = new MatTableDataSource<ComentarioDenunciadoItemList>([]);
   }
 
@@ -57,8 +60,4 @@ export class ListadoItemsComentariosComponent implements AfterViewInit, OnInit {
     console.log('Aceptando comentario:', row);
   }
 
-  delete(row: ComentarioDenunciadoItemList) {
-    // Aquí puedes implementar la lógica para eliminar un usuario
-    console.log('Eliminando comentario:', row);
-  }
 }

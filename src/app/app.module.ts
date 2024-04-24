@@ -50,7 +50,12 @@ import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/adm
 import { ListadoItemsComentariosComponent } from './components/listado/listado-items-comentarios/listado-items-comentarios.component';
 import { AdminPageModeracionComponent } from './components/admin/admin-page-moderacion/admin-page-moderacion.component';
 import { ListadoModeracionAdminComponent } from './components/admin/listados-admin/listado-moderacion-admin/listado-moderacion-admin.component';
-import { DeleteModalComponent } from './components/modal/delete-modal/delete-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteButtonComponent } from './components/modal/deleteModal/delete-button/delete-button.component'; 
+import { DeleteModalComponent } from './components/modal/deleteModal/delete-modal/delete-modal.component';
+import { AddClubModalComponent } from './components/modal/addClub/add-club-modal/add-club-modal.component';
+import { AddClubButtonComponent } from './components/modal/addClub/add-club-button/add-club-button.component';
+import { ImagenUpdateComponent } from './components/imagenUpload/imagen-update/imagen-update.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -78,7 +83,11 @@ import { DeleteModalComponent } from './components/modal/delete-modal/delete-mod
     ListadoItemsComentariosComponent,
     ListadoModeracionAdminComponent,
     AdminPageModeracionComponent,
-    DeleteModalComponent
+    DeleteButtonComponent,
+    DeleteModalComponent,
+    AddClubModalComponent,
+    AddClubButtonComponent,
+    ImagenUpdateComponent
   ],
   /* LIBRARIES */
   imports: [
@@ -106,7 +115,8 @@ import { DeleteModalComponent } from './components/modal/delete-modal/delete-mod
     MatSidenavModule,
     MatListModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule,
   ],
   /* SERVICE */
   providers: [

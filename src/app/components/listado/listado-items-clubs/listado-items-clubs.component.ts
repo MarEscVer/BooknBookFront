@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ClubService } from 'src/app/services/club/club.service';
 import { ClubItemList } from 'src/app/shared/models/club/club';
 
 @Component({
@@ -21,7 +22,9 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor() {
+  constructor(
+    public clubService: ClubService
+  ) {
     this.dataSource = new MatTableDataSource<ClubItemList>([]);
   }
 
@@ -51,8 +54,4 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit {
     }
   }
 
-  delete(row: ClubItemList) {
-    // Aquí puedes implementar la lógica para eliminar un usuario
-    console.log('Eliminando club:', row);
-  }
 }

@@ -4,7 +4,6 @@ export const environment = {
   production: false,
   BASE_URL: 'http://localhost:8080',
   BASE_TOKEN: '/api',
-  LINK_URL: '/api/link',
   USER_URL: '/api/user',
 };
 export const endpoints = {

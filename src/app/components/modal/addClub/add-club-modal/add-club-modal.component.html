@@ -1,0 +1,72 @@
+<mat-dialog-content class="dialog-text">
+    <form [formGroup]="formAddClub" (submit)="$event.preventDefault()">
+
+        <mat-form-field class="w-100 ">
+            <mat-label>Nombre del club</mat-label>
+            <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3" ng-reflect-name="name"
+                id="name" formControlName="name" />
+        </mat-form-field>
+        <div class="alert alert-danger" *ngIf="formAddClub.get('name')?.touched && formAddClub.get('name')?.errors">
+            <div *ngIf="this.specificError('name','required')">
+                Nombre requerido.
+            </div>
+        </div>
+
+        <mat-form-field class="w-100 ">
+            <mat-label>Descripcion</mat-label>
+            <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3"
+                ng-reflect-name="descripcion" id="descripcion" formControlName="descripcion" />
+        </mat-form-field>
+        <div class="alert alert-danger"
+            *ngIf="formAddClub.get('descripcion')?.touched && formAddClub.get('descripcion')?.errors">
+            <div *ngIf="this.specificError('descripcion','required')">
+                Descripción requerida.
+            </div>
+            <div *ngIf="this.specificError('descripcion','maxlength') || this.specificError('descripcion','minlength')">
+                Mínimo 10 y máximo 50 caracteres.
+            </div>
+        </div>
+
+        <mat-form-field class="w-100 ">
+            <app-imagen-update class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3"
+                ng-reflect-name="image" id="image" formControlName="image"></app-imagen-update>
+        </mat-form-field>
+        <div class="alert alert-danger" *ngIf="formAddClub.get('image')?.touched && formAddClub.get('image')?.errors">
+            <div *ngIf="this.specificError('image','required')">
+                Imagen requerida.
+            </div>
+        </div>
+
+        <!-- <mat-form-field class="w-100 ">
+            <label>Selecciona tu preferencia:</label>
+            <mat-radio-group aria-labelledby="type" class="type" ng-reflect-name="type" id="type" formControlName="type"
+                [(ngModel)]="favoriteType">
+                <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="typeOption">
+                    {{typeOption}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </mat-form-field>
+        <div class="alert alert-danger" *ngIf="formAddClub.get('type')?.touched && formAddClub.get('type')?.errors">
+            <div *ngIf="this.specificError('type','required')">
+                Tipo requerido.
+            </div>
+        </div>
+
+        <mat-form-field class="w-100 ">
+            <mat-radio-group aria-labelledby="gender" class="gender" ng-reflect-name="gender" id="gender"
+                formControlName="gender" [(ngModel)]="favoriteGender">
+                <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption">
+                    {{genderOption}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </mat-form-field>
+        <div class="alert alert-danger"
+            *ngIf="formAddClub.get('gender')?.touched && formAddClub.get('gender')?.errors">
+            <div *ngIf="this.specificError('gender','required')">
+                Género requerido.
+            </div>
+        </div> -->
+
+        <button mat-raised-button (click)="submit()" class="w-100 border border-primary">AÑADIR</button>
+    </form>
+</mat-dialog-content>

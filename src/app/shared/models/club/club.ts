@@ -7,3 +7,11 @@ export interface ClubItemList {
     gender: string;
     users: number;
 }
+
+export interface ClubData {
+    img: any;
+    name: string;
+    tipe: string;
+    gender: string;
+    descripcion: string;
+}

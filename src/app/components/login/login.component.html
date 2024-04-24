@@ -3,7 +3,7 @@
     <form [formGroup]="formLogin" (submit)="$event.preventDefault()" class="w-75 pt-5 pb-5">
       
         <mat-form-field class="w-100 ">
-          <mat-label>Usuario</mat-label>
+          <mat-label>Username</mat-label>
           <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3" ng-reflect-name="username" id="username"
             formControlName="username" (cdkAutofill)="firstNameAutofilled = $event.isAutofilled"/>
         </mat-form-field>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { BookService } from 'src/app/services/book/book.service';
 import { BookItemList } from 'src/app/shared/models/book/book';
 
 @Component({
@@ -21,7 +22,9 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor() {
+  constructor(
+    public bookServie: BookService
+  ) {
     this.dataSource = new MatTableDataSource<BookItemList>([]);
   }
 
@@ -49,11 +52,6 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  delete(row: BookItemList) {
-    // Aquí puedes implementar la lógica para eliminar un usuario
-    console.log('Eliminando libro:', row);
   }
 
 }

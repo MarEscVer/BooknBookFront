@@ -58,9 +58,7 @@
           <button mat-icon-button color="primary" aria-label="Editar" (click)="toggleEditMode(row)">
             <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
           </button>
-          <button mat-icon-button color="primary" aria-label="Eliminar" (click)="delete(row)">
-            <fa-icon [icon]="['fas', 'trash']" class="--listado-icon"></fa-icon>
-          </button>
+          <app-delete-button [modalInfo]="{ id: row.id, title: row.username }" [deleteService]="userService"></app-delete-button>
         </td>
       </ng-container>
 

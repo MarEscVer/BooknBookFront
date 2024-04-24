@@ -4,18 +4,19 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Login, LoginResponse, Register } from 'src/app/shared/models/users/user';
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
+import { deleteObject } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements deleteObject{
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
   register(registerRequest: Register): Observable<boolean> {
     return this.http
       .post<boolean>(
-        this.baseUrl + environment.USER_URL + endpoints.REGISTER,
+        this.baseUrl + endpoints.REGISTER,
         registerRequest,
         httpOptions
       )
@@ -29,6 +30,12 @@ export class UserService {
         loginRequest,
         httpOptions
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  //TODO delete URL
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(this.baseUrl + `/user/${id}`)
       .pipe(catchError(this.handleError));
   }
 

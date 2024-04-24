@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,21 +16,21 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   formLogin!: FormGroup;
   firstNameAutofilled: boolean = false;
   lastNameAutofilled: boolean = false;
   matcher!: FormErrorStateMatcher;
 
-    /**
-   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-   */
-    private subscriptions: Subscription = new Subscription();
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+  private subscriptions: Subscription = new Subscription();
 
-    /**
-     * Aplicar una clase al elemento raíz.
-     */
-    @HostBinding('class') class = "app-login";
+  /**
+   * Aplicar una clase al elemento raíz.
+   */
+  @HostBinding('class') class = "app-login";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,17 +45,15 @@ export class LoginComponent implements OnInit {
     this.matcher = this.formControl.matcher;
     this.createForm(formBuilder);
   }
-  
+
   createForm(fb: FormBuilder) {
     this.formLogin = this.formBuilder.group(this.formControl.login);
   }
 
-  ngOnInit() {
-    //console.log(this.formLogin.get('email'));
-  }
-  
+  ngOnInit() { }
+
   submit() {
-    this.userService.login(this.formLogin.getRawValue()).subscribe({
+    this.subscriptions.add(this.userService.login(this.formLogin.getRawValue()).subscribe({
       next: (data) => {
         if (data) {
           this.authService.setCookie("token", data.bearer, 7);
@@ -68,7 +66,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         }
       }
-    });
+    }));
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {
@@ -78,8 +76,8 @@ export class LoginComponent implements OnInit {
       errorAttribute
     );
   }
-  
-  public ngOnDestroy(): void{
+
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 

@@ -39,9 +39,7 @@
                     <button mat-icon-button color="primary" aria-label="Aceptar">
                         <fa-icon [icon]="['fas', 'check']" class="--listado-icon"></fa-icon>
                     </button>
-                    <button mat-icon-button color="primary" aria-label="Eliminar" (click)="delete(row)">
-                        <fa-icon [icon]="['fas', 'xmark']" class="--listado-icon"></fa-icon>
-                    </button>
+                    <app-delete-button [modalInfo]="{ id: row.id, title: row.username }" [deleteService]="comentarioService"></app-delete-button>
                 </td>
             </ng-container>
 

@@ -18,10 +18,19 @@ export class InputErrorStateMatcherExample {
       //TODO: poner patrón de validacion de telefono movil segun pais cuando toque
       return new FormControl('', [Validators.minLength(9), Validators.maxLength(9)]);
     }
+
+    getFormControl_imagen():FormControl {
+      return new FormControl('', [Validators.required]);
+    }
+
+    getFormControl_description():FormControl {
+      return new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
+    }
+
     matcher = new FormErrorStateMatcher();
 
     login = {
-      email: this.getFormControl_Email(),
+      username: this.getFormControl_required(),
       password: this.getFormControl_required(),
     }
 
@@ -33,4 +42,13 @@ export class InputErrorStateMatcherExample {
       plan: this.getFormControl_required(),
       rol: this.getFormControl_required(),
     }
+
+    addClub = {
+      imagen: this.getFormControl_imagen(),
+      name: this.getFormControl_required(),
+      description: this.getFormControl_description(),
+      type: this.getFormControl_required(),
+      gender: this.getFormControl_required(),
+    }
+
   }

@@ -1,8 +1,6 @@
 <div class="container">
     <h2 class="title">GESTIÓN DE CLUBES</h2>
     <!-- Contenedor para los botones -->
-    <div class="d-flex justify-content-end align-items-center">
-        <button mat-button class="estilo-claro" (click)="agregarClub()">NUEVO CLUB</button>
-    </div>
+    <app-add-club-button></app-add-club-button>
     <app-listado-items-clubs [data]="data"></app-listado-items-clubs>
 </div>
