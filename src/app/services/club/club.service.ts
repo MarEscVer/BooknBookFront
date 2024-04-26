@@ -21,7 +21,7 @@ export class ClubService implements deleteObject {
 
   //TODO add URL
   addClub(clubData: ClubData): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + `/club/add`, httpOptions)
+    return this.http.post<boolean>(this.baseUrl + `/club/add`, clubData, httpOptions)
     .pipe(catchError(this.handleError));
   }
 

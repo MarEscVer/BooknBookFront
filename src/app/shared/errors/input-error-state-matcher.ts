@@ -19,6 +19,21 @@ export class InputErrorStateMatcherExample {
       return new FormControl('', [Validators.minLength(9), Validators.maxLength(9)]);
     }
 
+    getFormControl_isbn():FormControl {
+      //TODO: poner patrón de validacion de ISBN
+      return new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]);
+    }
+
+    getFormControl_year():FormControl {
+      //TODO: poner patrón de validacion de AÑO
+      return new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]);
+    }
+
+    getFormControl_paginas():FormControl {
+      //TODO: poner patrón de validacion de PAGINAS
+      return new FormControl('', [Validators.required]);
+    }
+
     getFormControl_description():FormControl {
       return new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
     }
@@ -53,6 +68,17 @@ export class InputErrorStateMatcherExample {
       description: this.getFormControl_description(),
       type: this.getFormControl_type(),
       gender: this.getFormControl_gender(),
+    }
+
+    addBook = {
+      title: this.getFormControl_required(),
+      author: this.getFormControl_required(),
+      saga: this.getFormControl_required(),
+      type: this.getFormControl_type(),
+      gender: this.getFormControl_gender(),
+      isbn: this.getFormControl_isbn(),
+      year: this.getFormControl_year(),
+      paginas: this.getFormControl_paginas(),
     }
 
   }
