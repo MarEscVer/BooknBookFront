@@ -11,7 +11,7 @@ import { BookItemList } from 'src/app/shared/models/book/book';
   styleUrls: ['./listado-items-books.component.scss']
 })
 export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['id', 'title', 'author', 'tipe', 'gender', 'isbn', 'year', 'actions'];
+  displayedColumns: string[] = ['id', 'title', 'author', 'tipe', 'gender', 'year', 'actions'];
 
   @Input() data?: BookItemList[];
 

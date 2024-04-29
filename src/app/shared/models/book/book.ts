@@ -6,7 +6,6 @@ export interface BookItemList {
     author: string;
     tipe: string;
     gender: string;
-    isbn: number;
     year: number;
 }
 
@@ -18,6 +17,5 @@ export interface BookData {
     author: string;
     tipe: string;
     gender: string;
-    isbn: number;
     year: number;
 }

@@ -23,7 +23,6 @@ export class ListadoLibrosAdminComponent {
         author: `Autor ${i}`,
         tipe: `Tipo ${i}`,
         gender: `Género ${i}`,
-        isbn: 1000000000000 + i,
         year: 2000 + i,
       });
     }
