@@ -3,5 +3,5 @@
 @include listado-items-estilo-comun;
 
 .circular-image {
-    @include circular-image(50px, 50%, 1px solid #ccc);
+    @include circular-image();
 }

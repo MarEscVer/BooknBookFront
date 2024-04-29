@@ -54,17 +54,31 @@
 }
 
 //IMAGENES REDONDAS
-@mixin circular-image($size: 50px, $border-radius: 50%, $border: 1px solid #ccc) {
+@mixin circular-image($size: 50px, $border-radius: 50%, $border: 1px solid $claro-color) {
     width: $size;
     height: $size;
     border-radius: $border-radius;
     border: $border;
     overflow: hidden;
     margin: 5px;
-  
+
     img {
-      width: 100%;
-      height: auto;
+        width: 100%;
+        height: auto;
     }
-  }
-  
+}
+
+@mixin rectangular-image($width: 50px, $height: auto, $border-radius: 8px, $border: 1px solid $claro-color) {
+    width: $width;
+    height: $height;
+    border-radius: $border-radius;
+    border: $border;
+    overflow: hidden;
+    margin: 5px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // Para asegurarse de que la imagen cubra completamente el contenedor
+    }
+}

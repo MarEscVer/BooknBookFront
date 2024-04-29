@@ -85,16 +85,16 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const base64String = e.target.result.split(',')[1];
+        const imagen = e.target.result.split(',')[1];
   
-        this.uploadBase64Image(base64String);
+        this.uploadBase64Image(imagen);
       };
       reader.readAsDataURL(this.selectedFile);
     }
   }
 
-  private uploadBase64Image(base64String: string): void {
-    const subscription = this.uploadService.upload(base64String).pipe(
+  private uploadBase64Image(imagen: string): void {
+    const subscription = this.uploadService.upload(imagen).pipe(
       tap((event: any) => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progressInfo.value = Math.round(

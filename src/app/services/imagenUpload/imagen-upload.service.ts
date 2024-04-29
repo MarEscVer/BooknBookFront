@@ -10,12 +10,12 @@ export class ImagenUploadService {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
-  upload(base64String: string): Observable<boolean> {
+  upload(imagen: string): Observable<boolean> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     // Crear un objeto con la cadena base64 y cualquier otra información necesaria
     const data = {
-      base64String: base64String,
+      imagen: imagen,
     };
 
     return this.http.post<boolean>(`${this.baseUrl}/upload/img`, data, { headers })

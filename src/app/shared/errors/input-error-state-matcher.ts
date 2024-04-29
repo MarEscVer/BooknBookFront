@@ -64,10 +64,10 @@ export class InputErrorStateMatcherExample {
     }
 
     addClub = {
-      name: this.getFormControl_required(),
-      description: this.getFormControl_description(),
-      type: this.getFormControl_type(),
-      gender: this.getFormControl_gender(),
+      nombreGrupo: this.getFormControl_required(),
+      descripcion: this.getFormControl_description(),
+      tipo: this.getFormControl_type(),
+      genero: this.getFormControl_gender(),
     }
 
     addBook = {

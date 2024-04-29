@@ -3,53 +3,53 @@
 
         <mat-form-field class="w-100">
             <mat-label>Nombre del club</mat-label>
-            <input matInput formControlName="name" id="name" />
+            <input matInput formControlName="nombreGrupo" id="nombreGrupo" />
         </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formAddClub.get('name')?.touched && formAddClub.get('name')?.errors">
-            <div *ngIf="this.specificError('name','required')">
+        <div class="alert alert-danger" *ngIf="formAddClub.get('nombreGrupo')?.touched && formAddClub.get('nombreGrupo')?.errors">
+            <div *ngIf="this.specificError('nombreGrupo','required')">
                 Nombre requerido.
             </div>
         </div>
 
         <mat-form-field class="w-100">
             <mat-label>Descripción</mat-label>
-            <textarea matInput formControlName="description" id="description"></textarea>
+            <textarea matInput formControlName="descripcion" id="descripcion"></textarea>
         </mat-form-field>
         <div class="alert alert-danger"
-            *ngIf="formAddClub.get('description')?.touched && formAddClub.get('description')?.errors">
-            <div *ngIf="this.specificError('description','required')">
+            *ngIf="formAddClub.get('descripcion')?.touched && formAddClub.get('descripcion')?.errors">
+            <div *ngIf="this.specificError('descripcion','required')">
                 Descripción requerida.
             </div>
-            <div *ngIf="this.specificError('description','maxlength') || this.specificError('description','minlength')">
+            <div *ngIf="this.specificError('descripcion','maxlength') || this.specificError('descripcion','minlength')">
                 Mínimo 10 y máximo 50 caracteres.
             </div>
         </div>
 
         <div class="w-100">
             <label>Selecciona tu preferencia:</label>
-            <mat-radio-group formControlName="type" id="type">
+            <mat-radio-group formControlName="tipo" id="tipo">
                 <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption">
                     {{typeOption}}
                 </mat-radio-button>
             </mat-radio-group>
         </div>
-        <div class="alert alert-danger" *ngIf="formAddClub.get('type')?.touched && formAddClub.get('type')?.errors">
-            <div *ngIf="this.specificError('type','required')">
+        <div class="alert alert-danger" *ngIf="formAddClub.get('tipo')?.touched && formAddClub.get('tipo')?.errors">
+            <div *ngIf="this.specificError('tipo','required')">
                 Tipo requerido.
             </div>
         </div>
 
         <div class="w-100">
             <label>Género:</label>
-            <mat-radio-group formControlName="gender" id="gender">
+            <mat-radio-group formControlName="genero" id="genero">
                 <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption">
                     {{genderOption}}
                 </mat-radio-button>
             </mat-radio-group>
         </div>
         <div class="alert alert-danger"
-            *ngIf="formAddClub.get('gender')?.touched && formAddClub.get('gender')?.errors">
-            <div *ngIf="this.specificError('gender','required')">
+            *ngIf="formAddClub.get('genero')?.touched && formAddClub.get('genero')?.errors">
+            <div *ngIf="this.specificError('genero','required')">
                 Género requerido.
             </div>
         </div>

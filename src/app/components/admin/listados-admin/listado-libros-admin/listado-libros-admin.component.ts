@@ -10,6 +10,7 @@ import { BookItemList } from 'src/app/shared/models/book/book';
 export class ListadoLibrosAdminComponent {
   // MOCK DATA
   data: BookItemList[] = [];
+  imagenPrueba: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -18,7 +19,7 @@ export class ListadoLibrosAdminComponent {
     for (let i = 1; i <= 20; i++) {
       this.data.push({
         id: i,
-        img: `url_de_la_imagen_${i}`,
+        img: this.imagenPrueba,
         title: `Título ${i}`,
         author: `Autor ${i}`,
         tipe: `Tipo ${i}`,
