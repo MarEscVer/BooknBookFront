@@ -52,3 +52,19 @@
         border-color: $claro-color !important;
     }
 }
+
+//IMAGENES REDONDAS
+@mixin circular-image($size: 50px, $border-radius: 50%, $border: 1px solid #ccc) {
+    width: $size;
+    height: $size;
+    border-radius: $border-radius;
+    border: $border;
+    overflow: hidden;
+    margin: 5px;
+  
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  

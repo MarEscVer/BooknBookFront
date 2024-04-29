@@ -8,6 +8,10 @@
     width: 120px;
 }
 
+.circular-image {
+    @include circular-image(50px, 50%, 1px solid #ccc);
+}
+
 /* Estilos para dispositivos móviles */
 @media only screen and (max-width: 768px) {
     .role-select-field {

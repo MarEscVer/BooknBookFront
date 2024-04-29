@@ -11,10 +11,11 @@ import { ClubItemList } from 'src/app/shared/models/club/club';
   styleUrls: ['./listado-items-clubs.component.scss']
 })
 export class ListadoItemsClubsComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['id', 'name', 'tipe', 'gender', 'users', 'actions'];
+  displayedColumns: string[] = ['img', 'name', 'tipe', 'gender', 'users', 'actions'];
 
   @Input() data?: ClubItemList[];
 
+  imgNoData: string = '../../../../assets/img/iconoClub.png';
   dataSource: MatTableDataSource<ClubItemList>;
   editedItems: ClubItemList[] = [];
   originalRol: string = '';

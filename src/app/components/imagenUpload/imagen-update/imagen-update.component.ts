@@ -55,7 +55,8 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
   setDisabledState?(isDisabled: boolean): void { }
 
   ngOnInit(): void {
-    this.imageInfos = this.uploadService.getFilesMOCK();
+    //getFilesMOCK --> para MOCK
+    this.imageInfos = this.uploadService.getFiles();
   }
 
   selectFiles(event: any): void {
@@ -71,9 +72,6 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
         this.progress = 0;
 
         const reader = new FileReader();
-        reader.onload = (e: any) => {
-          console.log(e.target.result);
-        };
         reader.readAsDataURL(this.selectedFile);
       }
     }
@@ -83,23 +81,35 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
     if (this.selectedFileName) {
       this.progressInfo = { fileName: this.selectedFileName, value: 0 };
     }
-
+  
     if (this.selectedFile) {
-      const subscription = this.uploadService.uploadMOCK(this.selectedFile).pipe(
-        tap((event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfo.value = Math.round(
-              (100 * event.loaded) / event.total
-            );
-          } else if (event instanceof HttpResponse) {
-            this.imageInfos = this.uploadService.getFilesMOCK();
-          }
-        })
-      ).subscribe();
-
-      this.imageSelected.emit(true);
-      this.subscriptions.push(subscription);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const base64String = e.target.result.split(',')[1];
+  
+        this.uploadBase64Image(base64String);
+      };
+      reader.readAsDataURL(this.selectedFile);
     }
   }
+
+  private uploadBase64Image(base64String: string): void {
+    const subscription = this.uploadService.upload(base64String).pipe(
+      tap((event: any) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progressInfo.value = Math.round(
+            (100 * event.loaded) / event.total
+          );
+        } else if (event instanceof HttpResponse) {
+          //getFilesMOCK --> para MOCK
+          this.imageInfos = this.uploadService.getFiles();
+        }
+      })
+    ).subscribe();
+  
+    this.imageSelected.emit(true);
+    this.subscriptions.push(subscription);
+  }
+  
 
 }

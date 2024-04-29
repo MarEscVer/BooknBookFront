@@ -10,6 +10,7 @@ import { ClubItemList } from 'src/app/shared/models/club/club';
 export class ListadoClubesAdminComponent {
   // MOCK DATA
   data: ClubItemList[] = [];
+  imagenPrueba: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -18,7 +19,7 @@ export class ListadoClubesAdminComponent {
     for (let i = 1; i <= 20; i++) {
       this.data.push({
         id: i,
-        img: `url_de_la_imagen_${i}`,
+        img: this.imagenPrueba,
         name: `Club ${i}`,
         tipe: `Tipo ${i}`,
         gender: `Género ${i}`,

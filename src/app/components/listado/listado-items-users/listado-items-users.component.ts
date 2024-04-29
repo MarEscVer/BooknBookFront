@@ -11,10 +11,11 @@ import { UserItemList } from 'src/app/shared/models/users/user';
   styleUrls: ['./listado-items-users.component.scss']
 })
 export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['id', 'username', 'fullname', 'email', 'rol', 'actions'];
+  displayedColumns: string[] = ['img', 'username', 'fullname', 'email', 'rol', 'actions'];
 
   @Input() data?: UserItemList[];
 
+  imgNoData: string = '../../../../assets/img/iconoPerfil.jpg';
   dataSource: MatTableDataSource<UserItemList>;
   editedItems: UserItemList[] = [];
   originalRol: string = '';

@@ -10,12 +10,13 @@ export class ListadoUsuarioAdminComponent {
 
   // MOCK DATA
   data: UserItemList[] = [];
+  imagenPrueba: string = '';
 
   constructor() {
     for (let i = 1; i <= 20; i++) {
       this.data.push({
         id: i,
-        img: `url_de_la_imagen${i}`,
+        img: this.imagenPrueba,
         username: `user_${i}`,
         name: `Name${i}`,
         surname1: `Surname${i}`,
