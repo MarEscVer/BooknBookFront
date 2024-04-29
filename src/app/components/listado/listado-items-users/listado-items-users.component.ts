@@ -1,16 +1,18 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { UserItemList } from 'src/app/shared/models/users/user';
+import { UserItemList, modifyUser } from 'src/app/shared/models/users/user';
 
 @Component({
   selector: 'app-listado-items-users',
   templateUrl: './listado-items-users.component.html',
   styleUrls: ['./listado-items-users.component.scss']
 })
-export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
+export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = ['img', 'username', 'fullname', 'email', 'rol', 'actions'];
 
   @Input() data?: UserItemList[];
@@ -23,8 +25,14 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
-    public userService: UserService
+    public userService: UserService,
+    private notification: NotificationService
   ) {
     this.dataSource = new MatTableDataSource<UserItemList>([]);
   }
@@ -57,20 +65,40 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit {
   }
 
   saveChanges(row: UserItemList) {
-    // Aquí puedes enviar los cambios al backend
-    console.log('Guardando cambios:', row);
+    if (row.editMode) {
+      const modifiedUser: modifyUser = {
+        idUsuario: row.id,
+        rolUsuario: row.rol
+      };
+      const sub = this.userService.updateUserRole(modifiedUser)
+        .subscribe({
+          next: (data) => {
+            if (data) {
+              console.log('Rol actualizado con éxito:', row);
+              row.editMode = false;
+            } else {
+              this.notification.show(data, 'error');
+            }
+          },
+          error: (error) => { },
+        });
+
+      this.subscriptions.add(sub);
+    }
   }
 
   toggleEditMode(row: UserItemList) {
     row.editMode = !row.editMode;
-    // Guardar el valor original del rol temporalmente al activar el modo de edición
     if (row.editMode) {
       this.originalRol = row.rol;
     } else {
-      // Restaurar el valor original del rol al cancelar la edición
       row.rol = this.originalRol;
-      this.originalRol = ''; // Limpiar la variable después de restaurar el valor
+      this.originalRol = '';
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

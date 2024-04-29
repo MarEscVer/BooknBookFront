@@ -28,3 +28,8 @@ export interface UserItemList {
     rol: string;
     editMode?: boolean;
 }
+
+export interface modifyUser {
+    idUsuario: number,
+    rolUsuario: string,
+}

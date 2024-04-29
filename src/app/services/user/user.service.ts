@@ -2,14 +2,14 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Login, LoginResponse, Register } from 'src/app/shared/models/users/user';
+import { Login, LoginResponse, Register, modifyUser } from 'src/app/shared/models/users/user';
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
 import { deleteObject } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements deleteObject{
+export class UserService implements deleteObject {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
@@ -38,6 +38,16 @@ export class UserService implements deleteObject{
     return this.http.delete<any>(this.baseUrl + `/user/${id}`)
       .pipe(catchError(this.handleError));
   }
+
+  //TODO update URL
+  updateUserRole(modifiedUser: modifyUser): Observable<any> {
+    return this.http.put<any>(this.baseUrl +
+      `/user`,
+      modifiedUser,
+      httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     console.log(error);
