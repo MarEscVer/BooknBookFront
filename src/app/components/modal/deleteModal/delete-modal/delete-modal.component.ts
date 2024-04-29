@@ -9,7 +9,7 @@ import { deleteObject } from 'src/app/services/interfaces';
   templateUrl: './delete-modal.component.html',
   styleUrls: ['./delete-modal.component.scss']
 })
-export class DeleteModalComponent implements OnDestroy{
+export class DeleteModalComponent{
 
   modalInfo: ModalInfo = {
     id: 0,
@@ -38,9 +38,5 @@ export class DeleteModalComponent implements OnDestroy{
     this.subscriptions.add(this.deleteService.delete(this.modalInfo.id).subscribe(() => {
       this.dialogRef.close(true);
     }));
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 }

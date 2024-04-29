@@ -21,7 +21,7 @@ export class BookService implements deleteObject {
 
   //TODO add URL + objeto
   addBook(bookData: BookData): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + `/book/add`, httpOptions)
+    return this.http.post<boolean>(this.baseUrl + `/book/add`, bookData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

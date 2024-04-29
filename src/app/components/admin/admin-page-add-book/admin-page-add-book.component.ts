@@ -21,6 +21,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
 
   typeSelected?: string;
   genderSelected?: string;
+  addingNewSaga: boolean = false;
 
   autores: string[] = ['AUTOR1'];
   sagas: string[] = ['SAGA1'];
@@ -80,6 +81,13 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
 
   handleImageSelected(imageSelected: boolean) {
     this.imageSelected = imageSelected;
+  }
+
+  toggleAddingSaga() {
+    this.addingNewSaga = !this.addingNewSaga;
+    if (!this.addingNewSaga) {
+      this.formAddBook.get('newSagaName')?.reset(); // Reiniciar el valor del campo de entrada si se cancela
+    }
   }
 
   ngOnDestroy(): void {

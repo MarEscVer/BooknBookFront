@@ -91,7 +91,7 @@ import { AdminPageAddBookComponent } from './components/admin/admin-page-add-boo
     AddClubModalComponent,
     AddClubButtonComponent,
     ImagenUpdateComponent,
-    AdminPageAddBookComponent
+    AdminPageAddBookComponent,
   ],
   /* LIBRARIES */
   imports: [
