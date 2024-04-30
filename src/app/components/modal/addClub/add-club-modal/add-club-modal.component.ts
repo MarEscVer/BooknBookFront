@@ -57,10 +57,10 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
     public dialogRef: MatDialogRef<AddClubModalComponent>) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
-    this.createForm(formBuilder);
+    this.createForm();
   }
 
-  createForm(fb: FormBuilder) {
+  createForm() {
     this.formAddClub = this.formBuilder.group(this.formControl.addClub);
   }
 

@@ -67,7 +67,16 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     this.formAddBook = this.formBuilder.group(this.formControl.addBook);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.subscriptions.add(this.formAddBook.get('autor')?.valueChanges.subscribe(value => {
+      if (value == null || value == 0) {
+        this.formAddBook.controls['saga'].disable();
+        this.formAddBook.controls['saga'].reset();
+      } else {
+        this.formAddBook.controls['saga'].enable();
+      }
+    }));
+  }
 
   submit() {
     return this.subscriptions.add(this.bookService
@@ -110,7 +119,6 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     } else {
       this.autoresFiltrados = [];
       this.formAddBook.get('autor')?.reset();
-      console.log('autor RESET', this.formAddBook.get('autor')?.value);
     }
   }
 
@@ -119,8 +127,6 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     this.addingNewSaga = !this.addingNewSaga;
     if (!this.addingNewSaga) {
       this.formAddBook.get('newSagaName')?.setValue(null);
-      console.log('newsaganame RESET');
-      console.log(this.formAddBook.get('newSagaName')?.value);
     }
   }
 

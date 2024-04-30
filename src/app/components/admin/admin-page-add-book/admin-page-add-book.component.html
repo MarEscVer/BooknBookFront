@@ -31,7 +31,7 @@
                 <mat-form-field class="w-100">
                     <mat-label>Buscar Autor</mat-label>
                     <div class="d-flex">
-                        <input matInput (input)="filtrarAutores($event)">
+                        <input matInput formControlName="autor" (input)="filtrarAutores($event)">
                         <app-add-autor-button *ngIf="autoresFiltrados.length <= 0"></app-add-autor-button>
                     </div>
                 </mat-form-field>
@@ -54,7 +54,7 @@
                     <mat-label>Saga</mat-label>
                     <div class="d-flex">
                         <ng-container *ngIf="!addingNewSaga; else newSagaInput">
-                            <mat-select formControlName="saga" id="saga" [disabled]="formAddBook.get('autor')?.value == null || formAddBook.get('autor')?.value == 0">
+                            <mat-select formControlName="saga" id="saga">
                                 <mat-option *ngFor="let saga of sagas" [value]="saga.id">{{ saga.name }}</mat-option>
                             </mat-select>
                         </ng-container>
@@ -66,7 +66,17 @@
                             <fa-icon [icon]="['fas', addingNewSaga ? 'times' : 'plus']"></fa-icon>
                         </button>
                     </div>
+                    <div class="alert alert-danger"
+                        *ngIf="formAddBook.get('saga')?.touched && formAddBook.get('saga')?.errors">
+                        <div *ngIf="this.specificError('saga','required')">
+                            Saga requerida.
+                        </div>
+                        <div *ngIf="this.specificError('saga','minlength')">
+                            Saga requerida.
+                        </div>
+                    </div>
                 </mat-form-field>
+
 
 
                 <mat-form-field class="w-100">
@@ -130,7 +140,8 @@
                 <div class="d-flex justify-content-end gap-3 mt-3">
                     <!-- [disabled]="!formAddBook.valid || !imageSelected" -->
                     <button mat-raised-button type="button" (click)="cancel()">CANCELAR</button>
-                    <button mat-raised-button (click)="submit()" color="accent">AÑADIR</button>
+                    <button mat-raised-button (click)="submit()" color="accent"
+                        [disabled]="!formAddBook.valid">AÑADIR</button>
                 </div>
             </form>
         </div>
