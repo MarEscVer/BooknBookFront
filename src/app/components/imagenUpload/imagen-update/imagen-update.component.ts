@@ -62,54 +62,79 @@ export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDe
   selectFiles(event: any): void {
     const files = event.target.files;
     if (files && files.length > 0) {
-      const blob = files[0]; // Obtener el primer archivo si hay múltiples archivos seleccionados
-      const file = new File([blob], blob.name, { type: blob.type });
-      if (file instanceof Blob) {
-
-        this.progressInfo = { fileName: '', value: 0 };
-        this.selectedFile = file;
-        this.selectedFileName = this.selectedFile.name;
-        this.progress = 0;
-
-        const reader = new FileReader();
-        reader.readAsDataURL(this.selectedFile);
-      }
+      this.selectedFile = files[0];
+      this.selectedFileName = this.selectedFile?.name;
     }
   }
 
   upload(): void {
-    if (this.selectedFileName) {
-      this.progressInfo = { fileName: this.selectedFileName, value: 0 };
-    }
-  
     if (this.selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const imagen = e.target.result.split(',')[1];
-  
-        this.uploadBase64Image(imagen);
-      };
-      reader.readAsDataURL(this.selectedFile);
+      this.progressInfo = { fileName: this.selectedFileName || '', value: 0 };
+      this.uploadService.upload(this.selectedFile).subscribe(
+        (event: any) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.progressInfo.value = Math.round(
+              (100 * event.loaded) / event.total
+            );
+          } else if (event instanceof HttpResponse) {
+            this.imageInfos = this.uploadService.getFiles();
+          }
+        }
+      );
     }
   }
 
-  private uploadBase64Image(imagen: string): void {
-    const subscription = this.uploadService.upload(imagen).pipe(
-      tap((event: any) => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfo.value = Math.round(
-            (100 * event.loaded) / event.total
-          );
-        } else if (event instanceof HttpResponse) {
-          //getFilesMOCK --> para MOCK
-          this.imageInfos = this.uploadService.getFiles();
-        }
-      })
-    ).subscribe();
+  // selectFiles(event: any): void {
+  //   const files = event.target.files;
+  //   if (files && files.length > 0) {
+  //     const blob = files[0]; // Obtener el primer archivo si hay múltiples archivos seleccionados
+  //     const file = new File([blob], blob.name, { type: blob.type });
+  //     if (file instanceof Blob) {
+
+  //       this.progressInfo = { fileName: '', value: 0 };
+  //       this.selectedFile = file;
+  //       this.selectedFileName = this.selectedFile.name;
+  //       this.progress = 0;
+
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(this.selectedFile);
+  //     }
+  //   }
+  // }
+
+  // upload(): void {
+  //   if (this.selectedFileName) {
+  //     this.progressInfo = { fileName: this.selectedFileName, value: 0 };
+  //   }
   
-    this.imageSelected.emit(true);
-    this.subscriptions.push(subscription);
-  }
+  //   if (this.selectedFile) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e: any) => {
+  //       const imagen = e.target.result.split(',')[1];
+  
+  //       this.uploadBase64Image(imagen);
+  //     };
+  //     reader.readAsDataURL(this.selectedFile);
+  //   }
+  // }
+
+  // private uploadBase64Image(imagen: string): void {
+  //   const subscription = this.uploadService.upload(imagen).pipe(
+  //     tap((event: any) => {
+  //       if (event.type === HttpEventType.UploadProgress) {
+  //         this.progressInfo.value = Math.round(
+  //           (100 * event.loaded) / event.total
+  //         );
+  //       } else if (event instanceof HttpResponse) {
+  //         //getFilesMOCK --> para MOCK
+  //         this.imageInfos = this.uploadService.getFiles();
+  //       }
+  //     })
+  //   ).subscribe();
+  
+  //   this.imageSelected.emit(true);
+  //   this.subscriptions.push(subscription);
+  // }
   
 
 }

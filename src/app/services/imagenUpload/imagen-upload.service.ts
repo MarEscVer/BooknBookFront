@@ -10,19 +10,27 @@ export class ImagenUploadService {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
-  upload(imagen: string): Observable<boolean> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  upload(file: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('imagen', file, file.name);
 
-    // Crear un objeto con la cadena base64 y cualquier otra información necesaria
-    const data = {
-      imagen: imagen,
-    };
+    return this.http.post<boolean>(`${this.baseUrl}/upload/img`, formData)
+      .pipe(catchError(this.handleError));
+  }
 
-    return this.http.post<boolean>(`${this.baseUrl}/upload/img`, data, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }  
+  // upload(imagen: string): Observable<boolean> {
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  //   // Crear un objeto con la cadena base64 y cualquier otra información necesaria
+  //   const data = {
+  //     imagen: imagen,
+  //   };
+
+  //   return this.http.post<boolean>(`${this.baseUrl}/upload/img`, data, { headers })
+  //     .pipe(
+  //       catchError(this.handleError)
+  //     );
+  // }  
 
   getFiles(): Observable<any> {
     return this.http.get(`${this.baseUrl}/files`)
