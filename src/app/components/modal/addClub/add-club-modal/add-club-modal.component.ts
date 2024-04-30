@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { ClubData } from 'src/app/shared/models/club/club';
+import { Combo } from 'src/app/shared/models/combo/combo';
 
 @Component({
   selector: 'app-add-club-modal',
@@ -22,10 +23,23 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
 
   imageSelected: boolean = false;
 
-  favoriteType?: string;
-  favoriteGender?: string;
-  typeOptions: string[] = ['JUVENIL', 'INFANTIL', 'FICCION', 'NO FICCION'];
-  genderOptions: string[] = ['ROMANTICA', 'NEGRA', 'HISTORICA', 'HUMOR', 'TERROR', 'CIENCIA FICCION', 'FANTASTICA'];
+  favoriteType?: Combo;
+  favoriteGender?: Combo;
+  typeOptions: Combo[] = [
+    { id: 1, name: 'JUVENIL' },
+    { id: 2, name: 'INFANTIL' },
+    { id: 3, name: 'FICCION' },
+    { id: 4, name: 'NO FICCION' }
+  ];
+  genderOptions: Combo[] = [
+    { id: 1, name: 'ROMANTICA' },
+    { id: 2, name: 'NEGRA' },
+    { id: 3, name: 'HISTORICA' },
+    { id: 4, name: 'HUMOR' },
+    { id: 5, name: 'TERROR' },
+    { id: 6, name: 'CIENCIA FICCION' },
+    { id: 7, name: 'FANTASTICA' }
+  ];
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.

@@ -1,101 +1,138 @@
 <app-menu-admin></app-menu-admin>
+
 <div class="container">
     <h2 class="title">GESTIÓN DE BIBLIOTECA</h2>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <form [formGroup]="formAddBook" (submit)="$event.preventDefault()">
 
-    <form [formGroup]="formAddBook" (submit)="$event.preventDefault()">
+                <mat-form-field class="w-100">
+                    <mat-label>Título</mat-label>
+                    <input matInput formControlName="nombre" id="nombre" />
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddBook.get('nombre')?.touched && formAddBook.get('nombre')?.errors">
+                    <div *ngIf="this.specificError('nombre','required')">
+                        Título requerido.
+                    </div>
+                </div>
 
-        <mat-form-field class="w-100">
-            <mat-label>Título</mat-label>
-            <input matInput formControlName="title" id="title" />
-        </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formAddBook.get('title')?.touched && formAddBook.get('title')?.errors">
-            <div *ngIf="this.specificError('title','required')">
-                Título requerido.
-            </div>
-        </div>
+                <mat-form-field class="w-100">
+                    <mat-label>Sinopsis</mat-label>
+                    <textarea matInput formControlName="descripcion" id="descripcion"></textarea>
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddBook.get('descripcion')?.touched && formAddBook.get('descripcion')?.errors">
+                    <div *ngIf="this.specificError('descripcion','required')">
+                        Descripción requerida.
+                    </div>
+                </div>
 
-        <mat-form-field>
-            <mat-label>Autor</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let autor of autores" [value]="autor">{{autor}} </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formAddBook.get('author')?.touched && formAddBook.get('author')?.errors">
-            <div *ngIf="this.specificError('author','required')">
-                Autor requerido.
-            </div>
-        </div>
+                <mat-form-field class="w-100">
+                    <mat-label>Buscar Autor</mat-label>
+                    <div class="d-flex">
+                        <input matInput (input)="filtrarAutores($event)">
+                        <app-add-autor-button *ngIf="autoresFiltrados.length <= 0"></app-add-autor-button>
+                    </div>
+                </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Saga</mat-label>
-            <div style="display: flex;">
-                <ng-container *ngIf="!addingNewSaga; else newSagaInput">
-                    <mat-select>
-                        <mat-option *ngFor="let saga of sagas" [value]="saga">{{saga}} </mat-option>
+                <mat-form-field class="w-100" *ngIf="autoresFiltrados.length > 0">
+                    <mat-label>Selecciona Autor</mat-label>
+                    <mat-select formControlName="autor" id="autor">
+                        <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.name
+                            }}</mat-option>
                     </mat-select>
-                </ng-container>
-                <ng-template #newSagaInput>
-                    <input matInput formControlName="saga" placeholder="Nombre de la nueva saga">
-                </ng-template>
-                <button mat-icon-button color="primary" aria-label="Agregar" (click)="toggleAddingSaga()">
-                    <fa-icon [icon]="['fas', addingNewSaga ? 'times' : 'plus']"></fa-icon>
-                </button>
-            </div>
-        </mat-form-field>
-        
-        <mat-form-field class="w-100">
-            <mat-label>Páginas</mat-label>
-            <input matInput formControlName="paginas" id="paginas" />
-        </mat-form-field>
-        <div class="alert alert-danger"
-            *ngIf="formAddBook.get('paginas')?.touched && formAddBook.get('paginas')?.errors">
-            <div *ngIf="this.specificError('paginas','required')">
-                Páginas requeridas.
-            </div>
-        </div>
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddBook.get('autor')?.touched && formAddBook.get('autor')?.errors">
+                    <div *ngIf="this.specificError('autor','required')">
+                        Autor requerido.
+                    </div>
+                </div>
 
-        <mat-form-field class="w-100">
-            <mat-label>Año</mat-label>
-            <input matInput formControlName="year" id="year" />
-        </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formAddBook.get('year')?.touched && formAddBook.get('year')?.errors">
-            <div *ngIf="this.specificError('year','required')">
-                Año requerido.
-            </div>
-        </div>
+                <mat-form-field class="w-100">
+                    <mat-label>Saga</mat-label>
+                    <div class="d-flex">
+                        <ng-container *ngIf="!addingNewSaga; else newSagaInput">
+                            <mat-select formControlName="saga" id="saga" [disabled]="formAddBook.get('autor')?.value == null || formAddBook.get('autor')?.value == 0">
+                                <mat-option *ngFor="let saga of sagas" [value]="saga.id">{{ saga.name }}</mat-option>
+                            </mat-select>
+                        </ng-container>
+                        <ng-template #newSagaInput>
+                            <input matInput formControlName="newSagaName" id="newSagaName"
+                                placeholder="Nombre de la nueva saga">
+                        </ng-template>
+                        <button mat-icon-button color="primary" aria-label="Agregar" (click)="toggleAddingSaga()">
+                            <fa-icon [icon]="['fas', addingNewSaga ? 'times' : 'plus']"></fa-icon>
+                        </button>
+                    </div>
+                </mat-form-field>
 
-        <div class="w-100">
-            <label>Selecciona tu preferencia:</label>
-            <mat-radio-group formControlName="type" id="type">
-                <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption">
-                    {{typeOption}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="alert alert-danger" *ngIf="formAddBook.get('type')?.touched && formAddBook.get('type')?.errors">
-            <div *ngIf="this.specificError('type','required')">
-                Tipo requerido.
-            </div>
-        </div>
 
-        <div class="w-100">
-            <label>Género:</label>
-            <mat-radio-group formControlName="gender" id="gender">
-                <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption">
-                    {{genderOption}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="alert alert-danger" *ngIf="formAddBook.get('gender')?.touched && formAddBook.get('gender')?.errors">
-            <div *ngIf="this.specificError('gender','required')">
-                Género requerido.
-            </div>
-        </div>
+                <mat-form-field class="w-100">
+                    <mat-label>Páginas</mat-label>
+                    <input matInput formControlName="paginas" id="paginas" />
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddBook.get('paginas')?.touched && formAddBook.get('paginas')?.errors">
+                    <div *ngIf="this.specificError('paginas','required')">
+                        Páginas requeridas.
+                    </div>
+                </div>
 
-        <!-- Contenedor para imagen -->
-        <!-- <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update> -->
+                <mat-form-field class="w-100">
+                    <mat-label>Año</mat-label>
+                    <input matInput formControlName="fechaPublicacion" id="fechaPublicacion" />
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddBook.get('fechaPublicacion')?.touched && formAddBook.get('fechaPublicacion')?.errors">
+                    <div *ngIf="this.specificError('fechaPublicacion','required')">
+                        Año requerido.
+                    </div>
+                </div>
 
-        <!-- [disabled]="!formAddBook.valid || !imageSelected" -->
-        <button mat-raised-button (click)="submit()" class="w-100 border border-primary">AÑADIR</button>
-    </form>
+                <div class="row mb-3">
+                    <div class="col w-100">
+                        <label>TIPO:</label>
+                        <mat-radio-group formControlName="tipo" id="tipo">
+                            <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id"
+                                class="row">
+                                {{typeOption.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="formAddBook.get('tipo')?.touched && formAddBook.get('tipo')?.errors">
+                        <div *ngIf="this.specificError('tipo','required')">
+                            Tipo requerido.
+                        </div>
+                    </div>
+
+                    <div class="col w-100">
+                        <label>GÉNERO:</label>
+                        <mat-radio-group formControlName="genero" id="genero">
+                            <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id"
+                                class="row">
+                                {{genderOption.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="formAddBook.get('genero')?.touched && formAddBook.get('genero')?.errors">
+                        <div *ngIf="this.specificError('genero','required')">
+                            Género requerido.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update> -->
+
+                <div class="d-flex justify-content-end gap-3 mt-3">
+                    <!-- [disabled]="!formAddBook.valid || !imageSelected" -->
+                    <button mat-raised-button type="button" (click)="cancel()">CANCELAR</button>
+                    <button mat-raised-button (click)="submit()" color="accent">AÑADIR</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

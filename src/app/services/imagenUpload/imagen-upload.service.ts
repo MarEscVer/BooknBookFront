@@ -1,36 +1,28 @@
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment, httpOptions } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagenUploadService {
-  private baseUrl: string = environment.BASE_URL;
+  private baseUrl: string = environment.BASE_URL + environment.BASE_TOKEN;
   constructor(private http: HttpClient) { }
 
-  upload(file: File): Observable<boolean> {
+  uploadGrupo(idGrupo: number, file: File): Observable<any> {
     const formData: FormData = new FormData();
-    formData.append('imagen', file, file.name);
+    formData.append('imagen', file);
+    const options = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    } as any;
 
-    return this.http.post<boolean>(`${this.baseUrl}/upload/img`, formData)
+    //TODO Query idGrupo
+    return this.http.put(this.baseUrl + '/grupo?idGrupo=' + idGrupo, formData, options)
       .pipe(catchError(this.handleError));
   }
-
-  // upload(imagen: string): Observable<boolean> {
-  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-  //   // Crear un objeto con la cadena base64 y cualquier otra información necesaria
-  //   const data = {
-  //     imagen: imagen,
-  //   };
-
-  //   return this.http.post<boolean>(`${this.baseUrl}/upload/img`, data, { headers })
-  //     .pipe(
-  //       catchError(this.handleError)
-  //     );
-  // }  
 
   getFiles(): Observable<any> {
     return this.http.get(`${this.baseUrl}/files`)

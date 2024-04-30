@@ -5,7 +5,8 @@
             <mat-label>Nombre del club</mat-label>
             <input matInput formControlName="nombreGrupo" id="nombreGrupo" />
         </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formAddClub.get('nombreGrupo')?.touched && formAddClub.get('nombreGrupo')?.errors">
+        <div class="alert alert-danger"
+            *ngIf="formAddClub.get('nombreGrupo')?.touched && formAddClub.get('nombreGrupo')?.errors">
             <div *ngIf="this.specificError('nombreGrupo','required')">
                 Nombre requerido.
             </div>
@@ -24,38 +25,42 @@
                 Mínimo 10 y máximo 50 caracteres.
             </div>
         </div>
-
-        <div class="w-100">
-            <label>Selecciona tu preferencia:</label>
-            <mat-radio-group formControlName="tipo" id="tipo">
-                <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption">
-                    {{typeOption}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="alert alert-danger" *ngIf="formAddClub.get('tipo')?.touched && formAddClub.get('tipo')?.errors">
-            <div *ngIf="this.specificError('tipo','required')">
-                Tipo requerido.
+        
+        <div class="row">
+            <div>Selecciona tu preferencia:</div>
+            <div class="col w-100">
+                <label>TIPO:</label>
+                <mat-radio-group formControlName="tipo" id="tipo">
+                    <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id" class="row">
+                        {{typeOption.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
             </div>
-        </div>
+            <div class="alert alert-danger" *ngIf="formAddClub.get('tipo')?.touched && formAddClub.get('tipo')?.errors">
+                <div *ngIf="this.specificError('tipo','required')">
+                    Tipo requerido.
+                </div>
+            </div>
 
-        <div class="w-100">
-            <label>Género:</label>
-            <mat-radio-group formControlName="genero" id="genero">
-                <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption">
-                    {{genderOption}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="alert alert-danger"
-            *ngIf="formAddClub.get('genero')?.touched && formAddClub.get('genero')?.errors">
-            <div *ngIf="this.specificError('genero','required')">
-                Género requerido.
+            <div class="col w-100">
+                <label>GÉNERO:</label>
+                <mat-radio-group formControlName="genero" id="genero">
+                    <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id" class="row">
+                        {{genderOption.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="alert alert-danger"
+                *ngIf="formAddClub.get('genero')?.touched && formAddClub.get('genero')?.errors">
+                <div *ngIf="this.specificError('genero','required')">
+                    Género requerido.
+                </div>
             </div>
         </div>
 
         <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
 
-        <button mat-raised-button (click)="submit()" class="w-100 border border-primary" [disabled]="!formAddClub.valid || !imageSelected">AÑADIR</button>
+        <button mat-raised-button (click)="submit()" class="w-100 border border-primary"
+            [disabled]="!formAddClub.valid || !imageSelected">AÑADIR</button>
     </form>
 </mat-dialog-content>

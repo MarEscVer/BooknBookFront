@@ -33,12 +33,22 @@ export class InputErrorStateMatcherExample {
     return new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
   }
 
+  //TODO cambiar valor desde constructor del formulario
   getFormControl_gender(): FormControl {
-    return new FormControl('ROMANTICA', [Validators.required]);
+    return new FormControl(1, [Validators.required]);
   }
 
+  //TODO cambiar valor desde constructor del formulario
   getFormControl_type(): FormControl {
-    return new FormControl('JUVENIL', [Validators.required]);
+    return new FormControl(1, [Validators.required]);
+  }
+
+  getFormControl_saga(): FormControl {
+    return new FormControl({value:0, disabled:true}, [Validators.required]);
+  }
+
+  getFormControl_newSaga(): FormControl {
+    return new FormControl('', [Validators.minLength(1)]);
   }
 
 
@@ -66,12 +76,14 @@ export class InputErrorStateMatcherExample {
   }
 
   addBook = {
-    title: this.getFormControl_required(),
-    author: this.getFormControl_required(),
-    saga: this.getFormControl_required(),
-    type: this.getFormControl_type(),
-    gender: this.getFormControl_gender(),
-    year: this.getFormControl_year(),
+    nombre: this.getFormControl_required(),
+    autor: this.getFormControl_required(),
+    saga: this.getFormControl_saga(),
+    tipo: this.getFormControl_type(),
+    genero: this.getFormControl_gender(),
+    fechaPublicacion: this.getFormControl_year(),
     paginas: this.getFormControl_paginas(),
+    descripcion: this.getFormControl_required(),
+    newSagaName: this.getFormControl_newSaga(),
   }
 }

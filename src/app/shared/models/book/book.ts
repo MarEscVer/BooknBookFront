@@ -9,13 +9,15 @@ export interface BookItemList {
     year: number;
 }
 
-//TODO objeto
+//TODO Imagenes
 export interface BookData {
-    //TODO Imagenes BLOB
-    img: any;
-    title: string;
-    author: string;
-    tipe: string;
-    gender: string;
-    year: number;
+    fechaPublicacion: string; // Formato
+    nombre: string;
+    paginas: number;
+    idAutor: number;
+    genero: number;
+    tipo: number;
+    saga: number;
+    nuevaSaga: string;
+    descripcion: string;
 }
