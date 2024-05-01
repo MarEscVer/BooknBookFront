@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ClubService } from 'src/app/services/club/club.service';
+import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
@@ -21,10 +22,12 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
   clubData?: ClubData;
   matcher!: FormErrorStateMatcher;
 
-  imageSelected: boolean = false;
+  selectedFile?: File;
 
   favoriteType?: Combo;
   favoriteGender?: Combo;
+
+    //MOCK DATA
   typeOptions: Combo[] = [
     { id: 1, name: 'JUVENIL' },
     { id: 2, name: 'INFANTIL' },
@@ -48,6 +51,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private uploadService: ImagenUploadService,
     private formControl: InputErrorStateMatcherExample,
     private notification: NotificationService,
     private clubService: ClubService,
@@ -67,22 +71,41 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
   ngOnInit() { }
 
   submit() {
+    const clubData = this.formAddClub.getRawValue()
     return this.subscriptions.add(this.clubService
-      .addClub(this.formAddClub.getRawValue())
+      .addClub(clubData)
       .subscribe({
-        next: (data) => {
-          if (data) {
-            this.notification.show(
-              'Club añadido correctamente!',
-              'success'
-            );
-            this.router.navigate(['/home']);
-          } else {
-            this.notification.show(data, 'error');
-          }
+        next: (clubAdded) => {
+          this.notification.show(
+            'Club añadido correctamente!',
+            'success'
+          );
+          this.uploadImage(clubData.id);
+
+          //TODO redirigir a pantalla grupo creado
+          this.router.navigate(['/']);
         },
-        error: (error) => { },
+        error: (error) => {
+          this.notification.show('No se ha podido añadir el club', 'error');
+        },
       }));
+  }
+
+  private uploadImage(idGrupo: number): void {
+    if (this.selectedFile) {
+      this.subscriptions.add(this.uploadService.uploadGrupo(idGrupo, this.selectedFile).subscribe({
+        next: (event) => {
+          this.notification.show(
+            'Imagen subida correctamente',
+            'success'
+          );
+          this.dialogRef.close(true);
+        },
+        error: (error) => {
+          this.dialogRef.close(true);
+        }
+      }));
+    }
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {
@@ -93,8 +116,8 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
     );
   }
 
-  handleImageSelected(imageSelected: boolean) {
-    this.imageSelected = imageSelected;
+  handleImageSelected(file: File) {
+    this.selectedFile = file;
   }
 
   ngOnDestroy(): void {

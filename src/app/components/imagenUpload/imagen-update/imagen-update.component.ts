@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-imagen-update',
@@ -17,74 +18,23 @@ import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload
     }
   ]
 })
-export class ImagenUpdateComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class ImagenUpdateComponent {
+  
   selectedFile?: File;
-  progress = 0;
   selectedFileName?: string;
-  progressInfo: { fileName: string, value: number } = { fileName: '', value: 0 };
   imageInfos?: Observable<any>;
 
-  showProgressBar: boolean = false;
+  @Output() imageSelected: EventEmitter<File> = new EventEmitter<File>();
 
-  onChange: any = () => { };
-  onTouch: any = () => { };
-
-  @Output() imageSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
-  private subscriptions: Subscription = new Subscription();
-
-  constructor(private uploadService: ImagenUploadService) { }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  writeValue(value: any): void { }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouch = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void { }
-
-  ngOnInit(): void {
-    //getFilesMOCK --> para MOCK
-    this.imageInfos = this.uploadService.getFiles();
-  }
+  constructor() { }
 
   selectFiles(event: any): void {
     const files = event.target.files;
     if (files && files.length > 0) {
       this.selectedFile = files[0];
       this.selectedFileName = this.selectedFile?.name;
+      this.imageSelected.emit(this.selectedFile);
     }
   }
 
-  upload(): void {
-    if (this.selectedFile) {
-      this.progressInfo = { fileName: this.selectedFileName || '', value: 0 };
-      this.subscriptions.add(this.uploadService.uploadGrupo(1, this.selectedFile).subscribe({
-        next: (event) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progressInfo.value = Math.round(
-              (100 * event.loaded) / event.total
-            );
-          } else if (event instanceof HttpResponse) {
-            this.imageInfos = this.uploadService.getFiles();
-          }
-        },
-        error: (error) => {
-          this.selectedFile = undefined;
-        },
-      }));
-    }
-    this.selectedFile = undefined;
-  }
 }

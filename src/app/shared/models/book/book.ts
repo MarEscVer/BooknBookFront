@@ -18,6 +18,6 @@ export interface BookData {
     genero: number;
     tipo: number;
     saga: number;
-    nuevaSaga: string;
+    newSagaName: string;
     descripcion: string;
 }

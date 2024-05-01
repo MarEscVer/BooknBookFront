@@ -1,22 +1,12 @@
 <div class="container">
-    <span>{{ progressInfo.fileName }}</span>
-    <mat-toolbar class="p-0" color="accent">
-        <mat-progress-bar color="primary" [value]="progressInfo.value"></mat-progress-bar>
-        <span class="w-auto ms-1">{{ progressInfo.value }}%</span>
-    </mat-toolbar>
-
     <mat-form-field color="accent">
         <div>
             <mat-toolbar>
                 <input matInput [value]="
             selectedFileName
               ? selectedFileName
-              : 'Seleccionar imagen'
+              : 'Selecciona imagen'
           " />
-
-                <button mat-flat-button color="primary" [disabled]="!selectedFile" (click)="upload()">
-                    Upload
-                </button>
             </mat-toolbar>
 
             <input type="file" color="primary" id="fileInput" name="fileInput" accept="image/*"

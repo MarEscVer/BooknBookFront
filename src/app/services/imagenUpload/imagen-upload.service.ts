@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of, throwError } from 'rxjs';
-import { environment, httpOptions } from 'src/environments/environment';
+import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,31 @@ export class ImagenUploadService {
       headers: {}
     } as any;
 
-    //TODO Query idGrupo
     return this.http.put(this.baseUrl + '/grupo/imagen?idGrupo=' + idGrupo, formData, options)
+      .pipe(catchError(this.handleError));
+  }
+
+  uploadBook(idBook: number, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    var blob = new Blob([file], { type: file.type });
+    formData.append('createGroupRequest', blob, file.name);
+    const options = {
+      headers: {}
+    } as any;
+
+    return this.http.put(this.baseUrl + '/book/imagen?idGrupo=' + idBook, formData, options)
+      .pipe(catchError(this.handleError));
+  }
+
+  uploadAutor(idAutor: number, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    var blob = new Blob([file], { type: file.type });
+    formData.append('createGroupRequest', blob, file.name);
+    const options = {
+      headers: {}
+    } as any;
+
+    return this.http.put(this.baseUrl + '/book/imagen?idGrupo=' + idAutor, formData, options)
       .pipe(catchError(this.handleError));
   }
 
@@ -32,16 +55,4 @@ export class ImagenUploadService {
     console.log(error);
     return throwError(() => error.error);
   }
-
-  //MOCK DATA
-  uploadMOCK(file: File): Observable<HttpEvent<any>> {
-    // Simula una carga exitosa con un evento de progreso del 100%
-    return of({ type: HttpEventType.UploadProgress, loaded: 100, total: 100 });
-  }
-
-  getFilesMOCK(): Observable<any> {
-    // Simula la respuesta del backend con una lista de archivos vacía
-    return of([]);
-  }
-
 }

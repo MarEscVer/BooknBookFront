@@ -135,13 +135,12 @@
                     </div>
                 </div>
 
-                <!-- <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update> -->
+                <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
 
                 <div class="d-flex justify-content-end gap-3 mt-3">
-                    <!-- [disabled]="!formAddBook.valid || !imageSelected" -->
                     <button mat-raised-button type="button" (click)="cancel()">CANCELAR</button>
                     <button mat-raised-button (click)="submit()" color="accent"
-                        [disabled]="!formAddBook.valid">AÑADIR</button>
+                    [disabled]="!formAddBook.valid || this.selectedFile == null || this.selectedFile == undefined">CREAR</button>
                 </div>
             </form>
         </div>

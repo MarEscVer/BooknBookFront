@@ -60,7 +60,7 @@
 
         <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
 
-        <button mat-raised-button (click)="submit()" class="w-100 border border-primary"
-            [disabled]="!formAddClub.valid || !imageSelected">AÑADIR</button>
+        <button mat-raised-button (click)="submit()" class="w-100" color="accent"
+            [disabled]="!formAddClub.valid || this.selectedFile == null || this.selectedFile == undefined">CREAR</button>
     </form>
 </mat-dialog-content>
