@@ -12,9 +12,7 @@ export class ImagenUploadService {
 
   uploadGrupo(idGrupo: number, file: File): Observable<any> {
     const formData: FormData = new FormData();
-
     var blob = new Blob([file], { type: file.type });
-
     formData.append('createGroupRequest', blob, file.name);
     const options = {
       headers: {}
