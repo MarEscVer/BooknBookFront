@@ -8,7 +8,7 @@ import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { ClubData } from 'src/app/shared/models/club/club';
+import { ClubData, ClubEdit } from 'src/app/shared/models/club/club';
 import { Combo } from 'src/app/shared/models/combo/combo';
 
 @Component({
@@ -20,14 +20,18 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
 
   formAddClub!: FormGroup;
   clubData?: ClubData;
+  clubEdit?: ClubEdit;
   matcher!: FormErrorStateMatcher;
 
   selectedFile?: File;
+  urlImagenDelServidor?: string;
+
+  isEditing: boolean = false;
 
   favoriteType?: Combo;
   favoriteGender?: Combo;
 
-    //MOCK DATA
+  //MOCK DATA
   typeOptions: Combo[] = [
     { id: 1, name: 'JUVENIL' },
     { id: 2, name: 'INFANTIL' },
@@ -57,7 +61,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
     private clubService: ClubService,
     private route: ActivatedRoute,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: { clubData: ClubData },
+    @Inject(MAT_DIALOG_DATA) public data: { clubId: number },
     public dialogRef: MatDialogRef<AddClubModalComponent>) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -68,7 +72,20 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
     this.formAddClub = this.formBuilder.group(this.formControl.addClub);
   }
 
-  ngOnInit() { }
+  loadClubData(clubId: number) {
+    this.subscriptions.add(
+      this.clubService.getClubById(clubId).subscribe((clubEdit) => {
+        this.formAddClub.patchValue(clubEdit);
+        this.urlImagenDelServidor = clubEdit.img; 
+      }));
+  }
+
+  ngOnInit() {
+    if (this.data && this.data.clubId) {
+      this.loadClubData(this.data.clubId);
+      this.isEditing = true;
+    }
+  }
 
   submit() {
     const clubData = this.formAddClub.getRawValue()
@@ -87,6 +104,27 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
         },
         error: (error) => {
           this.notification.show('No se ha podido añadir el club', 'error');
+        },
+      }));
+  }
+
+  submitEdit() {
+    const clubData = this.formAddClub.getRawValue()
+    return this.subscriptions.add(this.clubService
+      .editClub(clubData, this.data.clubId)
+      .subscribe({
+        next: (clubAdded) => {
+          this.notification.show(
+            'Club editado correctamente!',
+            'success'
+          );
+          this.uploadImage(clubData.id);
+
+          //TODO redirigir a pantalla grupo creado
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          this.notification.show('No se ha podido editar el club', 'error');
         },
       }));
   }

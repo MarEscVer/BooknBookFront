@@ -7,7 +7,8 @@ import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { BookData } from 'src/app/shared/models/book/book';
+import { AutorIcon } from 'src/app/shared/models/autor/autor';
+import { BookData, BookEdit } from 'src/app/shared/models/book/book';
 import { Combo } from 'src/app/shared/models/combo/combo';
 
 @Component({
@@ -20,13 +21,24 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   formAddBook!: FormGroup;
   matcher!: FormErrorStateMatcher;
   bookData?: BookData;
+  bookEdit?: BookEdit;
 
   selectedFile?: File;
+  urlImagenDelServidor?: string;
+
+  isEditing: boolean = false;
+  bookId?: number;
 
   typeSelected?: Combo;
   genderSelected?: Combo;
   addingNewSaga: boolean = false;
   autoresFiltrados: Combo[] = [];
+
+  autorIconEdit: AutorIcon =
+    { iconName: 'pen', iconPrefix: 'fas' }
+
+  autorIconAdd: AutorIcon =
+    { iconName: 'plus', iconPrefix: 'fas' }
 
   //MOCK DATA
   autores: Combo[] = [{ id: 1, name: 'AUTOR1' }, { id: 2, name: 'AUTOR2' }, { id: 3, name: 'AUTOR3' }];
@@ -71,6 +83,16 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    this.bookId = this.route.snapshot.params['id'];
+
+    if (this.bookId) {
+      this.bookService.getBookById(this.bookId).subscribe((bookEdit) => {
+        this.formAddBook.patchValue(bookEdit);
+        this.urlImagenDelServidor = bookEdit.imagen; 
+      });
+      this.isEditing = true;
+    }
+
     this.subscriptions.add(this.formAddBook.get('autor')?.valueChanges.subscribe(value => {
       if (value == null || value == 0) {
         this.formAddBook.controls['saga'].disable();
@@ -87,18 +109,40 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
       .addBook(bookData)
       .subscribe({
         next: (bookAdded) => {
-            this.notification.show(
-              'Libro añadido correctamente!',
-              'success'
-            );
-            this.uploadImage(bookData.id);
-            this.router.navigate(['/admin']);
+          this.notification.show(
+            'Libro añadido correctamente!',
+            'success'
+          );
+          this.uploadImage(bookData.id);
+          this.router.navigate(['/admin']);
         },
         error: (error) => {
           this.notification.show('No se ha podido añadir el libro', 'error');
         },
       }));
   }
+
+  submitEdit() {
+    const bookData = this.formAddBook.getRawValue();
+    if (this.bookId) {
+      return this.subscriptions.add(this.bookService
+        .editBook(bookData, this.bookId)
+        .subscribe({
+          next: (bookAdded) => {
+            this.notification.show(
+              'Libro añadido correctamente!',
+              'success'
+            );
+            this.uploadImage(bookData.id);
+            this.router.navigate(['/admin']);
+          },
+          error: (error) => {
+            this.notification.show('No se ha podido añadir el libro', 'error');
+          },
+        }));
+    }
+  }
+
 
   private uploadImage(idGrupo: number): void {
     if (this.selectedFile) {
@@ -143,6 +187,10 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     if (!this.addingNewSaga) {
       this.formAddBook.get('newSagaName')?.setValue(null);
     }
+  }
+
+  editarAutor(event: Event) {
+    event.stopPropagation();
   }
 
   cancel() {

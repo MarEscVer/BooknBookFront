@@ -8,8 +8,15 @@ export interface ClubItemList {
     users: number;
 }
 
-export interface ClubData {
+export interface ClubEdit {
     img: any;
+    name: string;
+    tipe: string;
+    gender: string;
+    descripcion: string;
+}
+
+export interface ClubData {
     name: string;
     tipe: string;
     gender: string;

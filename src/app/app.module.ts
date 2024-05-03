@@ -61,6 +61,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AdminPageAddBookComponent } from './components/admin/admin-page-add-book/admin-page-add-book.component';
 import { AddAutorButtonComponent } from './components/modal/addAutor/add-autor-button/add-autor-button.component';
 import { AddAutorModalComponent } from './components/modal/addAutor/add-autor-modal/add-autor-modal.component';
+import { AcceptButtonComponent } from './components/modal/acceptModal/accept-button/accept-button.component';
+import { AcceptModalComponent } from './components/modal/acceptModal/accept-modal/accept-modal.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -96,6 +98,8 @@ import { AddAutorModalComponent } from './components/modal/addAutor/add-autor-mo
     AdminPageAddBookComponent,
     AddAutorButtonComponent,
     AddAutorModalComponent,
+    AcceptButtonComponent,
+    AcceptModalComponent,
   ],
   /* LIBRARIES */
   imports: [

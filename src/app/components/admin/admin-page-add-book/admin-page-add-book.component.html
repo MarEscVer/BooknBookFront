@@ -1,8 +1,13 @@
 <app-menu-admin></app-menu-admin>
-
 <div class="container">
-    <h2 class="title">GESTIÓN DE BIBLIOTECA</h2>
-    <div class="row justify-content-center mt-4">
+    <h2 class="title mb-3">GESTIÓN DE BIBLIOTECA</h2>
+    <div class="row justify-content-center">
+        <!-- Columna para el componente de imagen -->
+        <div class="col-md-3">
+            <app-imagen-update [imagenUrlServidor]="urlImagenDelServidor"
+                (imageSelected)="handleImageSelected($event)"></app-imagen-update>
+        </div>
+        <!-- Columna para el formulario -->
         <div class="col-md-8">
             <form [formGroup]="formAddBook" (submit)="$event.preventDefault()">
 
@@ -31,17 +36,23 @@
                 <mat-form-field class="w-100">
                     <mat-label>Buscar Autor</mat-label>
                     <div class="d-flex">
-                        <input matInput formControlName="autor" (input)="filtrarAutores($event)">
-                        <app-add-autor-button *ngIf="autoresFiltrados.length <= 0"></app-add-autor-button>
+                        <input matInput (input)="filtrarAutores($event)">
+                        <app-add-autor-button [autorIcon]="autorIconAdd"
+                            *ngIf="autoresFiltrados.length <= 0"></app-add-autor-button>
                     </div>
                 </mat-form-field>
 
                 <mat-form-field class="w-100" *ngIf="autoresFiltrados.length > 0">
                     <mat-label>Selecciona Autor</mat-label>
-                    <mat-select formControlName="autor" id="autor">
-                        <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.name
-                            }}</mat-option>
-                    </mat-select>
+                    <div class="d-flex">
+                        <mat-select formControlName="autor" id="autor">
+                            <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.name
+                                }}</mat-option>
+                        </mat-select>
+                        <app-add-autor-button [autorIcon]="autorIconEdit" [autorId]="formAddBook.get('autor')?.value"
+                            *ngIf="formAddBook.get('autor')?.value"
+                            (click)="editarAutor($event)"></app-add-autor-button>
+                    </div>
                 </mat-form-field>
                 <div class="alert alert-danger"
                     *ngIf="formAddBook.get('autor')?.touched && formAddBook.get('autor')?.errors">
@@ -135,12 +146,15 @@
                     </div>
                 </div>
 
-                <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
-
                 <div class="d-flex justify-content-end gap-3 mt-3">
                     <button mat-raised-button type="button" (click)="cancel()">CANCELAR</button>
-                    <button mat-raised-button (click)="submit()" color="accent"
-                    [disabled]="!formAddBook.valid || this.selectedFile == null || this.selectedFile == undefined">CREAR</button>
+                    <!-- Botón de añadir -->
+                    <button *ngIf="!isEditing" mat-raised-button (click)="submit()" color="accent"
+                        [disabled]="!formAddBook.valid || this.selectedFile == null || this.selectedFile == undefined">AÑADIR</button>
+
+                    <!-- Botón de editar -->
+                    <button *ngIf="isEditing" mat-raised-button (click)="submitEdit()" color="primary"
+                        [disabled]="!formAddBook.valid || this.selectedFile == null || this.selectedFile == undefined">EDITAR</button>
                 </div>
             </form>
         </div>

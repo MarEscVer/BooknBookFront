@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookItemList } from 'src/app/shared/models/book/book';
 
@@ -24,7 +25,9 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort?: MatSort;
 
   constructor(
-    public bookServie: BookService
+    public bookServie: BookService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.dataSource = new MatTableDataSource<BookItemList>([]);
   }
@@ -54,5 +57,9 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  editBook(bookId: number) {
+    this.router.navigate(['/admin/book', bookId]);
+}
 
 }

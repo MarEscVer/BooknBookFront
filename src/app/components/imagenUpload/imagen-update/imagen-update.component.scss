@@ -1,27 +1,9 @@
-#fileInput {
-  position: absolute;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0;
-  height: 100%;
-  left: 0px;
-  top: 0px;
+.preview-image, .default-image {
+  width: 145px;
+  height: 180px;
+  object-fit: cover;
 }
 
-.mat-toolbar-single-row {
-  height: auto !important;
-  background: transparent;
-  padding: 0;
-}
-
-.mat-toolbar-single-row button {
-  width: 100px;
-}
-
-.mat-form-field {
-  width: 100%;
-}
-
-.mat-mdc-form-field {
-  display: block;
+.file-name {
+  font-size: 12px;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +13,8 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav?: MatSidenav;
 
-  constructor() {
-     //MOCK
-     this.userRole = 'ADMIN';
+  constructor(private authService: AuthService) {
+     this.userRole = this.authService.getCookie('rol');
   }
 
   setActive(): void {

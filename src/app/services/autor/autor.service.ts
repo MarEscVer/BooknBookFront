@@ -3,7 +3,7 @@ import { environment, httpOptions } from 'src/environments/environment';
 import { deleteObject } from '../interfaces';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { AutorData } from 'src/app/shared/models/autor/autor';
+import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,17 @@ export class AutorService implements deleteObject {
   addAutor(autorData: AutorData): Observable<void> {
     return this.http.post<void>(this.baseUrl + environment.BASE_TOKEN + `/autor`, autorData, httpOptions)
       .pipe(catchError(this.handleError));
+  }
+
+  //TODO edit URL
+  editAutor(autorData: AutorData, idAutor: number): Observable<void> {
+    return this.http.put<void>(this.baseUrl + environment.BASE_TOKEN + `/autor/${idAutor}`, autorData, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  //TODO get URL
+  getAutorById(idAutor: number): Observable<AutorEdit> {
+    return this.http.get<AutorEdit>(this.baseUrl + environment.BASE_TOKEN + `/autor/${idAutor}`, httpOptions).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

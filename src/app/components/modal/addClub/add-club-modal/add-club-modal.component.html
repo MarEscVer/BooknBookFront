@@ -1,66 +1,84 @@
 <mat-dialog-content class="dialog-text">
-    <form [formGroup]="formAddClub" (submit)="$event.preventDefault()">
-
-        <mat-form-field class="w-100">
-            <mat-label>Nombre del club</mat-label>
-            <input matInput formControlName="nombreGrupo" id="nombreGrupo" />
-        </mat-form-field>
-        <div class="alert alert-danger"
-            *ngIf="formAddClub.get('nombreGrupo')?.touched && formAddClub.get('nombreGrupo')?.errors">
-            <div *ngIf="this.specificError('nombreGrupo','required')">
-                Nombre requerido.
-            </div>
+    <div class="row">
+        <!-- Columna para la imagen -->
+        <div class="col-md-3">
+            <app-imagen-update [imagenUrlServidor]="urlImagenDelServidor"
+                (imageSelected)="handleImageSelected($event)"></app-imagen-update>
         </div>
+        <!-- Columna para el formulario -->
+        <div class="col-md-9">
+            <form [formGroup]="formAddClub" (submit)="$event.preventDefault()">
 
-        <mat-form-field class="w-100">
-            <mat-label>Descripción</mat-label>
-            <textarea matInput formControlName="descripcion" id="descripcion"></textarea>
-        </mat-form-field>
-        <div class="alert alert-danger"
-            *ngIf="formAddClub.get('descripcion')?.touched && formAddClub.get('descripcion')?.errors">
-            <div *ngIf="this.specificError('descripcion','required')">
-                Descripción requerida.
-            </div>
-            <div *ngIf="this.specificError('descripcion','maxlength') || this.specificError('descripcion','minlength')">
-                Mínimo 10 y máximo 50 caracteres.
-            </div>
-        </div>
-        
-        <div class="row">
-            <div>Selecciona tu preferencia:</div>
-            <div class="col w-100">
-                <label>TIPO:</label>
-                <mat-radio-group formControlName="tipo" id="tipo">
-                    <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id" class="row">
-                        {{typeOption.name}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <div class="alert alert-danger" *ngIf="formAddClub.get('tipo')?.touched && formAddClub.get('tipo')?.errors">
-                <div *ngIf="this.specificError('tipo','required')">
-                    Tipo requerido.
+                <mat-form-field class="w-100">
+                    <mat-label>Nombre del club</mat-label>
+                    <input matInput formControlName="nombreGrupo" id="nombreGrupo" />
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddClub.get('nombreGrupo')?.touched && formAddClub.get('nombreGrupo')?.errors">
+                    <div *ngIf="this.specificError('nombreGrupo','required')">
+                        Nombre requerido.
+                    </div>
                 </div>
-            </div>
 
-            <div class="col w-100">
-                <label>GÉNERO:</label>
-                <mat-radio-group formControlName="genero" id="genero">
-                    <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id" class="row">
-                        {{genderOption.name}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <div class="alert alert-danger"
-                *ngIf="formAddClub.get('genero')?.touched && formAddClub.get('genero')?.errors">
-                <div *ngIf="this.specificError('genero','required')">
-                    Género requerido.
+                <mat-form-field class="w-100">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput formControlName="descripcion" id="descripcion"></textarea>
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddClub.get('descripcion')?.touched && formAddClub.get('descripcion')?.errors">
+                    <div *ngIf="this.specificError('descripcion','required')">
+                        Descripción requerida.
+                    </div>
+                    <div
+                        *ngIf="this.specificError('descripcion','maxlength') || this.specificError('descripcion','minlength')">
+                        Mínimo 10 y máximo 50 caracteres.
+                    </div>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div>Selecciona tu preferencia:</div>
+                    <div class="col w-100">
+                        <label>TIPO:</label>
+                        <mat-radio-group formControlName="tipo" id="tipo">
+                            <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id"
+                                class="row">
+                                {{typeOption.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="formAddClub.get('tipo')?.touched && formAddClub.get('tipo')?.errors">
+                        <div *ngIf="this.specificError('tipo','required')">
+                            Tipo requerido.
+                        </div>
+                    </div>
+
+                    <div class="col w-100">
+                        <label>GÉNERO:</label>
+                        <mat-radio-group formControlName="genero" id="genero">
+                            <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id"
+                                class="row">
+                                {{genderOption.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="formAddClub.get('genero')?.touched && formAddClub.get('genero')?.errors">
+                        <div *ngIf="this.specificError('genero','required')">
+                            Género requerido.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de añadir -->
+                <button *ngIf="!isEditing" mat-raised-button (click)="submit()" class="w-100" color="accent"
+                    [disabled]="!formAddClub.valid || this.selectedFile == null || this.selectedFile == undefined">AÑADIR</button>
+
+                <!-- Botón de editar -->
+                <button *ngIf="isEditing" mat-raised-button (click)="submitEdit()" class="w-100" color="primary"
+                    [disabled]="!formAddClub.valid || this.selectedFile == null || this.selectedFile == undefined">EDITAR</button>
+
+            </form>
         </div>
-
-        <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
-
-        <button mat-raised-button (click)="submit()" class="w-100" color="accent"
-            [disabled]="!formAddClub.valid || this.selectedFile == null || this.selectedFile == undefined">CREAR</button>
-    </form>
+    </div>
 </mat-dialog-content>

@@ -1,10 +1,5 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit, forwardRef, OnDestroy, EventEmitter, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload.service';
-import { NotificationService } from 'src/app/services/notification/notification.service';
+import { Component, OnInit, forwardRef, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-imagen-update',
@@ -18,22 +13,46 @@ import { NotificationService } from 'src/app/services/notification/notification.
     }
   ]
 })
-export class ImagenUpdateComponent {
-  
+export class ImagenUpdateComponent implements OnChanges {
+
   selectedFile?: File;
   selectedFileName?: string;
-  imageInfos?: Observable<any>;
+  imageUrl?: string;
+
+  defaultImageUrl: string = '../../../../assets/img/defaultAdd.png';
 
   @Output() imageSelected: EventEmitter<File> = new EventEmitter<File>();
 
+  @Input() imagenUrlServidor?: string;
+  @Input() imagenSeleccionadaLocal?: File;
+
   constructor() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['imagenUrlServidor'] && changes['imagenUrlServidor'].currentValue) {
+      this.mostrarImagenServidor(changes['imagenUrlServidor'].currentValue);
+    } else if (this.selectedFile) {
+      this.mostrarNuevaImagenSeleccionada(this.selectedFile);
+    }
+  }
+
+  mostrarImagenServidor(url: string): void {
+    this.imageUrl = url;
+  }
+
+  mostrarNuevaImagenSeleccionada(nuevaImagen: File): void {
+    this.imageUrl = URL.createObjectURL(nuevaImagen);
+    this.imageSelected.emit(nuevaImagen);
+  }
 
   selectFiles(event: any): void {
     const files = event.target.files;
     if (files && files.length > 0) {
       this.selectedFile = files[0];
       this.selectedFileName = this.selectedFile?.name;
-      this.imageSelected.emit(this.selectedFile);
+      if (this.selectedFile) {
+        this.mostrarNuevaImagenSeleccionada(this.selectedFile);
+      }
     }
   }
 

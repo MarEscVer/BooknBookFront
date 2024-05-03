@@ -1,45 +1,59 @@
 <mat-dialog-content class="dialog-text">
-    <form [formGroup]="formAddAutor" (submit)="$event.preventDefault()">
-
-        <mat-form-field class="w-100">
-            <mat-label>Nombre completo / Pseudónimo</mat-label>
-            <input matInput formControlName="pseudonimo" id="pseudonimo" />
-        </mat-form-field>
-        <div class="alert alert-danger"
-            *ngIf="formAddAutor.get('pseudonimo')?.touched && formAddAutor.get('pseudonimo')?.errors">
-            <div *ngIf="this.specificError('pseudonimo','required')">
-                Nombre requerido.
-            </div>
+    <div class="row">
+        <!-- Columna para la imagen -->
+        <div class="col-md-3">
+            <app-imagen-update [imagenUrlServidor]="urlImagenDelServidor"
+                (imageSelected)="handleImageSelected($event)"></app-imagen-update>
         </div>
+        <!-- Columna para el formulario -->
+        <div class="col-md-9">
+            <form [formGroup]="formAddAutor" (submit)="$event.preventDefault()">
 
-        <mat-form-field class="w-100">
-            <mat-label>Localidad</mat-label>
-            <input matInput formControlName="localidad" id="localidad" />
-        </mat-form-field>
-        <div class="alert alert-danger"
-            *ngIf="formAddAutor.get('localidad')?.touched && formAddAutor.get('localidad')?.errors">
-            <div *ngIf="this.specificError('localidad','required')">
-                Localidad requerida.
-            </div>
+                <mat-form-field class="w-100">
+                    <mat-label>Nombre completo / Pseudónimo</mat-label>
+                    <input matInput formControlName="pseudonimo" id="pseudonimo" />
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddAutor.get('pseudonimo')?.touched && formAddAutor.get('pseudonimo')?.errors">
+                    <div *ngIf="this.specificError('pseudonimo','required')">
+                        Nombre requerido.
+                    </div>
+                </div>
+
+                <mat-form-field class="w-100">
+                    <mat-label>Localidad</mat-label>
+                    <input matInput formControlName="localidad" id="localidad" />
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddAutor.get('localidad')?.touched && formAddAutor.get('localidad')?.errors">
+                    <div *ngIf="this.specificError('localidad','required')">
+                        Localidad requerida.
+                    </div>
+                </div>
+
+                <mat-form-field class="w-100">
+                    <mat-label>Biografía</mat-label>
+                    <textarea matInput formControlName="biografia" id="biografia"></textarea>
+                </mat-form-field>
+                <div class="alert alert-danger"
+                    *ngIf="formAddAutor.get('biografia')?.touched && formAddAutor.get('biografia')?.errors">
+                    <div *ngIf="this.specificError('biografia','required')">
+                        Biografía requerida.
+                    </div>
+                    <div *ngIf="this.specificError('biografia','minlength')">
+                        Biografía requerida.
+                    </div>
+                </div>
+
+
+                <!-- Botón de añadir -->
+                <button *ngIf="!isEditing" mat-raised-button (click)="submit()" color="accent"
+                    [disabled]="!formAddAutor.valid || this.selectedFile == null || this.selectedFile == undefined">AÑADIR</button>
+
+                <!-- Botón de editar -->
+                <button *ngIf="isEditing" mat-raised-button (click)="submitEdit()" color="primary"
+                    [disabled]="!formAddAutor.valid || this.selectedFile == null || this.selectedFile == undefined">EDITAR</button>
+            </form>
         </div>
-
-        <mat-form-field class="w-100">
-            <mat-label>Biografía</mat-label>
-            <textarea matInput formControlName="biografia" id="biografia"></textarea>
-        </mat-form-field>
-        <div class="alert alert-danger"
-            *ngIf="formAddAutor.get('biografia')?.touched && formAddAutor.get('biografia')?.errors">
-            <div *ngIf="this.specificError('biografia','required')">
-                Biografía requerida.
-            </div>
-            <div *ngIf="this.specificError('biografia','minlength')">
-                Biografía requerida.
-            </div>
-        </div>
-
-        <app-imagen-update (imageSelected)="handleImageSelected($event)"></app-imagen-update>
-
-        <button mat-raised-button (click)="submit()" class="w-100" color="accent"
-            [disabled]="!formAddAutor.valid || this.selectedFile == null || this.selectedFile == undefined">CREAR</button>
-    </form>
+    </div>
 </mat-dialog-content>

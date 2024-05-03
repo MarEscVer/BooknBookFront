@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { BookData } from 'src/app/shared/models/book/book';
+import { BookData, BookEdit } from 'src/app/shared/models/book/book';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,17 @@ export class BookService implements deleteObject {
   addBook(bookData: BookData): Observable<boolean> {
     return this.http.post<boolean>(this.baseUrl + `/book/add`, bookData, httpOptions)
       .pipe(catchError(this.handleError));
+  }
+
+  //TODO edit URL
+  editBook(bookData: BookData, idBook: number): Observable<void> {
+    return this.http.put<void>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, bookData, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  //TODO get URL
+  getBookById(idBook: number): Observable<BookEdit> {
+    return this.http.get<BookEdit>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, httpOptions).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

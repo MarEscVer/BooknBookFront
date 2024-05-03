@@ -3,12 +3,16 @@ import { CanActivateFn } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { roles } from 'src/environments/environment';
+import { NotificationService } from '../services/notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppPermissionService {
-  constructor(public router: Router, private cookieService: AuthService) {}
+  constructor(
+    public router: Router,
+    private cookieService: AuthService,
+    private notification: NotificationService,) { }
 
   canActivate(): boolean {
     let token = this.cookieService.getCookie('token');
@@ -18,6 +22,7 @@ export class AppPermissionService {
       return true;
     } else {
       this.router.navigate(['/login']);
+      this.notification.show('No has iniciado sesión', 'warning');
       return false;
     }
   }
@@ -28,6 +33,7 @@ export class AppPermissionService {
       return true;
     } else {
       this.router.navigate(['/login']);
+      this.notification.show('No eres administrador', 'warning');
       return false;
     }
   }

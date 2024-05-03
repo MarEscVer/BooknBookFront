@@ -8,7 +8,7 @@ import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { AutorData } from 'src/app/shared/models/autor/autor';
+import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
 
 @Component({
   selector: 'app-add-autor-modal',
@@ -20,8 +20,12 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
   formAddAutor!: FormGroup;
   matcher!: FormErrorStateMatcher;
   autorData?: AutorData;
+  autorEdit?: AutorEdit;
+
+  isEditing: boolean = false;
 
   selectedFile?: File;
+  urlImagenDelServidor?: string;
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -36,7 +40,7 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
     private notification: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: { autorData: AutorData },
+    @Inject(MAT_DIALOG_DATA) public data: { autorId: number },
     public dialogRef: MatDialogRef<AddAutorModalComponent>) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -47,7 +51,20 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
     this.formAddAutor = this.formBuilder.group(this.formControl.addAutor);
   }
 
-  ngOnInit() { }
+  loadAutorData(autorId: number) {
+    this.subscriptions.add(
+      this.autorService.getAutorById(autorId).subscribe((autorEdit) => {
+        this.formAddAutor.patchValue(autorEdit);
+        this.urlImagenDelServidor = autorEdit.imagen; 
+      }));
+  }
+
+  ngOnInit() {
+    if (this.data && this.data.autorId) {
+      this.loadAutorData(this.data.autorId);
+      this.isEditing = true;
+    }
+  }
 
   //TODO AUTOR NO IMAGEN???
   submit() {
@@ -57,16 +74,35 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
       .subscribe({
         next: (autorAdded) => {
           this.notification.show(
-            'Club añadido correctamente!',
+            'Autor añadido correctamente!',
             'success'
           );
           this.uploadImage(autorData.id);
           this.router.navigate(['/admin/book']);
         },
         error: (error) => {
-          this.notification.show('No se ha podido añadir el club', 'error');
+          this.notification.show('No se ha podido añadir el autor', 'error');
         },
-      })); 
+      }));
+  }
+
+  submitEdit() {
+    const autorData = this.formAddAutor.getRawValue();
+    return this.subscriptions.add(this.autorService
+      .editAutor(autorData, this.data.autorId)
+      .subscribe({
+        next: (autorAdded) => {
+          this.notification.show(
+            'Autor editado correctamente!',
+            'success'
+          );
+          this.uploadImage(autorData.id);
+          this.router.navigate(['/admin/book']);
+        },
+        error: (error) => {
+          this.notification.show('No se ha podido editar el autor', 'error');
+        },
+      }));
 
   }
 

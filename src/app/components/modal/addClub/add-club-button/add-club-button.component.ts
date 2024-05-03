@@ -10,6 +10,8 @@ import { AddClubModalComponent } from '../add-club-modal/add-club-modal.componen
 })
 export class AddClubButtonComponent implements OnDestroy {
 
+  @Input() clubId?: number;
+
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
   */
@@ -20,9 +22,11 @@ export class AddClubButtonComponent implements OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddClubModalComponent, {
-      width: '50%'});
+      width: '50%',
+      data: { clubId: this.clubId }
+    });
   }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

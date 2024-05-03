@@ -1,16 +1,9 @@
 <div class="container">
-    <mat-form-field color="accent">
-        <div>
-            <mat-toolbar>
-                <input matInput [value]="
-            selectedFileName
-              ? selectedFileName
-              : 'Selecciona imagen'
-          " />
-            </mat-toolbar>
-
-            <input type="file" color="primary" id="fileInput" name="fileInput" accept="image/*"
-                (change)="selectFiles($event)" />
-        </div>
-    </mat-form-field>
-</div>
+    <div class="image-container position-relative">
+      <img *ngIf="imageUrl" [src]="imageUrl" (click)="selectFileInput.click()" class="img-fluid rounded preview-image" alt="Preview Image">
+      <img *ngIf="!imageUrl" [src]="defaultImageUrl" class="img-fluid rounded default-image" alt="Default Image" (click)="selectFileInput.click()">
+      <input type="file" #selectFileInput (change)="selectFiles($event)" style="display:none" accept="image/*">
+    </div>
+    <div class="file-name mt-2" *ngIf="selectedFileName">{{ selectedFileName }}</div>
+  </div>
+  

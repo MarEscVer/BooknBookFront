@@ -21,3 +21,16 @@ export interface BookData {
     newSagaName: string;
     descripcion: string;
 }
+
+export interface BookEdit{
+    imagen: string;
+    fechaPublicacion: string; // Formato
+    nombre: string;
+    paginas: number;
+    idAutor: number;
+    genero: number;
+    tipo: number;
+    saga: number;
+    newSagaName: string;
+    descripcion: string;
+}

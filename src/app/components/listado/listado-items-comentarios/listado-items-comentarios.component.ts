@@ -11,7 +11,7 @@ import { ComentarioDenunciadoItemList } from 'src/app/shared/models/comentario/c
   styleUrls: ['./listado-items-comentarios.component.scss']
 })
 export class ListadoItemsComentariosComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['id', 'username', 'date', 'comentario', 'razon', 'actions'];
+  displayedColumns: string[] = ['username', 'date', 'comentario', 'razon', 'actions'];
 
   @Input() data?: ComentarioDenunciadoItemList[];
 

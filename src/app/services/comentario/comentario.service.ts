@@ -18,6 +18,12 @@ export class ComentarioService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
+  //TODO accept URL
+  acceptComentario(id: number): Observable<any> {
+    return this.http.post<any>(this.baseUrl + `/comentario/${id}`, id)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error);
     return throwError(() => error.error);
