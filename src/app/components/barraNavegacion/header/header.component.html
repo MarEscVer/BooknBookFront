@@ -34,7 +34,7 @@
                 <ng-container *ngIf="userRole === 'ADMIN'">
                     <mat-list-item routerLink="/mi-despacho"><a>Mi Despacho</a></mat-list-item>
                     <mat-list-item routerLink="/mi-perfil"><a>Mi Perfil</a></mat-list-item>
-                    <mat-list-item routerLink="/logout"><a>Logout</a></mat-list-item>
+                    <mat-list-item (click)="cerrarSesion()"><a>Logout</a></mat-list-item>
                     <mat-list-item routerLink="/admin"><a>Administrar</a></mat-list-item>
                 </ng-container>
             </mat-nav-list>

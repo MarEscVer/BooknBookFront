@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             'Se ha iniciado Sesion Correctamente',
             'success'
           );
+          this.authService.iniciarSession();
           this.router.navigate(['/home']);
         }
       }

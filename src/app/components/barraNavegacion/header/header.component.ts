@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -10,17 +11,20 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   public active: boolean = false;
-  userRole?: string;
+  userRole?: string | null;
 
   @ViewChild('sidenav') sidenav?: MatSidenav;
+
+  /**
+ * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+ */
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-  ) {
-     this.userRole = this.authService.getCookie('rol');
-  }
+  ) { }
 
   setActive(): void {
     this.active = !this.active
@@ -30,11 +34,20 @@ export class HeaderComponent implements OnInit {
     this.sidenav?.close();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this.authService.userRole$.subscribe(role => {
+        this.userRole = role;
+      })
+    );
   }
 
   cerrarSesion() {
     this.authService.closeSessionTotal();
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

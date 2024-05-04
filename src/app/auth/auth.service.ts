@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -9,16 +10,25 @@ import { Inject, Injectable } from '@angular/core';
 })
 export class AuthService {
 
+  private userRoleSubject = new BehaviorSubject<string | null>(null);
+  userRole$: Observable<string | null> = this.userRoleSubject.asObservable();
+
   constructor() {}
 
   public closeSession(): void {
     this.deleteCookie('token');
+    this.userRoleSubject.next(null);
   }
 
   public closeSessionTotal(): void {
     this.deleteCookie('token');
     this.deleteCookie('username');
     this.deleteCookie('rol');
+    this.userRoleSubject.next(null);
+  }
+
+  public iniciarSession(): void {
+    this.userRoleSubject.next(this.getCookie('rol'));
   }
 
   public getCookie(name: string) {

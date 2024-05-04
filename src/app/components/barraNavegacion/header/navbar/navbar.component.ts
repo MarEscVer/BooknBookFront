@@ -1,7 +1,6 @@
 import { Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -11,6 +10,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   @Input() userRole?: string;
+  isAuthenticated: boolean = false;
 
   /**
    * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
