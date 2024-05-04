@@ -33,7 +33,8 @@ export class BookService implements deleteObject {
 
   //TODO get URL
   getBookById(idBook: number): Observable<BookEdit> {
-    return this.http.get<BookEdit>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, httpOptions).pipe(catchError(this.handleError));
+    return this.http.get<BookEdit>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, httpOptions)
+    .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

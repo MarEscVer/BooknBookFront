@@ -27,8 +27,7 @@
                 <ng-container *ngIf="userRole === 'NORMAL'">
                     <mat-list-item routerLink="/mi-despacho"><a>Mi Despacho</a></mat-list-item>
                     <mat-list-item routerLink="/mi-perfil"><a>Mi Perfil</a></mat-list-item>
-                    <mat-list-item routerLink="/logout"><a>Logout</a></mat-list-item>
-
+                    <mat-list-item (click)="cerrarSesion()"><a>Logout</a></mat-list-item>
                 </ng-container>
 
                 <!-- Mostrar elementos para usuario administrador -->

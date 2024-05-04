@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { LoginAndRegisterComponent } from './components/loginAndRegister/login-and-register/login-and-register.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import { LoginAndRegisterComponent } from './components/user/login-and-register/login-and-register.component';
 import { HomeComponent } from './components/home/home/home.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { AdminPageUsersComponent } from './components/admin/admin-page-users/admin-page-users.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: "admin/clubes", component: AdminPageClubsComponent},
   {path: "admin/moderacion", component: AdminPageModeracionComponent},
   {path: "admin/book", component: AdminPageAddBookComponent},
-  { path: 'admin/book/:id', component: AdminPageAddBookComponent },
+  { path: "admin/book/:id", component: AdminPageAddBookComponent },
   ];
 
 @NgModule({

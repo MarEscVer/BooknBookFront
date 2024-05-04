@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -13,7 +14,11 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav?: MatSidenav;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+  ) {
      this.userRole = this.authService.getCookie('rol');
   }
 
@@ -28,4 +33,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  cerrarSesion() {
+    this.authService.closeSessionTotal();
+    this.router.navigate(['/']);
+  }
 }

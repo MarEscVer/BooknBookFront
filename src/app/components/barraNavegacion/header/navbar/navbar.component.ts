@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output 
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +26,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) {}
 
   ngOnDestroy(): void {
@@ -55,4 +57,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin']);
   }
   
+  cerrarSesion() {
+    this.authService.closeSessionTotal();
+    this.router.navigate(['/']);
+  }
+
 }

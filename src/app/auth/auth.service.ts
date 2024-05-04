@@ -15,6 +15,12 @@ export class AuthService {
     this.deleteCookie('token');
   }
 
+  public closeSessionTotal(): void {
+    this.deleteCookie('token');
+    this.deleteCookie('username');
+    this.deleteCookie('rol');
+  }
+
   public getCookie(name: string) {
     let ca: Array<string> = document.cookie.split(';');
     let caLen: number = ca.length;
