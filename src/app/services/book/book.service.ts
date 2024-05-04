@@ -10,7 +10,7 @@ import { BookData, BookEdit } from 'src/app/shared/models/book/book';
   providedIn: 'root'
 })
 export class BookService implements deleteObject {
-  private baseUrl: string = environment.BASE_URL;
+  private baseUrl: string = environment.BASE_URL + environment.BASE_ADMIN;
   constructor(private http: HttpClient) { }
 
   //TODO delete URL
@@ -19,9 +19,8 @@ export class BookService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO add URL + objeto
   addBook(bookData: BookData): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + `/book/add`, bookData, httpOptions)
+    return this.http.post<boolean>(this.baseUrl + `/libro`, bookData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

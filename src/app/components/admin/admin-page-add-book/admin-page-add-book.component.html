@@ -45,9 +45,8 @@
                 <mat-form-field class="w-100" *ngIf="autoresFiltrados.length > 0">
                     <mat-label>Selecciona Autor</mat-label>
                     <div class="d-flex">
-                        <mat-select formControlName="autor" id="autor">
-                            <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.name
-                                }}</mat-option>
+                        <mat-select formControlName="autor" id="autor" (selectionChange)="autorSeleccionado($event)">
+                            <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.nombre }}</mat-option>
                         </mat-select>
                         <app-add-autor-button [autorIcon]="autorIconEdit" [autorId]="formAddBook.get('autor')?.value"
                             *ngIf="formAddBook.get('autor')?.value"
@@ -66,7 +65,7 @@
                     <div class="d-flex">
                         <ng-container *ngIf="!addingNewSaga; else newSagaInput">
                             <mat-select formControlName="saga" id="saga">
-                                <mat-option *ngFor="let saga of sagas" [value]="saga.id">{{ saga.name }}</mat-option>
+                                <mat-option *ngFor="let saga of sagas" [value]="saga.id">{{ saga.nombre }}</mat-option>
                             </mat-select>
                         </ng-container>
                         <ng-template #newSagaInput>
@@ -92,7 +91,7 @@
 
                 <mat-form-field class="w-100">
                     <mat-label>Páginas</mat-label>
-                    <input matInput formControlName="paginas" id="paginas" />
+                    <input matInput type="number" formControlName="paginas" id="paginas" />
                 </mat-form-field>
                 <div class="alert alert-danger"
                     *ngIf="formAddBook.get('paginas')?.touched && formAddBook.get('paginas')?.errors">
@@ -103,7 +102,7 @@
 
                 <mat-form-field class="w-100">
                     <mat-label>Año</mat-label>
-                    <input matInput formControlName="fechaPublicacion" id="fechaPublicacion" />
+                    <input matInput type="date" formControlName="fechaPublicacion" id="fechaPublicacion" />
                 </mat-form-field>
                 <div class="alert alert-danger"
                     *ngIf="formAddBook.get('fechaPublicacion')?.touched && formAddBook.get('fechaPublicacion')?.errors">
@@ -118,7 +117,7 @@
                         <mat-radio-group formControlName="tipo" id="tipo">
                             <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id"
                                 class="row">
-                                {{typeOption.name}}
+                                {{typeOption.nombre}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -134,7 +133,7 @@
                         <mat-radio-group formControlName="genero" id="genero">
                             <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id"
                                 class="row">
-                                {{genderOption.name}}
+                                {{genderOption.nombre}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>

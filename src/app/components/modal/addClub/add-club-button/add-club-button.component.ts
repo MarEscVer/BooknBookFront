@@ -22,7 +22,7 @@ export class AddClubButtonComponent implements OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddClubModalComponent, {
-      width: '50%',
+      width: '100%',
       data: { clubId: this.clubId }
     });
   }

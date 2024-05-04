@@ -24,7 +24,7 @@ export class AddAutorButtonComponent implements OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddAutorModalComponent, {
-      width: '50%',
+      width: '100%',
       data: { autorId: this.autorId }
     });
   }

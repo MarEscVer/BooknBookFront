@@ -4,6 +4,7 @@ import { deleteObject } from '../interfaces';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
+import { ComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,16 @@ export class AutorService implements deleteObject {
   //TODO get URL
   getAutorById(idAutor: number): Observable<AutorEdit> {
     return this.http.get<AutorEdit>(this.baseUrl + environment.BASE_TOKEN + `/autor/${idAutor}`, httpOptions).pipe(catchError(this.handleError));
+  }
+
+  getAutores(): Observable<ComboResponse> {
+    return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + `/combo/autor`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getSagaAutor(idAutor: number): Observable<ComboResponse> {
+    return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + `/combo/saga/` + idAutor, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

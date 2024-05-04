@@ -4,6 +4,7 @@ export const environment = {
   production: false,
   BASE_URL: 'http://localhost:8080',
   BASE_TOKEN: '/api',
+  BASE_ADMIN: '/admin',
   USER_URL: '/api/user',
 };
 export const endpoints = {

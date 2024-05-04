@@ -19,11 +19,6 @@ export class InputErrorStateMatcherExample {
     return new FormControl('', [Validators.minLength(9), Validators.maxLength(9)]);
   }
 
-  getFormControl_year(): FormControl {
-    //TODO: poner patrón de validacion de AÑO
-    return new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]);
-  }
-
   getFormControl_paginas(): FormControl {
     //TODO: poner patrón de validacion de PAGINAS
     return new FormControl('', [Validators.required]);
@@ -35,12 +30,12 @@ export class InputErrorStateMatcherExample {
 
   //TODO cambiar valor desde constructor del formulario
   getFormControl_gender(): FormControl {
-    return new FormControl(1, [Validators.required]);
+    return new FormControl('', [Validators.required]);
   }
 
   //TODO cambiar valor desde constructor del formulario
   getFormControl_type(): FormControl {
-    return new FormControl(1, [Validators.required]);
+    return new FormControl('', [Validators.required]);
   }
 
   getFormControl_saga(): FormControl {
@@ -81,7 +76,7 @@ export class InputErrorStateMatcherExample {
     saga: this.getFormControl_saga(),
     tipo: this.getFormControl_type(),
     genero: this.getFormControl_gender(),
-    fechaPublicacion: this.getFormControl_year(),
+    fechaPublicacion: this.getFormControl_required(),
     paginas: this.getFormControl_paginas(),
     descripcion: this.getFormControl_required(),
     newSagaName: this.getFormControl_texto(),

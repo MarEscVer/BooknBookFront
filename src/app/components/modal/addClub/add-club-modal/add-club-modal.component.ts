@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ClubService } from 'src/app/services/club/club.service';
+import { GeneroTipoService } from 'src/app/services/genero/genero-tipo.service';
 import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
@@ -31,22 +32,8 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
   favoriteType?: Combo;
   favoriteGender?: Combo;
 
-  //MOCK DATA
-  typeOptions: Combo[] = [
-    { id: 1, name: 'JUVENIL' },
-    { id: 2, name: 'INFANTIL' },
-    { id: 3, name: 'FICCION' },
-    { id: 4, name: 'NO FICCION' }
-  ];
-  genderOptions: Combo[] = [
-    { id: 1, name: 'ROMANTICA' },
-    { id: 2, name: 'NEGRA' },
-    { id: 3, name: 'HISTORICA' },
-    { id: 4, name: 'HUMOR' },
-    { id: 5, name: 'TERROR' },
-    { id: 6, name: 'CIENCIA FICCION' },
-    { id: 7, name: 'FANTASTICA' }
-  ];
+  typeOptions: Combo[] = [];
+  genderOptions: Combo[] = [];
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -61,6 +48,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
     private clubService: ClubService,
     private route: ActivatedRoute,
     private router: Router,
+    private generoTipoService: GeneroTipoService,
     @Inject(MAT_DIALOG_DATA) public data: { clubId: number },
     public dialogRef: MatDialogRef<AddClubModalComponent>) {
     this.formControl = new InputErrorStateMatcherExample();
@@ -85,6 +73,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
       this.loadClubData(this.data.clubId);
       this.isEditing = true;
     }
+    this.obtenerGeneroTipo();
   }
 
   submit() {
@@ -156,6 +145,15 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
 
   handleImageSelected(file: File) {
     this.selectedFile = file;
+  }
+
+  obtenerGeneroTipo(): void {
+    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+      (data) => {
+        this.typeOptions = data.tipo.valores;
+        this.genderOptions = data.genero.valores;
+      }
+    ));
   }
 
   ngOnDestroy(): void {
