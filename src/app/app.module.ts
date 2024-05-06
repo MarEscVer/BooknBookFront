@@ -32,7 +32,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from './components/barraNavegacion/header/header.component';
 import { MatListModule } from "@angular/material/list";
 import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.component';
-import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
+import { AdminPageComponent } from './components/admin/pages/admin-page/admin-page.component';
 import { MenuItemComponent } from './components/barraNavegacion/menu/menu-item/menu-item.component';
 import { MenuComponent } from './components/barraNavegacion/menu/menu.component';
 import { ListadoUsuarioAdminComponent } from './components/admin/listados-admin/listado-usuario-admin/listado-usuario-admin.component';
@@ -42,12 +42,12 @@ import { ListadoItemsClubsComponent } from './components/listado/listado-items-c
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
-import { AdminPageUsersComponent } from './components/admin/admin-page-users/admin-page-users.component';
+import { AdminPageUsersComponent } from './components/admin/pages/admin-page-users/admin-page-users.component';
 import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/listado-libros-admin/listado-libros-admin.component';
 import { ListadoClubesAdminComponent } from './components/admin/listados-admin/listado-clubes-admin/listado-clubes-admin.component';
-import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/admin-page-clubs.component';
+import { AdminPageClubsComponent } from './components/admin/pages/admin-page-clubs/admin-page-clubs.component';
 import { ListadoItemsComentariosComponent } from './components/listado/listado-items-comentarios/listado-items-comentarios.component';
-import { AdminPageModeracionComponent } from './components/admin/admin-page-moderacion/admin-page-moderacion.component';
+import { AdminPageModeracionComponent } from './components/admin/pages/admin-page-moderacion/admin-page-moderacion.component';
 import { ListadoModeracionAdminComponent } from './components/admin/listados-admin/listado-moderacion-admin/listado-moderacion-admin.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteButtonComponent } from './components/modal/deleteModal/delete-button/delete-button.component'; 
@@ -56,11 +56,13 @@ import { AddClubModalComponent } from './components/modal/addClub/add-club-modal
 import { AddClubButtonComponent } from './components/modal/addClub/add-club-button/add-club-button.component';
 import { ImagenUpdateComponent } from './components/imagenUpload/imagen-update/imagen-update.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { AdminPageAddBookComponent } from './components/admin/admin-page-add-book/admin-page-add-book.component';
+import { AdminPageAddBookComponent } from './components/admin/pages/admin-page-add-book/admin-page-add-book.component';
 import { AddAutorButtonComponent } from './components/modal/addAutor/add-autor-button/add-autor-button.component';
 import { AddAutorModalComponent } from './components/modal/addAutor/add-autor-modal/add-autor-modal.component';
 import { AcceptButtonComponent } from './components/modal/acceptModal/accept-button/accept-button.component';
 import { AcceptModalComponent } from './components/modal/acceptModal/accept-modal/accept-modal.component';
+import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
+import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -97,6 +99,8 @@ import { AcceptModalComponent } from './components/modal/acceptModal/accept-moda
     AddAutorModalComponent,
     AcceptButtonComponent,
     AcceptModalComponent,
+    ValoracionButtonComponent,
+    ValoracionModalComponent,
   ],
   /* LIBRARIES */
   imports: [
