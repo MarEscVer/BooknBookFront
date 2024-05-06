@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
+import { ComentarioDenunciadoResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,24 @@ export class ComentarioService implements deleteObject {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
-  //TODO delete URL
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `/comentario/${id}`)
+    return this.http.put<any>(this.baseUrl + environment.BASE_ADMIN + '/denuncia/' + id + '/RECHAZADA', '')
       .pipe(catchError(this.handleError));
   }
 
-  //TODO accept URL
-  acceptComentario(id: number): Observable<any> {
-    return this.http.post<any>(this.baseUrl + `/comentario/${id}`, id)
+  acceptComentario(id: number, estado: string): Observable<any> {
+    return this.http.put<any>(this.baseUrl + environment.BASE_ADMIN + '/denuncia/' + id + '/' + estado, '')
+      .pipe(catchError(this.handleError));
+  }
+
+  getListComentariosDenunciados(pageIndex: number, size: number, filter: string): Observable<ComentarioDenunciadoResponse> {
+    const params: any = {
+      pageIndex: pageIndex.toString(),
+      size: size.toString(),
+      filter: filter
+    };
+
+    return this.http.get<ComentarioDenunciadoResponse>(this.baseUrl + environment.BASE_ADMIN + '/comentarios/denuncia', { params })
       .pipe(catchError(this.handleError));
   }
 

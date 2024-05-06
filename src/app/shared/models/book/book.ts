@@ -1,6 +1,5 @@
 export interface BookItemList {
     id: number;
-    //TODO Imagenes BLOB
     img: any;
     title: string;
     author: string;
@@ -9,7 +8,14 @@ export interface BookItemList {
     year: number;
 }
 
-//TODO Imagenes
+export interface BookItemCard {
+    id: number;
+    imagen: any;
+    titulo: string;
+    autor: string;
+    saga: string;
+}
+
 export interface BookData {
     fechaPublicacion: string; // Formato
     nombre: string;

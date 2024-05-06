@@ -1,7 +1,18 @@
 export interface ComentarioDenunciadoItemList {
-    id: number;
-    username: string;
-    date: string;
+    idDenuncia: number;
+    idValoracionLibro: number;
+    idValoracionUsuario: number;
+    nombreUsuario: string;
+    fechaDenuncia: string;
     comentario: string;
-    razon: string;
+    motivo: string;
+}
+
+export interface ComentarioDenunciadoResponse {
+    estado: string,
+    comentariosDenunciados: ComentarioDenunciadoItemList[]
+}
+
+export interface ComentarioDenunciadoInfo {
+    valoracion: string;
 }

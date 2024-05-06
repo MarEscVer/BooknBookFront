@@ -1,0 +1,29 @@
+<div class="container-fluid p-0 m-0 overflow-hidden">
+    <div class="row">
+        <div class="col">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="height: 450px;">
+                <div class="carousel-inner">
+                    <ng-container *ngFor="let item of lista; let i = index">
+                        <div class="carousel-item" [class.active]="current === i">
+                            <img class="d-block w-100" src="assets/img/{{item.imagen}}" alt="{{item.alt}}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <p>{{item.texto}}</p>
+                                <button mat-button class="estilo-oscuro" (click)="redirectTo(item.link)">{{item.boton}}</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    (click)="prevImage()">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    (click)="nextImage()">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

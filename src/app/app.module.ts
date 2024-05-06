@@ -32,13 +32,13 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from './components/barraNavegacion/header/header.component';
 import { MatListModule } from "@angular/material/list";
 import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.component';
-import { AdminPageComponent } from './components/admin/pages/admin-page/admin-page.component';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { MenuItemComponent } from './components/barraNavegacion/menu/menu-item/menu-item.component';
 import { MenuComponent } from './components/barraNavegacion/menu/menu.component';
 import { ListadoUsuarioAdminComponent } from './components/admin/listados-admin/listado-usuario-admin/listado-usuario-admin.component';
-import { ListadoItemsUsersComponent } from './components/listado/listado-items-users/listado-items-users.component';
-import { ListadoItemsBooksComponent } from './components/listado/listado-items-books/listado-items-books.component';
-import { ListadoItemsClubsComponent } from './components/listado/listado-items-clubs/listado-items-clubs.component';
+import { ListadoItemsUsersComponent } from './components/admin/listados-admin/items/listado-items-users/listado-items-users.component';
+import { ListadoItemsBooksComponent } from './components/admin/listados-admin/items/listado-items-books/listado-items-books.component';
+import { ListadoItemsClubsComponent } from './components/admin/listados-admin/items/listado-items-clubs/listado-items-clubs.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
@@ -46,7 +46,7 @@ import { AdminPageUsersComponent } from './components/admin/pages/admin-page-use
 import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/listado-libros-admin/listado-libros-admin.component';
 import { ListadoClubesAdminComponent } from './components/admin/listados-admin/listado-clubes-admin/listado-clubes-admin.component';
 import { AdminPageClubsComponent } from './components/admin/pages/admin-page-clubs/admin-page-clubs.component';
-import { ListadoItemsComentariosComponent } from './components/listado/listado-items-comentarios/listado-items-comentarios.component';
+import { ListadoItemsComentariosComponent } from './components/admin/listados-admin/items/listado-items-comentarios/listado-items-comentarios.component';
 import { AdminPageModeracionComponent } from './components/admin/pages/admin-page-moderacion/admin-page-moderacion.component';
 import { ListadoModeracionAdminComponent } from './components/admin/listados-admin/listado-moderacion-admin/listado-moderacion-admin.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -63,6 +63,9 @@ import { AcceptButtonComponent } from './components/modal/acceptModal/accept-but
 import { AcceptModalComponent } from './components/modal/acceptModal/accept-modal/accept-modal.component';
 import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
 import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
+import { CarouselImagenComponent } from './components/home/carousel-imagen/carousel-imagen.component';
+import { ItemBookCardComponent } from './components/listado/item-book-card/item-book-card.component';
+import { ListBookCardComponent } from './components/listado/list-book-card/list-book-card.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -101,6 +104,9 @@ import { ValoracionModalComponent } from './components/modal/valoracionModal/val
     AcceptModalComponent,
     ValoracionButtonComponent,
     ValoracionModalComponent,
+    CarouselImagenComponent,
+    ItemBookCardComponent,
+    ListBookCardComponent,
   ],
   /* LIBRARIES */
   imports: [

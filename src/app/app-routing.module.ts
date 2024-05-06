@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';import { HomeComponent } from './components/home/home/home.component';
-import { AdminPageComponent } from './components/admin/pages/admin-page/admin-page.component';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { AdminPageUsersComponent } from './components/admin/pages/admin-page-users/admin-page-users.component';
 import { AdminPageClubsComponent } from './components/admin/pages/admin-page-clubs/admin-page-clubs.component';
 import { AdminPageModeracionComponent } from './components/admin/pages/admin-page-moderacion/admin-page-moderacion.component';

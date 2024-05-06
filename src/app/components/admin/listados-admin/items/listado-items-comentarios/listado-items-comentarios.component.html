@@ -9,12 +9,12 @@
 
             <ng-container matColumnDef="username">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-                <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.nombreUsuario}} </td>
             </ng-container>
 
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA </th>
-                <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.fechaDenuncia}} </td>
             </ng-container>
 
             <ng-container matColumnDef="comentario">
@@ -24,15 +24,16 @@
 
             <ng-container matColumnDef="razon">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> RAZÓN </th>
-                <td mat-cell *matCellDef="let row">{{row.razon}}</td>
+                <td mat-cell *matCellDef="let row">{{row.motivo}}</td>
             </ng-container>
 
             <!-- Columna de acciones -->
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCIONES </th>
                 <td mat-cell *matCellDef="let row">
-                    <app-accept-button [modalInfo]="{ id: row.id, title: row.username }"></app-accept-button>
-                    <app-delete-button [modalInfo]="{ id: row.id, title: row.username }"
+                    <app-valoracion-button [modalInfo]="{ valoracion: row.comentario }"></app-valoracion-button>
+                    <app-accept-button [modalInfo]="{ id: row.idDenuncia, title: row.nombreUsuario }"></app-accept-button>
+                    <app-delete-button [modalInfo]="{ id: row.idDenuncia, title: row.nombreUsuario }"
                         [deleteService]="comentarioService"></app-delete-button>
                 </td>
             </ng-container>

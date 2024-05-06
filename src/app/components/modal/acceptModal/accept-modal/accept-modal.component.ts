@@ -32,7 +32,7 @@ export class AcceptModalComponent implements OnDestroy{
   }
 
   onConfirmClick(): void {
-    this.subscriptions.add(this.comentarioService.acceptComentario(this.modalInfo.id).subscribe(() => {
+    this.subscriptions.add(this.comentarioService.acceptComentario(this.modalInfo.id, "ACEPTADA").subscribe(() => {
       this.dialogRef.close(true);
     }));
   }

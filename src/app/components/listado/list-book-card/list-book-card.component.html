@@ -1,0 +1,7 @@
+<div class="d-flex flex-wrap mt-3 justify-content-between">
+    <ng-container *ngFor="let libro of libros.slice(0, 5)">
+        <div class="item mb-3">
+            <app-item-book-card [libro]="libro" [imagenOnly]="true"></app-item-book-card>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,19 @@
+.container-fluid {
+    .carousel-item {
+        position: relative;
+        height: 450px;
+
+        img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+        }
+
+        .btn-redirect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
