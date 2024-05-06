@@ -13,36 +13,36 @@ export class ImagenUploadService {
   uploadGrupo(idGrupo: number, file: File): Observable<any> {
     const formData: FormData = new FormData();
     var blob = new Blob([file], { type: file.type });
-    formData.append('createGroupRequest', blob, file.name);
+    formData.append('imagen', blob, file.name);
     const options = {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + '/grupo/imagen?idGrupo=' + idGrupo, formData, options)
+    return this.http.put(this.baseUrl + '/grupo/' + idGrupo + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 
   uploadBook(idBook: number, file: File): Observable<any> {
     const formData: FormData = new FormData();
     var blob = new Blob([file], { type: file.type });
-    formData.append('createGroupRequest', blob, file.name);
+    formData.append('imagen', blob, file.name);
     const options = {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + '/book/imagen?idGrupo=' + idBook, formData, options)
+    return this.http.put(this.baseUrl + '/book/' + idBook + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 
   uploadAutor(idAutor: number, file: File): Observable<any> {
     const formData: FormData = new FormData();
     var blob = new Blob([file], { type: file.type });
-    formData.append('createGroupRequest', blob, file.name);
+    formData.append('imagen', blob, file.name);
     const options = {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + '/book/imagen?idGrupo=' + idAutor, formData, options)
+    return this.http.put(this.baseUrl + '/book/' + idAutor + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 
