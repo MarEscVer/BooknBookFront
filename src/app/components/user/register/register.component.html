@@ -7,53 +7,59 @@
         <!-- Formulario a la derecha -->
 
         <div class="col-md-6 col-12 d-flex align-items-center 
-        justify-content-center mt-5">
+        justify-content-center mt-5 mb-5">
             <div class="text-center">
                 <img src="../../../../assets/img/iconlogo.svg" alt="Logo de la app" class="app-logo mb-3">
                 <h3>¡BIENVENIDO!</h3>
                 <p>Comienza tu aventura rellenando este formulario</p>
 
                 <form [formGroup]="formRegister" (submit)="$event.preventDefault()">
-                    <mat-form-field>
-                        <mat-label>Nombre de usuario</mat-label>
-                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="username"
-                            id="username" formControlName="username" />
+                    <mat-form-field class="custom-input">
+                        <div class="input-with-icon">
+                            <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
+                            <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="username"
+                                id="username" formControlName="username" placeholder="Nombre de usuario" />
+                        </div>
                     </mat-form-field>
                     <br />
-                    <mat-form-field>
-                        <mat-label>Nombre</mat-label>
+                    <mat-form-field class="w-100">
                         <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="name" id="name"
-                            formControlName="name" />
+                            formControlName="name" placeholder="Nombre" />
                     </mat-form-field>
                     <br />
-                    <mat-form-field>
-                        <mat-label>Primer apellido</mat-label>
+                    <mat-form-field class="w-100">
                         <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="apellido1"
-                            id="apellido1" formControlName="apellido1" />
+                            id="apellido1" formControlName="apellido1" placeholder="Primer apellido" />
                     </mat-form-field>
                     <br />
-                    <mat-form-field>
-                        <mat-label>Segundo apellido</mat-label>
+                    <mat-form-field class="w-100">
                         <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="apellido2"
-                            id="apellido2" formControlName="apellido2" />
+                            id="apellido2" formControlName="apellido2" placeholder="Segundo apellido" />
                     </mat-form-field>
                     <br />
-                    <mat-form-field>
-                        <mat-label>Email</mat-label>
-                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="email" id="email"
-                            formControlName="email" />
+                    <mat-form-field class="custom-input">
+                        <div class="input-with-icon">
+                            <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
+                            <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="email"
+                                id="email" formControlName="email" placeholder="Email" />
+                        </div>
                     </mat-form-field>
                     <br />
-                    <mat-form-field>
-                        <mat-label class="mat-label">Contraseña</mat-label>
-                        <input type="password" #password matInput class="ng-untouched ng-pristine ng-invalid"
-                            ng-reflect-name="password" id="password" formControlName="password" />
+                    <mat-form-field class="custom-input">
+                        <div class="input-with-icon">
+                            <fa-icon [icon]="['fas', 'lock']"></fa-icon>
+                            <input type="password" #password matInput class="ng-untouched ng-pristine ng-invalid"
+                                ng-reflect-name="password" id="password" formControlName="password"
+                                placeholder="Contraseña" />
+                        </div>
                     </mat-form-field>
                     <br />
-                    <mat-form-field>
-                        <mat-label>Repetir contraseña</mat-label>
-                        <input type="password" #passwordRepeat matInput class="ng-untouched ng-pristine ng-invalid"
-                            ng-reflect-name="passwordRepeat" id="passwordRepeat" />
+                    <mat-form-field class="custom-input">
+                        <div class="input-with-icon">
+                            <fa-icon [icon]="['fas', 'lock']"></fa-icon>
+                            <input type="password" #passwordRepeat matInput class="ng-untouched ng-pristine ng-invalid"
+                                ng-reflect-name="passwordRepeat" id="passwordRepeat" placeholder="Repetir contraseña" />
+                        </div>
                     </mat-form-field>
                     <div class="alert alert-danger" *ngIf="password.value != passwordRepeat.value">
                         <div>

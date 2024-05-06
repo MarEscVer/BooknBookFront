@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="row align-items-center">
+  <div class="row">
     <!-- Imagen a la izquierda -->
     <div class="col-md-6 d-none d-md-flex p-0">
       <img src="../../../../assets/img/login.jpg" alt="Login image" class="w-100"
@@ -7,7 +7,7 @@
     </div>
 
     <!-- Formulario a la derecha -->
-    <div class="col-md-6 col-12 d-flex justify-content-center">
+    <div class="col-md-6 col-12 d-flex justify-content-center mt-5">
       <div class="text-center">
         <img src="../../../../assets/img/iconlogo.svg" alt="Logo de la app" class="app-logo mb-3">
         <h3>¡BIENVENIDO!</h3>
@@ -18,7 +18,7 @@
             <div class="input-with-icon">
               <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
               <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="username" id="username"
-                formControlName="username" />
+                formControlName="username" placeholder="Nombre de usuario"/>
             </div>
           </mat-form-field>
           <br />
@@ -26,7 +26,7 @@
             <div class="input-with-icon">
               <fa-icon [icon]="['fas', 'lock']"></fa-icon>
               <input type="password" matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="password"
-                id="password" formControlName="password" />
+                id="password" formControlName="password" placeholder="Contraseña"/>
             </div>
           </mat-form-field>
 

@@ -21,9 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgIf } from '@angular/common';
 import { InputErrorStateMatcherExample } from './shared/errors/input-error-state-matcher';
-import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';
-import { LoginAndRegisterComponent } from './components/user/login-and-register/login-and-register.component';
-import { HomeComponent } from './components/home/home/home.component';
+import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';import { HomeComponent } from './components/home/home/home.component';
 import { MessageErrorComponent } from './components/messages/message-error/message-error.component';
 import { GlobalErrorHandler } from './interceptors/global-error-handler';
 import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
@@ -70,7 +68,6 @@ import { AcceptModalComponent } from './components/modal/acceptModal/accept-moda
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    LoginAndRegisterComponent,
     HomeComponent,
     MessageErrorComponent,
     NavbarComponent,

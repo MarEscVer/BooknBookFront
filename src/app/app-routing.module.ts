@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './components/user/login/login.component';
-import { RegisterComponent } from './components/user/register/register.component';
-import { LoginAndRegisterComponent } from './components/user/login-and-register/login-and-register.component';
-import { HomeComponent } from './components/home/home/home.component';
+import { RegisterComponent } from './components/user/register/register.component';import { HomeComponent } from './components/home/home/home.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { AdminPageUsersComponent } from './components/admin/admin-page-users/admin-page-users.component';
 import { AdminPageClubsComponent } from './components/admin/admin-page-clubs/admin-page-clubs.component';
@@ -13,7 +11,7 @@ import { AdminPageAddBookComponent } from './components/admin/admin-page-add-boo
 import { adminGuard, appGuard } from './auth/app.guard';
 
 const routes: Routes = [
-  {path: "", component: LoginAndRegisterComponent},
+  {path: "", component: HomeComponent},
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
   {path: "home", component: HomeComponent, canActivate: [appGuard]},
