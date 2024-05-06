@@ -39,7 +39,7 @@ export class InputErrorStateMatcherExample {
   }
 
   getFormControl_saga(): FormControl {
-    return new FormControl({value:0, disabled:true}, [Validators.required]);
+    return new FormControl({value:0, disabled:true});
   }
 
   getFormControl_texto(): FormControl {
@@ -72,14 +72,14 @@ export class InputErrorStateMatcherExample {
 
   addBook = {
     nombre: this.getFormControl_required(),
-    autor: this.getFormControl_required(),
+    idAutor: this.getFormControl_required(),
     saga: this.getFormControl_saga(),
     tipo: this.getFormControl_type(),
     genero: this.getFormControl_gender(),
     fechaPublicacion: this.getFormControl_required(),
     paginas: this.getFormControl_paginas(),
     descripcion: this.getFormControl_required(),
-    newSagaName: this.getFormControl_texto(),
+    nuevaSaga: this.getFormControl_texto(),
   }
 
   addAutor = {

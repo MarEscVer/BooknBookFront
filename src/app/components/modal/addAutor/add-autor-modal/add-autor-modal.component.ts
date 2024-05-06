@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
+import { Combo } from 'src/app/shared/models/combo/combo';
 
 @Component({
   selector: 'app-add-autor-modal',
@@ -26,6 +27,7 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
 
   selectedFile?: File;
   urlImagenDelServidor?: string;
+
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -66,7 +68,6 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
     }
   }
 
-  //TODO AUTOR NO IMAGEN???
   submit() {
     const autorData = this.formAddAutor.getRawValue();
     return this.subscriptions.add(this.autorService
@@ -74,11 +75,12 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
       .subscribe({
         next: (autorAdded) => {
           this.notification.show(
-            'Autor añadido correctamente!',
+            autorAdded.message,
             'success'
           );
-          this.uploadImage(autorData.id);
-          this.router.navigate(['/admin/book']);
+          this.uploadImage(autorAdded.id);
+          const autorCreado: Combo = {id: autorAdded.id, nombre: autorData.pseudonimo};
+          this.dialogRef.close(autorCreado);
         },
         error: (error) => {
           this.notification.show('No se ha podido añadir el autor', 'error');

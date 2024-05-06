@@ -3,6 +3,11 @@ export interface Combo {
     nombre: string;
 }
 
+export interface IdComboResponse {
+    id: number;
+    message: string;
+}
+
 export interface ComboGeneroResponse {
     genero: {
         valores: Combo[];
@@ -15,3 +20,4 @@ export interface ComboGeneroResponse {
 export interface ComboResponse {
     valores: Combo[];
 }
+

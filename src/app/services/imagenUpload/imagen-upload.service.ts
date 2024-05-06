@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ImagenUploadService {
-  private baseUrl: string = environment.BASE_URL + environment.BASE_TOKEN;
+  private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
   uploadGrupo(idGrupo: number, file: File): Observable<any> {
@@ -30,7 +30,7 @@ export class ImagenUploadService {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + '/book/' + idBook + '/imagen', formData, options)
+    return this.http.put(this.baseUrl + environment.BASE_ADMIN + '/book/' + idBook + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 

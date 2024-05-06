@@ -86,7 +86,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     this.obtenerGeneroTipo();
     this.obtenerAutores();
 
-    this.subscriptions.add(this.formAddBook.get('autor')?.valueChanges.subscribe(value => {
+    this.subscriptions.add(this.formAddBook.get('idAutor')?.valueChanges.subscribe(value => {
       if (value == null || value == 0) {
         this.formAddBook.controls['saga'].disable();
         this.formAddBook.controls['saga'].reset();
@@ -136,9 +136,9 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     }
   }
 
-  private uploadImage(idGrupo: number): void {
+  private uploadImage(idLibro: number): void {
     if (this.selectedFile) {
-      this.subscriptions.add(this.uploadService.uploadGrupo(idGrupo, this.selectedFile).subscribe({
+      this.subscriptions.add(this.uploadService.uploadBook(idLibro, this.selectedFile).subscribe({
         next: (event) => {
           this.notification.show(
             'Imagen subida correctamente',
@@ -164,20 +164,25 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   filtrarAutores(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const texto = inputElement.value;
-    if (texto.length > 0) {
+    this.mostrarAutores( texto.length > 0, texto);
+    this.mostrarAutores( this.autoresFiltrados.length > 0, texto);
+  }
+
+  mostrarAutores (condicion: boolean, texto: string): void {
+    if (condicion) {
       this.autoresFiltrados = this.autores.filter(autor =>
         autor.nombre.toLowerCase().includes(texto.toLowerCase())
       );
     } else {
-      this.autoresFiltrados = [];
-      this.formAddBook.get('autor')?.reset();
+      this.autoresFiltrados.length = 0;
+      this.formAddBook.get('idAutor')?.reset();
     }
   }
 
   toggleAddingSaga() {
     this.addingNewSaga = !this.addingNewSaga;
     if (!this.addingNewSaga) {
-      this.formAddBook.get('newSagaName')?.setValue(null);
+      this.formAddBook.get('nuevaSaga')?.setValue(null);
     }
   }
 
@@ -220,6 +225,14 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
       this.obtenerSagaAutor(id);
     }
   }
+
+  recibirAutorAgregado(autor: Combo) {
+    this.autores.push(autor);
+    this.autoresFiltrados.push(autor);
+    (document.getElementById("autorFiltro") as HTMLInputElement).value = autor.nombre;
+    this.formAddBook.get('idAutor')?.setValue(autor.id);
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

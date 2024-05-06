@@ -36,26 +36,26 @@
                 <mat-form-field class="w-100">
                     <mat-label>Buscar Autor</mat-label>
                     <div class="d-flex">
-                        <input matInput (input)="filtrarAutores($event)">
+                        <input matInput id="autorFiltro" (input)="filtrarAutores($event)">
                         <app-add-autor-button [autorIcon]="autorIconAdd"
-                            *ngIf="autoresFiltrados.length <= 0"></app-add-autor-button>
+                            *ngIf="autoresFiltrados.length <= 0" (autorCreado)="recibirAutorAgregado($event)"></app-add-autor-button>
                     </div>
                 </mat-form-field>
 
                 <mat-form-field class="w-100" *ngIf="autoresFiltrados.length > 0">
                     <mat-label>Selecciona Autor</mat-label>
                     <div class="d-flex">
-                        <mat-select formControlName="autor" id="autor" (selectionChange)="autorSeleccionado($event)">
+                        <mat-select formControlName="idAutor" id="idAutor" (selectionChange)="autorSeleccionado($event)">
                             <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.nombre }}</mat-option>
                         </mat-select>
-                        <app-add-autor-button [autorIcon]="autorIconEdit" [autorId]="formAddBook.get('autor')?.value"
-                            *ngIf="formAddBook.get('autor')?.value"
+                        <app-add-autor-button [autorIcon]="autorIconEdit" [autorId]="formAddBook.get('idAutor')?.value"
+                            *ngIf="formAddBook.get('idAutor')?.value"
                             (click)="editarAutor($event)"></app-add-autor-button>
                     </div>
                 </mat-form-field>
                 <div class="alert alert-danger"
-                    *ngIf="formAddBook.get('autor')?.touched && formAddBook.get('autor')?.errors">
-                    <div *ngIf="this.specificError('autor','required')">
+                    *ngIf="formAddBook.get('idAutor')?.touched && formAddBook.get('idAutor')?.errors">
+                    <div *ngIf="this.specificError('idAutor','required')">
                         Autor requerido.
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                             </mat-select>
                         </ng-container>
                         <ng-template #newSagaInput>
-                            <input matInput formControlName="newSagaName" id="newSagaName"
+                            <input matInput formControlName="nuevaSaga" id="nuevaSaga"
                                 placeholder="Nombre de la nueva saga">
                         </ng-template>
                         <button mat-icon-button color="primary" aria-label="Agregar" (click)="toggleAddingSaga()">

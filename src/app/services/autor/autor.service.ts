@@ -4,7 +4,7 @@ import { deleteObject } from '../interfaces';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
-import { ComboResponse } from 'src/app/shared/models/combo/combo';
+import { ComboResponse, IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +19,13 @@ export class AutorService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO add URL
-  addAutor(autorData: AutorData): Observable<void> {
-    return this.http.post<void>(this.baseUrl + environment.BASE_TOKEN + `/autor`, autorData, httpOptions)
+  addAutor(autorData: AutorData): Observable<IdComboResponse> {
+    return this.http.post<IdComboResponse>(this.baseUrl + environment.BASE_ADMIN + `/autor`, autorData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  //TODO edit URL
   editAutor(autorData: AutorData, idAutor: number): Observable<void> {
-    return this.http.put<void>(this.baseUrl + environment.BASE_TOKEN + `/autor/${idAutor}`, autorData, httpOptions)
+    return this.http.put<void>(this.baseUrl + environment.BASE_ADMIN + `/autor/${idAutor}`, autorData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
