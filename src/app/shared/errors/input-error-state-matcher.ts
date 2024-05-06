@@ -58,9 +58,9 @@ export class InputErrorStateMatcherExample {
     email: this.getFormControl_Email(),
     password: this.getFormControl_required(),
     name: this.getFormControl_required(),
-    phone: this.getFormControl_phone(),
-    plan: this.getFormControl_required(),
-    rol: this.getFormControl_required(),
+    username: this.getFormControl_required(),
+    apellido1: this.getFormControl_required(),
+    apellido2: this.getFormControl_required(),
   }
 
   addClub = {

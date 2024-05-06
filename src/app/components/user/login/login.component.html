@@ -1,36 +1,47 @@
-<mat-card >
-  <mat-card-content  class="d-flex justify-content-center">
-    <form [formGroup]="formLogin" (submit)="$event.preventDefault()" class="w-75 pt-5 pb-5">
-      
-        <mat-form-field class="w-100 ">
-          <mat-label>Username</mat-label>
-          <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3" ng-reflect-name="username" id="username"
-            formControlName="username" (cdkAutofill)="firstNameAutofilled = $event.isAutofilled"/>
-        </mat-form-field>
-        <mat-hint *ngIf="firstNameAutofilled">Autofilled!</mat-hint>
-          <div class="alert alert-danger" *ngIf="formLogin.get('username')?.touched && formLogin.get('username')?.errors">
-            <div *ngIf="this.specificError('username','required')">
-              Username is required.
-            </div>
-            <div *ngIf="this.formLogin?.get('username')?.getError('username')">
-              Username must be a good form.
-            </div>
-          </div>
-        <br/>
-        <mat-form-field class="w-100">
-          <mat-label>Password</mat-label>
-          <input type="password" matInput class="form-control ng-untouched ng-pristine ng-invalid mt-3" ng-reflect-name="password"
-            id="password" formControlName="password" (cdkAutofill)="lastNameAutofilled = $event.isAutofilled"/>
-          <mat-hint *ngIf="lastNameAutofilled">Autofilled!</mat-hint>
-        </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formLogin.get('password')?.touched && formLogin.get('password')?.errors">
-          <div *ngIf="this.specificError('password','required')">
-            password is required.
-          </div>
-        </div>
-        <br/>
-        <button mat-raised-button (click)="submit()" [disabled]="!formLogin.valid" class="w-100 border border-primary">Iniciar Sesion</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+<div class="container-fluid">
+  <div class="row align-items-center">
+    <!-- Imagen a la izquierda -->
+    <div class="col-md-6 d-none d-md-flex p-0">
+      <img src="../../../../assets/img/login.jpg" alt="Login image" class="w-100"
+        style="object-fit: cover;">
+    </div>
 
+    <!-- Formulario a la derecha -->
+    <div class="col-md-6 col-12 d-flex justify-content-center">
+      <div class="text-center">
+        <img src="../../../../assets/img/iconlogo.svg" alt="Logo de la app" class="app-logo mb-3">
+        <h3>¡BIENVENIDO!</h3>
+        <p>Inicia sesión con tu usuario y contraseña</p>
+
+        <form [formGroup]="formLogin" (submit)="$event.preventDefault()">
+          <mat-form-field class="custom-input">
+            <div class="input-with-icon">
+              <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
+              <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="username" id="username"
+                formControlName="username" />
+            </div>
+          </mat-form-field>
+          <br />
+          <mat-form-field class="custom-input">
+            <div class="input-with-icon">
+              <fa-icon [icon]="['fas', 'lock']"></fa-icon>
+              <input type="password" matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="password"
+                id="password" formControlName="password" />
+            </div>
+          </mat-form-field>
+
+          <div>
+            <a href="#" class="mb-3">¿Has olvidado la contraseña?</a>
+          </div>
+
+          <button mat-raised-button color="primary" (click)="submit()" [disabled]="!formLogin.valid" class="w-100 mb-3">
+            Iniciar Sesion</button>
+        </form>
+
+        <div>
+          <a href="/register">¿Aún no te has registrado? REGISTRATE</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

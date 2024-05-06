@@ -29,7 +29,7 @@
           <!-- Mostrar elementos para usuario anónimo -->
           <ng-container *ngIf="!userRole">
             <a routerLink="/quienes-somos">Quiénes somos</a>
-            <a routerLink="/registrarse">Registrarse</a>
+            <a routerLink="/register">Registrarse</a>
             <button mat-icon-button color="primary" aria-label="Login" (click)="toLogin()">
               <fa-icon [icon]="['far', 'user']"></fa-icon>
             </button>

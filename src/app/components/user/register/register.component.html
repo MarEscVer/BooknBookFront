@@ -1,82 +1,74 @@
-<mat-card>
-    <mat-card-content class="d-flex justify-content-center">
-        <form [formGroup]="formRegister" (submit)="$event.preventDefault()" class="w-75 pt-5 pb-5">
+<div class="container-fluid">
+    <div class="row">
+        <!-- Imagen a la izquierda -->
+        <div class="col-md-6 d-none d-md-flex p-0">
+            <img src="../../../../assets/img/login.jpg" alt="Login image" class="w-100" style="object-fit: cover;">
+        </div>
+        <!-- Formulario a la derecha -->
 
-            <mat-form-field class="w-100 ">
-                <mat-label>Email</mat-label>
-                <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3"
-                    ng-reflect-name="email" id="email" formControlName="email"
-                    (cdkAutofill)="firstNameAutofilled = $event.isAutofilled" />
-            </mat-form-field>
-            <mat-hint *ngIf="firstNameAutofilled">Autofilled!</mat-hint>
-            <div class="alert alert-danger"
-                *ngIf="formRegister.get('email')?.touched && formRegister.get('email')?.errors">
-                <div *ngIf="this.specificError('email','required')">
-                    email is required.
-                </div>
-                <div *ngIf="this.specificError('email','email')">
-                    email must be a good form.
-                </div>
-            </div>
-            <br />
-            <mat-form-field class="w-100" >
-                <mat-label class="mat-label">Password</mat-label>
-                <input type="password" #password matInput class="form-control ng-untouched ng-pristine ng-invalid mt-3"
-                    ng-reflect-name="password" id="password" formControlName="password"
-                    (cdkAutofill)="lastNameAutofilled = $event.isAutofilled" />
-                <mat-hint *ngIf="lastNameAutofilled">Autofilled!</mat-hint>
-            </mat-form-field>
-            <div class="alert alert-danger"
-                *ngIf="formRegister.get('password')?.touched && formRegister.get('password')?.errors">
-                <div *ngIf="this.specificError('password','required')">
-                    password is required.
-                </div>
-            </div>
-            <br />
-            <mat-form-field class="w-100">
-                <mat-label>Repetir Password</mat-label>
-                <input type="password" #passwordRepeat matInput
-                    class="form-control ng-untouched ng-pristine ng-invalid mt-3" ng-reflect-name="passwordRepeat"
-                    id="passwordRepeat" />
-                <mat-hint *ngIf="lastNameAutofilled">Autofilled!</mat-hint>
-            </mat-form-field>
-            <div class="alert alert-danger" *ngIf="password.value != passwordRepeat.value">
+        <div class="col-md-6 col-12 d-flex align-items-center 
+        justify-content-center mt-5">
+            <div class="text-center">
+                <img src="../../../../assets/img/iconlogo.svg" alt="Logo de la app" class="app-logo mb-3">
+                <h3>¡BIENVENIDO!</h3>
+                <p>Comienza tu aventura rellenando este formulario</p>
+
+                <form [formGroup]="formRegister" (submit)="$event.preventDefault()">
+                    <mat-form-field>
+                        <mat-label>Nombre de usuario</mat-label>
+                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="username"
+                            id="username" formControlName="username" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Nombre</mat-label>
+                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="name" id="name"
+                            formControlName="name" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Primer apellido</mat-label>
+                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="apellido1"
+                            id="apellido1" formControlName="apellido1" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Segundo apellido</mat-label>
+                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="apellido2"
+                            id="apellido2" formControlName="apellido2" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="email" id="email"
+                            formControlName="email" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label class="mat-label">Contraseña</mat-label>
+                        <input type="password" #password matInput class="ng-untouched ng-pristine ng-invalid"
+                            ng-reflect-name="password" id="password" formControlName="password" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Repetir contraseña</mat-label>
+                        <input type="password" #passwordRepeat matInput class="ng-untouched ng-pristine ng-invalid"
+                            ng-reflect-name="passwordRepeat" id="passwordRepeat" />
+                    </mat-form-field>
+                    <div class="alert alert-danger" *ngIf="password.value != passwordRepeat.value">
+                        <div>
+                            Contraseñas con diferentes valores.
+                        </div>
+                    </div>
+                    <br />
+                    <button mat-raised-button (click)="submit()" [disabled]="!formRegister.valid" color="primary"
+                        class="mb-3 mt-3">Registrarse</button>
+                </form>
+
                 <div>
-                    Password need equals value.
+                    <a href="/login">¿Ya estás registrado? INICIA SESIÓN</a>
                 </div>
             </div>
-            <br />
-            <mat-form-field class="w-100 ">
-                <mat-label >Nombre</mat-label>
-                <input matInput class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3"
-                    ng-reflect-name="name" id="name" formControlName="name"
-                    (cdkAutofill)="firstNameAutofilled = $event.isAutofilled" />
-            </mat-form-field>
-            <mat-hint *ngIf="firstNameAutofilled">Autofilled!</mat-hint>
-            <div class="alert alert-danger"
-                *ngIf="formRegister.get('name')?.touched && formRegister.get('name')?.errors">
-                <div *ngIf="this.specificError('name','required')">
-                    name is required.
-                </div>
-            </div>
-            <br />
-            <mat-form-field class="w-100">
-                <mat-label>Teléfono</mat-label>
-                <input maxlength="9" #phoneNumber matInput
-                    class="form-control ng-untouched ng-pristine ng-invalid w-75 mt-3" ng-reflect-name="phone"
-                    id="phone" formControlName="phone" (cdkAutofill)="firstNameAutofilled = $event.isAutofilled" />
-                <mat-hint class="mt-0">{{phoneNumber.value.length}} / 9</mat-hint>
-            </mat-form-field>
-            <div class="alert alert-danger"
-                *ngIf="formRegister.get('phone')?.touched && formRegister.get('phone')?.errors">
-                <div *ngIf="this.specificError('phone','maxlength') || this.specificError('phone','minlength')">
-                    Phone need 9 digits
-                </div>
-            </div>
-            <br />
-            <br />
-            <button mat-raised-button (click)="submit()"
-                class="w-100 border border-primary">Registrarse</button>
-        </form>
-    </mat-card-content>
-</mat-card>
+        </div>
+    </div>
+</div>
