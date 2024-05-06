@@ -86,10 +86,8 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
             'Club añadido correctamente!',
             'success'
           );
-          this.uploadImage(clubData.id);
-
-          //TODO redirigir a pantalla grupo creado
-          this.router.navigate(['/']);
+          this.uploadImage(clubAdded.id);
+          this.clubService.notifyClubAdded();
         },
         error: (error) => {
           this.notification.show('No se ha podido añadir el club', 'error');
@@ -108,9 +106,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
             'success'
           );
           this.uploadImage(clubData.id);
-
-          //TODO redirigir a pantalla grupo creado
-          this.router.navigate(['/']);
+          this.clubService.notifyClubAdded();
         },
         error: (error) => {
           this.notification.show('No se ha podido editar el club', 'error');

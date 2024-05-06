@@ -1,11 +1,16 @@
+import { GeneroTipo } from "../combo/combo";
+
 export interface ClubItemList {
     id: number;
-    //TODO Imagenes BLOB
-    img: any;
-    name: string;
-    tipe: string;
-    gender: string;
-    users: number;
+    imagen: any;
+    nombre: string;
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
+    miembros: number;
+}
+
+export interface ClubItemListResponse {
+    listGroup: ClubItemList[];
 }
 
 export interface ClubEdit {

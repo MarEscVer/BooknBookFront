@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ClubService } from 'src/app/services/club/club.service';
 import { ClubItemList } from 'src/app/shared/models/club/club';
 
 @Component({
@@ -8,28 +9,9 @@ import { ClubItemList } from 'src/app/shared/models/club/club';
   styleUrls: ['./listado-clubes-admin.component.scss']
 })
 export class ListadoClubesAdminComponent {
-  // MOCK DATA
-  data: ClubItemList[] = [];
-  imagenPrueba: string = '';
-
   constructor(
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    for (let i = 1; i <= 20; i++) {
-      this.data.push({
-        id: i,
-        img: this.imagenPrueba,
-        name: `Club ${i}`,
-        tipe: `Tipo ${i}`,
-        gender: `Género ${i}`,
-        users: 100 + i
-      });
-    }
-  }
+  ) {}
 
-  agregarClub(): void {
-    //TODO redireccionar a add libro
-    this.router.navigate(['/']);
-  }
 }

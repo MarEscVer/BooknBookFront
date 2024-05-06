@@ -106,7 +106,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
             'Libro añadido correctamente!',
             'success'
           );
-          this.uploadImage(bookData.id);
+          this.uploadImage(bookAdded.id);
           this.router.navigate(['/admin']);
         },
         error: (error) => {
@@ -164,11 +164,11 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   filtrarAutores(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const texto = inputElement.value;
-    this.mostrarAutores( texto.length > 0, texto);
-    this.mostrarAutores( this.autoresFiltrados.length > 0, texto);
+    this.mostrarAutores(texto.length > 0, texto);
+    this.mostrarAutores(this.autoresFiltrados.length > 0, texto);
   }
 
-  mostrarAutores (condicion: boolean, texto: string): void {
+  mostrarAutores(condicion: boolean, texto: string): void {
     if (condicion) {
       this.autoresFiltrados = this.autores.filter(autor =>
         autor.nombre.toLowerCase().includes(texto.toLowerCase())
@@ -227,10 +227,12 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   }
 
   recibirAutorAgregado(autor: Combo) {
-    this.autores.push(autor);
-    this.autoresFiltrados.push(autor);
-    (document.getElementById("autorFiltro") as HTMLInputElement).value = autor.nombre;
-    this.formAddBook.get('idAutor')?.setValue(autor.id);
+    if (autor) {
+      this.autores.push(autor);
+      this.autoresFiltrados.push(autor);
+      (document.getElementById("autorFiltro") as HTMLInputElement).value = autor.nombre;
+      this.formAddBook.get('idAutor')?.setValue(autor.id);
+    }
   }
 
   ngOnDestroy(): void {

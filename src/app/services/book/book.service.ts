@@ -5,6 +5,7 @@ import { environment, httpOptions } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
 import { BookData, BookEdit } from 'src/app/shared/models/book/book';
+import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class BookService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  addBook(bookData: BookData): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + `/libro`, bookData, httpOptions)
+  addBook(bookData: BookData): Observable<IdComboResponse> {
+    return this.http.post<IdComboResponse>(this.baseUrl + `/libro`, bookData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

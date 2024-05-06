@@ -21,3 +21,9 @@ export interface ComboResponse {
     valores: Combo[];
 }
 
+export interface GeneroTipo {
+    id: number;
+    nombre: string;
+    color: string;
+}
+

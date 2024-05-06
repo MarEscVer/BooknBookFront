@@ -18,7 +18,7 @@ export class ImagenUploadService {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + '/grupo/' + idGrupo + '/imagen', formData, options)
+    return this.http.put(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + idGrupo + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 
@@ -42,7 +42,7 @@ export class ImagenUploadService {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + '/book/' + idAutor + '/imagen', formData, options)
+    return this.http.put(this.baseUrl + environment.BASE_ADMIN + '/autor/' + idAutor + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 
