@@ -25,3 +25,23 @@
         </div>
     </div>
 </div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-container mt-3">
+    <img src="assets/img/newsletter.png" alt="Newsletter" class="newsletter-image">
+    <div class="newsletter-overlay">
+        <div class="flex-texto">
+            <p>¡Únete a nuestra comunidad literaria en Book 'N Book y mantente al día con las últimas noticias,
+                recomendaciones de libros y eventos emocionantes! Regístrate ahora para recibir nuestra newsletter y
+                sé parte de una red de lectores apasionados que comparten su amor por los libros.</p>
+        </div>
+        <div class="flex-formulario">
+            <form [formGroup]="formNewsletter" (submit)="$event.preventDefault()" class="d-flex flex-column">
+                <mat-form-field color="primary"><input matInput type="email"
+                        placeholder="Email">
+                </mat-form-field>
+                <button mat-button class="estilo-oscuro">SUSCRIBETE</button>
+            </form>
+        </div>
+    </div>
+</div>
