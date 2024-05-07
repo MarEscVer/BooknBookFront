@@ -1,0 +1,35 @@
+@import '../../../../style/variables.scss';
+
+footer {
+    background-color: $white-color;
+    padding-bottom: 10px;
+    box-shadow: $box-shadow;
+    z-index: 10;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+
+    #logoPC {
+        min-width: $logo-pc-mobile-min;
+        max-width: $logo-mobile-max;
+    }
+
+    #logoRRSS {
+        min-width: $logo-rrss-max-min;
+        max-width: $logo-rrss-max-min;
+    }
+
+    .btn-wrapper {
+        display: inline-block;
+    }
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    #seccion1,
+    #seccion3 {
+        display: none !important;
+    }
+}

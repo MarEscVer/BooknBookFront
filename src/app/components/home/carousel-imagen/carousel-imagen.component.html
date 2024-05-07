@@ -6,7 +6,7 @@
                     <ng-container *ngFor="let item of lista; let i = index">
                         <div class="carousel-item" [class.active]="current === i">
                             <img class="d-block w-100" src="assets/img/{{item.imagen}}" alt="{{item.alt}}">
-                            <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-caption">
                                 <p>{{item.texto}}</p>
                                 <button mat-button class="estilo-oscuro" (click)="redirectTo(item.link)">{{item.boton}}</button>
                             </div>

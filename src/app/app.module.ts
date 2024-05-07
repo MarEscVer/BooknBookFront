@@ -66,6 +66,7 @@ import { ValoracionModalComponent } from './components/modal/valoracionModal/val
 import { CarouselImagenComponent } from './components/home/carousel-imagen/carousel-imagen.component';
 import { ItemBookCardComponent } from './components/listado/item-book-card/item-book-card.component';
 import { ListBookCardComponent } from './components/listado/list-book-card/list-book-card.component';
+import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -107,6 +108,7 @@ import { ListBookCardComponent } from './components/listado/list-book-card/list-
     CarouselImagenComponent,
     ItemBookCardComponent,
     ListBookCardComponent,
+    FooterComponent,
   ],
   /* LIBRARIES */
   imports: [

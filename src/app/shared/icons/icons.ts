@@ -23,7 +23,6 @@ export const icons: IconDefinition[] = [
   faCircleInfo,
   faCircleRight,
   faCircleLeft,
-  
   /*Free regular*/
   faUser,
   faUserAlt,
