@@ -1,0 +1,7 @@
+<mat-card class="custom-card">
+  <img mat-card-image src="{{libro.imagen}}" alt="Portada del libro {{libro.titulo}}">
+  <mat-card-content class="texto">
+    <p class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</p>
+    <p class="autor">{{ libro.autor | uppercase }}</p>
+  </mat-card-content>
+</mat-card>

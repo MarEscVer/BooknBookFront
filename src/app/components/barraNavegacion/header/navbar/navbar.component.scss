@@ -27,14 +27,14 @@
 
 
 /* Estilos para pantallas pequeñas */
-@media (max-width: $max-width) {
+@media (max-width: $max-header-width) {
     .navbar-desktop {
         display: none;
     }
 }
 
 /* Estilos para pantallas grandes */
-@media (min-width: $min-width) {
+@media (min-width: $min-header-width) {
     .navbar-mobile {
         display: none;
     }

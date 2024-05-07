@@ -47,7 +47,6 @@ export class CarouselImagenComponent implements OnInit {
   }
 
   redirectTo(link: string) {
-    // Aquí puedes redirigir a la URL proporcionada
     window.location.href = link;
   }
 

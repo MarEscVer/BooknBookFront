@@ -64,14 +64,14 @@ import { AcceptModalComponent } from './components/modal/acceptModal/accept-moda
 import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
 import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
 import { CarouselImagenComponent } from './components/home/carousel-imagen/carousel-imagen.component';
-import { ItemBookCardComponent } from './components/listado/item-book-card/item-book-card.component';
-import { ListBookCardComponent } from './components/listado/list-book-card/list-book-card.component';
+import { ItemBookCardComponent } from './components/user/pages/biblioteca/listado/item-book-card/item-book-card.component';
 import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
 import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
 import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
 import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable-item/menu-desplegable-item.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
+import { ImagenListBookCardComponent } from './components/user/pages/biblioteca/listado/imagen-list-book-card/imagen-list-book-card.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -112,12 +112,12 @@ import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/bi
     ValoracionModalComponent,
     CarouselImagenComponent,
     ItemBookCardComponent,
-    ListBookCardComponent,
     FooterComponent,
     QuienesSomosComponent,
     MenuDesplegableComponent,
     MenuDesplegableItemComponent,
     BibliotecaComponent,
+    ImagenListBookCardComponent,
   ],
   /* LIBRARIES */
   imports: [

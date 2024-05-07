@@ -9,7 +9,7 @@ import { BookItemCard } from 'src/app/shared/models/book/book';
 export class ItemBookCardComponent {
 
   @Input() libro!: BookItemCard;
-  @Input() imagenOnly: boolean = false;
+  @Input() imagenOnly?: boolean;
 
   constructor() { }
 

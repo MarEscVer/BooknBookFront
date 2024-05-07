@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center mt-3 carousel-container">
+    <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let pagina of librosPorPagina; let i = index"
+                [class.active]="i === current">
+                <div class="row">
+                    <div class="col-12 cards-wrapper d-flex flex-row flex-nowrap overflow-auto">
+                        <div *ngFor="let libro of pagina" class="col-auto">
+                            <app-item-book-card [libro]="libro"></app-item-book-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Botón de control previo -->
+        <button class="carousel-control-prev top-50 translate-middle-y" type="button" (click)="prevCarouselItem()">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+
+        <!-- Botón de control siguiente -->
+        <button class="carousel-control-next top-50 translate-middle-y" type="button" (click)="nextCarouselItem()">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+</div>
