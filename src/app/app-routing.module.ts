@@ -10,12 +10,14 @@ import { AdminPageModeracionComponent } from './components/admin/pages/admin-pag
 import { AdminPageAddBookComponent } from './components/admin/pages/admin-page-add-book/admin-page-add-book.component';
 import { adminGuard, appGuard } from './auth/app.guard';
 import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
+import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "quienes-somos", component: QuienesSomosComponent},
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
+  {path: "biblioteca", component: BibliotecaComponent},
   {path: "home", component: HomeComponent, canActivate: [appGuard]},
   {path: "admin", component: AdminPageComponent, canActivate: [appGuard, adminGuard]},
   {path: "admin/usuarios", component: AdminPageUsersComponent},

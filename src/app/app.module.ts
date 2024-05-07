@@ -71,6 +71,7 @@ import { QuienesSomosComponent } from './components/user/pages/quienes-somos/qui
 import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
 import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable-item/menu-desplegable-item.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -116,6 +117,7 @@ import {MatMenuModule} from '@angular/material/menu';
     QuienesSomosComponent,
     MenuDesplegableComponent,
     MenuDesplegableItemComponent,
+    BibliotecaComponent,
   ],
   /* LIBRARIES */
   imports: [
