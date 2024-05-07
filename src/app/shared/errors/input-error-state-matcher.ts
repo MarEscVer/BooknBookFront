@@ -87,5 +87,8 @@ export class InputErrorStateMatcherExample {
     localidad: this.getFormControl_required(),
     biografia: this.getFormControl_texto(),
   }
-  
+
+  newsletter = {
+    email: this.getFormControl_Email(),
+  }
 }

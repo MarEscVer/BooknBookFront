@@ -1,0 +1,10 @@
+@import '../../../../../../style/variables.scss';
+
+.link {
+
+    &:hover {
+        color: $base-color;
+        cursor: pointer;
+    }
+
+}

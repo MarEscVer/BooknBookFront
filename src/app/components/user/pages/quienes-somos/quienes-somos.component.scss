@@ -1,0 +1,38 @@
+@import '../../../../../style/variables.scss';
+
+.container-fluid {
+    #logoRRSS {
+        min-width: $logo-rrss-max-min;
+        max-width: $logo-rrss-max-min;
+    }
+
+    #seccionImagen {
+        max-width: 345px;
+        min-width: 300px;
+        height: 675px;
+
+        img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+        }
+    }
+
+    #seccionTexto{
+        p {
+            font-size: 14px;
+        }
+    }
+
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    #seccionImagen {
+        display: none;
+    }
+
+    #seccionTexto {
+        padding: 15px;
+    }
+}

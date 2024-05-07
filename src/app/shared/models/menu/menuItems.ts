@@ -6,3 +6,8 @@ export interface MenuItem {
     iconPrefix: IconPrefix;
     tooltipText: string;
 }
+
+export interface MenuDesplegableItem {
+    routerLink: string;
+    tooltipText: string;
+}

@@ -1,0 +1,5 @@
+<a [matMenuTriggerFor]="menu" class="link">{{ menuItem.tooltipText }}</a>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item
+    *ngFor="let menuItemDesplegable of menuItemsDesplegable" (click)="dirigir(menuItemDesplegable.routerLink)">{{menuItemDesplegable.tooltipText}}</button>
+</mat-menu>

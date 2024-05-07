@@ -1,0 +1,17 @@
+@import '../../../../../style/variables.scss';
+
+mat-toolbar {
+    height: 58px;
+
+    .link {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        &:hover {
+            color: $base-color;
+            border-bottom: 1px solid $base-color;
+        }
+
+    }
+}

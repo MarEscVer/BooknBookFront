@@ -67,6 +67,10 @@ import { CarouselImagenComponent } from './components/home/carousel-imagen/carou
 import { ItemBookCardComponent } from './components/listado/item-book-card/item-book-card.component';
 import { ListBookCardComponent } from './components/listado/list-book-card/list-book-card.component';
 import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
+import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
+import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
+import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable-item/menu-desplegable-item.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -109,6 +113,9 @@ import { FooterComponent } from './components/barraNavegacion/footer/footer.comp
     ItemBookCardComponent,
     ListBookCardComponent,
     FooterComponent,
+    QuienesSomosComponent,
+    MenuDesplegableComponent,
+    MenuDesplegableItemComponent,
   ],
   /* LIBRARIES */
   imports: [
@@ -140,6 +147,7 @@ import { FooterComponent } from './components/barraNavegacion/footer/footer.comp
     MatDialogModule,
     MatRadioModule,
     MatProgressBarModule,
+    MatMenuModule,
   ],
   /* SERVICE */
   providers: [
