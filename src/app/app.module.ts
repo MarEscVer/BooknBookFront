@@ -64,7 +64,7 @@ import { AcceptModalComponent } from './components/modal/acceptModal/accept-moda
 import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
 import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
 import { CarouselImagenComponent } from './components/home/carousel-imagen/carousel-imagen.component';
-import { ItemBookCardComponent } from './components/user/pages/biblioteca/listado/item-book-card/item-book-card.component';
+import { ItemBookCardComponent } from './components/user/pages/biblioteca/listado/imagen-list-book-card/item-book-card/item-book-card.component';
 import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
 import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
 import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
