@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "biblioteca", component: BibliotecaComponent},
   { path: "home", component: HomeComponent},
-  { path: "biblioteca/:tipo/:genero", component: BibliotecaComponent},
+  { path: "biblioteca/:tipo/:genero/:titulo", component: BibliotecaComponent},
 // REGISTRADO
 
 // ADMINISTRADOR

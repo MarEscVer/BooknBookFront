@@ -35,6 +35,7 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
     this.breadcrumbs = ['Home', ...urlSegments];
   }
 
+  //TODO URL DINÁMICAS
   getLinkForCrumb(crumb: string): string[] {
     let link: string[] = [''];
 
@@ -50,8 +51,7 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
       } else if (crumb === 'Romántica') {
         link = ['/biblioteca', 'romantica'];
       } else {
-        const id = '123'; // Aquí debes obtener el ID del libro específico
-        link = ['/biblioteca', 'libro', id];
+        link = ['/biblioteca'];
       }
     }
     return link;
