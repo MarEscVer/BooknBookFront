@@ -1,6 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { BookItemCard } from 'src/app/shared/models/book/book';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-imagen-list-book-card',
@@ -14,7 +15,7 @@ import { BookItemCard } from 'src/app/shared/models/book/book';
   ]
 })
 
-export class ImagenListBookCardComponent implements OnInit{
+export class ImagenListBookCardComponent implements OnInit, OnDestroy {
 
   libros: BookItemCard[] = [
     {
@@ -93,13 +94,32 @@ export class ImagenListBookCardComponent implements OnInit{
   isMobile: boolean = false;
   current = 0;
 
+  @Input() listadoService: any;
+
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+  private subscriptions: Subscription = new Subscription();
+
+  constructor() { }
+
   ngOnInit() {
+    // this.loadData();
+
     this.onResize();
     setInterval(() => {
       this.current = ++this.current % this.librosPorPagina.length;
     }, 6000);
   }
-  
+
+  // loadData() {
+  //   this.subscriptions.add(this.listadoService.getListado().subscribe((data: BookItemCard[]) => {
+  //     if (data) {
+  //       this.libros = data;
+  //     }
+  //   }));
+  // }
+
   @HostListener('window:resize', ['$event'])
   onResize(event?: Event) {
     this.isMobile = window.innerWidth <= 576;
@@ -128,13 +148,15 @@ export class ImagenListBookCardComponent implements OnInit{
     }
   }
 
-
-
   nextCarouselItem() {
     this.current = (this.current + 1) % this.librosPorPagina.length;
   }
 
   prevCarouselItem() {
     this.current = (this.current - 1 + this.librosPorPagina.length) % this.librosPorPagina.length;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

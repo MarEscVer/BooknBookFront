@@ -1,14 +1,16 @@
+<app-breadcumb></app-breadcumb>
 <app-menu-desplegable></app-menu-desplegable>
 <div class="carousel-libro mt-5">
     <h5 class="carousel-titulo text-center m-0">LOS MÁS LEIDOS</h5>
-    <app-imagen-list-book-card></app-imagen-list-book-card>
+    <app-imagen-list-book-card [listadoService]="masLeidosBookService"></app-imagen-list-book-card>
 </div>
 <div class="carousel-libro mt-5">
     <h5 class="carousel-titulo text-center m-0">RECOMENDADOS</h5>
-    <app-imagen-list-book-card></app-imagen-list-book-card>
+    <app-imagen-list-book-card [listadoService]="recomendadosBookService"></app-imagen-list-book-card>
 </div>
 <div class="carousel-libro mt-5 mb-5">
     <h5 class="carousel-titulo text-center m-0">NOVEDADES</h5>
-    <app-imagen-list-book-card></app-imagen-list-book-card>
+    <app-imagen-list-book-card [listadoService]="novedadesBookService"></app-imagen-list-book-card>
 </div>
 <app-footer></app-footer>
+

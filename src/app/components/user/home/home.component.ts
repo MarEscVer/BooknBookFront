@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RandomBookService } from 'src/app/services/book/random-book.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
@@ -20,6 +21,7 @@ export class HomeComponent {
     private notification: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
+    public randomBookService: RandomBookService,
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;

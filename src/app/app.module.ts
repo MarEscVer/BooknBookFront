@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgIf } from '@angular/common';
 import { InputErrorStateMatcherExample } from './shared/errors/input-error-state-matcher';
-import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';import { HomeComponent } from './components/home/home/home.component';
+import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';import { HomeComponent } from './components/user/home/home.component';
 import { MessageErrorComponent } from './components/messages/message-error/message-error.component';
 import { GlobalErrorHandler } from './interceptors/global-error-handler';
 import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
@@ -32,7 +32,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from './components/barraNavegacion/header/header.component';
 import { MatListModule } from "@angular/material/list";
 import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.component';
-import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
+import { AdminPageComponent } from './components/admin/pages/admin-page/admin-page.component';
 import { MenuItemComponent } from './components/barraNavegacion/menu/menu-item/menu-item.component';
 import { MenuComponent } from './components/barraNavegacion/menu/menu.component';
 import { ListadoUsuarioAdminComponent } from './components/admin/listados-admin/listado-usuario-admin/listado-usuario-admin.component';
@@ -63,7 +63,7 @@ import { AcceptButtonComponent } from './components/modal/acceptModal/accept-but
 import { AcceptModalComponent } from './components/modal/acceptModal/accept-modal/accept-modal.component';
 import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
 import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
-import { CarouselImagenComponent } from './components/home/carousel-imagen/carousel-imagen.component';
+import { CarouselImagenComponent } from './components/user/home/carousel-imagen/carousel-imagen.component';
 import { ItemBookCardComponent } from './components/user/pages/biblioteca/listado/imagen-list-book-card/item-book-card/item-book-card.component';
 import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
 import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
@@ -72,6 +72,7 @@ import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuD
 import {MatMenuModule} from '@angular/material/menu';
 import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
 import { ImagenListBookCardComponent } from './components/user/pages/biblioteca/listado/imagen-list-book-card/imagen-list-book-card.component';
+import { BreadcumbComponent } from './components/barraNavegacion/breadcumb/breadcumb.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -118,6 +119,7 @@ import { ImagenListBookCardComponent } from './components/user/pages/biblioteca/
     MenuDesplegableItemComponent,
     BibliotecaComponent,
     ImagenListBookCardComponent,
+    BreadcumbComponent
   ],
   /* LIBRARIES */
   imports: [
