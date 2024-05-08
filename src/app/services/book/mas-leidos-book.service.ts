@@ -11,7 +11,7 @@ export class MasLeidosBookService {
   constructor(private http: HttpClient) { }
 
   //TODO getListado URL
-  getListado(): Observable<any> {
+  getListado(genero?: string): Observable<any> {
     return this.http.get<any>(this.baseUrl, httpOptions)
       .pipe(catchError(this.handleError));
   }

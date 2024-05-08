@@ -1,10 +1,11 @@
 <div class="table-responsive">
-    <mat-form-field color="primary" appearance="outline" class="m-2">
-        <mat-label>FILTRADO</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
-    </mat-form-field>
-
     <div class="mat-elevation-z8">
+        <mat-form-field color="primary" appearance="outline" class="m-2">
+            <mat-label>FILTRADO</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
+        </mat-form-field>
+
+
         <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="img">

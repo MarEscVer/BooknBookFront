@@ -64,15 +64,17 @@ import { AcceptModalComponent } from './components/modal/acceptModal/accept-moda
 import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
 import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
 import { CarouselImagenComponent } from './components/user/home/carousel-imagen/carousel-imagen.component';
-import { ItemBookCardComponent } from './components/user/pages/biblioteca/listado/imagen-list-book-card/item-book-card/item-book-card.component';
+import { ItemBookCardComponent } from './components/user/pages/biblioteca/item-book-card/item-book-card.component';
 import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
 import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
 import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
 import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable-item/menu-desplegable-item.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
-import { ImagenListBookCardComponent } from './components/user/pages/biblioteca/listado/imagen-list-book-card/imagen-list-book-card.component';
+import { ImagenListBookCardComponent } from './components/user/pages/biblioteca/imagen-list-book-card/imagen-list-book-card.component';
 import { BreadcumbComponent } from './components/barraNavegacion/breadcumb/breadcumb.component';
+import { BibliotecaGeneroComponent } from './components/user/pages/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
+import { PaginadorListBookComponent } from './components/user/pages/biblioteca/paginador-list-book/paginador-list-book.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -119,7 +121,9 @@ import { BreadcumbComponent } from './components/barraNavegacion/breadcumb/bread
     MenuDesplegableItemComponent,
     BibliotecaComponent,
     ImagenListBookCardComponent,
-    BreadcumbComponent
+    BreadcumbComponent,
+    BibliotecaGeneroComponent,
+    PaginadorListBookComponent
   ],
   /* LIBRARIES */
   imports: [

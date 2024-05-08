@@ -1,0 +1,17 @@
+<div class="table-responsive">
+    <div class="container-fluid">
+        <mat-form-field color="primary" appearance="outline" class="m-0">
+            <mat-label>FILTRADO</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
+        </mat-form-field>
+
+        <div class="row-flex justify-content-start flex-wrap mt-2">
+            <div class="book-card" *ngFor="let libro of observable | async">
+                <app-item-book-card [libro]="libro"></app-item-book-card>
+            </div>
+        </div>
+
+        <mat-paginator class="d-flex justify-content-start"
+        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</div>

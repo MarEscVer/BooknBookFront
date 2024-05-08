@@ -6,6 +6,7 @@ export const environment = {
   BASE_TOKEN: '/api',
   BASE_ADMIN: '/admin',
   USER_URL: '/api/user',
+  BIBLIO_URL: '/biblioteca',
 };
 export const endpoints = {
   LOGIN: '/login',

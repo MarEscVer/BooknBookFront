@@ -18,8 +18,6 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
 
   imgNoData: string = '../../../../assets/img/iconoLibro.jpg';
   dataSource: MatTableDataSource<BookItemList>;
-  editedItems: BookItemList[] = [];
-  originalRol: string = '';
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
@@ -60,6 +58,6 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
 
   editBook(bookId: number) {
     this.router.navigate(['/admin/book', bookId]);
-}
+  }
 
 }

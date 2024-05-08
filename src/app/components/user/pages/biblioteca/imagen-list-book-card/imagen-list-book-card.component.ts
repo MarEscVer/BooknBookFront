@@ -95,6 +95,7 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
   current = 0;
 
   @Input() listadoService: any;
+  @Input() genero?: string;
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
