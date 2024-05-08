@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output 
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,13 +29,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-  ) {}
+    private notification: NotificationService,
+  ) { }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onToggleSidenav() {
     this.SidenavToggle.emit();
@@ -48,18 +50,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/perfil']);
   }
 
-  //TODO hacer el metodo para logout
-  toLogout() {
-
-  }
-
   toAdmin() {
     this.router.navigate(['/admin']);
   }
-  
+
   cerrarSesion() {
-    this.authService.closeSessionTotal();
-    this.router.navigate(['/']);
+    if (this.authService.closeSessionTotal()) {
+      this.notification.show(
+        'Se ha cerrado sesion Correctamente',
+        'success'
+      );
+      this.router.navigate(['/']);
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { BookItemCard } from 'src/app/shared/models/book/book';
 
@@ -14,7 +14,7 @@ import { BookItemCard } from 'src/app/shared/models/book/book';
   ]
 })
 
-export class ImagenListBookCardComponent {
+export class ImagenListBookCardComponent implements OnInit{
 
   libros: BookItemCard[] = [
     {
@@ -93,15 +93,17 @@ export class ImagenListBookCardComponent {
   isMobile: boolean = false;
   current = 0;
 
-
+  ngOnInit() {
+    this.onResize();
+    setInterval(() => {
+      this.current = ++this.current % this.librosPorPagina.length;
+    }, 6000);
+  }
+  
   @HostListener('window:resize', ['$event'])
   onResize(event?: Event) {
     this.isMobile = window.innerWidth <= 576;
     this.dividirLibrosPorPagina();
-  }
-
-  ngOnInit() {
-    this.onResize();
   }
 
   dividirLibrosPorPagina() {

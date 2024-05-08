@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -13,22 +13,35 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string | null>(null);
   userRole$: Observable<string | null> = this.userRoleSubject.asObservable();
 
-  constructor() {}
+  constructor() {
+    this.iniciarSesionSiExiste();
+  }
 
   public closeSession(): void {
     this.deleteCookie('token');
     this.userRoleSubject.next(null);
   }
 
-  public closeSessionTotal(): void {
+  public closeSessionTotal(): boolean {
     this.deleteCookie('token');
     this.deleteCookie('username');
     this.deleteCookie('rol');
     this.userRoleSubject.next(null);
+    return true;
   }
 
   public iniciarSession(): void {
     this.userRoleSubject.next(this.getCookie('rol'));
+  }
+
+  private iniciarSesionSiExiste(): void {
+    const token = this.getCookie('token');
+    const rol = this.getCookie('rol');
+    const username = this.getCookie('username');
+
+    if (token && rol && username) {
+      this.iniciarSession();
+    }
   }
 
   public getCookie(name: string) {

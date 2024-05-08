@@ -2,15 +2,25 @@
     <div class="container text-center">
         <div class="d-flex flex-row justify-content-around align-items-center">
             <div class="w-25" id="seccion1">
-                <div class="d-flex flex-column text-center">
-                    <div class="mb-2">
-                        ¡Explora, comparte y conecta!
-                        Tu biblioteca virtual y comunidad literaria en un solo lugar
+                <ng-container *ngIf="!userRole">
+                    <div class="d-flex flex-column text-center">
+                        <div class="mb-2">
+                            ¡Explora, comparte y conecta!
+                            Tu biblioteca virtual y comunidad literaria a un solo click
+                        </div>
+                        <div class="btn-wrapper">
+                            <button mat-button class="estilo-oscuro" (click)="rutaSuscribirse()">REGÍSTRATE</button>
+                        </div>
                     </div>
-                    <div class="btn-wrapper">
-                        <button mat-button class="estilo-oscuro" (click)="submit()">REGÍSTRATE</button>
+                </ng-container>
+                <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'">
+                    <div class="d-flex flex-column text-center">
+                        <div>
+                            Únete a nuestra comunidad literaria y mantente al día con las últimas noticias,
+                            recomendaciones de libros y eventos emocionantes
+                        </div>
                     </div>
-                </div>
+                </ng-container>
             </div>
             <div class="" id="seccion2">
                 <div class="text-center">

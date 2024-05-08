@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   public active: boolean = false;
   userRole?: string | null;
 
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private notification: NotificationService,
   ) { }
 
   setActive(): void {
@@ -43,8 +45,13 @@ export class HeaderComponent implements OnInit {
   }
 
   cerrarSesion() {
-    this.authService.closeSessionTotal();
-    this.router.navigate(['/']);
+    if (this.authService.closeSessionTotal()) {
+      this.notification.show(
+        'Se ha cerrado sesion Correctamente',
+        'success'
+      );
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnDestroy(): void {
