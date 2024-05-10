@@ -1,0 +1,25 @@
+<div class="stars">
+    <ng-container *ngFor="let star of stars; index as i">
+        <svg class="star" (click)='setRating(star)' width="255" height="240" viewBox="0 0 51 48">
+            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z" />
+        </svg>
+    </ng-container>
+</div>
+
+<!-- <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+    <app-estrellas formControlName="estrellas"></app-estrellas>
+</form> 
+
+  form: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+  ) {
+    this.form = this.fb.group({
+      estrellas: this.fb.control(null),
+    });
+
+    this.form.valueChanges.subscribe(data => { console.log(data); });
+  }
+
+-->

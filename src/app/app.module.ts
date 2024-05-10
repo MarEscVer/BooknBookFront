@@ -75,6 +75,9 @@ import { ImagenListBookCardComponent } from './components/user/pages/biblioteca/
 import { BreadcumbComponent } from './components/barraNavegacion/breadcumb/breadcumb.component';
 import { BibliotecaGeneroComponent } from './components/user/pages/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
 import { PaginadorListBookComponent } from './components/user/pages/biblioteca/paginador-list-book/paginador-list-book.component';
+import { LibroComponent } from './components/user/pages/biblioteca/pages/libro/libro.component';
+import { FichaLibroComponent } from './components/user/pages/biblioteca/ficha-libro/ficha-libro.component';
+import { EstrellasComponent } from './components/user/pages/biblioteca/estrellas/estrellas.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -123,7 +126,10 @@ import { PaginadorListBookComponent } from './components/user/pages/biblioteca/p
     ImagenListBookCardComponent,
     BreadcumbComponent,
     BibliotecaGeneroComponent,
-    PaginadorListBookComponent
+    PaginadorListBookComponent,
+    LibroComponent,
+    FichaLibroComponent,
+    EstrellasComponent
   ],
   /* LIBRARIES */
   imports: [

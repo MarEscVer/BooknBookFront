@@ -1,0 +1,25 @@
+<app-breadcumb></app-breadcumb>
+<app-ficha-libro [libro]="libro"></app-ficha-libro>
+<div class="carousel-libro mb-4">
+    <h5 class="carousel-titulo text-center m-0">RECOMENDADOS</h5>
+    <app-imagen-list-book-card [listadoService]="masLeidosBookService"></app-imagen-list-book-card>
+</div>
+
+<!-- Estrellas valoracion media -->
+<div class="d-flex flex-column align-items-center mb-3">
+    <div class="d-flex flex-row align-items-baseline">
+        <h4>Opiniones sobre {{libro.titulo| uppercase}}</h4>
+    </div>
+    <div class="stars">
+        <ng-container *ngFor="let star of stars; index as i">
+            <svg class="star" width="255" height="240" viewBox="0 0 51 48" [ngClass]="{'active': i < valoracionMedia}">
+                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z" />
+            </svg>
+        </ng-container>
+    </div>
+    <div class="contador-comentarios">({{this.contadorComentario}} comentarios)</div>
+    <div class="d-flex flex-row align-items-baseline">
+        <h1 class="valoracion">{{this.valoracionMedia}}</h1><span>/5</span>
+    </div>
+    <button mat-raised-button type="button" color="accent" (click)="generarComentario()">DEJAR MI OPINIÓN</button>
+</div>

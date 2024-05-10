@@ -1,0 +1,93 @@
+@import '../../../../../../style/variables.scss';
+
+.imagen-libro {
+    width: 300px;
+    height: 450px;
+    object-fit: cover;
+}
+
+.detalle-titulo, .detalle-saga {
+    color:$black-color;
+}
+
+.detalle-autor{
+    color: $grey-color;
+}
+
+.favorito {
+    background-color: $background-heart;
+    color: $color-heart;
+}
+
+.proceso {
+    background-color: $background-rotate;
+    color: $color-rotate;
+}
+
+.leido {
+    background-color: $background-check;
+    color: $color-check;
+}
+
+.sin-estado {
+    background-color: $claro-color;
+    color: $base-color;
+}
+
+
+.stars {
+    flex: 0 0 50%;
+
+    .star {
+        cursor: pointer;
+        width: 30px;
+        height: auto;
+
+        fill: white;
+        stroke: #ccc;
+
+
+    }
+
+    .active {
+        fill: #ffbb00;
+        stroke: darken(#ffbb00, 10%);
+    }
+
+}
+
+.detalle-enlace {
+    a {
+       color: $claro-color;
+       text-decoration: underline;
+    }
+    
+}
+
+.detalle-texto-sinopsis {
+    max-height: 4.5em; // Define el número máximo de líneas que deseas mostrar
+    overflow: hidden;
+    position: relative;
+
+    &.expanded {
+        max-height: none; // Elimina la restricción de altura para mostrar todo el texto
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 70%);
+        pointer-events: none;
+    }
+}
+
+.enlace {
+    padding-top: 15px;
+    width: auto;
+    text-decoration: none;
+    z-index: 1;
+    cursor: pointer;
+    color: $claro-color;
+}

@@ -1,0 +1,77 @@
+<div class="container-fluid mb-5" *ngIf="libro">
+    <div class="row justify-content-center">
+        <!-- Imagen del libro -->
+        <div class="col-md-3">
+            <img [src]="libro.imagen" class="img-fluid imagen-libro" alt="Imagen del libro">
+        </div>
+        <!-- Detalles del libro -->
+        <div class="col-md-6">
+            <div class="detalle-info">
+                <div class="mb-2 d-flex align-items-center">
+                    <h3 class="detalle-titulo mt-2"><strong>{{libro.titulo | uppercase}}</strong></h3>
+                    <div class="detalle-estado ms-2">
+                        <ng-container *ngIf="libro.estado === 'LEÍDO'">
+                            <button mat-icon-button class="leido" aria-label="Editar" (click)="seleccionarEstado()">
+                                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="libro.estado === 'PROCESO'">
+                            <button mat-icon-button class="proceso" aria-label="Editar" (click)="seleccionarEstado()">
+                                <fa-icon [icon]="['fas', 'rotate']"></fa-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="libro.estado === 'FAVORITO'">
+                            <button mat-icon-button class="favorito" aria-label="Editar" (click)="seleccionarEstado()">
+                                <fa-icon [icon]="['fas', 'heart']"></fa-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="libro.estado !== 'LEÍDO' && libro.estado !== 'PROCESO' && libro.estado !== 'FAVORITO'">
+                            <button mat-icon-button class="sin-estado" aria-label="Editar"
+                                (click)="seleccionarEstado()">
+                                <fa-icon [icon]="['fas', 'heart']"></fa-icon>
+                            </button>
+                        </ng-container>
+
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <h4 class="detalle-saga"><em>{{libro.saga | uppercase}}</em></h4>
+                    <h4 class="detalle-autor">{{libro.autor | uppercase}}</h4>
+                </div>
+                <div class="mb-2">
+                    <div class="detalle-fecha">Fecha de publicación: {{libro.fechaPublicacion}}</div>
+                    <div class="detalle-paginas">Páginas totales: {{libro.paginasTotales}}</div>
+                </div>
+
+                <!-- Estrellas valoracion media -->
+                <div class="d-flex flex-column mb-2">
+                    <div class="stars">
+                        <ng-container *ngFor="let star of stars; index as i">
+                            <svg class="star" width="255" height="240" viewBox="0 0 51 48"
+                                [ngClass]="{'active': i < valoracionMedia}">
+                                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z" />
+                            </svg>
+                        </ng-container>
+                    </div>
+                    <div class="detalle-enlace"><a href="#">Escribe tu opinión</a></div>
+                </div>
+
+                <div class="d-flex gap-2 mb-2">
+                    <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
+                    <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre| uppercase}}</div>
+                </div>
+            </div>
+            <div class="detalle-sinopsis">
+                <div class="detalle-sinopsis">
+                    <h5 class="detalle-titulo-sinopsis"><strong>Sinópsis:</strong></h5>
+                    <div class="detalle-texto-sinopsis" [ngClass]="{'expanded': isExpanded}">
+                        {{ libro.descripcion }}
+                    </div>
+                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar más'
+                        }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

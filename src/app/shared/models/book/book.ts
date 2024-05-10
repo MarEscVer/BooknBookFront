@@ -1,3 +1,20 @@
+import { GeneroTipo } from "../combo/combo";
+
+export interface Book {
+    id: number;
+    imagen: any;
+    titulo: string;
+    autor: string;
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
+    fechaPublicacion: string;
+    paginasTotales: number;
+    valoracionMedia: number;
+    estado: string;
+    saga: string;
+    descripcion: string;
+}
+
 export interface BookItemList {
     id: number;
     img: any;
@@ -17,7 +34,7 @@ export interface BookItemCard {
 }
 
 export interface BookData {
-    fechaPublicacion: string; // Formato
+    fechaPublicacion: string;
     nombre: string;
     paginas: number;
     idAutor: number;
@@ -30,7 +47,7 @@ export interface BookData {
 
 export interface BookEdit{
     imagen: string;
-    fechaPublicacion: string; // Formato
+    fechaPublicacion: string;
     nombre: string;
     paginas: number;
     idAutor: number;

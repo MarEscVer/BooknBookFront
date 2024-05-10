@@ -26,4 +26,3 @@ export interface GeneroTipo {
     nombre: string;
     color: string;
 }
-

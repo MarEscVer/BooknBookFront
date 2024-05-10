@@ -1,0 +1,24 @@
+@import '../../../../../../../style/variables.scss';
+
+.stars {
+    flex: 0 0 50%;
+
+    .star {
+        cursor: pointer;
+        width: 30px;
+        height: auto;
+
+        fill: white;
+        stroke: #ccc;
+    }
+
+    .active {
+        fill: #ffbb00;
+        stroke: darken(#ffbb00, 10%);
+    }
+
+}
+
+.valoracion{
+    color: $black-color;
+}

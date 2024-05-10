@@ -1,0 +1,29 @@
+.stars {
+    flex: 0 0 50%;
+}
+
+.star {
+    cursor: pointer;
+    width: 30px;
+    height: auto;
+
+    fill: white;
+    stroke: #ccc;
+
+    transform: scale(0.8);
+    transition: transform 200ms ease-in-out;
+
+    path {
+        transition: fill 200ms ease-in-out, stroke 100ms ease-in-out;
+    }
+}
+
+.active {
+    fill: #ffbb00;
+    stroke: darken(#ffbb00, 10%);
+}
+
+* {
+    display: flex;
+    flex-flow: row wrap;
+}

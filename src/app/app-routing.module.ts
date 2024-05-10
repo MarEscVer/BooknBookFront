@@ -12,6 +12,7 @@ import { adminGuard, appGuard } from './auth/app.guard';
 import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
 import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
 import { BibliotecaGeneroComponent } from './components/user/pages/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
+import { LibroComponent } from './components/user/pages/biblioteca/pages/libro/libro.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path: "biblioteca", component: BibliotecaComponent},
   { path: "home", component: HomeComponent},
   { path: "biblioteca/:genero", component: BibliotecaGeneroComponent},
-  { path: "biblioteca/:genero/:titulo", component: BibliotecaComponent},
+  { path: "titulo", component: LibroComponent},
 // REGISTRADO
 
 // ADMINISTRADOR
