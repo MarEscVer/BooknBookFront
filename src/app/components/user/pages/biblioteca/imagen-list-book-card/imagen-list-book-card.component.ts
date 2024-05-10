@@ -1,7 +1,7 @@
 import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { BookItemCard } from 'src/app/shared/models/book/book';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-imagen-list-book-card',
@@ -95,7 +95,8 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
   current = 0;
 
   @Input() listadoService: any;
-  @Input() genero?: string;
+  @Input() generoObs?: Observable<string>;
+  genero!: string;
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -105,12 +106,17 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    // this.loadData();
 
-    this.onResize();
-    setInterval(() => {
-      this.current = ++this.current % this.librosPorPagina.length;
-    }, 6000);
+    this.subscriptions.add(this.generoObs?.subscribe(genero => {
+      this.genero = genero;
+    }));
+
+      // this.loadData();
+
+      this.onResize();
+      setInterval(() => {
+        this.current = ++this.current % this.librosPorPagina.length;
+      }, 6000);
   }
 
   // loadData() {

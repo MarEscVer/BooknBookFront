@@ -2,9 +2,10 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } fro
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookItemCard } from 'src/app/shared/models/book/book';
+import { BibliotecaGeneroComponent } from '../pages/biblioteca-genero/biblioteca-genero.component';
 
 @Component({
   selector: 'app-paginador-list-book',
@@ -86,7 +87,8 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
     }
   ];
 
-  @Input() genero!: string;
+  @Input() generoObs?: Observable<string>;
+  genero!: string;
   dataSource: MatTableDataSource<BookItemCard> = new MatTableDataSource<BookItemCard>(this.listadoLibros);
   observable?: Observable<any>;
 
@@ -96,6 +98,11 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
   pageEvent?: PageEvent;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     public bookServie: BookService,
@@ -108,15 +115,22 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    //TODO LLAMAR SERVICIO CON EL GENERO(TIPO) QUE QUIERO OBTENER LIBROS
+    this.subscriptions.add(this.generoObs?.subscribe(genero => {
+      this.genero = genero;
+    }));
+
+    // this.loadData();
 
     if (this.listadoLibros) {
       this.dataSource = new MatTableDataSource<BookItemCard>(this.listadoLibros);
       this.changeDetectorRef.detectChanges();
       this.dataSource.paginator = this.paginator;
       this.observable = this.dataSource.connect();
-      this.observable.subscribe({ next: (data) => { console.log(data) } });
     }
+  }
+
+  loadData() {
+    //TODO LLAMAR SERVICIO CON EL GENERO(TIPO) QUE QUIERO OBTENER LIBROS
   }
 
   applyFilter(event: Event) {
@@ -127,6 +141,7 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
     if (this.dataSource) {
       this.dataSource.disconnect();
     }
+    this.subscriptions.unsubscribe();
   }
 
 }

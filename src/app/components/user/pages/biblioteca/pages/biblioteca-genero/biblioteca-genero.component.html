@@ -1,2 +1,6 @@
-<app-imagen-list-book-card [listadoService]="masLeidosBookService" [genero]="genero"></app-imagen-list-book-card>
-<app-paginador-list-book [genero]="genero"></app-paginador-list-book>
+<div *ngIf="genero$">
+    <app-menu-desplegable></app-menu-desplegable>
+    <app-breadcumb></app-breadcumb>
+    <app-imagen-list-book-card [listadoService]="masLeidosBookService" [generoObs]="genero$"></app-imagen-list-book-card>
+    <app-paginador-list-book [generoObs]="genero$"></app-paginador-list-book>
+</div>

@@ -17,7 +17,6 @@ export class AppPermissionService {
   canActivate(): boolean {
     let token = this.cookieService.getCookie('token');
     let rol = this.cookieService.getCookie('rol');
-    console.log('decide token', token);
     if (token && rol) {
       return true;
     } else {

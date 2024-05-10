@@ -28,7 +28,7 @@ export class AddAutorButtonComponent implements OnDestroy {
     const dialogRef = this.dialog.open(AddAutorModalComponent, {
       width: '100%',
       data: { autorId: this.autorId }
-    }).afterClosed().subscribe((combo: Combo) => {console.log(combo); this.autorCreado.emit(combo)});
+    }).afterClosed().subscribe((combo: Combo) => {this.autorCreado.emit(combo)});
   }
 
   ngOnDestroy(): void {

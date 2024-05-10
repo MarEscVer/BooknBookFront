@@ -70,7 +70,6 @@ export class MessageErrorComponent extends Toast {
     protected override toastrService: ToastrService,
     public override toastPackage: ToastPackage
   ) {
-    //console.log(toastrService);
     super(toastrService, toastPackage);
     //this.width = 500;
     if (toastPackage?.message) {
@@ -87,7 +86,6 @@ export class MessageErrorComponent extends Toast {
     //this.completeErrorMessage = this.snackBarRef?.containerInstance.snackBarConfig.data.message;
     //this.message = this.snackBarRef?.containerInstance.snackBarConfig.data.message.largeDescription;
     //this.action = this.snackBarRef?.containerInstance.snackBarConfig.data.action;
-    //console.log(this.completeErrorMessage);
   }
 
   action(event: Event) {
