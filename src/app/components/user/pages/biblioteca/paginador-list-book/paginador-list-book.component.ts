@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookItemCard } from 'src/app/shared/models/book/book';
-import { BibliotecaGeneroComponent } from '../pages/biblioteca-genero/biblioteca-genero.component';
 
 @Component({
   selector: 'app-paginador-list-book',

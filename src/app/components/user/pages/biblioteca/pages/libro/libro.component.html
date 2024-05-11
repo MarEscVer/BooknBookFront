@@ -8,7 +8,7 @@
 <!-- Estrellas valoracion media -->
 <div class="d-flex flex-column align-items-center mb-3">
     <div class="d-flex flex-row align-items-baseline">
-        <h4>Opiniones sobre {{libro.titulo| uppercase}}</h4>
+        <h5>Opiniones sobre {{libro.titulo| uppercase}}</h5>
     </div>
     <div class="stars">
         <ng-container *ngFor="let star of stars; index as i">
@@ -23,3 +23,5 @@
     </div>
     <button mat-raised-button type="button" color="accent" (click)="generarComentario()">DEJAR MI OPINIÓN</button>
 </div>
+
+<app-valoracion-table></app-valoracion-table>

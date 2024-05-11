@@ -1,0 +1,77 @@
+@import '../../../../../../../style/mixin.scss';
+@import '../../../../../../../style/variables.scss';
+
+.container-comentario {
+    border-top: 1px solid $claro-color;
+
+    .circular-image {
+        @include circular-image();
+    }
+
+    .container-contenido {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        margin: 20px;
+    
+        .detalles-valoracion{
+            margin-left: 20px;
+        }
+
+        .detalles-usuario{
+            margin-left: 10px;
+        }
+
+        .detalles-denuncia {
+            margin-right: 20px;
+            margin-left: auto;
+        }
+
+    }
+
+    .stars {
+        flex: 0 0 50%;
+
+        .star {
+            cursor: pointer;
+            width: 30px;
+            height: auto;
+
+            fill: white;
+            stroke: #ccc;
+
+
+        }
+
+        .active {
+            fill: #ffbb00;
+            stroke: darken(#ffbb00, 10%);
+        }
+
+    }
+}
+
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    .container-contenido {
+        flex-direction: column !important;
+        gap: 10px;
+
+        .detalles-valoracion{
+            text-align: center;
+            margin: 0;
+        }
+
+        .detalles-usuario{
+            text-align: center;
+            margin: 0;
+        }
+
+        .detalles-denuncia{
+            text-align: center;
+            margin: 0 !important;
+        }
+    }
+}

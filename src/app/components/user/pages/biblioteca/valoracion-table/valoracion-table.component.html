@@ -1,0 +1,16 @@
+<div class="table-responsive">
+    <div class="container-fluid">
+        <mat-form-field color="primary" appearance="outline" class="m-3">
+            <mat-label>FILTRADO</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
+        </mat-form-field>
+
+        <div class="row-flex mt-3">
+            <div *ngFor="let comentario of comentarios" class="comentario">
+                <app-valoracion-table-item [comentario]="comentario"></app-valoracion-table-item>
+            </div>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</div>
