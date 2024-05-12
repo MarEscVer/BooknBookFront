@@ -1,4 +1,4 @@
-<mat-card class="custom-card">
+<mat-card class="custom-card" (click)="fichaLibro(libro.id)">
   <img mat-card-image src="{{libro.imagen}}" alt="Portada del libro {{libro.titulo}}">
   <mat-card-content class="texto">
     <span class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</span>

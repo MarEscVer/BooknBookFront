@@ -1,0 +1,28 @@
+<div *ngIf="autor">
+    <div class="container-fluid mb-5 mt-5">
+        <div class="row justify-content-center">
+            <!-- Imagen del autor -->
+            <div class="col-md-3">
+                <ng-container *ngIf="autor.imagen !== null && autor.imagen !== ''; else noData">
+                    <img [src]="'data:image;base64,' + autor.imagen" alt="Icono de autor"
+                        class="img-fluid imagen-libro">
+                </ng-container>
+                <ng-template #noData>
+                    <img [src]="imgNoData" alt="Icono de club" class="img-fluid imagen-autor">
+                </ng-template>
+            </div>
+            <!-- Detalles del autor -->
+            <div class="col-md-6">
+                <div class="detalle-info">
+                    <h3 class="detalle-nombre mt-2"><strong>{{autor.pseudonimo| uppercase}}</strong></h3>
+                    <div><span>{{autor.biografia}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center mt-4">
+            <h5 class="">Libros de {{autor.pseudonimo| uppercase}}</h5>
+            <app-paginador-list-book></app-paginador-list-book>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

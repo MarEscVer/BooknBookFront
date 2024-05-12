@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment, httpOptions } from 'src/environments/environment';
 import { deleteObject } from '../interfaces';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
 import { ComboResponse, IdComboResponse } from 'src/app/shared/models/combo/combo';
 
@@ -11,7 +11,21 @@ import { ComboResponse, IdComboResponse } from 'src/app/shared/models/combo/comb
 })
 export class AutorService implements deleteObject {
   private baseUrl: string = environment.BASE_URL;
-  constructor(private http: HttpClient) { }
+  private autorSeleccionadoSubject: BehaviorSubject<AutorData | undefined> = new BehaviorSubject<AutorData | undefined>(undefined);
+  autorSeleccionado$: Observable<AutorData | undefined> = this.autorSeleccionadoSubject.asObservable();
+
+  constructor(private http: HttpClient) {
+    const storedAutor = localStorage.getItem('selectedAutor');
+    const initialAutor = storedAutor ? JSON.parse(storedAutor) : undefined;
+    this.autorSeleccionadoSubject = new BehaviorSubject<AutorData | undefined>(initialAutor);
+    this.autorSeleccionado$ = this.autorSeleccionadoSubject.asObservable();
+  }
+
+  setAutor(autor: AutorData) {
+    this.autorSeleccionadoSubject.next(autor);
+    localStorage.setItem('selectedAutor', JSON.stringify(autor));
+
+  }
 
   //TODO delete URL
   delete(id: number): Observable<any> {

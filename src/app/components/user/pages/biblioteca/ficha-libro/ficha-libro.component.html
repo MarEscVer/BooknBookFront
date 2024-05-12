@@ -37,7 +37,7 @@
                 </div>
                 <div class="mb-2">
                     <h4 class="detalle-saga"><em>{{libro.saga | uppercase}}</em></h4>
-                    <h4 class="detalle-autor">{{libro.autor | uppercase}}</h4>
+                    <a (click)="autorLibro(libro.autor.id)"><h4 class="detalle-autor enlace">{{libro.autor.pseudonimo| uppercase}}</h4></a>
                 </div>
                 <div class="mb-2">
                     <div class="detalle-fecha">Fecha de publicación: {{libro.fechaPublicacion}}</div>
@@ -68,8 +68,7 @@
                     <div class="detalle-texto-sinopsis" [ngClass]="{'expanded': isExpanded}">
                         {{ libro.descripcion }}
                     </div>
-                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar más'
-                        }}</a>
+                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar más'}}</a>
                 </div>
             </div>
         </div>

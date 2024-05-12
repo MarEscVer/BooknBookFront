@@ -80,6 +80,7 @@ import { FichaLibroComponent } from './components/user/pages/biblioteca/ficha-li
 import { EstrellasComponent } from './components/user/pages/biblioteca/estrellas/estrellas.component';
 import { ValoracionTableItemComponent } from './components/user/pages/biblioteca/valoracion-table/valoracion-table-item/valoracion-table-item.component';
 import { ValoracionTableComponent } from './components/user/pages/biblioteca/valoracion-table/valoracion-table.component';
+import { AutorComponent } from './components/user/pages/biblioteca/pages/autor/autor.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -133,7 +134,8 @@ import { ValoracionTableComponent } from './components/user/pages/biblioteca/val
     FichaLibroComponent,
     EstrellasComponent,
     ValoracionTableItemComponent,
-    ValoracionTableComponent
+    ValoracionTableComponent,
+    AutorComponent
   ],
   /* LIBRARIES */
   imports: [

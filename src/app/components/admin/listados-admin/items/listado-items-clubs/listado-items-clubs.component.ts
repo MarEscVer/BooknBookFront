@@ -14,7 +14,7 @@ import { ClubItemList } from 'src/app/shared/models/club/club';
 export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = ['img', 'name', 'tipe', 'gender', 'users', 'actions'];
 
-  imgNoData: string = '../../../../assets/img/iconoClub.png';
+  imgNoData: string = '/assets/img/iconoClub.png';
   dataSource: MatTableDataSource<ClubItemList>;
   editedItems: ClubItemList[] = [];
   originalRol: string = '';

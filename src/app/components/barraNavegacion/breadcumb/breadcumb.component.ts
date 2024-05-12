@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { GeneroTipoService } from 'src/app/services/genero/genero-tipo.service';
+import { Combo } from 'src/app/shared/models/combo/combo';
+import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 
 @Component({
   selector: 'app-breadcumb',
@@ -9,7 +12,10 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./breadcumb.component.scss']
 })
 export class BreadcumbComponent implements OnInit, OnDestroy {
+
   breadcrumbs?: string[];
+  genderOptions: Combo[] = [];
+  generos: String[] = [];
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -18,7 +24,8 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private generoTipoService: GeneroTipoService,
   ) {
     this.ngOnInit();
   }
@@ -26,13 +33,24 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(this.router.events.pipe
       (filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {this.updateBreadcrumb();
-    }));
+      .subscribe(() => {
+        this.obtenerGeneroTipo();
+      }));
   }
 
   updateBreadcrumb(): void {
     const urlSegments = this.router.url.split('/').filter(segment => segment !== '');
     this.breadcrumbs = ['Home', ...urlSegments];
+  }
+
+  obtenerGeneroTipo(): void {
+    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+      (data) => {
+        this.genderOptions = data.genero.valores.concat(data.tipo.valores);
+        this.generos = this.genderOptions.map(value => sinDiacriticos(value.nombre.toLocaleLowerCase().replaceAll(' ', '-')));
+        this.updateBreadcrumb();
+      }
+    ));
   }
 
   //TODO URL DINÁMICAS
@@ -41,18 +59,16 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
 
     if (crumb === 'Home') {
       link = ['/home'];
-    } else if (crumb === 'Biblioteca') {
+    } else if (crumb === 'biblioteca') {
       link = ['/biblioteca'];
     } else if (crumb === 'Quiénes Somos') {
       link = ['/quienes-somos'];
+    } else if (crumb === 'Clubes') {
+      link = ['/clubes'];
+    } else if (this.generos.includes(crumb)) {
+      link = ['/biblioteca', crumb.toLowerCase()];
     } else {
-      if (crumb === 'Juvenil') {
-        link = ['/biblioteca', 'juvenil'];
-      } else if (crumb === 'Romántica') {
-        link = ['/biblioteca', 'romantica'];
-      } else {
-        link = ['/biblioteca'];
-      }
+      link = ['/home'];
     }
     return link;
   }

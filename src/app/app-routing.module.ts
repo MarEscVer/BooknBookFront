@@ -13,6 +13,7 @@ import { QuienesSomosComponent } from './components/user/pages/quienes-somos/qui
 import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
 import { BibliotecaGeneroComponent } from './components/user/pages/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
 import { LibroComponent } from './components/user/pages/biblioteca/pages/libro/libro.component';
+import { AutorComponent } from './components/user/pages/biblioteca/pages/autor/autor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: "biblioteca", component: BibliotecaComponent},
   { path: "home", component: HomeComponent},
   { path: "biblioteca/:genero", component: BibliotecaGeneroComponent},
-  { path: "titulo", component: LibroComponent},
+  { path: "biblioteca/:genero/:titulo", component: LibroComponent},
+  { path: "biblioteca/autores/perfil/:nombre", component: AutorComponent},
 // REGISTRADO
 
 // ADMINISTRADOR

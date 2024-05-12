@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { BookData, BookEdit } from 'src/app/shared/models/book/book';
+import { Book, BookData, BookEdit } from 'src/app/shared/models/book/book';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -12,7 +12,19 @@ import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 })
 export class BookService implements deleteObject {
   private baseUrl: string = environment.BASE_URL + environment.BASE_ADMIN;
-  constructor(private http: HttpClient) { }
+  private libroSeleccionadoSubject: BehaviorSubject<Book | undefined> = new BehaviorSubject<Book | undefined>(undefined);
+  libroSeleccionado$: Observable<Book | undefined> = this.libroSeleccionadoSubject.asObservable();
+  constructor(private http: HttpClient) {
+    const storedBook = localStorage.getItem('selectedBook');
+    const initialBook = storedBook ? JSON.parse(storedBook) : undefined;
+    this.libroSeleccionadoSubject = new BehaviorSubject<Book | undefined>(initialBook);
+    this.libroSeleccionado$ = this.libroSeleccionadoSubject.asObservable();
+  }
+
+  setLibro(libro: Book) {
+    this.libroSeleccionadoSubject.next(libro);
+    localStorage.setItem('selectedBook', JSON.stringify(libro));
+  }
 
   //TODO delete URL
   delete(id: number): Observable<any> {
@@ -34,7 +46,7 @@ export class BookService implements deleteObject {
   //TODO get URL
   getBookById(idBook: number): Observable<BookEdit> {
     return this.http.get<BookEdit>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, httpOptions)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

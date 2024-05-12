@@ -1,10 +1,11 @@
+import { AutorNombre } from "../autor/autor";
 import { GeneroTipo } from "../combo/combo";
 
 export interface Book {
     id: number;
     imagen: any;
     titulo: string;
-    autor: string;
+    autor: AutorNombre;
     tipo: GeneroTipo;
     genero: GeneroTipo;
     fechaPublicacion: string;

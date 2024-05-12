@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AutorService } from 'src/app/services/autor/autor.service';
+import { AutorData } from 'src/app/shared/models/autor/autor';
 import { Book } from 'src/app/shared/models/book/book';
 
 @Component({
@@ -15,7 +18,19 @@ export class FichaLibroComponent implements OnInit {
   tipoStyle: any = {};
   generoStyle: any = {};
 
-  constructor() { }
+  autorSeleccionado: AutorData = {
+    "id": 1,
+    "imagen": "",
+    "pseudonimo": "Patrick Rothfuss",
+    "localidad": "Patrick Rothfuss",
+    "biografia": "Patrick Rothfuss",
+  }
+
+  constructor(
+    private autorService: AutorService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     if (this.libro) {
@@ -40,8 +55,21 @@ export class FichaLibroComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
+  autorLibro(id: number) {
+    //TODO GET AUTOR POR ID --> obtener LIBRO completo
+
+    if(this.autorSeleccionado) {
+      this.autorService.setAutor(this.autorSeleccionado);
+      
+      let autor: string = this.autorSeleccionado.pseudonimo.toLowerCase().replaceAll(' ', '-');
+
+      this.router.navigate(['/biblioteca/autores/perfil', autor]);
+    }
+
+  }
+
   //TODO LLAMAR AL MODAL DE SELECCIONAR ESTADO
-  seleccionarEstado(){
+  seleccionarEstado() {
     console.log('CAMBIAR ESTADO');
   }
 

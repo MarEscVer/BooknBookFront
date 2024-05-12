@@ -11,7 +11,7 @@
     .container-contenido {
         display: flex;
         flex-direction: row;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         margin: 20px;
     
@@ -40,8 +40,6 @@
 
             fill: white;
             stroke: #ccc;
-
-
         }
 
         .active {
