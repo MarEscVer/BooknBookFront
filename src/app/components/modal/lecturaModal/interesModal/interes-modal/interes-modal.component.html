@@ -1,0 +1,21 @@
+<div class="d-flex flex-column justify-content-center align-items-center p-3">
+    <h4>¿Has leído <strong>{{modalInfo?.titulo| uppercase}}</strong>?</h4>
+    <div class="mb-3">Especifica el estado de lectura:</div>
+    <form [formGroup]="formularioLibro" (submit)="$event.preventDefault()">
+        <mat-radio-group aria-label="Estado de lectura" formControlName="estado" class="d-flex flex-column gap-2">
+            <mat-radio-button value="LEÍDO">
+                <fa-icon class="leido" [icon]="['fas', 'heart']"></fa-icon>
+                Me gustaría leérmelo - Lista de deseos
+            </mat-radio-button>
+            <mat-radio-button value="PROCESO">
+                <fa-icon class="proceso" [icon]="['fas', 'rotate']"></fa-icon>
+                Estoy en proceso de lectura - Lista de lectura
+            </mat-radio-button>
+            <mat-radio-button value="FAVORITO">
+                <fa-icon class="favorito" [icon]="['fas', 'check']"></fa-icon>
+                Lo he leído - Lista de leídos
+            </mat-radio-button>
+        </mat-radio-group>
+        <button class="mt-3" mat-raised-button (click)="submit()" color="accent">GUARDAR</button>
+    </form>
+</div>

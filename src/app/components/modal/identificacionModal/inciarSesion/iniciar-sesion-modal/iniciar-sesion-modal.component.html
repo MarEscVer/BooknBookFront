@@ -1,0 +1,29 @@
+<div class="d-flex flex-column justify-content-center align-items-center p-3">
+    <h5>¡BIENVENIDO!</h5>
+    <p>Inicia sesión con tu usuario y contraseña</p>
+
+    <form [formGroup]="formLogin" (submit)="$event.preventDefault()">
+        <mat-form-field class="custom-input mb-1">
+            <div class="input-with-icon">
+                <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
+                <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="username" id="username"
+                    formControlName="username" placeholder="Nombre de usuario" />
+            </div>
+        </mat-form-field>
+        <br />
+        <mat-form-field class="custom-input">
+            <div class="input-with-icon">
+                <fa-icon [icon]="['fas', 'lock']"></fa-icon>
+                <input type="password" matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="password"
+                    id="password" formControlName="password" placeholder="Contraseña" />
+            </div>
+        </mat-form-field>
+
+        <div class="m-3">
+            <a href="#">¿Has olvidado la contraseña?</a>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="submit()" [disabled]="!formLogin.valid" class="w-100 mb-3">
+            Iniciar Sesion</button>
+    </form>
+</div>

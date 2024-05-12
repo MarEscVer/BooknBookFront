@@ -1,7 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 

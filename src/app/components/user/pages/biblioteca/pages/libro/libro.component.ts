@@ -26,7 +26,6 @@ export class LibroComponent implements OnInit {
   ngOnInit(): void {
     this.bookService.libroSeleccionado$.subscribe(libro => {
       this.libro = libro;
-      console.log(libro);
       if (this.libro) {
         this.valoracionMedia = this.libro.valoracionMedia ?? 0;
         this.contadorComentario = 20 ?? 0;

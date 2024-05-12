@@ -1,0 +1,22 @@
+@import '../../../../../../style/variables.scss';
+
+.favorito {
+    background-color: $background-heart;
+    padding: 10px;
+    border-radius: 100%;
+    color: $color-heart;
+}
+
+.proceso {
+    background-color: $background-rotate;
+    color: $color-rotate;
+    padding: 10px;
+    border-radius: 100%;
+}
+
+.leido {
+    background-color: $background-check;
+    color: $color-check;
+    padding: 10px;
+    border-radius: 100%;
+}

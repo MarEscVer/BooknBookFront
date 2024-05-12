@@ -81,6 +81,16 @@ import { EstrellasComponent } from './components/user/pages/biblioteca/estrellas
 import { ValoracionTableItemComponent } from './components/user/pages/biblioteca/valoracion-table/valoracion-table-item/valoracion-table-item.component';
 import { ValoracionTableComponent } from './components/user/pages/biblioteca/valoracion-table/valoracion-table.component';
 import { AutorComponent } from './components/user/pages/biblioteca/pages/autor/autor.component';
+import { InicioAnonimoBotonComponent } from './components/modal/identificacionModal/inicio-anonimo-boton/inicio-anonimo-boton.component';
+import { InicioAnonimoModalComponent } from './components/modal/identificacionModal/inicio-anonimo-modal/inicio-anonimo-modal.component';
+import { IniciarSesionBotonComponent } from './components/modal/identificacionModal/inciarSesion/iniciar-sesion-boton/iniciar-sesion-boton.component';
+import { IniciarSesionModalComponent } from './components/modal/identificacionModal/inciarSesion/iniciar-sesion-modal/iniciar-sesion-modal.component';
+import { DenunciaButtonComponent } from './components/modal/lecturaModal/denunciarModal/denuncia-button/denuncia-button.component';
+import { DenunciaModalComponent } from './components/modal/lecturaModal/denunciarModal/denuncia-modal/denuncia-modal.component';
+import { FechasButtonComponent } from './components/modal/lecturaModal/fechasModal/fechas-button/fechas-button.component';
+import { FechasModalComponent } from './components/modal/lecturaModal/fechasModal/fechas-modal/fechas-modal.component';
+import { InteresButtonComponent } from './components/modal/lecturaModal/interesModal/interes-button/interes-button.component';
+import { InteresModalComponent } from './components/modal/lecturaModal/interesModal/interes-modal/interes-modal.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -135,7 +145,17 @@ import { AutorComponent } from './components/user/pages/biblioteca/pages/autor/a
     EstrellasComponent,
     ValoracionTableItemComponent,
     ValoracionTableComponent,
-    AutorComponent
+    AutorComponent,
+    InicioAnonimoBotonComponent,
+    InicioAnonimoModalComponent,
+    IniciarSesionBotonComponent,
+    IniciarSesionModalComponent,
+    DenunciaButtonComponent,
+    DenunciaModalComponent,
+    FechasButtonComponent,
+    FechasModalComponent,
+    InteresButtonComponent,
+    InteresModalComponent
   ],
   /* LIBRARIES */
   imports: [

@@ -1,22 +1,26 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
-import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { UserService } from 'src/app/services/user/user.service';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
+import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
+import { ModalInfo } from 'src/app/shared/models/modal/modal';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-iniciar-sesion-modal',
+  templateUrl: './iniciar-sesion-modal.component.html',
+  styleUrls: ['./iniciar-sesion-modal.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class IniciarSesionModalComponent implements OnInit, OnDestroy {
+  modalInfo: ModalInfo = {
+    id: 0,
+    title: ''
+  };
+
   formLogin!: FormGroup;
   matcher!: FormErrorStateMatcher;
 
@@ -25,12 +29,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   */
   private subscriptions: Subscription = new Subscription();
 
-  /**
-   * Aplicar una clase al elemento raíz.
-   */
-  @HostBinding('class') class = "app-login";
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ModalInfo },
+    private dialogRef: MatDialogRef<IniciarSesionModalComponent>,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -42,6 +44,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
     this.createForm(formBuilder);
+    if (data && data.modalInfo) {
+      this.modalInfo = data.modalInfo;
+    }
   }
 
   createForm(fb: FormBuilder) {
@@ -62,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             'success'
           );
           this.authService.iniciarSession();
-          this.router.navigate(['/home']);
+          this.dialogRef.close();
         }
       }
     }));
@@ -79,5 +84,4 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 }

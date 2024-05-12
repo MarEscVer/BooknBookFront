@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { AutorService } from 'src/app/services/autor/autor.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { AutorData } from 'src/app/shared/models/autor/autor';
 import { Book } from 'src/app/shared/models/book/book';
 
@@ -9,7 +12,7 @@ import { Book } from 'src/app/shared/models/book/book';
   templateUrl: './ficha-libro.component.html',
   styleUrls: ['./ficha-libro.component.scss']
 })
-export class FichaLibroComponent implements OnInit {
+export class FichaLibroComponent implements OnInit, OnDestroy{
 
   @Input() libro?: Book;
   stars = [0, 1, 2, 3, 4];
@@ -17,6 +20,13 @@ export class FichaLibroComponent implements OnInit {
   isExpanded: boolean = false;
   tipoStyle: any = {};
   generoStyle: any = {};
+
+  userRole?: string | null;
+
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+    private subscriptions: Subscription = new Subscription();
 
   autorSeleccionado: AutorData = {
     "id": 1,
@@ -30,9 +40,16 @@ export class FichaLibroComponent implements OnInit {
     private autorService: AutorService,
     private route: ActivatedRoute,
     private router: Router,
+    private notification: NotificationService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.authService.userRole$.subscribe(role => {
+        this.userRole = role;
+      })
+    );
     if (this.libro) {
       this.valoracionMedia = this.libro.valoracionMedia ?? 0;
       this.tipoStyle = {
@@ -67,11 +84,9 @@ export class FichaLibroComponent implements OnInit {
     }
 
   }
-
-  //TODO LLAMAR AL MODAL DE SELECCIONAR ESTADO
-  seleccionarEstado() {
-    console.log('CAMBIAR ESTADO');
+  
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
-
 }
 

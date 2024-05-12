@@ -28,12 +28,10 @@ export class InputErrorStateMatcherExample {
     return new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
   }
 
-  //TODO cambiar valor desde constructor del formulario
   getFormControl_gender(): FormControl {
     return new FormControl('', [Validators.required]);
   }
 
-  //TODO cambiar valor desde constructor del formulario
   getFormControl_type(): FormControl {
     return new FormControl('', [Validators.required]);
   }
@@ -46,6 +44,9 @@ export class InputErrorStateMatcherExample {
     return new FormControl('', [Validators.minLength(1)]);
   }
 
+  getFormControl_interes(): FormControl {
+    return new FormControl('', [Validators.required]);
+  }
 
   matcher = new FormErrorStateMatcher();
 
@@ -90,5 +91,9 @@ export class InputErrorStateMatcherExample {
 
   newsletter = {
     email: this.getFormControl_Email(),
+  }
+
+  addInteres = {
+    estado: this.getFormControl_interes(),
   }
 }

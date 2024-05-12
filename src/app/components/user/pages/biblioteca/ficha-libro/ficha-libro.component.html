@@ -10,34 +10,20 @@
                 <div class="mb-2 d-flex align-items-center">
                     <h3 class="detalle-titulo mt-2"><strong>{{libro.titulo | uppercase}}</strong></h3>
                     <div class="detalle-estado ms-2">
-                        <ng-container *ngIf="libro.estado === 'LEÍDO'">
-                            <button mat-icon-button class="leido" aria-label="Editar" (click)="seleccionarEstado()">
-                                <fa-icon [icon]="['fas', 'check']"></fa-icon>
-                            </button>
+                        <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
+                            <app-interes-button [modalInfo]="libro"></app-interes-button>
                         </ng-container>
-                        <ng-container *ngIf="libro.estado === 'PROCESO'">
-                            <button mat-icon-button class="proceso" aria-label="Editar" (click)="seleccionarEstado()">
-                                <fa-icon [icon]="['fas', 'rotate']"></fa-icon>
-                            </button>
-                        </ng-container>
-                        <ng-container *ngIf="libro.estado === 'FAVORITO'">
-                            <button mat-icon-button class="favorito" aria-label="Editar" (click)="seleccionarEstado()">
-                                <fa-icon [icon]="['fas', 'heart']"></fa-icon>
-                            </button>
-                        </ng-container>
-                        <ng-container
-                            *ngIf="libro.estado !== 'LEÍDO' && libro.estado !== 'PROCESO' && libro.estado !== 'FAVORITO'">
-                            <button mat-icon-button class="sin-estado" aria-label="Editar"
-                                (click)="seleccionarEstado()">
-                                <fa-icon [icon]="['fas', 'heart']"></fa-icon>
-                            </button>
-                        </ng-container>
-
+                        <ng-template #anonimoBlock>
+                            <app-inicio-anonimo-boton
+                                [modalInfo]="{ id: libro.id, title: libro.titulo}"></app-inicio-anonimo-boton>
+                        </ng-template>
                     </div>
                 </div>
                 <div class="mb-2">
                     <h4 class="detalle-saga"><em>{{libro.saga | uppercase}}</em></h4>
-                    <a (click)="autorLibro(libro.autor.id)"><h4 class="detalle-autor enlace">{{libro.autor.pseudonimo| uppercase}}</h4></a>
+                    <a (click)="autorLibro(libro.autor.id)">
+                        <h4 class="detalle-autor enlace">{{libro.autor.pseudonimo| uppercase}}</h4>
+                    </a>
                 </div>
                 <div class="mb-2">
                     <div class="detalle-fecha">Fecha de publicación: {{libro.fechaPublicacion}}</div>
@@ -68,7 +54,8 @@
                     <div class="detalle-texto-sinopsis" [ngClass]="{'expanded': isExpanded}">
                         {{ libro.descripcion }}
                     </div>
-                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar más'}}</a>
+                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar
+                        más'}}</a>
                 </div>
             </div>
         </div>
