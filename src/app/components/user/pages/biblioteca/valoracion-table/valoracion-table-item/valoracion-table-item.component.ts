@@ -14,7 +14,4 @@ export class ValoracionTableItemComponent {
   
   constructor(){}
 
-  denunciarComentario() {
-    console.log('Comentario denunciado:', this.comentario.username);
-  }
 }

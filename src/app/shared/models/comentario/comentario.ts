@@ -23,4 +23,5 @@ export interface ComentarioData {
     fechaValoracion: string;
     valoracion: number;
     comentario: string;
+    idLibro: number;
 }

@@ -12,27 +12,30 @@ import { ComentarioData } from 'src/app/shared/models/comentario/comentario';
 })
 export class ValoracionTableComponent {
 
-  comentarios: ComentarioData[] =[
+  comentarios: ComentarioData[] = [
     {
       imagen: "",
       username: "usuario1",
       fechaValoracion: "2024-05-10",
       valoracion: 4,
-      comentario: "Este es un comentario de ejemplo."
+      comentario: "Este es un comentario de ejemplo.",
+      idLibro: 1
     },
     {
       imagen: "",
       username: "usuario2",
       fechaValoracion: "2024-05-09",
       valoracion: 5,
-      comentario: "Este es un comentario de ejemplo."
+      comentario: "Este es un comentario de ejemplo.",
+      idLibro: 1
     },
     {
       imagen: "",
       username: "usuario3",
       fechaValoracion: "2024-05-08",
       valoracion: 3,
-      comentario: "Este es un comentario de ejemplo."
+      comentario: "Este es un comentario de ejemplo.",
+      idLibro: 1
     }
   ];
 

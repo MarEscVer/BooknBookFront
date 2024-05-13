@@ -31,7 +31,7 @@
             <div class="comentario">{{ comentario.comentario }}</div>
         </div>
         <div class="detalles-denuncia">
-            <button mat-button class="estilo-claro" (click)="denunciarComentario()">Denunciar comentario</button>
+            <app-denuncia-button [modalInfo]="{idLibro: comentario.idLibro, username: comentario.username}"></app-denuncia-button>
         </div>
     </div>
 </div>

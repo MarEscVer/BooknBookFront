@@ -8,3 +8,8 @@ export interface ModalInfoPages {
     title: string;
     pages: number;
 }
+
+export interface ModalInfoDenuciaComentario {
+    idLibro: number;
+    username: string;
+}

@@ -32,7 +32,7 @@ export class InputErrorStateMatcherExample {
   }
 
   getFormControl_saga(): FormControl {
-    return new FormControl({value:0, disabled:true});
+    return new FormControl({ value: 0, disabled: true });
   }
 
   getFormControl_texto(): FormControl {
@@ -102,5 +102,13 @@ export class InputErrorStateMatcherExample {
     final: null,
     paginaActual: this.getFormControl_required(),
     terminado: false,
+  }
+
+  denuncia = {
+    nombre: this.getFormControl_required(),
+    apellidos: this.getFormControl_nonRequired(),
+    email: this.getFormControl_Email(),
+    motivo: this.getFormControl_required(),
+    texto: this.getFormControl_nonRequired(),
   }
 }

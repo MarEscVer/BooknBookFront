@@ -16,7 +16,7 @@
                 </mat-datepicker-actions>
             </mat-datepicker>
         </mat-form-field>
-        <div class="alert alert-danger" *ngIf="formProceso.get('inicio')?.touched && formProceso.get('inicio')?.errors">
+        <div class="alert alert-danger w-100" *ngIf="formProceso.get('inicio')?.touched && formProceso.get('inicio')?.errors">
             <div *ngIf="this.specificError('inicio','required')">
                 Inicio de lectura requerido.
             </div>
@@ -41,7 +41,7 @@
             <mat-label>Página actual de lectura</mat-label>
             <input matInput type="number" formControlName="paginaActual" id="paginaActual" />
         </mat-form-field>
-        <div class="alert alert-danger"
+        <div class="alert alert-danger w-100"
             *ngIf="formProceso.get('paginaActual')?.touched && formProceso.get('paginaActual')?.errors">
             <div *ngIf="this.specificError('paginaActual','required')">
                 Página requerida.

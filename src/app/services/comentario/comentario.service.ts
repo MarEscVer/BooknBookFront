@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
 import { ComentarioDenunciadoResponse } from 'src/app/shared/models/comentario/comentario';
+import { ComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,11 @@ export class ComentarioService implements deleteObject {
 
     return this.http.get<ComentarioDenunciadoResponse>(this.baseUrl + environment.BASE_ADMIN + '/comentarios/denuncia', { params })
       .pipe(catchError(this.handleError));
+  }
+
+  getComboMotivoDenuncia(): Observable<ComboResponse> {
+    return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/combo/denuncia/motivo')
+    .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
