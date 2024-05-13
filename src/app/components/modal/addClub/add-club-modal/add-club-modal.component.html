@@ -52,7 +52,6 @@
                             Tipo requerido.
                         </div>
                     </div>
-
                     <div class="col w-100">
                         <label>GÉNERO:</label>
                         <mat-radio-group formControlName="genero" id="genero">
@@ -61,12 +60,6 @@
                                 {{genderOption.nombre}}
                             </mat-radio-button>
                         </mat-radio-group>
-                    </div>
-                    <div class="alert alert-danger"
-                        *ngIf="formAddClub.get('genero')?.touched && formAddClub.get('genero')?.errors">
-                        <div *ngIf="this.specificError('genero','required')">
-                            Género requerido.
-                        </div>
                     </div>
                 </div>
 

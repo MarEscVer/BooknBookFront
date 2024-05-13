@@ -3,6 +3,12 @@ export interface Combo {
     nombre: string;
 }
 
+export interface ComboImagen {
+    id: number;
+    nombre: string;
+    imagen: any;
+}
+
 export interface IdComboResponse {
     id: number;
     message: string;

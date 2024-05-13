@@ -5,15 +5,15 @@
             <img src="../../../../assets/img/login.jpg" alt="Login image" class="w-100" style="object-fit: cover;">
         </div>
         <!-- Formulario a la derecha -->
-
         <div class="col-md-6 col-12 d-flex align-items-center 
-        justify-content-center mt-5 mb-5">
+        justify-content-center p-3">
             <div class="text-center">
                 <img src="../../../../assets/img/iconlogo.svg" alt="Logo de la app" class="app-logo mb-3">
                 <h3>¡BIENVENIDO!</h3>
                 <p>Comienza tu aventura rellenando este formulario</p>
 
-                <form [formGroup]="formRegister" (submit)="$event.preventDefault()">
+                <form [formGroup]="formRegister" (submit)="$event.preventDefault()" class="d-flex flex-column align-items-center 
+                justify-content-center gap-1">
                     <mat-form-field class="custom-input">
                         <div class="input-with-icon">
                             <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
@@ -21,22 +21,18 @@
                                 id="username" formControlName="username" placeholder="Nombre de usuario" />
                         </div>
                     </mat-form-field>
-                    <br />
-                    <mat-form-field class="w-100">
+                    <mat-form-field>
                         <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="name" id="name"
                             formControlName="name" placeholder="Nombre" />
                     </mat-form-field>
-                    <br />
-                    <mat-form-field class="w-100">
+                    <mat-form-field>
                         <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="apellido1"
                             id="apellido1" formControlName="apellido1" placeholder="Primer apellido" />
                     </mat-form-field>
-                    <br />
-                    <mat-form-field class="w-100">
+                    <mat-form-field>
                         <input matInput class="ng-untouched ng-pristine ng-invalid" ng-reflect-name="apellido2"
                             id="apellido2" formControlName="apellido2" placeholder="Segundo apellido" />
                     </mat-form-field>
-                    <br />
                     <mat-form-field class="custom-input">
                         <div class="input-with-icon">
                             <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
@@ -44,7 +40,6 @@
                                 id="email" formControlName="email" placeholder="Email" />
                         </div>
                     </mat-form-field>
-                    <br />
                     <mat-form-field class="custom-input">
                         <div class="input-with-icon">
                             <fa-icon [icon]="['fas', 'lock']"></fa-icon>
@@ -53,7 +48,6 @@
                                 placeholder="Contraseña" />
                         </div>
                     </mat-form-field>
-                    <br />
                     <mat-form-field class="custom-input">
                         <div class="input-with-icon">
                             <fa-icon [icon]="['fas', 'lock']"></fa-icon>
@@ -66,7 +60,29 @@
                             Contraseñas con diferentes valores.
                         </div>
                     </div>
-                    <br />
+
+                    <!-- INTERESES-->
+                    <div class="d-flex flex-column align-items-center justify-content-center mt-3 mb-3 ms-5 me-5">
+                        <h5>Indica tus preferencias de lectura para personalizar el perfil</h5>
+                        <div>Selecciona un tipo:</div>
+                        <div class="opciones-container d-flex flex-wrap align-items-baseline justify-content-center">
+                            <div *ngFor="let typeOption of typeOptionsImagenes" class="opcion"
+                                [class.selected]="favoriteType === typeOption.id"
+                                (click)="selectOptionType(typeOption.id)">
+                                <img [src]="typeOption.imagen" alt="Imagen {{typeOption.nombre}}">
+                                <div class="opcion-nombre">{{typeOption.nombre}}</div>
+                            </div>
+                        </div>
+                        <div>Selecciona un género:</div>
+                        <div class="opciones-container d-flex flex-wrap align-items-baseline justify-content-center">
+                            <div *ngFor="let genderOption of genderOptionsImagenes" class="opcion"
+                                [class.selected]="favoriteGender === genderOption.id"
+                                (click)="selectOptionGender(genderOption.id)">
+                                <img [src]="genderOption.imagen" alt="Imagen {{genderOption.nombre}}">
+                                <div class="opcion-nombre">{{genderOption.nombre}}</div>
+                            </div>
+                        </div>
+                    </div>
                     <button mat-raised-button (click)="submit()" [disabled]="!formRegister.valid" color="primary"
                         class="mb-3 mt-3">Registrarse</button>
                 </form>

@@ -172,7 +172,7 @@ import { ClubesComponent } from './components/clubes/pages/clubes/clubes.compone
     ClubListAllComponent,
     UserItemClubListComponent,
     UserClubListComponent,
-    ClubesComponent
+    ClubesComponent,
   ],
   /* LIBRARIES */
   imports: [

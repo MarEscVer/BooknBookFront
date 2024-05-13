@@ -23,10 +23,6 @@ export class InputErrorStateMatcherExample {
     return new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
   }
 
-  getFormControl_gender(): FormControl {
-    return new FormControl('', [Validators.required]);
-  }
-
   getFormControl_type(): FormControl {
     return new FormControl('', [Validators.required]);
   }
@@ -57,13 +53,15 @@ export class InputErrorStateMatcherExample {
     username: this.getFormControl_required(),
     apellido1: this.getFormControl_required(),
     apellido2: this.getFormControl_required(),
+    tipo: this.getFormControl_required(),
+    genero: this.getFormControl_required(),
   }
 
   addClub = {
     nombreGrupo: this.getFormControl_required(),
     descripcion: this.getFormControl_description(),
     tipo: this.getFormControl_type(),
-    genero: this.getFormControl_gender(),
+    genero: this.getFormControl_nonRequired(),
   }
 
   addBook = {
@@ -71,7 +69,7 @@ export class InputErrorStateMatcherExample {
     idAutor: this.getFormControl_required(),
     saga: this.getFormControl_saga(),
     tipo: this.getFormControl_type(),
-    genero: this.getFormControl_gender(),
+    genero: this.getFormControl_nonRequired(),
     fechaPublicacion: this.getFormControl_required(),
     paginas: this.getFormControl_paginas(),
     descripcion: this.getFormControl_required(),

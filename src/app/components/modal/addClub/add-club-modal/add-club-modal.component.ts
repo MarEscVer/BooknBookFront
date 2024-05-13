@@ -64,7 +64,7 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
     this.subscriptions.add(
       this.clubService.getClubById(clubId).subscribe((clubEdit) => {
         this.formAddClub.patchValue(clubEdit);
-        this.urlImagenDelServidor = clubEdit.img; 
+        this.urlImagenDelServidor = clubEdit.img;
       }));
   }
 
