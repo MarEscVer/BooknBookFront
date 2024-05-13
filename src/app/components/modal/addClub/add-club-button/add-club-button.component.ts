@@ -11,6 +11,7 @@ import { AddClubModalComponent } from '../add-club-modal/add-club-modal.componen
 export class AddClubButtonComponent implements OnDestroy {
 
   @Input() clubId?: number;
+  @Input() icono?: boolean = false;
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.

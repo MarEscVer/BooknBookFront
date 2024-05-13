@@ -1,1 +1,36 @@
-<p>item-club-list-all works!</p>
+<div class="container-club" *ngIf="club">
+    <div class="container-contenido">
+        <div class="imagen">
+            <ng-container *ngIf="club.imagen !== undefined && club.imagen !== ''; else noData">
+                <div class="circular-image">
+                    <img [src]="club.imagen" alt="Icono de club">
+                </div>
+            </ng-container>
+            <ng-template #noData>
+                <div class="circular-image">
+                    <img [src]="imgNoData" alt="Icono de club">
+                </div>
+            </ng-template>
+        </div>
+        <div class="detalles-club">
+            <div class="nombre">{{ club.nombre | uppercase}}</div>
+            <div class="descipcion">{{ club.descripcion }}</div>
+            <div class="intereses d-flex flex-row align-items-center gap-2">
+                <span>Intereses:</span>
+                <div class="detalle-tipo" [ngStyle]="tipoStyle">{{club.tipo.nombre| uppercase}}</div>
+                <div class="detalle-genero" [ngStyle]="generoStyle">{{club.genero.nombre| uppercase}}</div>
+            </div>
+        </div>
+        <div class="detalles-club-usuario">
+            <ng-container *ngIf="userLoged">
+                <ng-container *ngIf="club.perteneces ; else noPertenecer">
+                    <button mat-button class="estilo-claro" (click)="abandonarClub()">ABANDONAR</button>
+                </ng-container>
+                <ng-template #noPertenecer>
+                    <button mat-button class="estilo-oscuro" (click)="pertenecerClub()">PERTENECER</button>
+                </ng-template>
+            </ng-container>
+            <div class="contador">Nº de miembros: {{club.miembros}}</div>
+        </div>
+    </div>
+</div>

@@ -100,6 +100,7 @@ import { ItemClubListAllComponent } from './components/clubes/club-list-all/item
 import { ClubListAllComponent } from './components/clubes/club-list-all/club-list-all.component';
 import { UserItemClubListComponent } from './components/clubes/user-club-list/user-item-club-list/user-item-club-list.component';
 import { UserClubListComponent } from './components/clubes/user-club-list/user-club-list.component';
+import { ClubesComponent } from './components/clubes/pages/clubes/clubes.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -170,7 +171,8 @@ import { UserClubListComponent } from './components/clubes/user-club-list/user-c
     ItemClubListAllComponent,
     ClubListAllComponent,
     UserItemClubListComponent,
-    UserClubListComponent
+    UserClubListComponent,
+    ClubesComponent
   ],
   /* LIBRARIES */
   imports: [

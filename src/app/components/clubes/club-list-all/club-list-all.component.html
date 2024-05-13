@@ -1,1 +1,16 @@
-<p>club-list-all works!</p>
+<div class="table-responsive tabla">
+    <div class="container-fluid">
+        <mat-form-field color="primary" appearance="outline" class="m-3">
+            <mat-label>FILTRADO</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
+        </mat-form-field>
+
+        <div class="row-flex mt-3">
+            <div *ngFor="let club of clubes" class="club">
+                <app-item-club-list-all [club]="club" [userLoged]="userLoged"></app-item-club-list-all>
+            </div>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</div>

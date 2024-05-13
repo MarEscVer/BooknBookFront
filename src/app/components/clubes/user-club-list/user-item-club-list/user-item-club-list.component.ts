@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ClubDataShort } from 'src/app/shared/models/club/club';
 
 @Component({
   selector: 'app-user-item-club-list',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-item-club-list.component.scss']
 })
 export class UserItemClubListComponent {
+
+  @Input() club?: ClubDataShort;
+  imgNoData: string = '/assets/img/iconoClub.png';
+
+  constructor(){
+
+  }
+
+  eliminarClub(id: number){
+    console.log('ELIMINAR: ' + id);
+  }
 
 }

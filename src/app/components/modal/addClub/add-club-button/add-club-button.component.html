@@ -1,3 +1,10 @@
-<div class="d-flex justify-content-end align-items-center">
-    <button mat-button class="estilo-claro" (click)="openDialog()">NUEVO CLUB</button>
-</div>
+<ng-container *ngIf="icono; else noIcono">
+    <button mat-icon-button class="icono" (click)="openDialog()">
+        <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+    </button>
+</ng-container>
+<ng-template #noIcono>
+    <div class="d-flex justify-content-end align-items-center">
+        <button mat-button class="estilo-claro" (click)="openDialog()">NUEVO CLUB</button>
+    </div>
+</ng-template>

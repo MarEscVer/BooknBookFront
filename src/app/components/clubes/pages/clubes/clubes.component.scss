@@ -1,0 +1,28 @@
+@import '../../../../../style/variables.scss';
+
+.container-fluid {
+    #seccionImagen {
+        max-width: 345px;
+        min-width: 300px;
+        height: 675px;
+
+        img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+        }
+    }
+
+    .administrar, .pertenecer {
+        padding: 20px;
+        border: 1px solid $claro-color;
+    }
+
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    #seccionImagen {
+        display: none;
+    }
+}

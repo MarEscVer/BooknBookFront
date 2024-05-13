@@ -1,5 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faLeaf, faGear, faDoorOpen, faUserAlt, faBars, faXmark, faArrowRightFromBracket, faBookOpen, faComment, faUsers, faBookOpenReader, faTrash, faPen, faFloppyDisk, faCheck, faPlus, faLock, faCircleUser, faEnvelope, faCircleInfo, faCircleRight, faCircleLeft, faRotate, faHeart, faCommentSlash } from '@fortawesome/free-solid-svg-icons';
+import { faLeaf, faGear, faDoorOpen, faUserAlt, faBars, faXmark, faArrowRightFromBracket, faBookOpen, faComment, faUsers, faBookOpenReader, faTrash, faPen, faFloppyDisk, faCheck, faPlus, faLock, faCircleUser, faEnvelope, faCircleInfo, faCircleRight, faCircleLeft, faRotate, faHeart, faCommentSlash, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 export const icons: IconDefinition[] = [
@@ -26,6 +26,7 @@ export const icons: IconDefinition[] = [
   faRotate,
   faHeart,
   faCommentSlash,
+  faEllipsisVertical,
 
   /*Free regular*/
   faUser,

@@ -16,7 +16,7 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit {
 
   @Input() data?: BookItemList[];
 
-  imgNoData: string = '../../../../assets/img/iconoLibro.jpg';
+  imgNoData: string = '/assets/img/iconoLibro.jpg';
   dataSource: MatTableDataSource<BookItemList>;
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;

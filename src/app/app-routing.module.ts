@@ -14,6 +14,7 @@ import { BibliotecaComponent } from './components/biblioteca/pages/biblioteca/bi
 import { BibliotecaGeneroComponent } from './components/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
 import { LibroComponent } from './components/biblioteca/pages/libro/libro.component';
 import { AutorComponent } from './components/biblioteca/pages/autor/autor.component';
+import { ClubesComponent } from './components/clubes/pages/clubes/clubes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "biblioteca", component: BibliotecaComponent},
+  { path: "clubes", component: ClubesComponent },
   { path: "home", component: HomeComponent},
   { path: "biblioteca/:genero", component: BibliotecaGeneroComponent},
   { path: "biblioteca/:genero/:titulo", component: LibroComponent},

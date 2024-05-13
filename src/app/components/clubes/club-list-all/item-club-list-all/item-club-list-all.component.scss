@@ -1,0 +1,53 @@
+@import '../../../../../style/mixin.scss';
+@import '../../../../../style/variables.scss';
+
+.container-club {
+    border-top: 1px solid $claro-color;
+
+    .circular-image {
+        @include circular-image(80px, 80px);
+    }
+
+    .container-contenido {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 10px;
+        align-items: center;
+        margin: 10px;
+
+        .detalles-club-usuario {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-right: 40px;
+            margin-left: auto;
+        }
+
+        .detalle-tipo, .detalle-genero{
+            font-size: 12px
+        }
+    }
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    .container-contenido {
+        flex-direction: column !important;
+        gap: 10px;
+
+        .detalles-club{
+            text-align: center;
+            margin: 0;
+
+            .intereses{
+                justify-content: center;
+            }
+        }
+
+        .detalles-club-usuario{
+            text-align: center;
+            margin: 0 !important;
+        }
+    }
+}

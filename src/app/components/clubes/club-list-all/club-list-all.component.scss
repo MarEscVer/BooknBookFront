@@ -1,0 +1,10 @@
+@import '../../../../style/variables.scss';
+
+/* Estilos para pantallas pequeñas */
+@media (min-width: $min-width) {
+    .container-fluid {
+        width: 100%;
+        margin: 0%;
+        padding: 0%;
+    }
+}

@@ -27,3 +27,21 @@ export interface ClubData {
     gender: string;
     descripcion: string;
 }
+
+export interface ClubDataAll {
+    id: number;
+    imagen: any;
+    nombre: string;
+    descripcion: string;
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
+    miembros: number;
+    perteneces: boolean;
+}
+
+export interface ClubDataShort {
+    id: number;
+    imagen: any;
+    nombre: string;
+    administrador: boolean;
+}
