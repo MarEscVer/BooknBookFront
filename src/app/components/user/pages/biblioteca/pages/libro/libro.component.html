@@ -1,7 +1,5 @@
 <app-breadcumb></app-breadcumb>
 <div *ngIf="libro">
-    <app-fechas-button [modalInfo]="{ id: libro.id, title: libro.titulo, pages: libro.paginasTotales}"></app-fechas-button>
-    
     <app-ficha-libro [libro]="libro"></app-ficha-libro>
     <div class="carousel-libro mb-4">
         <h5 class="carousel-titulo text-center m-0">RECOMENDADOS</h5>
