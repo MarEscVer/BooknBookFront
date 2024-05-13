@@ -9,11 +9,11 @@ import { AdminPageClubsComponent } from './components/admin/pages/admin-page-clu
 import { AdminPageModeracionComponent } from './components/admin/pages/admin-page-moderacion/admin-page-moderacion.component';
 import { AdminPageAddBookComponent } from './components/admin/pages/admin-page-add-book/admin-page-add-book.component';
 import { adminGuard, appGuard } from './auth/app.guard';
-import { QuienesSomosComponent } from './components/user/pages/quienes-somos/quienes-somos.component';
-import { BibliotecaComponent } from './components/user/pages/biblioteca/pages/biblioteca/biblioteca.component';
-import { BibliotecaGeneroComponent } from './components/user/pages/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
-import { LibroComponent } from './components/user/pages/biblioteca/pages/libro/libro.component';
-import { AutorComponent } from './components/user/pages/biblioteca/pages/autor/autor.component';
+import { QuienesSomosComponent } from './components/user/quienes-somos/quienes-somos.component';
+import { BibliotecaComponent } from './components/biblioteca/pages/biblioteca/biblioteca.component';
+import { BibliotecaGeneroComponent } from './components/biblioteca/pages/biblioteca-genero/biblioteca-genero.component';
+import { LibroComponent } from './components/biblioteca/pages/libro/libro.component';
+import { AutorComponent } from './components/biblioteca/pages/autor/autor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

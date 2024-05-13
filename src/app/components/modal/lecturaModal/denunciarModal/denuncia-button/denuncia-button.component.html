@@ -1,1 +1,4 @@
-<button mat-button class="estilo-claro" (click)="openDialog()">Denunciar comentario</button>
+<button mat-icon-button color="primary" aria-label="Denunciar comentario" (click)="openDialog()" class="d-flex flex-row align-items-center gap-2">
+    <fa-icon [icon]="['fas', 'comment-slash']" class="--listado-icon"></fa-icon>
+    <div class="texto-denuncia">Denunciar</div>
+  </button>

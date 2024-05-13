@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AutorService } from 'src/app/services/autor/autor.service';
-import { AutorData } from 'src/app/shared/models/autor/autor';
+import { Component, OnInit } from "@angular/core";
+import { AutorService } from "src/app/services/autor/autor.service";
+import { AutorData } from "src/app/shared/models/autor/autor";
 
 @Component({
   selector: 'app-autor',
