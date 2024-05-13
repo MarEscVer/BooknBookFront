@@ -14,11 +14,6 @@ export class InputErrorStateMatcherExample {
     return new FormControl('');
   }
 
-  getFormControl_phone(): FormControl {
-    //TODO: poner patrón de validacion de telefono movil segun pais cuando toque
-    return new FormControl('', [Validators.minLength(9), Validators.maxLength(9)]);
-  }
-
   getFormControl_paginas(): FormControl {
     //TODO: poner patrón de validacion de PAGINAS
     return new FormControl('', [Validators.required]);
@@ -95,5 +90,17 @@ export class InputErrorStateMatcherExample {
 
   addInteres = {
     estado: this.getFormControl_interes(),
+  }
+
+  valoracionEstrellas = {
+    estrellas: null,
+    textarea: this.getFormControl_required(),
+  }
+
+  procesoLectura = {
+    inicio: this.getFormControl_required(),
+    final: null,
+    paginaActual: this.getFormControl_required(),
+    terminado: false,
   }
 }

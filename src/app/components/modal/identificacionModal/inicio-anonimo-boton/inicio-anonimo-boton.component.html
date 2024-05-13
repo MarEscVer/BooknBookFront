@@ -1,3 +1,9 @@
-<button mat-icon-button class="sin-estado" aria-label="Editar" (click)="openDialog()">
-    <fa-icon [icon]="['fas', 'heart']"></fa-icon>
-</button>
+
+<div *ngIf="estilo === 'INTERES'">
+    <button mat-icon-button class="sin-estado" aria-label="Editar" (click)="openDialog()">
+        <fa-icon [icon]="['fas', 'heart']"></fa-icon>
+    </button>
+</div>
+<div *ngIf="estilo === 'VALORACION'">
+    <button mat-raised-button type="button" color="accent" (click)="openDialog()">DEJAR MI OPINIÓN</button>
+</div>

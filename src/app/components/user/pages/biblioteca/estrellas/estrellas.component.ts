@@ -16,11 +16,10 @@ import { BaseControlValueAccessor } from './BaseControlValueAccessor';
 })
 export class EstrellasComponent extends BaseControlValueAccessor<any> implements AfterViewInit {
 
-  @Input() stars = [0, 1, 2, 3, 4]; // default is 5 stars
-  @Input() override value: number | null = null; // un-touched value should be null
+  @Input() stars = [0, 1, 2, 3, 4];
+  @Input() override value: number | null = null;
 
   constructor(
-    private fb: FormBuilder,
     private eRef: ElementRef,
     private renderer: Renderer2
   ) {

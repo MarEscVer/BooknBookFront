@@ -91,6 +91,11 @@ import { FechasButtonComponent } from './components/modal/lecturaModal/fechasMod
 import { FechasModalComponent } from './components/modal/lecturaModal/fechasModal/fechas-modal/fechas-modal.component';
 import { InteresButtonComponent } from './components/modal/lecturaModal/interesModal/interes-button/interes-button.component';
 import { InteresModalComponent } from './components/modal/lecturaModal/interesModal/interes-modal/interes-modal.component';
+import { UserValoracionModalComponent } from './components/modal/lecturaModal/userValoracionModal/user-valoracion-modal/user-valoracion-modal.component';
+import { UserValoracionButtonComponent } from './components/modal/lecturaModal/userValoracionModal/user-valoracion-button/user-valoracion-button.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -155,7 +160,9 @@ import { InteresModalComponent } from './components/modal/lecturaModal/interesMo
     FechasButtonComponent,
     FechasModalComponent,
     InteresButtonComponent,
-    InteresModalComponent
+    InteresModalComponent,
+    UserValoracionModalComponent,
+    UserValoracionButtonComponent
   ],
   /* LIBRARIES */
   imports: [
@@ -188,6 +195,9 @@ import { InteresModalComponent } from './components/modal/lecturaModal/interesMo
     MatRadioModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   /* SERVICE */
   providers: [

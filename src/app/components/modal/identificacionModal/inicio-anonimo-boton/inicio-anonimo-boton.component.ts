@@ -10,6 +10,7 @@ import { InicioAnonimoModalComponent } from '../inicio-anonimo-modal/inicio-anon
 })
 export class InicioAnonimoBotonComponent {
   @Input() modalInfo?: ModalInfo;
+  @Input() estilo!: string;
 
   constructor(private dialog: MatDialog) {
   }

@@ -12,7 +12,7 @@ import { Book } from 'src/app/shared/models/book/book';
   templateUrl: './ficha-libro.component.html',
   styleUrls: ['./ficha-libro.component.scss']
 })
-export class FichaLibroComponent implements OnInit, OnDestroy{
+export class FichaLibroComponent implements OnInit, OnDestroy {
 
   @Input() libro?: Book;
   stars = [0, 1, 2, 3, 4];
@@ -22,11 +22,12 @@ export class FichaLibroComponent implements OnInit, OnDestroy{
   generoStyle: any = {};
 
   userRole?: string | null;
+  estiloBoton: string = 'INTERES';
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
   */
-    private subscriptions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   autorSeleccionado: AutorData = {
     "id": 1,
@@ -75,16 +76,16 @@ export class FichaLibroComponent implements OnInit, OnDestroy{
   autorLibro(id: number) {
     //TODO GET AUTOR POR ID --> obtener LIBRO completo
 
-    if(this.autorSeleccionado) {
+    if (this.autorSeleccionado) {
       this.autorService.setAutor(this.autorSeleccionado);
-      
+
       let autor: string = this.autorSeleccionado.pseudonimo.toLowerCase().replaceAll(' ', '-');
 
       this.router.navigate(['/biblioteca/autores/perfil', autor]);
     }
 
   }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

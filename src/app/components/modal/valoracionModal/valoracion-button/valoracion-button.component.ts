@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ValoracionModalComponent } from '../valoracion-modal/valoracion-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalInfo } from 'src/app/shared/models/modal/modal';
 import { ComentarioDenunciadoInfo } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
