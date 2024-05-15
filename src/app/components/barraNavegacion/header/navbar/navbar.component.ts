@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toPerfil() {
-    this.router.navigate(['/perfil']);
+    this.router.navigate(['/mi-despacho/perfil']);
   }
 
   toAdmin() {

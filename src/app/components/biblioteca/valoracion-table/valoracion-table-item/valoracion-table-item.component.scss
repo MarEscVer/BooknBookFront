@@ -6,6 +6,7 @@
 
     .circular-image {
         @include circular-image();
+        cursor: pointer;
     }
 
     .container-contenido {
@@ -21,6 +22,10 @@
 
         .detalles-usuario{
             margin-left: 10px;
+
+            .username {
+                cursor: pointer;
+            }
         }
 
         .detalles-denuncia {

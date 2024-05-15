@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
 import { PerfilUsuarioData } from 'src/app/shared/models/users/user';
 
 @Component({
@@ -45,6 +46,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    public masLeidosBookService: MasLeidosBookService,
   ) { }
 
   ngOnInit(): void {

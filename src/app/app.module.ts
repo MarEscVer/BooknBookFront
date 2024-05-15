@@ -103,6 +103,7 @@ import { UserClubListComponent } from './components/clubes/user-club-list/user-c
 import { ClubesComponent } from './components/clubes/pages/clubes/clubes.component';
 import { PerfilComponent } from './components/despacho/pages/perfil/perfil.component';
 import { SidenavDespachoComponent } from './components/despacho/sidenav-despacho/sidenav-despacho.component';
+import { EditValoracionButtonComponent } from './components/modal/lecturaModal/userValoracionModal/edit-valoracion-button/edit-valoracion-button.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -177,6 +178,8 @@ import { SidenavDespachoComponent } from './components/despacho/sidenav-despacho
     ClubesComponent,
     PerfilComponent,
     SidenavDespachoComponent,
+    PaginadorListBookComponent,
+    EditValoracionButtonComponent
   ],
   /* LIBRARIES */
   imports: [

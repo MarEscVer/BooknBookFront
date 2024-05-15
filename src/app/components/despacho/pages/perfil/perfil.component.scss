@@ -1,17 +1,23 @@
 @import '../../../../../style/mixin.scss';
 @import '../../../../../style/variables.scss';
 
-.container-fluid {
-    .data-perfil-container {
+.container-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
 
+    .data-perfil-container {
+        align-self: flex-start;
         display: flex;
         flex-direction: row;
         gap: 10px;
         align-items: center;
         justify-content: center;
+        margin-left: 5%;
 
         .data-perfil {
-
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -25,11 +31,27 @@
             @include circular-image(170px, 170px);
         }
     }
+
+    .valoracion-table {
+        width: 90%;
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
 }
+
+
 
 /* Estilos para pantallas pequeñas */
 @media (max-width: $max-width) {
-    .circular-image {
-        @include circular-image(70px, 70px);
+    .container-contenido {
+        .data-perfil-container {
+            flex-direction: column;
+            align-self: center;
+            margin-left: 0;
+
+            .circular-image {
+                @include circular-image(100px, 100px);
+            }
+        }
     }
 }

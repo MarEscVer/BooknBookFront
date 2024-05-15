@@ -48,7 +48,7 @@
         <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
                 <app-user-valoracion-button
-                    [modalInfo]="{id: libro.id}"  [titulo]="libro.titulo"></app-user-valoracion-button>
+                    [modalInfo]="{id: libro.id}" [titulo]="libro.titulo"></app-user-valoracion-button>
             </ng-container>
         </ng-container>
         <ng-template #valoracionNoExistente>

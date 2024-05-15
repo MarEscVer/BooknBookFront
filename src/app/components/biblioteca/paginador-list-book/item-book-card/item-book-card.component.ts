@@ -16,7 +16,7 @@ export class ItemBookCardComponent {
 
   libroSeleccionado: Book = {
     id: 1,
-    imagen: "/assets/img/iconoLibro.jpg",
+    imagen: "",
     titulo: "El nombre del viento",
     autor: {
       "id": 1,

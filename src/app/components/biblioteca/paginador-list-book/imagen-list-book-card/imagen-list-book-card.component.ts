@@ -96,6 +96,7 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
 
   @Input() listadoService: any;
   @Input() generoObs?: Observable<string>;
+  @Input() opcionSize?: boolean = false;
   genero!: string;
 
   /**
@@ -111,12 +112,12 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
       this.genero = genero;
     }));
 
-      // this.loadData();
+    // this.loadData();
 
-      this.onResize();
-      setInterval(() => {
-        this.current = ++this.current % this.librosPorPagina.length;
-      }, 6000);
+    this.onResize();
+    setInterval(() => {
+      this.current = ++this.current % this.librosPorPagina.length;
+    }, 6000);
   }
 
   // loadData() {
@@ -138,14 +139,22 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
     let librosPorPagina = 1;
 
     const screenWidth = window.innerWidth;
-    if (!this.isMobile) {
-      if (screenWidth >= 1300) { // Pantalla grande
+    if (!this.isMobile && !this.opcionSize) {
+      if (screenWidth >= 1300) {
         librosPorPagina = 5;
-      } else if (screenWidth >= 1000) { // Pantalla grande
+      } else if (screenWidth >= 1000) {
         librosPorPagina = 4;
-      } else if (screenWidth >= 790) { // Tableta
+      } else if (screenWidth >= 790) {
         librosPorPagina = 3;
       } else if (screenWidth >= 577) {
+        librosPorPagina = 2;
+      }
+    }
+
+    if (!this.isMobile && this.opcionSize) {
+      if (screenWidth >= 1100) {
+        librosPorPagina = 3;
+      } else if (screenWidth >= 790) {
         librosPorPagina = 2;
       }
     }

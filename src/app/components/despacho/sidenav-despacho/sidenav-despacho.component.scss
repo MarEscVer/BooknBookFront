@@ -1,54 +1,28 @@
 @import '../../../../style/variables.scss';
 
-.sidenav {
-  position: fixed;
-  right: 0;
-  top: 0px;
-  width: 25%;
-  max-width: 300px;
-  height: 100%;
-  padding-right: 3%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 20px;
-  border-left: 1px solid $claro-color;
+mat-toolbar {
+    height: 90px;
+    border-bottom: 1px solid $claro-color;
 
-  div {
-    cursor: pointer;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    fa-icon {
-      font-size: 25px;
+    .link {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        &:hover {
+            cursor: pointer;
+            color: $base-color;
+        }
     }
-
-    &:hover {
-      color: $claro-color;
-    }
-  }
 }
 
-@media (max-width: $max-width) {
+@media screen and (max-width: $max-width) {
+    mat-toolbar {
+        height: 50px;
 
-  .sidenav {
-    width: 15%;
-    padding-right: 0;
-    align-items: center;
-
-    div {
-      span {
-        display: none;
-      }
-
-      fa-icon {
-        font-size: 18px;
-      }
+        .link {
+            span {
+                display: none;
+            }
+        }
     }
-
-
-  }
 }

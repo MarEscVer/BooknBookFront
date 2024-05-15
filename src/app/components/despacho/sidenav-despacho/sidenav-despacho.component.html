@@ -1,8 +1,26 @@
-<div class="sidenav">
-    <div routerLink="/mi-despacho"><span>MI DESPACHO</span> <fa-icon [icon]="['fas', 'house']"></fa-icon></div>
-    <div routerLink="/mi-despacho/perfil"><span>PERFIL</span><fa-icon [icon]="['fas', 'circle-user']"></fa-icon></div>
-    <div routerLink="/clubes"><span>CLUBES</span><fa-icon [icon]="['fas', 'ticket']"></fa-icon></div>
-    <div routerLink="/mi-despacho/perfil/mis-lecturas"><span>MIS LECTURAS</span><fa-icon [icon]="['fas', 'bookmark']"></fa-icon></div>
-    <div routerLink="/mi-despacho/perfil/estadisticas"><span>ESTADÍSTICAS</span><fa-icon [icon]="['fas', 'chart-pie']"></fa-icon></div>
-    <div routerLink="/mi-despacho/perfil/configuracion"><span>CONFIGURACIÓN</span><fa-icon [icon]="['fas', 'gear']"></fa-icon></div>
-</div>
+<mat-toolbar color="accent" class="d-flex justify-content-around align-items-center menu-container">
+    <div class="link" routerLink="/mi-despacho">
+        <fa-icon [icon]="['fas', 'house']"></fa-icon>
+        <span>MI DESPACHO</span>
+    </div>
+    <div class="link" routerLink="/mi-despacho/perfil">
+        <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
+        <span>PERFIL</span>
+    </div>
+    <div class="link" routerLink="/clubes">
+        <fa-icon [icon]="['fas', 'ticket']"></fa-icon>
+        <span>CLUBES</span>
+    </div>
+    <div class="link" routerLink="/mi-despacho/perfil/mis-lecturas">
+        <fa-icon [icon]="['fas', 'bookmark']"></fa-icon>
+        <span>MIS LECTURAS</span>
+    </div>
+    <div class="link" routerLink="/mi-despacho/perfil/estadisticas">
+        <fa-icon [icon]="['fas', 'chart-pie']"></fa-icon>
+        <span>ESTADÍSTICAS</span>
+    </div>
+    <div class="link" routerLink="/mi-despacho/perfil/configuracion">
+        <fa-icon [icon]="['fas', 'gear']"></fa-icon>
+        <span>CONFIGURACIÓN</span>
+    </div>
+</mat-toolbar>

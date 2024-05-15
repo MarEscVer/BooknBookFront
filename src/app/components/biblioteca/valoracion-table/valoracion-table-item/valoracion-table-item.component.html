@@ -3,17 +3,17 @@
         <div class="imagen">
             <ng-container *ngIf="comentario.imagen !== undefined && comentario.imagen !== ''; else noData">
                 <div class="circular-image">
-                    <img [src]="comentario.imagen" alt="Icono de usuario">
+                    <img [src]="comentario.imagen" alt="Icono de usuario" routerLink="/mi-despacho/perfil">
                 </div>
             </ng-container>
             <ng-template #noData>
                 <div class="circular-image">
-                    <img [src]="imgNoData" alt="Icono de usuario">
+                    <img [src]="imgNoData" alt="Icono de usuario" routerLink="/mi-despacho/perfil">
                 </div>
             </ng-template>
         </div>
         <div class="detalles-usuario">
-            <div class="username">{{ comentario.username }}</div>
+            <div class="username" routerLink="/mi-despacho/perfil">{{ comentario.username }}</div>
             <div class="fecha-valoracion">{{ comentario.fechaValoracion }}</div>
         </div>
         <div class="detalles-valoracion">
@@ -32,7 +32,14 @@
         </div>
         <div class="detalles-denuncia">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-                <app-denuncia-button [modalInfo]="{idLibro: comentario.idLibro, username: comentario.username}"></app-denuncia-button>
+                <ng-container *ngIf="estiloPerfil === 'PERFILPROPIO'; else denuncia">
+                    <app-edit-valoracion-button [modalInfo]="{id: comentario.idLibro}"
+                        [titulo]="''"></app-edit-valoracion-button>
+                </ng-container>
+                <ng-template #denuncia>
+                    <app-denuncia-button [modalInfo]="{idLibro: comentario.idLibro, username: comentario.username}">
+                    </app-denuncia-button>
+                </ng-template>
             </ng-container>
             <ng-template #anonimoBlock>
                 <app-inicio-anonimo-boton [estilo]="estiloBoton"></app-inicio-anonimo-boton>
