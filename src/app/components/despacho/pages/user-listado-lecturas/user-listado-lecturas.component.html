@@ -1,0 +1,25 @@
+<app-sidenav-despacho></app-sidenav-despacho>
+<div class="container-fluid">
+    <div *ngIf="url$ | async as estado">
+        <!--TITULO-->
+        <ng-container *ngIf="estado == 'LEIDO'">
+            <div class="titulo">
+                <fa-icon class="leido" [icon]="['fas', 'check']"></fa-icon><span>LISTA DE LEIDOS</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="estado == 'PROGRESO'">
+            <div class="titulo">
+                <fa-icon class="proceso" [icon]="['fas', 'rotate']"></fa-icon><span>LISTA DE LECTURA</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="estado == 'FAVORITO'">
+            <div class="titulo">
+                <fa-icon class="favorito" [icon]="['fas', 'heart']"></fa-icon><span>LISTA DE DESEOS</span>
+            </div>
+        </ng-container>
+        <!--LISTADO-->
+        <div class="listado">
+            <app-list-book-lectura [estado]="estado"></app-list-book-lectura>
+        </div>
+    </div>
+</div>

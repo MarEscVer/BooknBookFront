@@ -7,8 +7,8 @@
             <fa-icon [icon]="['fas', 'check']"></fa-icon>
         </button>
     </ng-container>
-    <ng-container *ngIf="modalInfo?.estado === 'PROCESO'">
-        <button mat-icon-button class="proceso" aria-label="PROCESO, Editar lectura" (click)="openDialog()">
+    <ng-container *ngIf="modalInfo?.estado === 'PROGUESO'">
+        <button mat-icon-button class="proceso" aria-label="PROGRESO, Editar lectura" (click)="openDialog()">
             <fa-icon [icon]="['fas', 'rotate']"></fa-icon>
         </button>
     </ng-container>
@@ -18,7 +18,7 @@
         </button>
     </ng-container>
     <ng-container
-        *ngIf="modalInfo?.estado !== 'LEÍDO' && modalInfo?.estado !== 'PROCESO' && modalInfo?.estado !== 'FAVORITO'">
+        *ngIf="modalInfo?.estado !== 'LEÍDO' && modalInfo?.estado !== 'PROGRESO' && modalInfo?.estado !== 'FAVORITO'">
         <button mat-icon-button class="sin-estado" aria-label="Editar lectura" (click)="openDialog()">
             <fa-icon [icon]="['fas', 'heart']"></fa-icon>
         </button>

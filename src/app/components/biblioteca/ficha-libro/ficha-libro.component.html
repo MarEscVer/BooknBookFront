@@ -4,14 +4,15 @@
         <div class="col-md-3">
             <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
                 <div>
-                    <img [src]="'data:image;base64,' + libro.imagen" class="img-fluid imagen-libro" alt="Imagen del libro">
+                    <img [src]="'data:image;base64,' + libro.imagen" class="img-fluid imagen-libro"
+                        alt="Imagen del libro">
                 </div>
-              </ng-container>
-              <ng-template #noData>
+            </ng-container>
+            <ng-template #noData>
                 <div>
-                  <img [src]="imgNoData" class="img-fluid imagen-libro" alt="Imagen del libro">
+                    <img [src]="imgNoData" class="img-fluid imagen-libro" alt="Imagen del libro">
                 </div>
-              </ng-template>
+            </ng-template>
         </div>
         <!-- Detalles del libro -->
         <div class="col-md-6">
@@ -28,7 +29,9 @@
                     </div>
                 </div>
                 <div class="mb-2">
-                    <h4 class="detalle-saga"><em>{{libro.saga | uppercase}}</em></h4>
+                    <ng-container *ngIf="libro.saga">
+                        <h4 class="detalle-saga"><em>{{libro.saga | uppercase}}</em></h4>
+                    </ng-container>
                     <a (click)="autorLibro(libro.autor.id)">
                         <h4 class="detalle-autor enlace">{{libro.autor.pseudonimo| uppercase}}</h4>
                     </a>
@@ -61,7 +64,8 @@
                     <div class="detalle-texto-sinopsis" [ngClass]="{'expanded': isExpanded}">
                         {{ libro.descripcion }}
                     </div>
-                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar más'}}</a>
+                    <a class="enlace" (click)="toggleDescription()">{{ isExpanded ? 'Mostrar menos' : 'Mostrar
+                        más'}}</a>
                 </div>
             </div>
         </div>

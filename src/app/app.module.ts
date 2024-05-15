@@ -104,6 +104,10 @@ import { ClubesComponent } from './components/clubes/pages/clubes/clubes.compone
 import { PerfilComponent } from './components/despacho/pages/perfil/perfil.component';
 import { SidenavDespachoComponent } from './components/despacho/sidenav-despacho/sidenav-despacho.component';
 import { EditValoracionButtonComponent } from './components/modal/lecturaModal/userValoracionModal/edit-valoracion-button/edit-valoracion-button.component';
+import { UserLecturasComponent } from './components/despacho/pages/user-lecturas/user-lecturas.component';
+import { UserListadoLecturasComponent } from './components/despacho/pages/user-listado-lecturas/user-listado-lecturas.component';
+import { ItemBookLecturaComponent } from './components/despacho/list-book-lectura/item-book-lectura/item-book-lectura.component';
+import { ListBookLecturaComponent } from './components/despacho/list-book-lectura/list-book-lectura.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -179,7 +183,11 @@ import { EditValoracionButtonComponent } from './components/modal/lecturaModal/u
     PerfilComponent,
     SidenavDespachoComponent,
     PaginadorListBookComponent,
-    EditValoracionButtonComponent
+    EditValoracionButtonComponent,
+    UserLecturasComponent,
+    UserListadoLecturasComponent,
+    ItemBookLecturaComponent,
+    ListBookLecturaComponent
   ],
   /* LIBRARIES */
   imports: [

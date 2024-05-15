@@ -1,0 +1,37 @@
+@import '../../../../../style/variables.scss';
+
+.container-fluid {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    .listado {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+
+        img {
+            width: 80%;
+            height: auto;
+        }
+    }
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    .container-fluid {
+        flex-direction: column;
+        gap: 20px;
+
+        .listado {    
+            img {
+                width: 300px;
+                height: auto;
+            }
+        }
+    }
+}

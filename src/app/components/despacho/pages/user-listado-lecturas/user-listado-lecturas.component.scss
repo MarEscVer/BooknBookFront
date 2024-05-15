@@ -1,0 +1,49 @@
+@import '../../../../../style/variables.scss';
+
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    align-items: center;
+    margin: 50px 0 50px 0;
+
+    .titulo {
+
+        span {
+            font-size: 24px;
+        }
+
+        .favorito {
+            background-color: $background-heart;
+            padding: 10px;
+            border-radius: 100%;
+            color: $color-heart;
+            margin-right: 10px;
+        }
+
+        .proceso {
+            background-color: $background-rotate;
+            color: $color-rotate;
+            padding: 10px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+
+        .leido {
+            background-color: $background-check;
+            color: $color-check;
+            padding: 10px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+    }
+}
+
+// Estilos para pantallas pequeñas
+@media (max-width: $max-width) {
+    .container-fluid {
+        margin: 50px 0 50px 0;
+    }
+}

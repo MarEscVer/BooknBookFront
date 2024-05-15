@@ -1,0 +1,79 @@
+<div class="book-container container-fluid">
+  <div class="imagen">
+    <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
+      <div class="rectangular-image">
+        <img [src]="libro.imagen" alt="Portada libro">
+      </div>
+    </ng-container>
+    <ng-template #noData>
+      <div class="rectangular-image">
+        <img [src]="imgNoData" alt="Portada libro">
+      </div>
+    </ng-template>
+  </div>
+  <ng-container *ngIf="estado === 'FAVORITO'">
+    <div class="detalle-libro">
+      <span class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</span>
+      <span>
+        <h6 class="autor">{{libro.autor| uppercase}}</h6>
+      </span>
+      <span>{{ libro.descripcion }}</span>
+      <div class="d-flex gap-2 mt-2">
+        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
+        <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre | uppercase}}</div>
+      </div>
+    </div>
+    <div class="botones">
+      <button mat-icon-button color="primary" aria-label="Eliminar" (click)="eliminarLibro(libro.id)">
+        <fa-icon class="me-2" [icon]="['fas', 'trash']"></fa-icon>
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="estado === 'LEIDO'">
+    <div class="detalle-libro">
+      <span class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</span>
+      <span>
+        <h6 class="autor">{{libro.autor| uppercase}}</h6>
+      </span>
+      <div>Paginas totales: {{libro.paginasTotales}}</div>
+      <div>Fecha de inicio: {{(libro.fechaInicio ? libro.fechaInicio : 'Sin datos')}}</div>
+      <div>Fecha final: {{(libro.fechaFinal ? libro.fechaFinal : 'Sin datos')}}</div>
+      <div class="d-flex gap-2 mt-2">
+        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
+        <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre | uppercase}}</div>
+      </div>
+    </div>
+    <div class="botones">
+      <button mat-icon-button color="primary" aria-label="Editar" (click)="editarLectura(libro.id)">
+        <fa-icon class="me-2" [icon]="['fas', 'pen']"></fa-icon>
+      </button>
+      <button mat-icon-button color="primary" aria-label="Eliminar" (click)="eliminarLibro(libro.id)">
+        <fa-icon class="me-2" [icon]="['fas', 'trash']"></fa-icon>
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="estado === 'PROGRESO'">
+    <div class="detalle-libro">
+      <span class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</span>
+      <span>
+        <h6 class="autor">{{libro.autor| uppercase}}</h6>
+      </span>
+      <div>Paginas totales: {{libro.paginasTotales}}</div>
+      <div>Paginas leidas: {{(libro.paginasLeidas ? libro.paginasLeidas : 'Sin datos')}}</div>
+      <div>Fecha de inicio: {{(libro.fechaInicio ? libro.fechaInicio : 'Sin datos')}}</div>
+      <div class="d-flex gap-2 mt-2">
+        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
+        <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre | uppercase}}</div>
+      </div>
+    </div>
+    <div class="botones">
+      <button mat-icon-button color="primary" aria-label="Editar" (click)="editarLectura(libro.id)">
+        <fa-icon class="me-2" [icon]="['fas', 'pen']"></fa-icon>
+      </button>
+      <button mat-icon-button color="primary" aria-label="Eliminar" (click)="eliminarLibro(libro.id)">
+        <fa-icon class="me-2" [icon]="['fas', 'trash']"></fa-icon>
+      </button>
+    </div>
+  </ng-container>
+
+</div>

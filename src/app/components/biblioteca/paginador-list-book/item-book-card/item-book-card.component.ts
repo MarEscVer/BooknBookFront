@@ -35,7 +35,7 @@ export class ItemBookCardComponent {
     fechaPublicacion: "2007-03-27",
     paginasTotales: 662,
     valoracionMedia: 4,
-    estado: "PROCESO",
+    estado: "PROGRESO",
     saga: "El nombre del viento",
     descripcion: "Atípica, profunda y sincera, El nombre del viento es una novela de aventuras, de historias dentro de otras historias, de misterio, de amistad, de amor, de magia y de superación. La novela que ha consagrado a Patrick Rothfuss como fenómeno editorial de los últimos años. En una posada en tierra de nadie, un hombre se dispone a relatar, por primera vez, la autentica historia de su vida.Una historia que únicamente el conoce y que ha quedado diluida tras los rumores, las conjeturas y los cuentos de taberna que le han convertido en un personaje legendario a quien todos daban ya por muerto: Kvothe...músico, mendigo, ladrón, estudiante, mago, heroe y asesino. Ahora va a revelar la verdad sobre sí mismo.Y para ello debe empezar por el principio: su infancia en una troupe de artistas itinerantes, los años malviviendo como un ladronzuelo en las calles de una gran ciudad y su llegada a una universidad donde esperaba encontrar todas las respuestas que había estado buscando. Viaje, ame, perdí, confie y me traicionaron. He robado princesas a reyes agónicos. Incendie la ciudad de Trebon. He pasado la noche con Felurian y he despertado vivo y cuerdo."
   };

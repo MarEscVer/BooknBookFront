@@ -58,3 +58,19 @@ export interface BookEdit{
     newSagaName: string;
     descripcion: string;
 }
+
+export interface BookListadoLectura {
+    id: number;
+    imagen: any;
+    titulo: string;
+    saga: string;
+    autor: string;
+    descripcion:string
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
+    paginasTotales: number;
+    //datos valoracion
+    fechaInicio: string;
+    fechaFinal: string;
+    paginasLeidas: number
+}

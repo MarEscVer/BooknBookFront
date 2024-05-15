@@ -16,6 +16,8 @@ import { LibroComponent } from './components/biblioteca/pages/libro/libro.compon
 import { AutorComponent } from './components/biblioteca/pages/autor/autor.component';
 import { ClubesComponent } from './components/clubes/pages/clubes/clubes.component';
 import { PerfilComponent } from './components/despacho/pages/perfil/perfil.component';
+import { UserLecturasComponent } from './components/despacho/pages/user-lecturas/user-lecturas.component';
+import { UserListadoLecturasComponent } from './components/despacho/pages/user-listado-lecturas/user-listado-lecturas.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,7 +33,8 @@ const routes: Routes = [
   // REGISTRADO
   { path: "mi-despacho", component: PerfilComponent, canActivate: [appGuard] },
   { path: "mi-despacho/perfil", component: PerfilComponent, canActivate: [appGuard] },
-  { path: "mi-despacho/perfil/mis-lecturas", component: PerfilComponent, canActivate: [appGuard] },
+  { path: "mi-despacho/perfil/mis-lecturas", component: UserLecturasComponent, canActivate: [appGuard] },
+  { path: "mi-despacho/perfil/mis-lecturas/listado/:estado", component: UserListadoLecturasComponent, canActivate: [appGuard] },
   { path: "mi-despacho/perfil/estadisticas", component: PerfilComponent, canActivate: [appGuard] },
   { path: "mi-despacho/perfil/configuracion", component: PerfilComponent, canActivate: [appGuard] },
   // ADMINISTRADOR

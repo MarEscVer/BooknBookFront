@@ -1,0 +1,75 @@
+@import '../../../../../style/mixin.scss';
+@import '../../../../../style/variables.scss';
+
+.book-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid $claro-color;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .imagen {
+        flex: 0 0 auto;
+        margin-right: 15px;
+
+        .rectangular-image {
+            @include rectangular-image(185px, 225px);
+        }
+
+    }
+
+    .detalle-libro {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .titulo {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .autor {
+            font-size: 1em;
+            font-weight: normal;
+            color: $grey-color;
+        }
+
+    }
+
+    .botones {
+        flex: 0 0 auto;
+        margin-left: 20px;
+    }
+}
+
+// Estilos para pantallas pequeñas
+@media (max-width: $max-width) {
+    .book-container {
+        flex-direction: column;
+        width: 100%;
+        padding: 10px;
+
+        .imagen {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+
+        .detalle-libro {
+            align-items: center;
+            text-align: center;
+
+            .d-flex {
+                justify-content: center;
+            }
+        }
+
+        button {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+    }
+}
