@@ -10,6 +10,9 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string | null>(null);
   userRole$: Observable<string | null> = this.userRoleSubject.asObservable();
 
+  private userUsernameSubject = new BehaviorSubject<string | null>(null);
+  userUsername$: Observable<string | null> = this.userUsernameSubject.asObservable();
+
   constructor() {
     this.iniciarSesionSiExiste();
   }
@@ -17,6 +20,7 @@ export class AuthService {
   public closeSession(): void {
     this.deleteCookie('token');
     this.userRoleSubject.next(null);
+    this.userUsernameSubject.next(null);
   }
 
   public closeSessionTotal(): boolean {
@@ -24,11 +28,13 @@ export class AuthService {
     this.deleteCookie('username');
     this.deleteCookie('rol');
     this.userRoleSubject.next(null);
+    this.userUsernameSubject.next(null);
     return true;
   }
 
   public iniciarSession(): void {
     this.userRoleSubject.next(this.getCookie('rol'));
+    this.userUsernameSubject.next(this.getCookie('username'));
   }
 
   private iniciarSesionSiExiste(): void {

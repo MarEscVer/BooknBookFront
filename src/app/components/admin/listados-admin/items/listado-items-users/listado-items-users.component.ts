@@ -17,7 +17,7 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
 
   @Input() data?: UserItemList[];
 
-  imgNoData: string = '../../../../assets/img/iconoPerfil.jpg';
+  imgNoData: string = '/assets/img/iconoPerfil.jpg';
   dataSource: MatTableDataSource<UserItemList>;
   editedItems: UserItemList[] = [];
   originalRol: string = '';

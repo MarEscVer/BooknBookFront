@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegisterComponent } from './components/user/register/register.component';
+import { LoginComponent } from './components/public/login/login.component';
+import { RegisterComponent } from './components/public/register/register.component';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgIf } from '@angular/common';
 import { InputErrorStateMatcherExample } from './shared/errors/input-error-state-matcher';
-import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';import { HomeComponent } from './components/user/home/home.component';
+import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';import { HomeComponent } from './components/public/home/home.component';
 import { MessageErrorComponent } from './components/messages/message-error/message-error.component';
 import { GlobalErrorHandler } from './interceptors/global-error-handler';
 import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
@@ -63,10 +63,10 @@ import { AcceptButtonComponent } from './components/modal/acceptModal/accept-but
 import { AcceptModalComponent } from './components/modal/acceptModal/accept-modal/accept-modal.component';
 import { ValoracionButtonComponent } from './components/modal/valoracionModal/valoracion-button/valoracion-button.component';
 import { ValoracionModalComponent } from './components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
-import { CarouselImagenComponent } from './components/user/home/carousel-imagen/carousel-imagen.component';
+import { CarouselImagenComponent } from './components/public/home/carousel-imagen/carousel-imagen.component';
 import { ItemBookCardComponent } from './components/biblioteca/paginador-list-book/item-book-card/item-book-card.component';
 import { FooterComponent } from './components/barraNavegacion/footer/footer.component';
-import { QuienesSomosComponent } from './components/user/quienes-somos/quienes-somos.component';
+import { QuienesSomosComponent } from './components/public/quienes-somos/quienes-somos.component';
 import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
 import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable-item/menu-desplegable-item.component';
 import {MatMenuModule} from '@angular/material/menu';
@@ -101,6 +101,8 @@ import { ClubListAllComponent } from './components/clubes/club-list-all/club-lis
 import { UserItemClubListComponent } from './components/clubes/user-club-list/user-item-club-list/user-item-club-list.component';
 import { UserClubListComponent } from './components/clubes/user-club-list/user-club-list.component';
 import { ClubesComponent } from './components/clubes/pages/clubes/clubes.component';
+import { PerfilComponent } from './components/despacho/pages/perfil/perfil.component';
+import { SidenavDespachoComponent } from './components/despacho/sidenav-despacho/sidenav-despacho.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -173,6 +175,8 @@ import { ClubesComponent } from './components/clubes/pages/clubes/clubes.compone
     UserItemClubListComponent,
     UserClubListComponent,
     ClubesComponent,
+    PerfilComponent,
+    SidenavDespachoComponent,
   ],
   /* LIBRARIES */
   imports: [

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FechasModalComponent } from '../fechas-modal/fechas-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalInfoPages } from 'src/app/shared/models/modal/modal';
+import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-fechas-button',
@@ -9,7 +9,9 @@ import { ModalInfoPages } from 'src/app/shared/models/modal/modal';
   styleUrls: ['./fechas-button.component.scss']
 })
 export class FechasButtonComponent {
-  @Input() modalInfo!: ModalInfoPages;
+  @Input() modalInfo!: ValoracionData;
+  @Input() pages!: number;
+  @Input() titulo!: string;
 
   constructor(private dialog: MatDialog) {
   }
@@ -18,7 +20,9 @@ export class FechasButtonComponent {
     const dialogRef = this.dialog.open(FechasModalComponent, {
       width: '50%',
       data: {
-        modalInfo: this.modalInfo
+        modalInfo: this.modalInfo,
+        pages: this.pages,
+        titulo: this.titulo,
       }
     });
   }

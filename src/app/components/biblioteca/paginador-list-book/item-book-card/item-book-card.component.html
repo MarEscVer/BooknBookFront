@@ -1,5 +1,14 @@
 <mat-card class="custom-card" (click)="fichaLibro(libro.id)">
-  <img mat-card-image src="{{libro.imagen}}" alt="Portada del libro {{libro.titulo}}">
+  <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
+    <div>
+        <img mat-card-image [src]="'data:image;base64,' + libro.imagen" alt="Portada del libro {{libro.titulo}}">
+    </div>
+  </ng-container>
+  <ng-template #noData>
+    <div>
+      <img mat-card-image [src]="imgNoData" alt="Portada del libro {{libro.titulo}}">
+    </div>
+  </ng-template>
   <mat-card-content class="texto">
     <span class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</span>
     <span class="autor">{{ libro.autor | uppercase }}</span>

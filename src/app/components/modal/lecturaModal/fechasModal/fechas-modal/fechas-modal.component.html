@@ -1,5 +1,5 @@
 <div class="d-flex flex-column justify-content-center align-items-center p-3">
-    <h4><strong>{{modalInfo.title | uppercase}}</strong></h4>
+    <h4><strong>{{tituloLibro | uppercase}}</strong></h4>
     <div class="mb-3">Ficha de lectura:</div>
     <form [formGroup]="formProceso" (submit)="$event.preventDefault()"
         class="d-flex flex-column align-items-center gap-3">
@@ -16,14 +16,9 @@
                 </mat-datepicker-actions>
             </mat-datepicker>
         </mat-form-field>
-        <div class="alert alert-danger w-100" *ngIf="formProceso.get('inicio')?.touched && formProceso.get('inicio')?.errors">
-            <div *ngIf="this.specificError('inicio','required')">
-                Inicio de lectura requerido.
-            </div>
-        </div>
         <ng-container *ngIf="formProceso.get('terminado')?.value || formProceso.get('inicio')?.value">
             <mat-form-field class="w-100">
-                <mat-label>Inicio de lectura</mat-label>
+                <mat-label>Final de lectura</mat-label>
                 <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datepicker" formControlName="final"
                     id="final">
                 <mat-hint>MM/DD/YYYY</mat-hint>
@@ -36,10 +31,11 @@
                 </mat-datepicker>
             </mat-form-field>
         </ng-container>
-        <div class="paginasLibro">Páginas totales: {{modalInfo.pages}}</div>
+        <div class="paginasLibro">Páginas totales: {{pages}}</div>
         <mat-form-field class="w-100">
             <mat-label>Página actual de lectura</mat-label>
-            <input matInput type="number" formControlName="paginaActual" id="paginaActual" />
+            <input matInput type="number" formControlName="paginaActual" id="paginaActual"
+    />
         </mat-form-field>
         <div class="alert alert-danger w-100"
             *ngIf="formProceso.get('paginaActual')?.touched && formProceso.get('paginaActual')?.errors">
@@ -48,7 +44,8 @@
             </div>
         </div>
         <section class="checkbox-terminado">
-            <mat-checkbox formControlName="terminado" (change)="updatePageInput()">Lo he terminado de leer</mat-checkbox>
+            <mat-checkbox formControlName="terminado" (change)="updatePageInput()">Lo he terminado de
+                leer</mat-checkbox>
         </section>
         <button mat-raised-button (click)="submit()" color="primary" [disabled]="!formProceso.valid">GUARDAR</button>
     </form>

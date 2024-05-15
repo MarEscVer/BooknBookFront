@@ -6,8 +6,8 @@ import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-ma
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { Book } from 'src/app/shared/models/book/book';
 import { FechasModalComponent } from '../../fechasModal/fechas-modal/fechas-modal.component';
-import { ModalInfo, ModalInfoPages } from 'src/app/shared/models/modal/modal';
 import { UserValoracionModalComponent } from '../../userValoracionModal/user-valoracion-modal/user-valoracion-modal.component';
+import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-interes-modal',
@@ -18,8 +18,7 @@ export class InteresModalComponent implements OnInit {
 
   modalInfo?: Book;
 
-  modalInfoFechas?: ModalInfoPages;
-  modalInfoValoracion?: ModalInfo;
+  modalInfoFechasValoracion?: ValoracionData;
 
   matcher!: FormErrorStateMatcher;
   formularioLibro!: FormGroup;
@@ -52,22 +51,20 @@ export class InteresModalComponent implements OnInit {
 
   submit() {
     const estadoMarcado = this.formularioLibro.get('estado')?.value;
+    //TODO OBTENER VALORACION AL HACER LA LLAMADA AL SERVICIO CON EL ESTADO DEL LIBRO
+    //LO PASAMOS AL modalInfoFechasValoracion Y ABRIMOS ALGUNO DE LOS OTROS DOS MODALES
     if (this.modalInfo) {
-      this.modalInfoFechas = {
-        id: this.modalInfo.id,
-        title: this.modalInfo.titulo,
-        pages: this.modalInfo.paginasTotales,
+      this.modalInfoFechasValoracion = {
+        id: this.modalInfo.id
       };
-      this.modalInfoValoracion = {
-        id: this.modalInfo.id,
-        title: this.modalInfo.titulo,
-      };
-      if (this.modalInfoFechas || this.modalInfoValoracion) {
+      if (this.modalInfoFechasValoracion) {
         if (estadoMarcado === 'PROCESO') {
           const dialogFechas = this.dialog.open(FechasModalComponent, {
             width: '50%',
             data: {
-              modalInfo: this.modalInfoFechas
+              modalInfo: this.modalInfoFechasValoracion,
+              pages: this.modalInfo.paginasTotales,
+              titulo: this.modalInfo.titulo,
             }
           });
         }
@@ -75,7 +72,9 @@ export class InteresModalComponent implements OnInit {
           const dialogValoracion = this.dialog.open(UserValoracionModalComponent, {
             width: '50%',
             data: {
-              modalInfo: this.modalInfoValoracion
+              modalInfo: this.modalInfoFechasValoracion,
+              titulo: this.modalInfo.titulo,
+              procedenciaModal: false,
             }
           });
         }

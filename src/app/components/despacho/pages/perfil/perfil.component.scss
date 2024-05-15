@@ -1,0 +1,35 @@
+@import '../../../../../style/mixin.scss';
+@import '../../../../../style/variables.scss';
+
+.container-fluid {
+    .data-perfil-container {
+
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+
+        .data-perfil {
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            .username {
+                color: $grey-color;
+            }
+        }
+
+        .circular-image {
+            @include circular-image(170px, 170px);
+        }
+    }
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: $max-width) {
+    .circular-image {
+        @include circular-image(70px, 70px);
+    }
+}

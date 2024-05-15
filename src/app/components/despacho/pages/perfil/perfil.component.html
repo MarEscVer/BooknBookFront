@@ -1,0 +1,36 @@
+<app-sidenav-despacho></app-sidenav-despacho>
+<div class="vh-100 container-fluid">
+    <div *ngIf="perfilUsuario" class="data-perfil-container col-md-5">
+        <ng-container *ngIf="perfilUsuario.imagen !== undefined && perfilUsuario.imagen !== ''; else noData">
+            <div class="circular-image">
+                <img [src]="'data:image;base64,' + perfilUsuario.imagen" alt="Icono de usuario">
+            </div>
+        </ng-container>
+        <ng-template #noData>
+            <div class="circular-image">
+                <img [src]="imgNoData" alt="Icono de usuario">
+            </div>
+        </ng-template>
+        <div class="data-perfil">
+            <h4>{{perfilUsuario.nombre | uppercase}}</h4>
+            <h6 class="username">{{perfilUsuario.username | uppercase}}</h6>
+            <div class="d-flex gap-2 mb-3">
+                <div class="detalle-tipo" [ngStyle]="tipoStyle">{{perfilUsuario.tipo.nombre| uppercase}}</div>
+                <div class="detalle-genero" [ngStyle]="generoStyle">{{perfilUsuario.genero.nombre| uppercase}}</div>
+            </div>
+            <ng-container *ngIf="perfilPropio; else noPerfilPropio">
+                <div>
+                    <button mat-button class="estilo-claro" (click)="rutaEditarPerfil()">EDITAR PERFIL</button>
+                </div>
+            </ng-container>
+            <ng-template #noPerfilPropio>
+                <ng-container *ngIf="perfilUsuario.seguir; else noSeguido">
+                    <button mat-button class="estilo-claro" (click)="unfollow()">DEJAR DE SEGUIR</button>
+                </ng-container>
+                <ng-template #noSeguido>
+                    <button mat-button class="estilo-oscuro" (click)="follow()">SEGUIR</button>
+                </ng-template>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -2,7 +2,16 @@
     <div class="row justify-content-center">
         <!-- Imagen del libro -->
         <div class="col-md-3">
-            <img [src]="libro.imagen" class="img-fluid imagen-libro" alt="Imagen del libro">
+            <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
+                <div>
+                    <img [src]="'data:image;base64,' + libro.imagen" class="img-fluid imagen-libro" alt="Imagen del libro">
+                </div>
+              </ng-container>
+              <ng-template #noData>
+                <div>
+                  <img [src]="imgNoData" class="img-fluid imagen-libro" alt="Imagen del libro">
+                </div>
+              </ng-template>
         </div>
         <!-- Detalles del libro -->
         <div class="col-md-6">
@@ -14,8 +23,7 @@
                             <app-interes-button [modalInfo]="libro"></app-interes-button>
                         </ng-container>
                         <ng-template #anonimoBlock>
-                            <app-inicio-anonimo-boton
-                                [modalInfo]="{ id: libro.id, title: libro.titulo}" [estilo]="estiloBoton"></app-inicio-anonimo-boton>
+                            <app-inicio-anonimo-boton [estilo]="estiloBoton"></app-inicio-anonimo-boton>
                         </ng-template>
                     </div>
                 </div>

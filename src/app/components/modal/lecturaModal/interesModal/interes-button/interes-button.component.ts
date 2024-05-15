@@ -10,6 +10,7 @@ import { Book } from 'src/app/shared/models/book/book';
 })
 export class InteresButtonComponent {
   @Input() modalInfo?: Book;
+  @Input() estiloOpcion?: boolean = false;
 
   constructor(private dialog: MatDialog) {
   }

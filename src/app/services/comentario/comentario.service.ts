@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { ComentarioDenunciadoResponse } from 'src/app/shared/models/comentario/comentario';
+import { ComentarioDenunciadoResponse, ValoracionData } from 'src/app/shared/models/comentario/comentario';
 import { ComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -38,6 +38,11 @@ export class ComentarioService implements deleteObject {
   getComboMotivoDenuncia(): Observable<ComboResponse> {
     return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/combo/denuncia/motivo')
     .pipe(catchError(this.handleError));
+  }
+
+  getValoracion(): Observable<ValoracionData> {
+    const valoracion: ValoracionData = {id: 1};
+    return of(valoracion);
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -103,9 +103,6 @@ export class InputErrorStateMatcherExample {
   }
 
   denuncia = {
-    nombre: this.getFormControl_required(),
-    apellidos: this.getFormControl_nonRequired(),
-    email: this.getFormControl_Email(),
     motivo: this.getFormControl_required(),
     texto: this.getFormControl_nonRequired(),
   }

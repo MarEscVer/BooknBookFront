@@ -1,10 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { ModalInfo } from 'src/app/shared/models/modal/modal';
+import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-user-valoracion-modal',
@@ -13,10 +13,12 @@ import { ModalInfo } from 'src/app/shared/models/modal/modal';
 })
 export class UserValoracionModalComponent implements OnInit, OnDestroy {
 
-  modalInfo: ModalInfo = {
-    id: 0,
-    title: ''
+  modalInfo: ValoracionData = {
+    id: 1,
   };
+  tituloLibro: string = '';
+  procedenciaModal: boolean = false;
+  private submitted = false;
 
   formValoracion!: FormGroup;
   matcher!: FormErrorStateMatcher;
@@ -27,7 +29,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ModalInfo },
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionData, titulo: string, procedenciaModal?: boolean },
     private dialogRef: MatDialogRef<UserValoracionModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
@@ -37,6 +39,12 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
     this.createForm(this.formBuilder);
     if (data && data.modalInfo) {
       this.modalInfo = data.modalInfo;
+      if (data.titulo) {
+        this.tituloLibro = data.titulo;
+      }
+      if (data.procedenciaModal) {
+        this.procedenciaModal = data.procedenciaModal;
+      }
     }
   }
 
@@ -44,12 +52,32 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
     this.formValoracion = this.formBuilder.group(this.formControl.valoracionEstrellas);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dialogRef.beforeClosed().subscribe(() => {
+      if (this.procedenciaModal && !this.submitted) {
+        this.sendDataToServer(this.modalInfo);
+        console.log('before closed');
+      }
+    });
+  }
 
   submit() {
-    // TODO ENVIAR FORMULARIO VALORACION + PONER LIBRO CON ESTADO LEÍDO (MODALINFO ID LIBRO) + USUARIO TOKEN
-    console.log(this.formValoracion.value);
+    this.submitted = true;
+    const formValues = this.formValoracion.value;
+    const dataToSend = {
+      ...this.modalInfo,
+      ...formValues,
+    };
+    this.sendDataToServer(dataToSend);
+
+    console.log('submit');
     this.dialogRef.close();
+  }
+
+  sendDataToServer(data: any) {
+    //TODO LLAMADA AL SERVIDOR CON LOS DATOS QUE HAY EN EL modalInfo: ValoracionData
+    //RELLENO SOLO CON LOS DATOS DEL MODAL ANTERIOR (TRUE) O CON TODO (SUBMIT FORMUALRIO)
+    console.log('Datos enviados exitosamente');
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {

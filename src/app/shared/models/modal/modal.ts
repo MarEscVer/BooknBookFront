@@ -3,12 +3,6 @@ export interface ModalInfo {
     title: string;
 }
 
-export interface ModalInfoPages {
-    id: number;
-    title: string;
-    pages: number;
-}
-
 export interface ModalInfoDenuciaComentario {
     idLibro: number;
     username: string;

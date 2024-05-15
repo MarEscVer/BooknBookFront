@@ -1,4 +1,3 @@
-
 <div *ngIf="estilo === 'INTERES'">
     <button mat-icon-button class="sin-estado" aria-label="Editar" (click)="openDialog()">
         <fa-icon [icon]="['fas', 'heart']"></fa-icon>
@@ -6,4 +5,11 @@
 </div>
 <div *ngIf="estilo === 'VALORACION'">
     <button mat-raised-button type="button" color="accent" (click)="openDialog()">DEJAR MI OPINIÓN</button>
+</div>
+<div *ngIf="estilo === 'DENUNCIA'">
+    <button mat-icon-button color="primary" aria-label="Denunciar comentario" (click)="openDialog()"
+        class="d-flex flex-row align-items-center gap-2">
+        <fa-icon [icon]="['fas', 'comment-slash']" class="--listado-icon"></fa-icon>
+        <div class="texto-denuncia">Denunciar</div>
+    </button>
 </div>

@@ -9,7 +9,6 @@ import { InicioAnonimoModalComponent } from '../inicio-anonimo-modal/inicio-anon
   styleUrls: ['./inicio-anonimo-boton.component.scss']
 })
 export class InicioAnonimoBotonComponent {
-  @Input() modalInfo?: ModalInfo;
   @Input() estilo!: string;
 
   constructor(private dialog: MatDialog) {
@@ -17,10 +16,7 @@ export class InicioAnonimoBotonComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(InicioAnonimoModalComponent, {
-      width: '50%',
-      data: {
-        modalInfo: this.modalInfo
-      }
+      width: '60%'
     });
   }
 }

@@ -1,3 +1,5 @@
+import { GeneroTipo } from "../combo/combo";
+
 export interface Login {
     username: string;
     password: string;
@@ -19,14 +21,24 @@ export interface Register {
 export interface UserItemList {
     id: number;
     //TODO Imagenes BLOB
-    img: any;
+    imagen: any;
     username: string;
-    name: string;
-    surname1: string;
-    surname2: string;
+    nombre: string;
+    apellido1: string;
+    apellido2: string;
     email: string;
     rol: string;
     editMode?: boolean;
+}
+
+export interface PerfilUsuarioData {
+    id: number;
+    imagen: any;
+    username: string;
+    nombre: string;
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
+    seguir: boolean;
 }
 
 export interface modifyUser {

@@ -1,10 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { ModalInfoPages } from 'src/app/shared/models/modal/modal';
+import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { UserValoracionModalComponent } from '../../userValoracionModal/user-valoracion-modal/user-valoracion-modal.component';
 
 @Component({
   selector: 'app-fechas-modal',
@@ -13,11 +14,11 @@ import { ModalInfoPages } from 'src/app/shared/models/modal/modal';
 })
 export class FechasModalComponent implements OnInit, OnDestroy {
 
-  modalInfo: ModalInfoPages = {
-    id: 0,
-    title: '',
-    pages: 0,
+  modalInfo: ValoracionData = {
+    id: 1,
   };
+  pages: number = 0;
+  tituloLibro: string = '';
 
   formProceso!: FormGroup;
   matcher!: FormErrorStateMatcher;
@@ -31,25 +32,24 @@ export class FechasModalComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ModalInfoPages },
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionData, pages: number, titulo: string },
     private dialogRef: MatDialogRef<FechasModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
+    private dialog: MatDialog
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
     this.createForm(this.formBuilder);
     if (data && data.modalInfo) {
       this.modalInfo = data.modalInfo;
+      if (data.pages) {
+        this.pages = data.pages;
+      }
+      if (data.titulo) {
+        this.tituloLibro = data.titulo;
+      }
     }
-    this.subscriptions.add(this.formProceso.get('paginaActual')?.valueChanges.subscribe((value) => {
-      if (value > this.modalInfo.pages) {
-        this.formProceso.get('paginaActual')?.setValue(this.modalInfo.pages);
-      }
-      if (value === this.modalInfo.pages) {
-        this.formProceso.get('terminado')?.setValue(true);
-      }
-    }));
   }
 
   createForm(fb: FormBuilder) {
@@ -58,8 +58,22 @@ export class FechasModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setMinMaxDate();
+    this.subscriptions.add(this.formProceso.get('paginaActual')?.valueChanges.subscribe((value) => {
+      if (value !== this.formProceso.get('paginaActual')?.value) {
+        if (value > this.pages) {
+          this.formProceso.get('paginaActual')?.setValue(this.pages);
+        }
+        if (value === this.pages) {
+          this.formProceso.get('terminado')?.setValue(true);
+          this.formProceso.get('paginaActual')?.disable();
+        } else {
+          this.formProceso.get('terminado')?.setValue(false);
+          this.formProceso.get('paginaActual')?.enable();
+        }
+      }
+    }));
   }
-
+ 
   submit() {
     const inicioDate: Date = this.formProceso.get('inicio')?.value;
     const finalDate: Date = this.formProceso.get('final')?.value;
@@ -68,8 +82,9 @@ export class FechasModalComponent implements OnInit, OnDestroy {
 
     // Formatear las fechas al formato YYYY/MM/DD
     const inicioFormatted: string = inicioDate.toISOString().split('T')[0];
-    const finalFormatted: string = finalDate.toISOString().split('T')[0];
+    const finalFormatted: string | null = finalDate ? finalDate.toISOString().split('T')[0] : null;
 
+    // TODO METERLO AL OBJETO QUE YA TENGO modalInfo: ValoracionData
     const dataToSend = {
       inicio: inicioFormatted,
       final: finalFormatted,
@@ -77,8 +92,21 @@ export class FechasModalComponent implements OnInit, OnDestroy {
       terminado: terminado,
     };
 
-    // TODO ENVIAR FORMULARIO PROCESO LECTURA --> SI PONE QUE LO HA TERMINADO DE LEER, ESTADO LIBRO PONERLO A TERMINADO
-    console.log(dataToSend);
+    // ENVIAR FORMULARIO PROCESO LECTURA --> SI PONE QUE LO HA TERMINADO DE LEER
+    // ENVIAR DATOS A MODAL USER-VALORACION Y AY AHÍ ENVIAR TODO, SINO
+    // DESDE AQUÍ HACER LA LLAMADA
+    if(terminado) {
+      const dialogValoracion = this.dialog.open(UserValoracionModalComponent, {
+        width: '50%',
+        data: {
+          modalInfo: this.modalInfo,
+          titulo: this.tituloLibro,
+          procedenciaModal: true,
+        }
+      });
+    } else {
+      // TODO LLAMADA --> ENVIAR DATOS A MODAL USER-VALORACION Y AY AHÍ ENVIAR TODO
+    }
     this.dialogRef.close();
   }
 
@@ -88,12 +116,13 @@ export class FechasModalComponent implements OnInit, OnDestroy {
 
   updatePageInput() {
     if (this.formProceso.get('terminado')?.value) {
-      this.formProceso.get('paginaActual')?.setValue(this.modalInfo.pages);
+      this.formProceso.get('paginaActual')?.setValue(this.pages);
+      this.formProceso.get('paginaActual')?.disable();
     } else {
       this.formProceso.get('paginaActual')?.setValue(null);
+      this.formProceso.get('paginaActual')?.enable();
     }
   }
-  
 
   specificError(modelAttribute: string, errorAttribute: string) {
     return this.matcher.isErrorStateSpecific(

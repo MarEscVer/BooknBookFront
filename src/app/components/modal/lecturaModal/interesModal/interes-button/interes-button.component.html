@@ -1,22 +1,26 @@
-<div *ngIf="modalInfo">
-    <ng-container *ngIf="modalInfo.estado === 'LEÍDO'">
+<ng-container *ngIf="estiloOpcion; else estiloIcono">
+    <button mat-raised-button type="button" color="accent" (click)="openDialog()">DEJAR MI OPINIÓN</button>
+</ng-container>
+<ng-template #estiloIcono>
+    <ng-container *ngIf="modalInfo?.estado === 'LEÍDO'">
         <button mat-icon-button class="leido" aria-label="LEÍDO, Editar lectura" (click)="openDialog()">
             <fa-icon [icon]="['fas', 'check']"></fa-icon>
         </button>
     </ng-container>
-    <ng-container *ngIf="modalInfo.estado === 'PROCESO'">
+    <ng-container *ngIf="modalInfo?.estado === 'PROCESO'">
         <button mat-icon-button class="proceso" aria-label="PROCESO, Editar lectura" (click)="openDialog()">
             <fa-icon [icon]="['fas', 'rotate']"></fa-icon>
         </button>
     </ng-container>
-    <ng-container *ngIf="modalInfo.estado === 'FAVORITO'">
+    <ng-container *ngIf="modalInfo?.estado === 'FAVORITO'">
         <button mat-icon-button class="favorito" aria-label="FAVORITO, Editar lectura" (click)="openDialog()">
             <fa-icon [icon]="['fas', 'heart']"></fa-icon>
         </button>
     </ng-container>
-    <ng-container *ngIf="modalInfo.estado !== 'LEÍDO' && modalInfo.estado !== 'PROCESO' && modalInfo.estado !== 'FAVORITO'">
+    <ng-container
+        *ngIf="modalInfo?.estado !== 'LEÍDO' && modalInfo?.estado !== 'PROCESO' && modalInfo?.estado !== 'FAVORITO'">
         <button mat-icon-button class="sin-estado" aria-label="Editar lectura" (click)="openDialog()">
             <fa-icon [icon]="['fas', 'heart']"></fa-icon>
         </button>
     </ng-container>
-</div>
+</ng-template>

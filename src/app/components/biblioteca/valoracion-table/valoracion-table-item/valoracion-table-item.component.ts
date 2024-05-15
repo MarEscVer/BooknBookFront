@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ComentarioData } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
@@ -6,12 +8,34 @@ import { ComentarioData } from 'src/app/shared/models/comentario/comentario';
   templateUrl: './valoracion-table-item.component.html',
   styleUrls: ['./valoracion-table-item.component.scss']
 })
-export class ValoracionTableItemComponent {
+export class ValoracionTableItemComponent implements OnInit, OnDestroy {
 
-  @Input() comentario!: ComentarioData; 
+  @Input() comentario!: ComentarioData;
   imgNoData: string = '/assets/img/iconoPerfil.jpg';
   stars = [0, 1, 2, 3, 4];
-  
-  constructor(){}
+
+  userRole?: string | null;
+  estiloBoton: string = 'DENUNCIA';
+
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(
+    private authService: AuthService,
+  ) { }
+
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this.authService.userRole$.subscribe(role => {
+        this.userRole = role;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
 }

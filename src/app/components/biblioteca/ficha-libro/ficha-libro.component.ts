@@ -24,6 +24,8 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
   userRole?: string | null;
   estiloBoton: string = 'INTERES';
 
+  imgNoData: string = '/assets/img/iconoLibro.jpg';
+
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
   */

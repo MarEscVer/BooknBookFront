@@ -16,70 +16,70 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
   listadoLibros: BookItemCard[] = [
     {
       id: 1,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "El señor de los anillos",
       autor: "J.R.R. Tolkien",
       saga: "El señor de los anillos"
     },
     {
       id: 2,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Harry Potter y la piedra filosofal",
       autor: "J.K. Rowling",
       saga: "Harry Potter"
     },
     {
       id: 3,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Cien años de soledad",
       autor: "Gabriel García Márquez",
       saga: ""
     },
     {
       id: 4,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "1984",
       autor: "George Orwell",
       saga: ""
     },
     {
       id: 5,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Orgullo y prejuicio",
       autor: "Jane Austen",
       saga: ""
     },
     {
       id: 6,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Don Quijote de la Mancha",
       autor: "Miguel de Cervantes",
       saga: ""
     },
     {
       id: 7,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Crónicas de una muerte anunciada",
       autor: "Gabriel García Márquez",
       saga: ""
     },
     {
       id: 8,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "El Hobbit",
       autor: "J.R.R. Tolkien",
       saga: ""
     },
     {
       id: 9,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Las crónicas de Narnia: El león, la bruja y el armario",
       autor: "C.S. Lewis",
       saga: "Las crónicas de Narnia"
     },
     {
       id: 10,
-      imagen: "/assets/img/iconoLibro.jpg",
+      imagen: "",
       titulo: "Matar a un ruiseñor",
       autor: "Harper Lee",
       saga: ""

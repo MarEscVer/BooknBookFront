@@ -31,7 +31,12 @@
             <div class="comentario">{{ comentario.comentario }}</div>
         </div>
         <div class="detalles-denuncia">
-            <app-denuncia-button [modalInfo]="{idLibro: comentario.idLibro, username: comentario.username}"></app-denuncia-button>
+            <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
+                <app-denuncia-button [modalInfo]="{idLibro: comentario.idLibro, username: comentario.username}"></app-denuncia-button>
+            </ng-container>
+            <ng-template #anonimoBlock>
+                <app-inicio-anonimo-boton [estilo]="estiloBoton"></app-inicio-anonimo-boton>
+            </ng-template>
         </div>
     </div>
 </div>

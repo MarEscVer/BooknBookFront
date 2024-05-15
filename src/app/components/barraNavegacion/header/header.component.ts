@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         'Se ha cerrado sesion Correctamente',
         'success'
       );
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     }
   }
 

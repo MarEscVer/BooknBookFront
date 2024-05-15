@@ -12,6 +12,7 @@ import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 export class ItemBookCardComponent {
 
   @Input() libro!: BookItemCard;
+  imgNoData: string = '/assets/img/iconoLibro.jpg';
 
   libroSeleccionado: Book = {
     id: 1,

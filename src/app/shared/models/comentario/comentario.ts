@@ -25,3 +25,7 @@ export interface ComentarioData {
     comentario: string;
     idLibro: number;
 }
+
+export interface ValoracionData {
+    id: number;
+}

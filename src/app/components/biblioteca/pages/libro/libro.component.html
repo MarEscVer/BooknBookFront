@@ -23,12 +23,18 @@
         <div class="d-flex flex-row align-items-baseline">
             <h1 class="valoracion">{{this.valoracionMedia}}</h1><span>/5</span>
         </div>
-        <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-            <app-user-valoracion-button [modalInfo]="{id: libro.id, title: libro.titulo}"></app-user-valoracion-button>
+        <!-- BOTON AGREGAR OPINION -->
+        <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
+            <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
+                <app-user-valoracion-button
+                    [modalInfo]="{id: libro.id}" [titulo]="libro.titulo" ></app-user-valoracion-button>
+            </ng-container>
         </ng-container>
+        <ng-template #valoracionNoExistente>
+            <app-interes-button [estiloOpcion]="true" [modalInfo]="libro"></app-interes-button>
+        </ng-template>
         <ng-template #anonimoBlock>
-            <app-inicio-anonimo-boton [modalInfo]="{ id: libro.id, title: libro.titulo}"
-                [estilo]="estiloBoton"></app-inicio-anonimo-boton>
+            <app-inicio-anonimo-boton [estilo]="estiloBoton"></app-inicio-anonimo-boton>
         </ng-template>
     </div>
 
@@ -38,12 +44,18 @@
         <div class="d-flex flex-row align-items-baseline">
             <h5>¿Has leído {{libro.titulo| uppercase}}?</h5>
         </div>
-        <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-            <app-user-valoracion-button [modalInfo]="{id: libro.id, title: libro.titulo}"></app-user-valoracion-button>
+        <!-- BOTON AGREGAR OPINION -->
+        <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
+            <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
+                <app-user-valoracion-button
+                    [modalInfo]="{id: libro.id}"  [titulo]="libro.titulo"></app-user-valoracion-button>
+            </ng-container>
         </ng-container>
+        <ng-template #valoracionNoExistente>
+            <app-interes-button [estiloOpcion]="true" [modalInfo]="libro"></app-interes-button>
+        </ng-template>
         <ng-template #anonimoBlock>
-            <app-inicio-anonimo-boton [modalInfo]="{ id: libro.id, title: libro.titulo}"
-                [estilo]="estiloBoton"></app-inicio-anonimo-boton>
+            <app-inicio-anonimo-boton [estilo]="estiloBoton"></app-inicio-anonimo-boton>
         </ng-template>
     </div>
 
