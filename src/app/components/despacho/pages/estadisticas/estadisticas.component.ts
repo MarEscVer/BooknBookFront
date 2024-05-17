@@ -12,23 +12,37 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
 
   datosEstadisticaGenero?: EstadisticaGeneroResponse;
 
-  title = 'Browser market shares at a specific website, 2014';
-  type = ChartType.PieChart;
-  data = [
-    ['Firefox', 45.0],
-    ['IE', 26.8],
-    ['Chrome', 12.8],
-    ['Safari', 8.5],
-    ['Opera', 6.2],
-    ['Others', 0.7]
+  lecturas = 'ESTADO DE LECTURAS';
+  dataLecturas = [
+    ['LEÍDOS', 10],
+    ['EN PROGRESO', 10],
+    ['FAVORITOS', 10],
   ];
-  columnNames = ['Browser', 'Percentage'];
+
+  generos = 'LECTURAS POR GÉNERO';
+  dataGeneros = [
+    ['LEÍDAS', 10],
+    ['FALTANTES', 10],
+  ];
+
+  paginas = 'PÁGINAS LEÍADAS';
+  dataPaginas = [
+    ['LEÍDAS', 10],
+    ['FALTANTES', 10],
+  ];
+
+  type = ChartType.PieChart;
+  columnNames = ['Etiqueta', 'Porcentaje'];
   options = {
     legend: 'none',
     pieHole: 0.4,
+    width: 400,
+    height: 400,
+    titleTextStyle: {
+      fontSize: 15,
+    },
   };
-  width = 400;
-  height = 400;
+
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.

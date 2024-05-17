@@ -27,11 +27,8 @@
 
 <!-- ESTADISTICAS -->
 <div class="d-flex flex-row flex-wrap justify-content-around mt-4">
-    <google-chart [title]="title" [type]="type" [data]="data" [options]="options"
-      [width]="width" [height]="height"></google-chart>
-      <google-chart [title]="title" [type]="type" [data]="data" [options]="options"
-      [width]="width" [height]="height"></google-chart>
-      <google-chart [title]="title" [type]="type" [data]="data" [options]="options"
-      [width]="width" [height]="height"></google-chart>
+    <google-chart [title]="lecturas" [type]="type" [data]="dataLecturas" [options]="options"></google-chart>
+      <google-chart [title]="generos" [type]="type" [data]="dataGeneros" [options]="options"></google-chart>
+      <google-chart [title]="paginas" [type]="type" [data]="dataPaginas" [options]="options"></google-chart>
   </div>
   
