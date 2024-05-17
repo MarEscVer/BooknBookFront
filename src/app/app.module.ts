@@ -110,6 +110,7 @@ import { ItemBookLecturaComponent } from './components/despacho/list-book-lectur
 import { ListBookLecturaComponent } from './components/despacho/list-book-lectura/list-book-lectura.component';
 import { EditPerfilComponent } from './components/despacho/pages/edit-perfil/edit-perfil.component';
 import { EstadisticasComponent } from './components/despacho/pages/estadisticas/estadisticas.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -227,6 +228,7 @@ import { EstadisticasComponent } from './components/despacho/pages/estadisticas/
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    GoogleChartsModule.forRoot(),
   ],
   /* SERVICE */
   providers: [

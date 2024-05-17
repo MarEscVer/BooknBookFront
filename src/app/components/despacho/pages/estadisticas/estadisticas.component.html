@@ -8,22 +8,30 @@
         </div>
         <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
             <h5>PÁGINAS LEÍDAS</h5>
-            <h2>{{(data?.estadisticas ? data?.estadisticas : '0000' )}}</h2>
+            <h2>{{(datosEstadisticaGenero?.estadisticas ? datosEstadisticaGenero?.estadisticas : '0000' )}}</h2>
         </div>
         <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
             <h5>LIBROS LEÍDOS</h5>
-            <h2>{{(data?.estadisticas ? data?.estadisticas : '0000' )}}</h2>
+            <h2>{{(datosEstadisticaGenero?.estadisticas ? datosEstadisticaGenero?.estadisticas : '0000' )}}</h2>
         </div>
         <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
             <h5>RESEÑAS</h5>
-            <h2>{{(data?.estadisticas ? data?.estadisticas : '0000' )}}</h2>
+            <h2>{{(datosEstadisticaGenero?.estadisticas ? datosEstadisticaGenero?.estadisticas : '0000' )}}</h2>
         </div>
         <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
             <h5>GÉNERO FAVORITO</h5>
-            <h2>{{(data?.genero ? data?.genero : '...' )}}</h2>
+            <h2>{{(datosEstadisticaGenero?.genero ? datosEstadisticaGenero?.genero : '...' )}}</h2>
         </div>
     </div>
 </div>
 
 <!-- ESTADISTICAS -->
-<h2> Pie Chart</h2>
+<div class="d-flex flex-row flex-wrap justify-content-around mt-4">
+    <google-chart [title]="title" [type]="type" [data]="data" [options]="options"
+      [width]="width" [height]="height"></google-chart>
+      <google-chart [title]="title" [type]="type" [data]="data" [options]="options"
+      [width]="width" [height]="height"></google-chart>
+      <google-chart [title]="title" [type]="type" [data]="data" [options]="options"
+      [width]="width" [height]="height"></google-chart>
+  </div>
+  
