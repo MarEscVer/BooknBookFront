@@ -48,6 +48,14 @@ export class UserService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
+  //TODO edit URL
+  editUser(user: Register): Observable<any> {
+    return this.http.put<any>(this.baseUrl +
+      `/user`,
+      user,
+      httpOptions)
+      .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse) {
     console.log(error);

@@ -14,12 +14,8 @@ export class UserMapperService {
     };
   }
 
-  mapToRegisterRequest(bodyForm: any): Register {
-    return {
-      email: bodyForm.email,
-      password: bodyForm.password,
-      name: bodyForm.name,
-      phone: bodyForm?.phone
-    }
-  }
+  // mapToRegisterRequest(bodyForm: any): Register {
+  //   return {
+  //   }
+  // }
 }

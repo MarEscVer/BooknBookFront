@@ -108,6 +108,8 @@ import { UserLecturasComponent } from './components/despacho/pages/user-lecturas
 import { UserListadoLecturasComponent } from './components/despacho/pages/user-listado-lecturas/user-listado-lecturas.component';
 import { ItemBookLecturaComponent } from './components/despacho/list-book-lectura/item-book-lectura/item-book-lectura.component';
 import { ListBookLecturaComponent } from './components/despacho/list-book-lectura/list-book-lectura.component';
+import { EditPerfilComponent } from './components/despacho/pages/edit-perfil/edit-perfil.component';
+import { EstadisticasComponent } from './components/despacho/pages/estadisticas/estadisticas.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -187,7 +189,9 @@ import { ListBookLecturaComponent } from './components/despacho/list-book-lectur
     UserLecturasComponent,
     UserListadoLecturasComponent,
     ItemBookLecturaComponent,
-    ListBookLecturaComponent
+    ListBookLecturaComponent,
+    EditPerfilComponent,
+    EstadisticasComponent
   ],
   /* LIBRARIES */
   imports: [

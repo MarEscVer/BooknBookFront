@@ -1,0 +1,63 @@
+<app-sidenav-despacho></app-sidenav-despacho>
+<div class="container-fluid mt-4 vh-100">
+    <div *ngIf="perfilUsuario" class="container-contenido">
+        <div class="row justify-content-center">
+            <!-- Columna para el componente de imagen -->
+            <div class="col-md-3">
+                <app-imagen-update [imagenUrlServidor]="urlImagenDelServidor"
+                    (imageSelected)="handleImageSelected($event)"></app-imagen-update>
+            </div>
+            <!-- Columna para el formulario -->
+            <div class="col-md-8">
+                <form [formGroup]="formeEditUser" (submit)="$event.preventDefault()">
+                    <mat-form-field class="w-100 mb-3">
+                        <input matInput id="username" [disabled]="true" placeholder="{{perfilUsuario.username}}" />
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mb-3">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombre" id="nombre">
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mb-3">
+                        <mat-label>Primer apellido</mat-label>
+                        <input matInput formControlName="apellido1" id="apellido1" />
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mb-3">
+                        <mat-label>Segundo apellido</mat-label>
+                        <input matInput formControlName="apellido2" id="apellido2" />
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mb-3">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" id="email" />
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mb-3">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" formControlName="password" id="password" />
+                    </mat-form-field>
+                    <div class="row mb-3">
+                        <div class="col w-100">
+                            <label>TIPO:</label>
+                            <mat-radio-group formControlName="tipo" id="tipo">
+                                <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id"
+                                    class="row">
+                                    {{typeOption.nombre}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col w-100">
+                            <label>GÉNERO:</label>
+                            <mat-radio-group formControlName="genero" id="genero">
+                                <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id"
+                                    class="row">
+                                    {{genderOption.nombre}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-5">
+                        <button mat-raised-button (click)="submit()" color="primary"
+                            [disabled]="formeEditUser.pristine">EDITAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

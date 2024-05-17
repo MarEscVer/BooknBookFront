@@ -1,6 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BookService } from 'src/app/services/book/book.service';
 import { BookListadoLectura } from 'src/app/shared/models/book/book';
+import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 
 @Component({
   selector: 'app-item-book-lectura',
@@ -21,7 +24,11 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
 */
   private subscriptions: Subscription = new Subscription();
 
-  constructor() {
+  constructor(
+    private bookService: BookService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
 
   }
 
@@ -42,6 +49,26 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
       };
     }
   }
+  
+  fichaLibro(id: number) {
+    //TODO GET LIBRO POR ID --> obtener BOOK completo
+
+    if (this.libro) {
+      //this.bookService.setLibro(this.libro);
+
+      let genero: string = '';
+      let titulo: string = this.libro.titulo.toLowerCase().replaceAll(' ', '-');
+
+      if (this.libro.genero.nombre) {
+        genero = this.libro.genero.nombre.toLowerCase();
+      } else {
+        genero = this.libro.tipo.nombre.toLowerCase();
+      }
+
+      this.router.navigate(['/biblioteca', sinDiacriticos(genero), sinDiacriticos(titulo)]);
+    }
+  }
+
 
   eliminarLibro(id: number) {
     

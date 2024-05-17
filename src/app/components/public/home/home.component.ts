@@ -1,19 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { RandomBookService } from 'src/app/services/book/random-book.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
+import { EstadisticaResponse } from 'src/app/shared/models/estadistica/estadistifca';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+  
   formNewsletter!: FormGroup;
   matcher!: FormErrorStateMatcher;
+  data?: EstadisticaResponse;
+  
+  /**
+  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
+  */
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,5 +41,16 @@ export class HomeComponent {
     this.formNewsletter = this.formBuilder.group(this.formControl.newsletter);
   }
 
-  submit() {}
+  submit() {
+    //TODO HACER LLAMADA OBTENER DATOS ESTADÍSTICOS --> 
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
 }

@@ -1,12 +1,12 @@
 <div class="book-container container-fluid">
   <div class="imagen">
     <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
-      <div class="rectangular-image">
+      <div class="rectangular-image" (click)="fichaLibro(libro.id)">
         <img [src]="libro.imagen" alt="Portada libro">
       </div>
     </ng-container>
     <ng-template #noData>
-      <div class="rectangular-image">
+      <div class="rectangular-image" (click)="fichaLibro(libro.id)">
         <img [src]="imgNoData" alt="Portada libro">
       </div>
     </ng-template>

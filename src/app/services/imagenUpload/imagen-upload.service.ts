@@ -46,6 +46,18 @@ export class ImagenUploadService {
       .pipe(catchError(this.handleError));
   }
 
+  uploadUser(idUser: number, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    var blob = new Blob([file], { type: file.type });
+    formData.append('imagen', blob, file.name);
+    const options = {
+      headers: {}
+    } as any;
+
+    return this.http.put(this.baseUrl + environment.BASE_ADMIN + '/users/' + idUser + '/imagen', formData, options)
+      .pipe(catchError(this.handleError));
+  }
+
   getFiles(): Observable<any> {
     return this.http.get(`${this.baseUrl}/files`)
       .pipe(catchError(this.handleError));

@@ -48,7 +48,7 @@ export class ItemBookCardComponent {
 
   fichaLibro(id: number) {
     //TODO GET LIBRO POR ID --> obtener BOOK completo
-
+    // libroSeleccionado = MOCKDATA
     if (this.libroSeleccionado) {
       this.bookService.setLibro(this.libroSeleccionado);
 

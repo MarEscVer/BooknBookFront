@@ -12,10 +12,16 @@ export interface LoginResponse {
 }
 
 export interface Register {
-    email: string,
-    password: string,
-    name: string,
-    phone: string
+    id: number;
+    imagen: any;
+    username: string;
+    nombre: string;
+    apellido1: string;
+    apellido2: string;
+    email: string;
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
+    password: string;
 }
 
 export interface UserItemList {

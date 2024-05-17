@@ -1,0 +1,29 @@
+<app-sidenav-despacho></app-sidenav-despacho>
+
+<!-- METRICAS -->
+<div class="container-fluid container-metricas mt-4 my-2 mx-0">
+    <div class="row p-3 d-flex flex-lg-row justify-content-around">
+        <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
+            <h5>Desde que te uniste ...</h5>
+        </div>
+        <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
+            <h5>PÁGINAS LEÍDAS</h5>
+            <h2>{{(data?.estadisticas ? data?.estadisticas : '0000' )}}</h2>
+        </div>
+        <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
+            <h5>LIBROS LEÍDOS</h5>
+            <h2>{{(data?.estadisticas ? data?.estadisticas : '0000' )}}</h2>
+        </div>
+        <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
+            <h5>RESEÑAS</h5>
+            <h2>{{(data?.estadisticas ? data?.estadisticas : '0000' )}}</h2>
+        </div>
+        <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
+            <h5>GÉNERO FAVORITO</h5>
+            <h2>{{(data?.genero ? data?.genero : '...' )}}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- ESTADISTICAS -->
+<h2> Pie Chart</h2>

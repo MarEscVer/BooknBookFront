@@ -6,6 +6,10 @@ export class InputErrorStateMatcherExample {
     return new FormControl('', [Validators.required, Validators.email]);
   }
 
+  getFormControl_EmailnonRequired(): FormControl {
+    return new FormControl('', [Validators.email]);
+  }
+
   getFormControl_required(): FormControl {
     return new FormControl('', [Validators.required]);
   }
