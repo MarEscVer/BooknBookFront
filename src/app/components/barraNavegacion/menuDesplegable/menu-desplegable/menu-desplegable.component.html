@@ -1,10 +1,12 @@
-<mat-toolbar color="accent" class="d-flex justify-content-around align-items-center menu-container">
-  <ng-container *ngFor="let menuItem of menuItemsDesplegable">
-    <app-menu-desplegable-item [menuItem]="menuItem" [menuItemsDesplegable] = "desplegable"></app-menu-desplegable-item>
-  </ng-container>
-  <ng-container *ngFor="let menuItem of menuItems">
-    <a [routerLink]="menuItem.routerLink" class="link">
-      <span>{{ menuItem.tooltipText }}</span>
-    </a>
-  </ng-container>
-</mat-toolbar>
+<ng-container *ngIf="menuItemsDesplegable && menuItems">
+  <mat-toolbar color="accent" class="d-flex justify-content-around align-items-center menu-container">
+    <ng-container *ngFor="let menuItem of menuItemsDesplegable">
+      <app-menu-desplegable-item [menuItem]="menuItem" [menuItemsDesplegable]="desplegable"></app-menu-desplegable-item>
+    </ng-container>
+    <ng-container *ngFor="let menuItem of menuItems">
+      <a [routerLink]="menuItem.routerLink" class="link">
+        <span>{{ menuItem.tooltipText }}</span>
+      </a>
+    </ng-container>
+  </mat-toolbar>
+</ng-container>

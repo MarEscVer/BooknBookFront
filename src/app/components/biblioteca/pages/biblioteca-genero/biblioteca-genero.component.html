@@ -3,6 +3,8 @@
 <div *ngIf="genero$">
     <app-imagen-list-book-card [listadoService]="masLeidosBookService"
         [generoObs]="genero$"></app-imagen-list-book-card>
-    <app-paginador-list-book [generoObs]="genero$"></app-paginador-list-book>
+        <div class="mb-5 mt-5 ms-3">
+            <app-paginador-list-book [generoObs]="genero$"></app-paginador-list-book>
+        </div>
     <app-footer></app-footer>
 </div>

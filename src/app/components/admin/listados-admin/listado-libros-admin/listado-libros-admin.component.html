@@ -5,5 +5,7 @@
         <!-- Botón para agregar nuevo libro -->
         <button mat-button class="estilo-claro" (click)="agregarLibro()">NUEVO LIBRO</button>
     </div>
-    <app-listado-items-books [data]="data"></app-listado-items-books>
+    <ng-container *ngIf="data">
+        <app-listado-items-books [data]="data"></app-listado-items-books>
+    </ng-container>
 </div>

@@ -26,7 +26,6 @@ export interface Register {
 
 export interface UserItemList {
     id: number;
-    //TODO Imagenes BLOB
     imagen: any;
     username: string;
     nombre: string;

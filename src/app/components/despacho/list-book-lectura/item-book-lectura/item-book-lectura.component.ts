@@ -1,8 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FechasModalComponent } from 'src/app/components/modal/lecturaModal/fechasModal/fechas-modal/fechas-modal.component';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookListadoLectura } from 'src/app/shared/models/book/book';
+import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 
 @Component({
@@ -19,6 +22,10 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
   tipoStyle: any = {};
   generoStyle: any = {};
 
+  modalInfo: ValoracionData = {
+    id: 1,
+  };
+
   /**
 * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
 */
@@ -28,6 +35,7 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
     private bookService: BookService,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog
   ) {
 
   }
@@ -75,7 +83,15 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
   }
 
   editarLectura(id: number) {
-    
+    //TODO GET VALORAICON LIBRO PARA MANDARLO AL MODAL --> this.modalInfo
+    const dialogValoracion = this.dialog.open(FechasModalComponent, {
+      width: '50%',
+      data: {
+        modalInfo: this.modalInfo,
+        titulo: this.libro.titulo,
+        pages: this.libro.id,
+      }
+    });
   }
 
   ngOnDestroy(): void {

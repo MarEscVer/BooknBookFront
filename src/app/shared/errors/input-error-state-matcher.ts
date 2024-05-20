@@ -19,7 +19,6 @@ export class InputErrorStateMatcherExample {
   }
 
   getFormControl_paginas(): FormControl {
-    //TODO: poner patrón de validacion de PAGINAS
     return new FormControl('', [Validators.required]);
   }
 

@@ -1,5 +1,5 @@
 <nav aria-label="breadcrumb" class="m-3">
-  <ol class="breadcrumb">
+  <ol class="breadcrumb" *ngIf="breadcrumbs">
     <li class="breadcrumb-item" *ngFor="let crumb of breadcrumbs; let last = last" [class.active]="last">
       <a *ngIf="!last" [routerLink]="getLinkForCrumb(crumb)">{{ crumb | titlecase}}</a>
       <span *ngIf="last">{{ crumb | titlecase}}</span>

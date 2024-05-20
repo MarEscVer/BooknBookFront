@@ -1,10 +1,12 @@
-<div class="table-responsive tabla">
-    <div class="container-fluid">
-        <div class="row-flex mt-3">
-            <div *ngFor="let club of clubes" class="club">
-                <app-user-item-club-list [club]="club"></app-user-item-club-list>
+<ng-container *ngIf="clubes">
+    <div class="table-responsive tabla">
+        <div class="container-fluid">
+            <div class="row-flex mt-3">
+                <div *ngFor="let club of clubes" class="club">
+                    <app-user-item-club-list [club]="club"></app-user-item-club-list>
+                </div>
             </div>
+            <mat-paginator [pageSizeOptions]="[4]" hidePageSize></mat-paginator>
         </div>
-        <mat-paginator [pageSizeOptions]="[4]" hidePageSize></mat-paginator>
     </div>
-</div>
+</ng-container>

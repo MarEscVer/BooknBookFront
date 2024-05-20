@@ -74,7 +74,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.bookId = this.route.snapshot.params['id'];
-
+    // TODO MIRAR QUE EL FORMULARIO CUANDO SEA DE EDITAR SE VEAN LOS DATOS DEL LIBRO
     if (this.bookId) {
       this.bookService.getBookById(this.bookId).subscribe((bookEdit) => {
         this.formAddBook.patchValue(bookEdit);

@@ -1,4 +1,6 @@
 <div class="container">
     <h2 class="title">GESTIÓN DE USUARIOS</h2>
-    <app-listado-items-users [data]="data"></app-listado-items-users>
+    <ng-container *ngIf="data">
+        <app-listado-items-users [data]="data"></app-listado-items-users>
+    </ng-container>
 </div>
