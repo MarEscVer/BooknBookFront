@@ -1,33 +1,33 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';import { ValoracionModalComponent } from 'src/app/components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
 import { ComentarioService } from 'src/app/services/comentario/comentario.service';
-import { ComentarioDenunciadoItemList } from 'src/app/shared/models/comentario/comentario';
+import { ComentarioDenunciadoItemList, ComentarioResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-listado-items-comentarios',
   templateUrl: './listado-items-comentarios.component.html',
   styleUrls: ['./listado-items-comentarios.component.scss']
 })
-export class ListadoItemsComentariosComponent implements AfterViewInit, OnInit {
+export class ListadoItemsComentariosComponent implements OnInit {
   displayedColumns: string[] = ['username', 'date', 'comentario', 'razon', 'actions'];
 
   dataSource: MatTableDataSource<ComentarioDenunciadoItemList>;
-  editedItems: ComentarioDenunciadoItemList[] = [];
-  originalRol: string = '';
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatSort) sort?: MatSort;
+  itemsPerPageOptions = [5, 10, 25, 50];
+  itemsPerPage = 5;
+  currentPage = 0;
+  totalItems = 0;
+  selectedFilter: string = 'PENDIENTE';
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
-    private subscriptions: Subscription = new Subscription();
-  
+  modalInfo: ComentarioResponse = {message: ''};
+
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
-    public comentarioService: ComentarioService
+    public comentarioService: ComentarioService,
+    private dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource<ComentarioDenunciadoItemList>([]);
   }
@@ -36,59 +36,66 @@ export class ListadoItemsComentariosComponent implements AfterViewInit, OnInit {
     this.loadData();
   }
 
-
-  ngAfterViewInit() {
-    if (this.dataSource && this.paginator) {
-      this.dataSource.paginator = this.paginator;
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData();
     }
+  }
 
-    if (this.dataSource && this.sort) {
-      this.dataSource.sort = this.sort;
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData();
     }
+  }
 
-    this.subscribeToPaginator();
-    this.subscribeToSort();
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onItemsPerPageChange(newItemsPerPage: number) {
+    this.itemsPerPage = newItemsPerPage;
+    this.currentPage = 0;
     this.loadData();
-
   }
 
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.paginator?.firstPage();
-    this.loadData(filterValue);
-  }
-
-  subscribeToPaginator() {
-    if (this.paginator) {
-      this.subscriptions.add(
-        this.paginator.page.subscribe(() => {
-          this.loadData();
-        })
-      );
-    }
-  }
-
-  subscribeToSort() {
-    if (this.sort) {
-      this.subscriptions.add(
-        this.sort.sortChange.subscribe(() => {
-          this.loadData();
-        })
-      );
-    }
-  }
-
-  loadData(filter: string = '') {
-    const pageIndex = this.paginator?.pageIndex || 0;
-    const pageSize = this.paginator?.pageSize || 5;
+  loadData() {
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
     this.subscriptions.add(
-      this.comentarioService.getListComentariosDenunciados(pageIndex, pageSize, filter).subscribe(data => {
+      this.comentarioService.getListComentariosDenunciados(this.currentPage, this.itemsPerPage, this.selectedFilter).subscribe(data => {
         if (data.comentariosDenunciados) {
-          this.dataSource = new MatTableDataSource<ComentarioDenunciadoItemList>(data.comentariosDenunciados);
+          this.dataSource.data = data.comentariosDenunciados;
+          this.totalItems = data.pageInfo.totalElements;
         }
       })
     );
+  }
+
+  loadComentario(idLibro: number, idUsuario: number) {
+    this.subscriptions.add(
+      this.comentarioService.getComentarioDenunciado(idLibro, idUsuario).subscribe(data => {
+        if (data.message) {
+          this.modalInfo.message = data.message;
+          const dialogValoracion = this.dialog.open(ValoracionModalComponent, {
+            width: '50%',
+            data: {
+              modalInfo: this.modalInfo,
+            }
+          })
+        }
+      })
+    );
+  }
+
+  onFilterChange(event: any) {
+    this.loadData();
+  }
+
+  handleCommentAction() {
+    this.loadData();
   }
 
   ngOnDestroy(): void {

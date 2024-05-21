@@ -1,3 +1,5 @@
+import { pageInfo } from "../paginado/paginado";
+
 export interface ComentarioDenunciadoItemList {
     idDenuncia: number;
     idValoracionLibro: number;
@@ -9,12 +11,9 @@ export interface ComentarioDenunciadoItemList {
 }
 
 export interface ComentarioDenunciadoResponse {
-    estado: string,
-    comentariosDenunciados: ComentarioDenunciadoItemList[]
-}
-
-export interface ComentarioDenunciadoInfo {
-    valoracion: string;
+    estado: string;
+    comentariosDenunciados: ComentarioDenunciadoItemList[];
+    pageInfo: pageInfo; 
 }
 
 export interface ComentarioData {
@@ -28,4 +27,8 @@ export interface ComentarioData {
 
 export interface ValoracionData {
     id: number;
+}
+
+export interface ComentarioResponse {
+    message: string;
 }

@@ -4,7 +4,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { ComentarioDenunciadoResponse, ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ComentarioDenunciadoResponse, ComentarioResponse, ValoracionData } from 'src/app/shared/models/comentario/comentario';
 import { ComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -19,24 +19,34 @@ export class ComentarioService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  acceptComentario(id: number, estado: string): Observable<any> {
-    return this.http.put<any>(this.baseUrl + environment.BASE_ADMIN + '/denuncia/' + id + '/' + estado, '')
+  acceptComentario(id: number): Observable<any> {
+    return this.http.put<any>(this.baseUrl + environment.BASE_ADMIN + '/denuncia/' + id + '/ACEPTADA', '')
       .pipe(catchError(this.handleError));
   }
 
-  getListComentariosDenunciados(pageIndex: number, size: number, filter: string): Observable<ComentarioDenunciadoResponse> {
+  getListComentariosDenunciados(pageIndex: number, size: number, selectedFilter: string): Observable<ComentarioDenunciadoResponse> {
     const params: any = {
       pageIndex: pageIndex.toString(),
       size: size.toString(),
-      filter: filter
+      estado: selectedFilter
     };
 
     return this.http.get<ComentarioDenunciadoResponse>(this.baseUrl + environment.BASE_ADMIN + '/comentarios/denuncia', { params })
       .pipe(catchError(this.handleError));
   }
 
+  getComentarioDenunciado(idLibro: number, idUsuario: number): Observable<ComentarioResponse> {
+    const params: any = {
+      idLibro: idLibro.toString(),
+      idUsuario: idUsuario.toString(),
+    };
+
+    return this.http.get<ComentarioResponse>(this.baseUrl + environment.BASE_ADMIN + '/denuncia/valoracion/mensaje', { params })
+      .pipe(catchError(this.handleError));
+  }
+
   getComboMotivoDenuncia(): Observable<ComboResponse> {
-    return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/combo/denuncia/motivo')
+    return this.http.get<ComboResponse>(this.baseUrl + '/combo/denuncia/motivo')
     .pipe(catchError(this.handleError));
   }
 

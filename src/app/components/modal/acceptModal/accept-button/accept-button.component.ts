@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalInfo } from 'src/app/shared/models/modal/modal';
 import { AcceptModalComponent } from '../accept-modal/accept-modal.component';
@@ -11,6 +11,7 @@ import { AcceptModalComponent } from '../accept-modal/accept-modal.component';
 export class AcceptButtonComponent {
 
   @Input() modalInfo?: ModalInfo;
+  @Output() actionCompleted = new EventEmitter<void>();
 
   constructor(private dialog: MatDialog) {
   }
@@ -19,6 +20,12 @@ export class AcceptButtonComponent {
     const dialogRef = this.dialog.open(AcceptModalComponent, {
       data: {
         modalInfo: this.modalInfo
+      }
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.actionCompleted.emit();
       }
     });
   }

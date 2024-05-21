@@ -8,23 +8,6 @@ import { UserItemList } from 'src/app/shared/models/users/user';
 })
 export class ListadoUsuarioAdminComponent {
 
-  // MOCK DATA
-  data: UserItemList[] = [];
-  imagenPrueba: string = '';
-
-  constructor() {
-    for (let i = 1; i <= 20; i++) {
-      this.data.push({
-        id: i,
-        imagen: this.imagenPrueba,
-        username: `user_${i}`,
-        nombre: `Name${i}`,
-        apellido1: `Surname${i}`,
-        apellido2: `Surname${i}`,
-        email: `user${i}@example.com`,
-        rol: i % 2 === 0 ? 'Admin' : 'User' // Alternar entre 'Admin' y 'User'
-      });
-    }
-  }
+  constructor() { }
 
 }

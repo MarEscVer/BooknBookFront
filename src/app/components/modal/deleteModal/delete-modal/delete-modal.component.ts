@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ModalInfo } from 'src/app/shared/models/modal/modal';
@@ -17,9 +17,7 @@ export class DeleteModalComponent implements OnDestroy{
   };
   deleteService: any;
 
-  /**
-   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
+  @Output() actionCompleted = new EventEmitter<void>();
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -37,6 +35,7 @@ export class DeleteModalComponent implements OnDestroy{
     //if(this.deleteService instanceof deleteObject)
     this.subscriptions.add(this.deleteService.delete(this.modalInfo.id).subscribe(() => {
       this.dialogRef.close(true);
+      this.actionCompleted.emit();
     }));
   }
 

@@ -1,5 +1,6 @@
 import { AutorNombre } from "../autor/autor";
 import { GeneroTipo } from "../combo/combo";
+import { pageInfo } from "../paginado/paginado";
 
 export interface Book {
     id: number;
@@ -18,12 +19,18 @@ export interface Book {
 
 export interface BookItemList {
     id: number;
-    img: any;
-    title: string;
-    author: string;
-    tipe: string;
-    gender: string;
+    imagen: any;
+    titulo: string;
+    autor: string;
+    genero: string;
+    tipo: string;
     year: number;
+    saga: string;
+}
+
+export interface BookItemListResponse {
+    libros: BookItemList[];
+    pageInfo: pageInfo; 
 }
 
 export interface BookItemCard {

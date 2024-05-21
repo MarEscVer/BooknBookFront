@@ -1,4 +1,5 @@
 import { GeneroTipo } from "../combo/combo";
+import { pageInfo } from "../paginado/paginado";
 
 export interface ClubItemList {
     id: number;
@@ -7,10 +8,13 @@ export interface ClubItemList {
     tipo: GeneroTipo;
     genero: GeneroTipo;
     miembros: number;
+    descripcion: string;
+    perteneces: boolean;
 }
 
 export interface ClubItemListResponse {
     listGroup: ClubItemList[];
+    pageInfo: pageInfo; 
 }
 
 export interface ClubEdit {

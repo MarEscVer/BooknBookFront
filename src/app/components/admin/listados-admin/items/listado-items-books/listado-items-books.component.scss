@@ -1,7 +1,12 @@
 @import '../../../../../../style/mixin.scss';
+@import '../../../../../../style/variables.scss';
 
 @include listado-items-estilo-comun;
 
 .rectangular-image {
     @include rectangular-image(75px, 100px);
+}
+
+.author-column {
+    color: $grey-color;
 }

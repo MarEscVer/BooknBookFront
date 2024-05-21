@@ -13,6 +13,7 @@ import { AutorIcon } from 'src/app/shared/models/autor/autor';
 import { BookData, BookEdit } from 'src/app/shared/models/book/book';
 import { Combo } from 'src/app/shared/models/combo/combo';
 
+// TODO addbook id libro para upload imagen
 @Component({
   selector: 'app-admin-page-add-book',
   templateUrl: './admin-page-add-book.component.html',

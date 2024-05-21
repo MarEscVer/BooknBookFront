@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ComentarioService } from 'src/app/services/comentario/comentario.service';
@@ -16,9 +16,7 @@ export class AcceptModalComponent implements OnDestroy{
     title: ''
   };
 
-  /**
- * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
- */
+  @Output() actionCompleted = new EventEmitter<void>();
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -32,8 +30,9 @@ export class AcceptModalComponent implements OnDestroy{
   }
 
   onConfirmClick(): void {
-    this.subscriptions.add(this.comentarioService.acceptComentario(this.modalInfo.id, "ACEPTADA").subscribe(() => {
+    this.subscriptions.add(this.comentarioService.acceptComentario(this.modalInfo.id).subscribe(() => {
       this.dialogRef.close(true);
+      this.actionCompleted.emit();
     }));
   }
 

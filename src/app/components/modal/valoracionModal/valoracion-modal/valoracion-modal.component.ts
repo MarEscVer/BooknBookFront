@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ComentarioDenunciadoInfo } from 'src/app/shared/models/comentario/comentario';
-import { ModalInfo } from 'src/app/shared/models/modal/modal';
+import { ComentarioResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-valoracion-modal',
@@ -10,10 +9,10 @@ import { ModalInfo } from 'src/app/shared/models/modal/modal';
 })
 export class ValoracionModalComponent {
 
-  modalInfo?: ComentarioDenunciadoInfo;
+  modalInfo!: ComentarioResponse;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ComentarioDenunciadoInfo},
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ComentarioResponse},
     private dialogRef: MatDialogRef<ValoracionModalComponent>) {
 
     if (data && data.modalInfo) {

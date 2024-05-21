@@ -1,4 +1,5 @@
 import { GeneroTipo } from "../combo/combo";
+import { pageInfo } from "../paginado/paginado";
 
 export interface Login {
     username: string;
@@ -26,7 +27,7 @@ export interface Register {
 
 export interface UserItemList {
     id: number;
-    imagen: any;
+    imagenUsuario: any;
     username: string;
     nombre: string;
     apellido1: string;
@@ -34,6 +35,11 @@ export interface UserItemList {
     email: string;
     rol: string;
     editMode?: boolean;
+}
+
+export interface UserItemListResponse {
+    usuarios: UserItemList[];
+    pageInfo: pageInfo; 
 }
 
 export interface PerfilUsuarioData {
@@ -47,6 +53,6 @@ export interface PerfilUsuarioData {
 }
 
 export interface modifyUser {
-    idUsuario: number,
-    rolUsuario: string,
+    username: string,
+    rol: string,
 }

@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ClubService } from 'src/app/services/club/club.service';
@@ -16,14 +15,13 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
 
   imgNoData: string = '/assets/img/iconoClub.png';
   dataSource: MatTableDataSource<ClubItemList>;
-  editedItems: ClubItemList[] = [];
-  originalRol: string = '';
 
-  pageIndex: number = 0;
-  pageSize: number = 5;
+  itemsPerPageOptions = [5, 10, 25, 50];
+  itemsPerPage = 5;
+  currentPage = 0;
+  totalItems = 0;
   filter: string = '';
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
   /**
@@ -31,9 +29,7 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
   */
   private subscriptions: Subscription = new Subscription();
 
-  constructor(
-    public clubService: ClubService
-  ) {
+  constructor(public clubService: ClubService) {
     this.dataSource = new MatTableDataSource<ClubItemList>([]);
   }
 
@@ -48,55 +44,65 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
   }
 
   ngAfterViewInit() {
-    if (this.dataSource && this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-
-    if (this.dataSource && this.sort) {
+    if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-
-    this.subscribeToPaginator();
     this.subscribeToSort();
-    this.loadData();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.paginator?.firstPage();
-    this.loadData(filterValue);
-  }
-
-  subscribeToPaginator() {
-    if (this.paginator) {
-      this.subscriptions.add(
-        this.paginator.page.subscribe(() => {
-          this.loadData();
-        })
-      );
-    }
+    this.filter = filterValue;
+    this.currentPage = 0;
+    this.loadData();
   }
 
   subscribeToSort() {
     if (this.sort) {
       this.subscriptions.add(
-        this.sort.sortChange.subscribe(() => {
+        this.sort.sortChange.subscribe((sort: Sort) => {
           this.loadData();
         })
       );
     }
   }
 
-  loadData(filter: string = '') {
-    const pageIndex = this.paginator?.pageIndex || 0;
-    const pageSize = this.paginator?.pageSize || 5;
+  loadData() {
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
     this.subscriptions.add(
-      this.clubService.getListClubes(pageIndex, pageSize, filter).subscribe(data => {
+      this.clubService.getListClubes(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.listGroup) {
-          this.dataSource = new MatTableDataSource<ClubItemList>(data.listGroup);
+          this.dataSource.data = data.listGroup;
+          this.totalItems = data.pageInfo.totalElements;
         }
       })
     );
+  }
+
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData();
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onItemsPerPageChange(newItemsPerPage: number) {
+    this.itemsPerPage = newItemsPerPage;
+    this.currentPage = 0; // Reiniciar a la primera página al cambiar el tamaño de página
+    this.loadData();
   }
 
   ngOnDestroy(): void {

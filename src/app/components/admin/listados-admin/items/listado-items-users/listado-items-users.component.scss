@@ -1,6 +1,27 @@
 @import '../../../../../../style/mixin.scss';
+@import '../../../../../../style/variables.scss';
 
-@include listado-items-estilo-comun;
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.mat-column-actions {
+    width: auto;
+}
+
+tr.mat-mdc-header-row {
+    background-color: $claro-color !important;
+}
+
+tr,
+td {
+    border-color: $claro-color !important;
+}
+
+td {
+    height: 100px;
+}
 
 .role-select-field {
     margin-top: 5px;
@@ -8,8 +29,12 @@
     width: 120px;
 }
 
+.fullname-column {
+    color: $grey-color;
+}
+
 .circular-image {
-    @include circular-image();
+    @include circular-image(65px);
 }
 
 /* Estilos para dispositivos móviles */

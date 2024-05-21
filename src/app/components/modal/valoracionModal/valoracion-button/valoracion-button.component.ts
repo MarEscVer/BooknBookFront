@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ValoracionModalComponent } from '../valoracion-modal/valoracion-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ComentarioDenunciadoInfo } from 'src/app/shared/models/comentario/comentario';
+import { ComentarioResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-valoracion-button',
@@ -10,7 +10,7 @@ import { ComentarioDenunciadoInfo } from 'src/app/shared/models/comentario/comen
 })
 export class ValoracionButtonComponent {
 
-  @Input() modalInfo?: ComentarioDenunciadoInfo;
+  @Input() modalInfo?: ComentarioResponse;
 
   constructor(private dialog: MatDialog) {
   }

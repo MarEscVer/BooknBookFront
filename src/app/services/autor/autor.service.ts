@@ -49,12 +49,12 @@ export class AutorService implements deleteObject {
   }
 
   getAutores(): Observable<ComboResponse> {
-    return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + `/combo/autor`, httpOptions)
+    return this.http.get<ComboResponse>(this.baseUrl + '/combo/autor', httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   getSagaAutor(idAutor: number): Observable<ComboResponse> {
-    return this.http.get<ComboResponse>(this.baseUrl + environment.BASE_TOKEN + `/combo/saga/` + idAutor, httpOptions)
+    return this.http.get<ComboResponse>(this.baseUrl + '/combo/saga/' + idAutor, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

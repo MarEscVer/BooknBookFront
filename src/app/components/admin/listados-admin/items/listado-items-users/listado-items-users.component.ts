@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserItemList, modifyUser } from 'src/app/shared/models/users/user';
@@ -21,8 +22,14 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
   dataSource: MatTableDataSource<UserItemList>;
   editedItems: UserItemList[] = [];
   originalRol: string = '';
+  userUsername?: string | null;
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  itemsPerPageOptions = [5, 10, 25, 50];
+  itemsPerPage = 5;
+  currentPage = 0;
+  totalItems = 0;
+  filter: string = '';
+
   @ViewChild(MatSort) sort?: MatSort;
 
   /**
@@ -32,57 +39,101 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
 
   constructor(
     public userService: UserService,
+    private authService: AuthService,
     private notification: NotificationService
   ) {
     this.dataSource = new MatTableDataSource<UserItemList>([]);
   }
 
   ngOnInit() {
-    if (this.data) {
-      this.dataSource = new MatTableDataSource<UserItemList>(this.data);
-    }
+    this.subscriptions.add(
+      this.authService.userUsername$.subscribe(username => {
+        this.userUsername = username;
+      })
+    );
+    this.loadData();
   }
 
 
   ngAfterViewInit() {
-    if (this.dataSource && this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-
-    if (this.dataSource && this.sort) {
+    if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-
+    this.subscribeToSort();
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filter = filterValue;
+    this.currentPage = 0;
+    this.loadData();
+  }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  subscribeToSort() {
+    if (this.sort) {
+      this.subscriptions.add(
+        this.sort.sortChange.subscribe((sort: Sort) => {
+          this.loadData();
+        })
+      );
     }
+  }
+
+  loadData() {
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
+    this.subscriptions.add(
+      this.userService.getListUser(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
+        if (data.usuarios) {
+          this.dataSource.data = data.usuarios;
+          this.totalItems = data.pageInfo.totalElements;
+        }
+      })
+    );
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData();
+    }
+  }
+
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData();
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onItemsPerPageChange(newItemsPerPage: number) {
+    this.itemsPerPage = newItemsPerPage;
+    this.currentPage = 0;
+    this.loadData();
   }
 
   saveChanges(row: UserItemList) {
     if (row.editMode) {
       const modifiedUser: modifyUser = {
-        idUsuario: row.id,
-        rolUsuario: row.rol
+        username: row.username,
+        rol: row.rol
       };
       const sub = this.userService.updateUserRole(modifiedUser)
         .subscribe({
-          next: (data) => {
-            if (data) {
-              console.log('Rol actualizado con éxito:', row);
+          next: (success) => {
+            if (success) {
               row.editMode = false;
+              this.notification.show('Rol actualizado con éxito', 'success');
             } else {
-              this.notification.show(data, 'error');
+              this.notification.show('Error al actualizar el rol', 'error');
             }
-          },
-          error: (error) => { },
+          }
         });
-
       this.subscriptions.add(sub);
     }
   }

@@ -12,7 +12,7 @@ export class GeneroTipoService {
   constructor(private http: HttpClient) { }
 
   getGeneroTipo(): Observable<ComboGeneroResponse> {
-    return this.http.get<ComboGeneroResponse>(this.baseUrl + environment.BASE_TOKEN + `/combo/genero`, httpOptions)
+    return this.http.get<ComboGeneroResponse>(this.baseUrl + '/combo/genero', httpOptions)
     .pipe(catchError(this.handleError));
   }
 
