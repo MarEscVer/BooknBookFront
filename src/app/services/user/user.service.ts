@@ -2,7 +2,7 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Login, LoginResponse, Register, UserItemListResponse, modifyUser } from 'src/app/shared/models/users/user';
+import { Login, LoginResponse, PerfilUsuarioData, Register, UserItemListResponse, modifyUser, UpdatePerfilData } from 'src/app/shared/models/users/user';
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
 import { deleteObject } from '../interfaces';
 
@@ -44,6 +44,16 @@ export class UserService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
+  getUserByUsername(username: string): Observable<PerfilUsuarioData> {
+    return this.http.get<PerfilUsuarioData>(this.baseUrl + environment.BASE_TOKEN + '/user/' + username + '/perfil')
+      .pipe(catchError(this.handleError));
+  }
+
+  getEditUser(): Observable<UpdatePerfilData> {
+    return this.http.get<UpdatePerfilData>(this.baseUrl + environment.BASE_TOKEN + '/user/perfil')
+      .pipe(catchError(this.handleError));
+  }
+
   //TODO delete URL
   delete(id: number): Observable<any> {
     return this.http.delete<any>(this.baseUrl + `/user/${id}`)
@@ -54,11 +64,11 @@ export class UserService implements deleteObject {
     return this.http.put<any>(this.baseUrl + environment.BASE_ADMIN + '/usuario/rol',
       modifiedUser,
       httpOptions)
-      .pipe(map(() => true),catchError(this.handleError));
+      .pipe(map(() => true), catchError(this.handleError));
   }
 
   //TODO edit URL
-  editUser(user: Register): Observable<any> {
+  editUser(user: UpdatePerfilData): Observable<any> {
     return this.http.put<any>(this.baseUrl +
       `/user`,
       user,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,10 +25,20 @@ export class UserClubListComponent implements OnInit, OnDestroy {
 
   constructor(
     public clubService: ClubService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadData();
+    this.subscriptions.add(
+      this.clubService.clubDeleted$.subscribe(() => {
+        this.loadData();
+      })
+    );
+    this.subscriptions.add(
+      this.clubService.clubAdded$.subscribe(() => {
+        this.loadData();
+      })
+    );
   }
 
   loadData() {

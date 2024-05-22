@@ -39,20 +39,32 @@ export interface UserItemList {
 
 export interface UserItemListResponse {
     usuarios: UserItemList[];
-    pageInfo: pageInfo; 
+    pageInfo: pageInfo;
 }
 
 export interface PerfilUsuarioData {
-    id: number;
-    imagen: any;
+    imagenPerfil: any;
     username: string;
     nombre: string;
     tipo: GeneroTipo;
     genero: GeneroTipo;
+    selfPerfil: boolean;
     seguir: boolean;
 }
 
 export interface modifyUser {
     username: string,
     rol: string,
+}
+
+export interface UpdatePerfilData {
+    imagenPerfil: any;
+    username: string;
+    nombre: string;
+    apellidoPrimero: string;
+    apellidoSegundo: string;
+    tipo: number;
+    genero: number;
+    email: string;
+    password: string;
 }

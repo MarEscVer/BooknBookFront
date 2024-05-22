@@ -15,11 +15,14 @@ export class ClubService implements deleteObject {
   private clubAddedSource = new BehaviorSubject<boolean>(false);
   clubAdded$ = this.clubAddedSource.asObservable();
 
+  private clubDeletedSource = new BehaviorSubject<boolean>(false);
+  clubDeleted$ = this.clubDeletedSource.asObservable();
+
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + id)
+  delete(id: number): Observable<IdComboResponse> {
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + id)
       .pipe(catchError(this.handleError));
   }
 
@@ -85,6 +88,10 @@ export class ClubService implements deleteObject {
 
   notifyClubAdded() {
     this.clubAddedSource.next(true);
+  }
+
+  notifyClubDeleted() {
+    this.clubDeletedSource.next(true);
   }
 
   private handleError(error: HttpErrorResponse) {

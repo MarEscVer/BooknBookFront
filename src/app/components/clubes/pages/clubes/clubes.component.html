@@ -2,7 +2,7 @@
 <div class="container-fluid mt-3 mb-5">
     <div class="row justify-content-center align-items-start m-2">
         <div class="col-md-8" id="seccionTexto">
-            <app-club-list-all [userLoged]="userLoged"></app-club-list-all>
+            <app-club-list-all #clubListAll [userLoged]="userLoged"></app-club-list-all>
         </div>
         <ng-container *ngIf="userLoged; else noLoged">
             <div class="col-md-4 position-relative" id="seccion-listados-usuario">

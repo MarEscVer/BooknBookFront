@@ -3,9 +3,9 @@
     <div class="container-fluid vh-100">
         <div *ngIf="perfilUsuario" class="container-contenido">
             <div class="data-perfil-container">
-                <ng-container *ngIf="perfilUsuario.imagen !== undefined && perfilUsuario.imagen !== ''; else noData">
+                <ng-container *ngIf="perfilUsuario.imagenPerfil !== null && perfilUsuario.imagenPerfil !== undefined && perfilUsuario.imagenPerfil !== ''; else noData">
                     <div class="circular-image">
-                        <img [src]="'data:image;base64,' + perfilUsuario.imagen" alt="Icono de usuario">
+                        <img [src]="'data:image;base64,' + perfilUsuario.imagenPerfil" alt="Icono de usuario">
                     </div>
                 </ng-container>
                 <ng-template #noData>
@@ -24,7 +24,7 @@
                             <div class="detalle-genero" [ngStyle]="generoStyle">{{perfilUsuario.genero.nombre| uppercase}}</div>
                         </ng-container>
                     </div>
-                    <ng-container *ngIf="perfilPropio; else noPerfilPropio">
+                    <ng-container *ngIf="perfilUsuario.selfPerfil; else noPerfilPropio">
                         <div>
                             <button mat-button class="estilo-claro" (click)="rutaEditarPerfil()">EDITAR PERFIL</button>
                         </div>
@@ -44,7 +44,7 @@
                 <app-imagen-list-book-card [listadoService]="masLeidosBookService"></app-imagen-list-book-card>
             </div>
             <div class="valoracion-table">
-                <ng-container *ngIf="perfilPropio; else noPropio">
+                <ng-container *ngIf="perfilUsuario.selfPerfil; else noPropio">
                     <app-valoracion-table [estiloPerfil]="'PERFILPROPIO'"></app-valoracion-table>
                 </ng-container>
                 <ng-template #noPropio>

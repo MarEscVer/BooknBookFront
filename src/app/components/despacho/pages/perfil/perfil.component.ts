@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { PerfilUsuarioData } from 'src/app/shared/models/users/user';
 
 @Component({
@@ -12,30 +13,13 @@ import { PerfilUsuarioData } from 'src/app/shared/models/users/user';
 })
 export class PerfilComponent implements OnInit, OnDestroy {
 
-  perfilUsuario: PerfilUsuarioData = {
-    id: 1,
-    imagen: '',
-    username: 'usuario123',
-    nombre: 'Juan Pérez',
-    genero: {
-      "id": 1,
-      "nombre": "ROMÁNTICA",
-      "color": "FD9D9D"
-    },
-    tipo: {
-      "id": 8,
-      "nombre": "JUVENIL",
-      "color": "ECCEC5"
-    },
-    seguir: false
-  };
+  @Input() usernamePerfil?: string;
+  perfilUsuario?: PerfilUsuarioData;
+  userUsername?: string | null;
 
   imgNoData: string = '/assets/img/iconoPerfil.jpg';
   tipoStyle: any = {};
   generoStyle: any = {};
-
-  userUsername?: string | null;
-  perfilPropio: boolean = false;
 
   /**
 * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -46,19 +30,22 @@ export class PerfilComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private usuarioService: UserService,
     public masLeidosBookService: MasLeidosBookService,
   ) { }
 
   ngOnInit(): void {
-    //TODO LLAMAR ENDPOINT GET DATOS USUARIO
-    this.subscriptions.add(
-      this.authService.userUsername$.subscribe(username => {
-        this.userUsername = username;
-        if(this.userUsername === this.perfilUsuario.username) {
-          this.perfilPropio = true;
-        }
-      })
-    );
+    if (this.usernamePerfil) {
+      this.userUsername = this.usernamePerfil;
+      this.loadData();
+    } else {
+      this.subscriptions.add(
+        this.authService.userUsername$.subscribe(username => {
+          this.userUsername = username;
+          this.loadData();
+        })
+      );
+    }
     if (this.perfilUsuario) {
       this.tipoStyle = {
         'background-color': '#' + this.perfilUsuario.tipo.color,
@@ -73,6 +60,17 @@ export class PerfilComponent implements OnInit, OnDestroy {
         'border-radius': '5px',
         'padding': '5px',
       };
+    }
+  }
+
+  loadData() {
+    if (this.userUsername && this.userUsername !== null) {
+      this.subscriptions.add(this.usuarioService.getUserByUsername(this.userUsername).subscribe(data => {
+        if (data) {
+          this.perfilUsuario = data;
+        }
+      })
+      );
     }
   }
 

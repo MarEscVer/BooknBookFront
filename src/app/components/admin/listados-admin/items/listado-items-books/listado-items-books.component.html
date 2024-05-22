@@ -64,7 +64,7 @@
                             <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
                         </button>
                         <app-delete-button [modalInfo]="{ id: row.id, title: row.title }"
-                            [deleteService]="bookServie"></app-delete-button>
+                            [deleteService]="bookServie" (actionCompleted)="handleCommentAction()"></app-delete-button>
                     </td>
                 </ng-container>
 

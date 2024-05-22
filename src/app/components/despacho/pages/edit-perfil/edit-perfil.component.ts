@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { Combo } from 'src/app/shared/models/combo/combo';
-import { PerfilUsuarioData, Register } from 'src/app/shared/models/users/user';
+import { PerfilUsuarioData, UpdatePerfilData } from 'src/app/shared/models/users/user';
 
 @Component({
   selector: 'app-edit-perfil',
@@ -21,37 +21,13 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
 
   formeEditUser!: FormGroup;
   matcher!: FormErrorStateMatcher;
-  perfilUsuario: Register = {
-    id: 1,
-    imagen: '',
-    username: 'usuario123',
-    nombre: 'Juan',
-    apellido1: 'Pérez',
-    apellido2: 'Pérez',
-    email: 'email@email.com',
-    password: '11111',
-    idGenero: {
-      "id": 1,
-      "nombre": "ROMÁNTICA",
-      "color": "FD9D9D"
-    },
-    idTipo: {
-      "id": 8,
-      "nombre": "JUVENIL",
-      "color": "ECCEC5"
-    }
-  };
-
+  perfilUsuario?: UpdatePerfilData;
   selectedFile?: File;
   urlImagenDelServidor?: string;
-  userUsername?: string | null;
 
   typeOptions: Combo[] = [];
   genderOptions: Combo[] = [];
 
-  /**
- * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
- */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -61,7 +37,6 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
     private uploadService: ImagenUploadService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
     private generoTipoService: GeneroTipoService,
     private userService: UserService,
   ) {
@@ -72,23 +47,40 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
 
   createForm(fb: FormBuilder) {
     this.formeEditUser = this.formBuilder.group({
-      nombre: [this.perfilUsuario.nombre],
-      apellido1: [this.perfilUsuario.apellido1],
-      apellido2: [this.perfilUsuario.apellido2],
-      email: [this.perfilUsuario.email, [Validators.email]],
-      password: [this.perfilUsuario.password],
-      tipo: [this.perfilUsuario.idTipo.id],
-      genero: [this.perfilUsuario.idGenero.id]
+      username: [''],
+      nombre: [''],
+      email: ['', [Validators.email]],
+      password: [''],
+      tipo: [''],
+      genero: [''],
+      apellidoPrimero: [''],
+      apellidoSegundo: [''],
     });
   }
 
   ngOnInit(): void {
-    //TODO LLAMAR ENDPOINT GET DATOS USUARIO CON USERNAME --> rellenar perfilUsuario
-    this.subscriptions.add(
-      this.authService.userUsername$.subscribe(username => {
-        this.userUsername = username;
-        this.obtenerGeneroTipo();
-      })
+    this.loadData();
+    this.obtenerGeneroTipo();
+  }
+
+  //TODO PROBAR QUE FUNCIONE EL GETEDIT CUANDO ENDPOITN
+  loadData() {
+    this.subscriptions.add(this.userService.getEditUser().subscribe(data => {
+      if (data) {
+        this.perfilUsuario = data;
+        this.formeEditUser.patchValue({
+          username: data.username,
+          nombre: data.nombre,
+          apellidoPrimero: data.apellidoPrimero,
+          apellidoSegundo: data.apellidoSegundo,
+          tipo: data.tipo,
+          genero: data.genero,
+          email: data.email,
+          password: data.password
+        });
+        this.urlImagenDelServidor = data.imagenPerfil;
+      }
+    })
     );
   }
 

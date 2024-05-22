@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AddClubModalComponent } from '../add-club-modal/add-club-modal.component';
@@ -13,9 +13,6 @@ export class AddClubButtonComponent implements OnDestroy {
   @Input() clubId?: number;
   @Input() icono?: boolean = false;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(private dialog: MatDialog) {

@@ -48,6 +48,16 @@ export class ClubListAllComponent {
         }
       })
     );
+    this.subscriptions.add(
+      this.clubService.clubAdded$.subscribe(() => {
+        this.loadData();
+      })
+    );
+    this.subscriptions.add(
+      this.clubService.clubDeleted$.subscribe(() => {
+        this.loadData();
+      })
+    );
   }
 
   ngAfterViewInit() {

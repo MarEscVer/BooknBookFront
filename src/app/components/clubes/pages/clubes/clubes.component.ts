@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ClubListAllComponent } from '../../club-list-all/club-list-all.component';
 
 @Component({
   selector: 'app-clubes',
@@ -13,9 +14,6 @@ export class ClubesComponent implements OnInit {
   userLoged: boolean = false;
   iconoOpcion: boolean = true;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -37,6 +35,4 @@ export class ClubesComponent implements OnInit {
       })
     );
   }
-
-
 }

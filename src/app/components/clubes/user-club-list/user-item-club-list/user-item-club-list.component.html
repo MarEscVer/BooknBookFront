@@ -21,7 +21,7 @@
                 <fa-icon [icon]="['fas', 'ellipsis-vertical']"></fa-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item><fa-icon class="me-2" [icon]="['fas', 'trash']" (click)="eliminarClub(club.idGrupo)"></fa-icon>Eliminar</button>
+                <button mat-menu-item (click)="eliminarClub(club.idGrupo)"><fa-icon class="me-2" [icon]="['fas', 'trash']"></fa-icon>Eliminar</button>
             </mat-menu>
         </div>
         </ng-container>

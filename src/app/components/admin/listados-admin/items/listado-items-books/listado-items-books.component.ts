@@ -107,6 +107,10 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
     this.router.navigate(['/admin/book', bookId]);
   }
 
+  handleCommentAction() {
+    this.loadData();
+  }
+  
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
