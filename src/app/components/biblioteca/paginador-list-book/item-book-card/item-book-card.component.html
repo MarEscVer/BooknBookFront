@@ -1,5 +1,5 @@
 <mat-card class="custom-card" (click)="fichaLibro(libro.id)">
-  <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
+  <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== null && libro.imagen !== ''; else noData">
     <div>
         <img mat-card-image [src]="'data:image;base64,' + libro.imagen" alt="Portada del libro {{libro.titulo}}">
     </div>

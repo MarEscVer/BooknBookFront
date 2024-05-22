@@ -1,7 +1,7 @@
 <div class="container-club" *ngIf="club">
     <div class="container-contenido">
         <div class="imagen">
-            <ng-container *ngIf="club.imagen !== undefined && club.imagen !== ''; else noData">
+            <ng-container *ngIf="club.imagen !== undefined && club.imagen !== null && club.imagen !== ''; else noData">
                 <div class="circular-image">
                     <img [src]="club.imagen" alt="Icono de club">
                 </div>
@@ -16,9 +16,15 @@
             <div class="nombre">{{ club.nombre | uppercase}}</div>
             <div class="descipcion">{{ club.descripcion }}</div>
             <div class="intereses d-flex flex-row align-items-center gap-2">
-                <span>Intereses:</span>
-                <div class="detalle-tipo" [ngStyle]="tipoStyle">{{club.tipo.nombre| uppercase}}</div>
-                <div class="detalle-genero" [ngStyle]="generoStyle">{{club.genero.nombre| uppercase}}</div>
+                <ng-container *ngIf="club.tipo || club.genero">
+                    <span>Intereses:</span>
+                    <ng-container *ngIf="club.tipo">
+                        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{club.tipo.nombre| uppercase}}</div>
+                    </ng-container>
+                    <ng-container *ngIf="club.genero">
+                        <div class="detalle-genero" [ngStyle]="generoStyle">{{club.genero.nombre| uppercase}}</div>
+                    </ng-container>
+                </ng-container>
             </div>
         </div>
         <div class="detalles-club-usuario">

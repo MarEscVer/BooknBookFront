@@ -13,78 +13,7 @@ import { BookItemCard } from 'src/app/shared/models/book/book';
 })
 export class PaginadorListBookComponent implements OnInit, OnDestroy {
 
-  listadoLibros: BookItemCard[] = [
-    {
-      id: 1,
-      imagen: "",
-      titulo: "El señor de los anillos",
-      autor: "J.R.R. Tolkien",
-      saga: "El señor de los anillos"
-    },
-    {
-      id: 2,
-      imagen: "",
-      titulo: "Harry Potter y la piedra filosofal",
-      autor: "J.K. Rowling",
-      saga: "Harry Potter"
-    },
-    {
-      id: 3,
-      imagen: "",
-      titulo: "Cien años de soledad",
-      autor: "Gabriel García Márquez",
-      saga: ""
-    },
-    {
-      id: 4,
-      imagen: "",
-      titulo: "1984",
-      autor: "George Orwell",
-      saga: ""
-    },
-    {
-      id: 5,
-      imagen: "",
-      titulo: "Orgullo y prejuicio",
-      autor: "Jane Austen",
-      saga: ""
-    },
-    {
-      id: 6,
-      imagen: "",
-      titulo: "Don Quijote de la Mancha",
-      autor: "Miguel de Cervantes",
-      saga: ""
-    },
-    {
-      id: 7,
-      imagen: "",
-      titulo: "Crónicas de una muerte anunciada",
-      autor: "Gabriel García Márquez",
-      saga: ""
-    },
-    {
-      id: 8,
-      imagen: "",
-      titulo: "El Hobbit",
-      autor: "J.R.R. Tolkien",
-      saga: ""
-    },
-    {
-      id: 9,
-      imagen: "",
-      titulo: "Las crónicas de Narnia: El león, la bruja y el armario",
-      autor: "C.S. Lewis",
-      saga: "Las crónicas de Narnia"
-    },
-    {
-      id: 10,
-      imagen: "",
-      titulo: "Matar a un ruiseñor",
-      autor: "Harper Lee",
-      saga: ""
-    }
-  ];
+  listadoLibros?: BookItemCard[];
 
   @Input() generoObs?: Observable<string>;
   genero!: string;
@@ -97,10 +26,6 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
   pageEvent?: PageEvent;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(

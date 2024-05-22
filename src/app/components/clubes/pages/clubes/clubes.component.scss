@@ -13,9 +13,18 @@
         }
     }
 
-    .administrar, .pertenecer {
+    .pertenecer {
         padding: 20px;
         border: 1px solid $claro-color;
+        max-width: 100%;
+        height: 380px;
+    }
+
+    .administrar {
+        padding: 20px;
+        border: 1px solid $claro-color;
+        max-width: 100%;
+        height: 400px;
     }
 
 }

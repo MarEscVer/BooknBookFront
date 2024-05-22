@@ -1,9 +1,9 @@
-<ng-container *ngIf="libros">
+<ng-container *ngIf="!loading">
     <div class="d-flex justify-content-center mt-3 carousel-container">
         <div class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item" *ngFor="let pagina of librosPorPagina; let i = index"
-                    [class.active]="i === current">
+                    [class.active]="i === current" [@fade]>
                     <div class="row">
                         <div class="col-12 cards-wrapper d-flex flex-row flex-nowrap overflow-auto">
                             <div *ngFor="let libro of pagina" class="col-auto">

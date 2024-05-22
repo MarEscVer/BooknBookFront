@@ -21,7 +21,7 @@
         </div>
         <div class="d-flex flex-column align-items-center justify-content-center mt-4">
             <h5 class="">Libros de {{autor.pseudonimo| uppercase}}</h5>
-            <app-paginador-list-book></app-paginador-list-book>
+            <app-list-book [idAutor]="autor.id"></app-list-book>
         </div>
     </div>
     <app-footer></app-footer>

@@ -10,7 +10,7 @@ export class ItemClubListAllComponent implements OnInit {
 
   @Input() club?: ClubDataAll;
   @Input() userLoged?: boolean;
-  imgNoData: string = '/assets/img/iconoPerfil.jpg';
+  imgNoData: string = '/assets/img/iconoClub.png';
   tipoStyle: any = {};
   generoStyle: any = {};
 
@@ -18,30 +18,33 @@ export class ItemClubListAllComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.club) {
-      this.tipoStyle = {
-        'background-color': '#' + this.club.tipo.color,
-        'color': 'black',
-        'border-radius': '20px',
-        'padding': '5px',
-      };
-
-      this.generoStyle = {
-        'background-color': '#' + this.club.genero.color,
-        'color': 'black',
-        'border-radius': '5px',
-        'padding': '5px',
-      };
+      if (this.club.tipo) {
+        this.tipoStyle = {
+          'background-color': this.club.tipo.color,
+          'color': 'black',
+          'border-radius': '20px',
+          'padding': '5px',
+        };
+      }
+      if (this.club.genero) {
+        this.generoStyle = {
+          'background-color': this.club.genero.color,
+          'color': 'black',
+          'border-radius': '5px',
+          'padding': '5px',
+        };
+      }
     }
   }
-  
-  abandonarClub(){
+
+  abandonarClub() {
     //TODO ENVIAR DATO A SERVIDOR PARA ABANDONAR
     console.log('ABANDONAR' + this.club?.id)
   }
 
-  pertenecerClub(){
+  pertenecerClub() {
     //TODO ENVIAR DATO A SERVIDOR PARA PERTENECER
     console.log('PERTENECER' + this.club?.id)
   }
-  
+
 }

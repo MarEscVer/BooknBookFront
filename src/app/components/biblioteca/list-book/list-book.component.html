@@ -1,0 +1,9 @@
+<div class="table-responsive">
+    <div class="container-fluid">
+        <div class="row-flex justify-content-start flex-wrap mt-2">
+            <div class="book-card" *ngFor="let libro of listadoLibros">
+                <app-item-book-card [libro]="libro"></app-item-book-card>
+            </div>
+        </div>
+    </div>
+</div>

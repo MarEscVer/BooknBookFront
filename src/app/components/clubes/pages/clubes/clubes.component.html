@@ -1,6 +1,6 @@
 <app-breadcumb></app-breadcumb>
 <div class="container-fluid mt-3 mb-5">
-    <div class="row justify-content-center align-items-center m-2">
+    <div class="row justify-content-center align-items-start m-2">
         <div class="col-md-8" id="seccionTexto">
             <app-club-list-all [userLoged]="userLoged"></app-club-list-all>
         </div>
@@ -8,14 +8,14 @@
             <div class="col-md-4 position-relative" id="seccion-listados-usuario">
                 <div class="pertenecer">
                     <span>CLUBES A LOS QUE PERTENECES</span>
-                    <app-user-club-list></app-user-club-list>
+                    <app-user-club-list [tipo]="'P'"></app-user-club-list>
                 </div>
                 <div class="administrar">
                     <div class="d-flex flex-row justify-content-between align-items-baseline">
                         <span>CLUBES QUE ADMINISTRAS</span>
                         <app-add-club-button [icono]="iconoOpcion"></app-add-club-button>
                     </div>
-                    <app-user-club-list></app-user-club-list>
+                    <app-user-club-list [tipo]="'A'"></app-user-club-list>
                 </div>
             </div>
         </ng-container>

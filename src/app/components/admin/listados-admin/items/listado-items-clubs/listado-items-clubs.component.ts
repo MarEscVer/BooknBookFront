@@ -21,12 +21,9 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
   currentPage = 0;
   totalItems = 0;
   filter: string = '';
+  isLoading: boolean = true;
 
   @ViewChild(MatSort) sort?: MatSort;
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(public clubService: ClubService) {
@@ -70,11 +67,13 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
   loadData() {
     const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
     this.currentPage = newPage;
+    this.isLoading = true;
     this.subscriptions.add(
       this.clubService.getListClubes(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.listGroup) {
           this.dataSource.data = data.listGroup;
           this.totalItems = data.pageInfo.totalElements;
+          this.isLoading = false;
         }
       })
     );
@@ -101,7 +100,7 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
 
   onItemsPerPageChange(newItemsPerPage: number) {
     this.itemsPerPage = newItemsPerPage;
-    this.currentPage = 0; // Reiniciar a la primera página al cambiar el tamaño de página
+    this.currentPage = 0;
     this.loadData();
   }
 

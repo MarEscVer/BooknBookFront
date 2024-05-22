@@ -13,14 +13,6 @@ export interface AutorNombre {
     pseudonimo: string;
 }
 
-
-export interface AutorEdit {
-    pseudonimo: string;
-    localidad: string;
-    biografia: string;
-    imagen: string;
-}
-
 export interface AutorIcon {
     iconName: IconName;
     iconPrefix: IconPrefix;

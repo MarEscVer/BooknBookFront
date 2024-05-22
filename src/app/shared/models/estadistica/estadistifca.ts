@@ -17,3 +17,10 @@ export interface EstadisticaGeneroResponse {
     estadisticas: ItemEstadistica[];
     genero: GeneroTipo;
 }
+
+export interface ContadorResponse {
+    lectoresTotales: number;
+    librosLeidos: number;
+    clubesCreados: number;
+    comentariosTotales: number;
+}

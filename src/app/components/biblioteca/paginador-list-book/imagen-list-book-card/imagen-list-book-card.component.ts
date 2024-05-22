@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations'
-import { BookItemCard } from 'src/app/shared/models/book/book';
+import { BookImageListResponse, BookItemCard } from 'src/app/shared/models/book/book';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -17,116 +17,44 @@ import { Observable, Subscription } from 'rxjs';
 
 export class ImagenListBookCardComponent implements OnInit, OnDestroy {
 
-  libros: BookItemCard[] = [
-    {
-      id: 1,
-      imagen: "",
-      titulo: "El señor de los anillos",
-      autor: "J.R.R. Tolkien",
-      saga: "El señor de los anillos"
-    },
-    {
-      id: 2,
-      imagen: "",
-      titulo: "Harry Potter y la piedra filosofal",
-      autor: "J.K. Rowling",
-      saga: "Harry Potter"
-    },
-    {
-      id: 3,
-      imagen: "",
-      titulo: "Cien años de soledad",
-      autor: "Gabriel García Márquez",
-      saga: ""
-    },
-    {
-      id: 4,
-      imagen: "",
-      titulo: "1984",
-      autor: "George Orwell",
-      saga: ""
-    },
-    {
-      id: 5,
-      imagen: "",
-      titulo: "Orgullo y prejuicio",
-      autor: "Jane Austen",
-      saga: ""
-    },
-    {
-      id: 6,
-      imagen: "",
-      titulo: "Don Quijote de la Mancha",
-      autor: "Miguel de Cervantes",
-      saga: ""
-    },
-    {
-      id: 7,
-      imagen: "",
-      titulo: "Crónicas de una muerte anunciada",
-      autor: "Gabriel García Márquez",
-      saga: ""
-    },
-    {
-      id: 8,
-      imagen: "",
-      titulo: "El Hobbit",
-      autor: "J.R.R. Tolkien",
-      saga: ""
-    },
-    {
-      id: 9,
-      imagen: "",
-      titulo: "Las crónicas de Narnia: El león, la bruja y el armario",
-      autor: "C.S. Lewis",
-      saga: "Las crónicas de Narnia"
-    },
-    {
-      id: 10,
-      imagen: "",
-      titulo: "Matar a un ruiseñor",
-      autor: "Harper Lee",
-      saga: ""
-    }
-  ];
+  libros?: BookItemCard[];
 
   librosPorPagina: BookItemCard[][] = [];
   isMobile: boolean = false;
   current = 0;
+  size = 10;
+  loading: boolean = true;
 
   @Input() listadoService: any;
   @Input() generoObs?: Observable<string>;
   @Input() opcionSize?: boolean = false;
   genero!: string;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor() { }
 
   ngOnInit() {
-
     this.subscriptions.add(this.generoObs?.subscribe(genero => {
       this.genero = genero;
     }));
-
-    // this.loadData();
-
+    this.loadData();
     this.onResize();
-    setInterval(() => {
-      this.current = ++this.current % this.librosPorPagina.length;
-    }, 6000);
   }
 
-  // loadData() {
-  //   this.subscriptions.add(this.listadoService.getListado().subscribe((data: BookItemCard[]) => {
-  //     if (data) {
-  //       this.libros = data;
-  //     }
-  //   }));
-  // }
+  loadData() {
+    this.subscriptions.add(this.listadoService.getListado(this.size).subscribe((data: BookImageListResponse) => {
+      if (data.libros) {
+        this.libros = data.libros;
+        this.dividirLibrosPorPagina();
+        this.loading = false;
+      }
+    },
+      (error: any) => {
+        this.loading = false;
+      }
+    ));
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event?: Event) {
@@ -159,8 +87,10 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
       }
     }
 
-    for (let i = 0; i < this.libros.length; i += librosPorPagina) {
-      this.librosPorPagina.push(this.libros.slice(i, i + librosPorPagina));
+    if (this.libros) {
+      for (let i = 0; i < this.libros.length; i += librosPorPagina) {
+        this.librosPorPagina.push(this.libros.slice(i, i + librosPorPagina));
+      }
     }
   }
 

@@ -52,12 +52,12 @@ export class InputErrorStateMatcherExample {
   register = {
     email: this.getFormControl_Email(),
     password: this.getFormControl_required(),
-    name: this.getFormControl_required(),
-    username: this.getFormControl_required(),
-    apellido1: this.getFormControl_required(),
-    apellido2: this.getFormControl_required(),
-    tipo: this.getFormControl_required(),
-    genero: this.getFormControl_required(),
+    nombre: this.getFormControl_required(),
+    usuario: this.getFormControl_required(),
+    apellidoPrimero: this.getFormControl_required(),
+    apellidoSegundo: this.getFormControl_required(),
+    idTipo: this.getFormControl_required(),
+    idGenero: this.getFormControl_required(),
   }
 
   addClub = {

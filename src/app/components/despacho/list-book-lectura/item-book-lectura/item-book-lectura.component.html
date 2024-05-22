@@ -19,8 +19,12 @@
       </span>
       <span>{{ libro.descripcion }}</span>
       <div class="d-flex gap-2 mt-2">
-        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
-        <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre | uppercase}}</div>
+        <ng-container *ngIf="libro.tipo">
+          <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
+        </ng-container>
+        <ng-container *ngIf="libro.genero">
+          <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre| uppercase}}</div>
+        </ng-container>
       </div>
     </div>
     <div class="botones">
@@ -39,8 +43,12 @@
       <div>Fecha de inicio: {{(libro.fechaInicio ? libro.fechaInicio : 'Sin datos')}}</div>
       <div>Fecha final: {{(libro.fechaFinal ? libro.fechaFinal : 'Sin datos')}}</div>
       <div class="d-flex gap-2 mt-2">
-        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
-        <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre | uppercase}}</div>
+        <ng-container *ngIf="libro.tipo">
+          <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
+        </ng-container>
+        <ng-container *ngIf="libro.genero">
+          <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre| uppercase}}</div>
+        </ng-container>
       </div>
     </div>
     <div class="botones">
@@ -62,8 +70,12 @@
       <div>Paginas leidas: {{(libro.paginasLeidas ? libro.paginasLeidas : 'Sin datos')}}</div>
       <div>Fecha de inicio: {{(libro.fechaInicio ? libro.fechaInicio : 'Sin datos')}}</div>
       <div class="d-flex gap-2 mt-2">
-        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
-        <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre | uppercase}}</div>
+        <ng-container *ngIf="libro.tipo">
+          <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
+        </ng-container>
+        <ng-container *ngIf="libro.genero">
+          <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre| uppercase}}</div>
+        </ng-container>
       </div>
     </div>
     <div class="botones">

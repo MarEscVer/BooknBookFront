@@ -20,6 +20,7 @@ export class ListadoItemsComentariosComponent implements OnInit {
   currentPage = 0;
   totalItems = 0;
   selectedFilter: string = 'PENDIENTE';
+  isLoading: boolean = true;
 
   modalInfo: ComentarioResponse = {message: ''};
 
@@ -64,11 +65,13 @@ export class ListadoItemsComentariosComponent implements OnInit {
   loadData() {
     const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
     this.currentPage = newPage;
+    this.isLoading = true;
     this.subscriptions.add(
       this.comentarioService.getListComentariosDenunciados(this.currentPage, this.itemsPerPage, this.selectedFilter).subscribe(data => {
         if (data.comentariosDenunciados) {
           this.dataSource.data = data.comentariosDenunciados;
           this.totalItems = data.pageInfo.totalElements;
+          this.isLoading = false;
         }
       })
     );

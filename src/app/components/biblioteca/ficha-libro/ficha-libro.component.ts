@@ -15,29 +15,19 @@ import { Book } from 'src/app/shared/models/book/book';
 export class FichaLibroComponent implements OnInit, OnDestroy {
 
   @Input() libro?: Book;
+  autorSeleccionado?: AutorData;
+
   stars = [0, 1, 2, 3, 4];
   valoracionMedia: number = 0;
   isExpanded: boolean = false;
   tipoStyle: any = {};
   generoStyle: any = {};
-
   userRole?: string | null;
   estiloBoton: string = 'INTERES';
 
   imgNoData: string = '/assets/img/iconoLibro.jpg';
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
-
-  autorSeleccionado: AutorData = {
-    "id": 1,
-    "imagen": "",
-    "pseudonimo": "Patrick Rothfuss",
-    "localidad": "Patrick Rothfuss",
-    "biografia": "Patrick Rothfuss",
-  }
 
   constructor(
     private autorService: AutorService,
@@ -75,17 +65,20 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
     this.isExpanded = !this.isExpanded;
   }
 
+  //TODO mirar que funcione (no compro9bable hasta ficha libro hecha)
   autorLibro(id: number) {
-    //TODO GET AUTOR POR ID --> obtener LIBRO completo
-
-    if (this.autorSeleccionado) {
-      this.autorService.setAutor(this.autorSeleccionado);
-
-      let autor: string = this.autorSeleccionado.pseudonimo.toLowerCase().replaceAll(' ', '-');
-
-      this.router.navigate(['/biblioteca/autores/perfil', autor]);
+    if (this.libro) {
+      this.subscriptions.add(
+        this.autorService.getAutorById(this.libro.autor.id).subscribe(data => {
+          if (data) {
+            this.autorSeleccionado = data;
+            this.autorService.setAutor(this.autorSeleccionado);
+            let autor: string = this.autorSeleccionado.pseudonimo.toLowerCase().replaceAll(' ', '-');
+            this.router.navigate(['/biblioteca/autores/perfil', autor]);
+          }
+        })
+      );
     }
-
   }
 
   ngOnDestroy(): void {

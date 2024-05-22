@@ -4,8 +4,13 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Por cualquier campo" #input>
     </mat-form-field>
 
-    <ng-container *ngIf="dataSource">
-        <div class="mat-elevation-z8">
+    <!-- Spinner de carga -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <ng-container *ngIf="!isLoading">
+        <div *ngIf="dataSource" class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
                 <ng-container matColumnDef="img">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
@@ -57,7 +62,7 @@
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="4">Ningún club encontrado con: "{{input.value}}"</td>
-                </tr>
+                  </tr>
             </table>
             <div class="mt-3 me-3 d-flex flex-row justify-content-end align-items-center gap-4">
                 <div class="d-flex flex-row align-items-center gap-2">

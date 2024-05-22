@@ -111,6 +111,8 @@ import { ListBookLecturaComponent } from './components/despacho/list-book-lectur
 import { EditPerfilComponent } from './components/despacho/pages/edit-perfil/edit-perfil.component';
 import { EstadisticasComponent } from './components/despacho/pages/estadisticas/estadisticas.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ListBookComponent } from './components/biblioteca/list-book/list-book.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -192,7 +194,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
     ItemBookLecturaComponent,
     ListBookLecturaComponent,
     EditPerfilComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    ListBookComponent
   ],
   /* LIBRARIES */
   imports: [
@@ -229,6 +232,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
     MatDatepickerModule,
     MatNativeDateModule,
     GoogleChartsModule.forRoot(),
+    MatProgressSpinnerModule,
   ],
   /* SERVICE */
   providers: [

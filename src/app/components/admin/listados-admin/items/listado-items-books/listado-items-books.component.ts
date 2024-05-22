@@ -22,6 +22,7 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
   currentPage = 0;
   totalItems = 0;
   filter: string = '';
+  isLoading: boolean = true;
 
   @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
@@ -90,11 +91,13 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
   loadData() {
     const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
     this.currentPage = newPage;
+    this.isLoading = true;
     this.subscriptions.add(
       this.bookServie.getListBook(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.libros) {
           this.dataSource.data = data.libros;
           this.totalItems = data.pageInfo.totalElements;
+          this.isLoading = false;
         }
       })
     );

@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RandomBookService } from 'src/app/services/book/random-book.service';
+import { EstadisticaService } from 'src/app/services/estadisticas/estadistica.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { EstadisticaResponse } from 'src/app/shared/models/estadistica/estadistifca';
+import { ContadorResponse } from 'src/app/shared/models/estadistica/estadistifca';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +18,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   formNewsletter!: FormGroup;
   matcher!: FormErrorStateMatcher;
-  data?: EstadisticaResponse;
-  
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
+  data?: ContadorResponse;
+ 
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -31,6 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public randomBookService: RandomBookService,
+    public estadisticaService: EstadisticaService
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -41,15 +40,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.formNewsletter = this.formBuilder.group(this.formControl.newsletter);
   }
 
+  loadData() {
+    this.subscriptions.add(
+      this.estadisticaService.getContador().subscribe(contadores => {
+        if (contadores) {
+          this.data = contadores;
+        }
+      })
+    );
+  }
+
   submit() {
-    //TODO HACER LLAMADA OBTENER DATOS ESTADÍSTICOS --> 
-  }
-
-  ngOnInit(): void {
 
   }
 
-  public ngOnDestroy(): void {
+  ngOnInit() {
+    this.loadData();
+  }
+
+  public ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 

@@ -1,7 +1,7 @@
 <div class="container-club" *ngIf="club">
     <div class="container-contenido">
         <div class="imagen">
-            <ng-container *ngIf="club.imagen !== undefined && club.imagen !== ''; else noData">
+            <ng-container *ngIf="club.imagen !== undefined && club.imagen !== null && club.imagen !== ''; else noData">
                 <div class="circular-image">
                     <img [src]="club.imagen" alt="Icono de club">
                 </div>
@@ -13,7 +13,7 @@
             </ng-template>
         </div>
         <div class="detalles-club">
-            <div class="nombre">{{ club.nombre | uppercase}}</div>
+            <div class="nombre">{{ club.nombreGrupo| uppercase}}</div>
         </div>
         <ng-container *ngIf="club.administrador">
         <div class="detalles-menu">        
@@ -21,7 +21,7 @@
                 <fa-icon [icon]="['fas', 'ellipsis-vertical']"></fa-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item><fa-icon class="me-2" [icon]="['fas', 'trash']" (click)="eliminarClub(club.id)"></fa-icon>Eliminar</button>
+                <button mat-menu-item><fa-icon class="me-2" [icon]="['fas', 'trash']" (click)="eliminarClub(club.idGrupo)"></fa-icon>Eliminar</button>
             </mat-menu>
         </div>
         </ng-container>

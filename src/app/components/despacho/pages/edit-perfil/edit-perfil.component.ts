@@ -30,12 +30,12 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
     apellido2: 'Pérez',
     email: 'email@email.com',
     password: '11111',
-    genero: {
+    idGenero: {
       "id": 1,
       "nombre": "ROMÁNTICA",
       "color": "FD9D9D"
     },
-    tipo: {
+    idTipo: {
       "id": 8,
       "nombre": "JUVENIL",
       "color": "ECCEC5"
@@ -77,8 +77,8 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
       apellido2: [this.perfilUsuario.apellido2],
       email: [this.perfilUsuario.email, [Validators.email]],
       password: [this.perfilUsuario.password],
-      tipo: [this.perfilUsuario.tipo.id],
-      genero: [this.perfilUsuario.genero.id]
+      tipo: [this.perfilUsuario.idTipo.id],
+      genero: [this.perfilUsuario.idGenero.id]
     });
   }
 

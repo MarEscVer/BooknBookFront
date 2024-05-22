@@ -1,155 +1,134 @@
 import { ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ClubService } from 'src/app/services/club/club.service';
 import { ClubDataAll } from 'src/app/shared/models/club/club';
 
 @Component({
   selector: 'app-club-list-all',
   templateUrl: './club-list-all.component.html',
-  styleUrls: ['./club-list-all.component.scss']
+  styleUrls: ['./club-list-all.component.scss'],
 })
 export class ClubListAllComponent {
 
-  clubes: ClubDataAll[] = [
-    {
-      id: 1,
-      imagen: "",
-      nombre: "Club de Lectura",
-      descripcion: "Un club dedicado a la lectura de libros de todo tipo de géneros.",
-      genero: {
-        "id": 1,
-        "nombre": "ROMÁNTICA",
-        "color": "FD9D9D"
-      },
-      tipo: {
-        "id": 8,
-        "nombre": "JUVENIL",
-        "color": "ECCEC5"
-      },
-      miembros: 20,
-      perteneces: true
-    },
-    {
-      id: 2,
-      imagen: "",
-      nombre: "Club de Lectura",
-      descripcion: "Un club dedicado a la lectura de libros de todo tipo de géneros.",
-      genero: {
-        "id": 1,
-        "nombre": "ROMÁNTICA",
-        "color": "FD9D9D"
-      },
-      tipo: {
-        "id": 8,
-        "nombre": "JUVENIL",
-        "color": "ECCEC5"
-      },
-      miembros: 20,
-      perteneces: true
-    },
-    {
-      id: 3,
-      imagen: "",
-      nombre: "Club de Lectura",
-      descripcion: "Un club dedicado a la lectura de libros de todo tipo de géneros.",
-      genero: {
-        "id": 1,
-        "nombre": "ROMÁNTICA",
-        "color": "FD9D9D"
-      },
-      tipo: {
-        "id": 8,
-        "nombre": "JUVENIL",
-        "color": "ECCEC5"
-      },
-      miembros: 20,
-      perteneces: true
-    },
-    {
-      id: 4,
-      imagen: "",
-      nombre: "Club de Lectura",
-      descripcion: "Un club dedicado a la lectura de libros de todo tipo de géneros.",
-      genero: {
-        "id": 1,
-        "nombre": "ROMÁNTICA",
-        "color": "FD9D9D"
-      },
-      tipo: {
-        "id": 8,
-        "nombre": "JUVENIL",
-        "color": "ECCEC5"
-      },
-      miembros: 20,
-      perteneces: true
-    },
-    {
-      id: 5,
-      imagen: "",
-      nombre: "Club de Lectura",
-      descripcion: "Un club dedicado a la lectura de libros de todo tipo de géneros.",
-      genero: {
-        "id": 1,
-        "nombre": "ROMÁNTICA",
-        "color": "FD9D9D"
-      },
-      tipo: {
-        "id": 8,
-        "nombre": "JUVENIL",
-        "color": "ECCEC5"
-      },
-      miembros: 20,
-      perteneces: false
-    }
-  ]
+  clubes?: ClubDataAll[];
 
   @Input() userLoged!: boolean;
 
-  dataSource: MatTableDataSource<ClubDataAll> = new MatTableDataSource<ClubDataAll>(this.clubes);
+  dataSource: MatTableDataSource<ClubDataAll>;
 
-  pageIndex = 0;
-  pageSize = 5;
-  pageEvent?: PageEvent;
+  itemsPerPage = 6;
+  currentPage = 0;
+  totalItems = 0;
+  filter: string = '';
+  isLoading: boolean = true;
+  userRole?: string | null;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
+  @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
+    public clubService: ClubService,
+    private authService: AuthService,
   ) {
     this.dataSource = new MatTableDataSource<ClubDataAll>([]);
   }
 
   ngOnInit() {
-    // this.loadData();
-    if (this.clubes) {
-      this.dataSource = new MatTableDataSource<ClubDataAll>(this.clubes);
-      this.changeDetectorRef.detectChanges();
-      this.dataSource.paginator = this.paginator;
+    this.subscriptions.add(
+      this.authService.userRole$.subscribe(role => {
+        this.userRole = role;
+        this.loadData();
+        if (this.clubes) {
+          this.dataSource = new MatTableDataSource<ClubDataAll>(this.clubes);
+          this.changeDetectorRef.detectChanges();
+        }
+      })
+    );
+  }
+
+  ngAfterViewInit() {
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+    this.subscribeToSort();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filter = filterValue;
+    this.currentPage = 0;
+    this.loadData();
+  }
+
+  subscribeToSort() {
+    if (this.sort) {
+      this.subscriptions.add(
+        this.sort.sortChange.subscribe((sort: Sort) => {
+          this.loadData();
+        })
+      );
     }
   }
 
   loadData() {
-    //TODO LLAMAR SERVICIO
-  }
-
-  applyFilter(event: Event) {
-
-  }
-
-  ngOnDestroy() {
-    if (this.dataSource) {
-      this.dataSource.disconnect();
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
+    this.isLoading = true;
+    if (this.userRole === 'NORMAL' || this.userRole === 'ADMIN') {
+      this.subscriptions.add(
+        this.clubService.getListClubes(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
+          if (data.listGroup) {
+            this.dataSource.data = data.listGroup;
+            this.clubes = data.listGroup;
+            this.totalItems = data.pageInfo.totalElements;
+            this.isLoading = false;
+          }
+        })
+      );
+    } else {
+      this.subscriptions.add(
+        this.clubService.getListClubesAnonimo(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
+          if (data.listGroup) {
+            this.dataSource.data = data.listGroup;
+            this.clubes = data.listGroup;
+            this.totalItems = data.pageInfo.totalElements;
+            this.isLoading = false;
+          }
+        })
+      );
     }
+  }
+
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData();
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onItemsPerPageChange(newItemsPerPage: number) {
+    this.itemsPerPage = newItemsPerPage;
+    this.currentPage = 0;
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 

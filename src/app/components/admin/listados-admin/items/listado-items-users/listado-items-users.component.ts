@@ -29,6 +29,7 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
   currentPage = 0;
   totalItems = 0;
   filter: string = '';
+  isLoading: boolean = true;
 
   @ViewChild(MatSort) sort?: MatSort;
 
@@ -82,11 +83,13 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
   loadData() {
     const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
     this.currentPage = newPage;
+    this.isLoading = true;
     this.subscriptions.add(
       this.userService.getListUser(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.usuarios) {
           this.dataSource.data = data.usuarios;
           this.totalItems = data.pageInfo.totalElements;
+          this.isLoading = false;
         }
       })
     );

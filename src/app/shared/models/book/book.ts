@@ -33,6 +33,16 @@ export interface BookItemListResponse {
     pageInfo: pageInfo; 
 }
 
+export interface BookImageListResponse {
+    filterName: string;
+    libros: BookItemCard[];
+    pageInfo: pageInfo;
+}
+
+export interface BookListResponse {
+    libros: BookItemList[];
+}
+
 export interface BookItemCard {
     id: number;
     imagen: any;

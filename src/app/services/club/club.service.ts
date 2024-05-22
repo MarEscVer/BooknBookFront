@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { ClubData, ClubEdit, ClubItemListResponse } from 'src/app/shared/models/club/club';
+import { ClubData, ClubEdit, ClubItemListResponse, ClubShortListResponse } from 'src/app/shared/models/club/club';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class ClubService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO add URL
+  //TODO edit URL
   editClub(clubData: ClubData, idClub: number): Observable<void> {
     return this.http.put<void>(this.baseUrl + environment.BASE_TOKEN + `/grupo/${idClub}`, clubData, httpOptions)
       .pipe(catchError(this.handleError));
@@ -39,7 +39,7 @@ export class ClubService implements deleteObject {
     return this.http.get<ClubEdit>(this.baseUrl + environment.BASE_TOKEN + `/grupo/${idClub}`, httpOptions).pipe(catchError(this.handleError));
   }
 
-  getListClubes(pageIndex: number, size: number, filter: string): Observable<ClubItemListResponse> {
+  getListClubesAnonimo(pageIndex: number, size: number, filter: string): Observable<ClubItemListResponse> {
     const params: any = {
       pageIndex: pageIndex.toString(),
       size: size.toString(),
@@ -47,6 +47,39 @@ export class ClubService implements deleteObject {
     };
 
     return this.http.get<ClubItemListResponse>(this.baseUrl + '/clubes', { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getListClubes(pageIndex: number, size: number, filter: string): Observable<ClubItemListResponse> {
+    const params: any = {
+      pageIndex: pageIndex.toString(),
+      size: size.toString(),
+      filter: filter
+    };
+
+    return this.http.get<ClubItemListResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/clubes', { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getListClubesPertenece(pageIndex: number, size: number): Observable<ClubShortListResponse> {
+    const params: any = {
+      pageIndex: pageIndex.toString(),
+      size: size.toString(),
+      type: 'P',
+    };
+
+    return this.http.get<ClubShortListResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/mis-clubes', { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getListClubesAdministra(pageIndex: number, size: number): Observable<ClubShortListResponse> {
+    const params: any = {
+      pageIndex: pageIndex.toString(),
+      size: size.toString(),
+      type: 'A',
+    };
+
+    return this.http.get<ClubShortListResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/mis-clubes', { params })
       .pipe(catchError(this.handleError));
   }
 

@@ -17,9 +17,12 @@
                     <h4>{{perfilUsuario.nombre | uppercase}}</h4>
                     <h6 class="username">{{perfilUsuario.username | uppercase}}</h6>
                     <div class="d-flex gap-2 mb-3">
-                        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{perfilUsuario.tipo.nombre| uppercase}}</div>
-                        <div class="detalle-genero" [ngStyle]="generoStyle">{{perfilUsuario.genero.nombre| uppercase}}
-                        </div>
+                        <ng-container *ngIf="perfilUsuario.tipo">
+                            <div class="detalle-tipo" [ngStyle]="tipoStyle">{{perfilUsuario.tipo.nombre| uppercase}}</div>
+                        </ng-container>
+                        <ng-container *ngIf="perfilUsuario.genero">
+                            <div class="detalle-genero" [ngStyle]="generoStyle">{{perfilUsuario.genero.nombre| uppercase}}</div>
+                        </ng-container>
                     </div>
                     <ng-container *ngIf="perfilPropio; else noPerfilPropio">
                         <div>

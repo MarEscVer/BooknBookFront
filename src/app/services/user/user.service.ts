@@ -13,9 +13,9 @@ export class UserService implements deleteObject {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
-  register(registerRequest: Register): Observable<boolean> {
+  register(registerRequest: Register): Observable<void> {
     return this.http
-      .post<boolean>(
+      .post<void>(
         this.baseUrl + endpoints.REGISTER,
         registerRequest,
         httpOptions

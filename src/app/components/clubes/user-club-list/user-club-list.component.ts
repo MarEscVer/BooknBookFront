@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ClubService } from 'src/app/services/club/club.service';
 import { ClubDataShort } from 'src/app/shared/models/club/club';
 
 @Component({
@@ -10,67 +11,80 @@ import { ClubDataShort } from 'src/app/shared/models/club/club';
   templateUrl: './user-club-list.component.html',
   styleUrls: ['./user-club-list.component.scss']
 })
-export class UserClubListComponent {
+export class UserClubListComponent implements OnInit, OnDestroy {
 
-  clubes: ClubDataShort[] = [
-    {
-      id: 1,
-      imagen: "",
-      nombre: "Club de Lectura",
-      administrador: true,
-    },
-    {
-      id: 1,
-      imagen: "",
-      nombre: "Club de Lectura",
-      administrador: false,
-    },
-    {
-      id: 1,
-      imagen: "",
-      nombre: "Club de Lectura",
-      administrador: false,
-    },
-    {
-      id: 1,
-      imagen: "",
-      nombre: "Club de Lectura",
-      administrador: false,
-    }
-  ]
+  clubes?: ClubDataShort[];
+  @Input() tipo?: string;
 
-  dataSource: MatTableDataSource<ClubDataShort> = new MatTableDataSource<ClubDataShort>(this.clubes);
+  itemsPerPage = 4;
+  currentPage = 0;
+  totalItems = 0;
+  isLoading: boolean = true;
 
-  pageIndex = 0;
-  pageSize = 4;
-  pageEvent?: PageEvent;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private changeDetectorRef: ChangeDetectorRef,
-  ) {
-    this.dataSource = new MatTableDataSource<ClubDataShort>([]);
-  }
+    public clubService: ClubService,
+  ) {}
 
   ngOnInit() {
-    // this.loadData();
-    if (this.clubes) {
-      this.dataSource = new MatTableDataSource<ClubDataShort>(this.clubes);
-      this.changeDetectorRef.detectChanges();
-      this.dataSource.paginator = this.paginator;
-    }
+    this.loadData();
   }
 
   loadData() {
-    //TODO LLAMAR SERVICIO
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
+    this.isLoading = true;
+    if (this.tipo === 'P') {
+      this.subscriptions.add(
+        this.clubService.getListClubesPertenece(this.currentPage, this.itemsPerPage).subscribe(data => {
+          if (data.nombreGrupos) {
+            this.clubes = data.nombreGrupos;
+            this.totalItems = data.pageInfo.totalElements;
+            this.isLoading = false;
+          }
+        })
+      );
+    } else if (this.tipo === 'A') {
+      this.subscriptions.add(
+        this.clubService.getListClubesAdministra(this.currentPage, this.itemsPerPage).subscribe(data => {
+          if (data.nombreGrupos) {
+            this.clubes = data.nombreGrupos;
+            this.totalItems = data.pageInfo.totalElements;
+            this.isLoading = false;
+          }
+        })
+      );
+    }
+  }
+
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData();
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onItemsPerPageChange(newItemsPerPage: number) {
+    this.itemsPerPage = newItemsPerPage;
+    this.currentPage = 0;
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

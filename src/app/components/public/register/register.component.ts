@@ -22,8 +22,8 @@ export class RegisterComponent implements OnInit {
   lastNameAutofilled: boolean = false;
   matcher!: FormErrorStateMatcher;
 
-  favoriteType: number | null = null; 
-  favoriteGender: number | null = null; 
+  favoriteType: number | null = null;
+  favoriteGender: number | null = null;
 
   typeOptions: Combo[] = [];
   genderOptions: Combo[] = [];
@@ -63,34 +63,31 @@ export class RegisterComponent implements OnInit {
     this.obtenerGeneroTipo();
   }
 
-
   submit() {
-    return this.subscriptions.add(this.userService
-      .register(this.formRegister.getRawValue())
-      .subscribe({
-        next: (data) => {
-          if (data) {
-            this.notification.show(
-              'Registro Realizado correctamente!',
-              'success'
-            );
-            this.router.navigate(['/register/intereses']);
-          } else {
-            this.notification.show(data, 'error');
-          }
+    return this.subscriptions.add(
+      this.userService.register(this.formRegister.getRawValue()).subscribe({
+        next: () => {
+          this.notification.show(
+            'Registro Realizado correctamente!',
+            'success'
+          );
+          this.router.navigate(['/login']);
         },
-        error: (error) => { },
-      }));
+        error: (error) => {
+          this.notification.show('Error en el registro, intentelo más tarde', 'error');
+        }
+      })
+    );
   }
 
   selectOptionType(optionId: number) {
     this.favoriteType = optionId;
-    this.formRegister.controls['tipo'].setValue(optionId);
+    this.formRegister.controls['idTipo'].setValue(optionId);
   }
 
   selectOptionGender(optionId: number) {
     this.favoriteGender = optionId;
-    this.formRegister.controls['genero'].setValue(optionId);
+    this.formRegister.controls['idGenero'].setValue(optionId);
   }
 
   obtenerGeneroTipo(): void {
@@ -120,7 +117,7 @@ export class RegisterComponent implements OnInit {
       "INFANTIL": "/assets/img/genero/infantil.png"
     };
 
-    const imagenesGenero: ImagenesGenero= {
+    const imagenesGenero: ImagenesGenero = {
       "ROMÁNTICA": "/assets/img/genero/romantica.png",
       "TERROR": "/assets/img/genero/terror.png",
       "NEGRA": "/assets/img/genero/negra.png",

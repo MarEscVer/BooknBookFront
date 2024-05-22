@@ -20,8 +20,8 @@ export interface Register {
     apellido1: string;
     apellido2: string;
     email: string;
-    tipo: GeneroTipo;
-    genero: GeneroTipo;
+    idTipo: GeneroTipo;
+    idGenero: GeneroTipo;
     password: string;
 }
 
@@ -30,8 +30,8 @@ export interface UserItemList {
     imagenUsuario: any;
     username: string;
     nombre: string;
-    apellido1: string;
-    apellido2: string;
+    apellidoPrimero: string;
+    apellidoSegundo: string;
     email: string;
     rol: string;
     editMode?: boolean;

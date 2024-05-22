@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { BookImageListResponse } from 'src/app/shared/models/book/book';
 import { environment, httpOptions } from 'src/environments/environment';
 
 @Injectable({
@@ -10,9 +11,12 @@ export class MasLeidosBookService {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
-  //TODO getListado URL
-  getListado(genero?: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl, httpOptions)
+  getListado(size: number, genero?: string): Observable<BookImageListResponse> {
+    const params: any = {
+      size: size.toString(),
+    };
+
+    return this.http.get<BookImageListResponse>(this.baseUrl + '/libros-propuestas', { params })
       .pipe(catchError(this.handleError));
   }
 

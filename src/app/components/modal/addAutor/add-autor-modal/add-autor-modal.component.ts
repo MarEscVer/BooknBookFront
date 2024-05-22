@@ -8,7 +8,7 @@ import { ImagenUploadService } from 'src/app/services/imagenUpload/imagen-upload
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { AutorData, AutorEdit } from 'src/app/shared/models/autor/autor';
+import { AutorData } from 'src/app/shared/models/autor/autor';
 import { Combo } from 'src/app/shared/models/combo/combo';
 
 @Component({
@@ -21,7 +21,7 @@ export class AddAutorModalComponent implements OnDestroy, OnInit {
   formAddAutor!: FormGroup;
   matcher!: FormErrorStateMatcher;
   autorData?: AutorData;
-  autorEdit?: AutorEdit;
+  autorEdit?: AutorData;
 
   isEditing: boolean = false;
 

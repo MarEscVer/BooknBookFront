@@ -17,6 +17,11 @@ export interface ClubItemListResponse {
     pageInfo: pageInfo; 
 }
 
+export interface ClubShortListResponse {
+    nombreGrupos: ClubDataShort[];
+    pageInfo: pageInfo; 
+}
+
 export interface ClubEdit {
     img: any;
     name: string;
@@ -44,8 +49,8 @@ export interface ClubDataAll {
 }
 
 export interface ClubDataShort {
-    id: number;
+    idGrupo: number;
     imagen: any;
-    nombre: string;
+    nombreGrupo: string;
     administrador: boolean;
 }
