@@ -13,10 +13,11 @@ export class NovedadesBookService {
 
   getListado(size: number, genero?: string): Observable<BookImageListResponse> {
     const params: any = {
+      pageIndex:0,
       size: size.toString(),
     };
 
-    return this.http.get<BookImageListResponse>(this.baseUrl + '/libros-propuestas', { params })
+    return this.http.get<BookImageListResponse>(this.baseUrl + '/libros-novedades', { params })
       .pipe(catchError(this.handleError));
   }
 

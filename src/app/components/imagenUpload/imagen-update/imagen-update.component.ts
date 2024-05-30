@@ -18,6 +18,7 @@ export class ImagenUpdateComponent implements OnChanges {
   selectedFile?: File;
   selectedFileName?: string;
   imageUrl?: string;
+  imageNueva?: string;
 
   defaultImageUrl: string = '../../../../assets/img/defaultAdd.png';
 
@@ -41,7 +42,7 @@ export class ImagenUpdateComponent implements OnChanges {
   }
 
   mostrarNuevaImagenSeleccionada(nuevaImagen: File): void {
-    this.imageUrl = URL.createObjectURL(nuevaImagen);
+    this.imageNueva = URL.createObjectURL(nuevaImagen);
     this.imageSelected.emit(nuevaImagen);
   }
 

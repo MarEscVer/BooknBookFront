@@ -4,7 +4,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { ComentarioDenunciadoResponse, ComentarioResponse, ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ComentarioDataResponse, ComentarioDenunciadoResponse, ComentarioResponse, ValoracionData } from 'src/app/shared/models/comentario/comentario';
 import { ComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -49,6 +49,12 @@ export class ComentarioService implements deleteObject {
     return this.http.get<ComboResponse>(this.baseUrl + '/combo/denuncia/motivo')
     .pipe(catchError(this.handleError));
   }
+
+  getListComentarioUsuario(username: string): Observable<ComentarioDataResponse> {
+    return this.http.get<ComentarioDataResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/' + username + '/perfil/valoracion')
+    .pipe(catchError(this.handleError));
+  }
+
 
   getValoracion(): Observable<ValoracionData> {
     const valoracion: ValoracionData = {id: 1};

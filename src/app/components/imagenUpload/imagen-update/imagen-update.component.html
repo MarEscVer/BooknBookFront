@@ -1,7 +1,8 @@
 <div class="container">
     <div class="image-container position-relative">
-      <img *ngIf="imageUrl" [src]="imageUrl" (click)="selectFileInput.click()" class="img-fluid rounded preview-image" alt="Preview Image">
-      <img *ngIf="!imageUrl" [src]="defaultImageUrl" class="img-fluid rounded default-image" alt="Default Image" (click)="selectFileInput.click()">
+      <img *ngIf="imageUrl && !imageNueva" [src]="'data:image;base64,' + imageUrl" (click)="selectFileInput.click()" class="img-fluid rounded preview-image" alt="Preview Image">
+      <img *ngIf="imageNueva" [src]="imageNueva" (click)="selectFileInput.click()" class="img-fluid rounded preview-image" alt="Preview Image">
+      <img *ngIf="!imageUrl && !imageNueva" [src]="defaultImageUrl" class="img-fluid rounded default-image" alt="Default Image" (click)="selectFileInput.click()">
       <input type="file" #selectFileInput (change)="selectFiles($event)" style="display:none" accept="image/*">
     </div>
     <div class="file-name mt-2" *ngIf="selectedFileName">{{ selectedFileName }}</div>

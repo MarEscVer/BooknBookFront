@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,45 +15,49 @@ export class ValoracionTableComponent {
 
   comentarios: ComentarioData[] = [
     {
-      imagen: "",
-      username: "usuario1",
-      fechaValoracion: "2024-05-10",
+      imagenUsuario: "",
+      username: "string",
+      fechaComentario: "2024-05-10",
       valoracion: 4,
       comentario: "Este es un comentario de ejemplo.",
-      idLibro: 1
+      valoracionIdLibro: 1,
+      valoracionIdUsuario: 1,
+      estaDenunciado: true,
     },
     {
-      imagen: "",
-      username: "usuario2",
-      fechaValoracion: "2024-05-09",
+      imagenUsuario: "",
+      username: "Xalo",
+      fechaComentario: "2024-05-09",
       valoracion: 5,
       comentario: "Este es un comentario de ejemplo.",
-      idLibro: 1
+      valoracionIdLibro: 1,
+      valoracionIdUsuario: 2,
+      estaDenunciado: true,
     },
     {
-      imagen: "",
-      username: "usuario3",
-      fechaValoracion: "2024-05-08",
+      imagenUsuario: "",
+      username: "Andrea",
+      fechaComentario: "2024-05-08",
       valoracion: 3,
       comentario: "Este es un comentario de ejemplo.",
-      idLibro: 1
+      valoracionIdLibro: 1,
+      valoracionIdUsuario: 3,
+      estaDenunciado: true,
     }
   ];
 
-  dataSource: MatTableDataSource<ComentarioData> = new MatTableDataSource<ComentarioData>(this.comentarios);
+  dataSource: MatTableDataSource<ComentarioData>;
 
-  length = 10;
-  pageIndex = 0;
-  pageSize = 10;
-  pageEvent?: PageEvent;
+  itemsPerPageOptions = [5, 10, 25, 50];
+  itemsPerPage = 5;
+  currentPage = 0;
+  totalItems = 0;
+  filter: string = '';
+  isLoading: boolean = false;
 
   @Input() estiloPerfil?: string;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
+  @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -64,23 +69,76 @@ export class ValoracionTableComponent {
   }
 
   ngOnInit() {
+    this.loadData();
+  }
 
-    // this.loadData();
+  ngAfterViewInit() {
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+    this.subscribeToSort();
+  }
 
-    if (this.comentarios) {
-      this.dataSource = new MatTableDataSource<ComentarioData>(this.comentarios);
-      this.changeDetectorRef.detectChanges();
-      this.dataSource.paginator = this.paginator;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filter = filterValue;
+    this.currentPage = 0;
+    this.loadData();
+  }
+
+  subscribeToSort() {
+    if (this.sort) {
+      this.subscriptions.add(
+        this.sort.sortChange.subscribe((sort: Sort) => {
+          this.loadData();
+        })
+      );
     }
   }
 
   loadData() {
     //TODO LLAMAR SERVICIO --> TENER EN CUENTA EL estiloPerfil para hacer una llamada u otra
     // PERFILPROPIO --> PERFIL DE OTRA PERSONA QUE ESTÁ BUSCANDO
+    // const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    // this.currentPage = newPage;
+    // this.isLoading = true;
+    // if (this.tipo === 'P') {
+    //   this.subscriptions.add(
+    //     this.clubService.getListClubesPertenece(this.currentPage, this.itemsPerPage).subscribe(data => {
+    //       if (data.nombreGrupos) {
+    //         this.clubes = data.nombreGrupos;
+    //         this.dataSource.data = data.nombreGrupos;
+    //         this.totalItems = data.pageInfo.totalElements;
+    //         this.isLoading = false;
+    //       }
+    //     })
+    //   );
+
   }
 
-  applyFilter(event: Event) {
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData();
+    }
+  }
 
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData();
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onItemsPerPageChange(newItemsPerPage: number) {
+    this.itemsPerPage = newItemsPerPage;
+    this.currentPage = 0;
+    this.loadData();
   }
 
   ngOnDestroy() {

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { FechasModalComponent } from 'src/app/components/modal/lecturaModal/fechasModal/fechas-modal/fechas-modal.component';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookListadoLectura } from 'src/app/shared/models/book/book';
+import { applyColors } from 'src/app/shared/models/combo/combo';
 import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 
@@ -40,26 +41,32 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     if (this.libro) {
-      this.tipoStyle = {
-        'background-color': '#' + this.libro.tipo.color,
-        'color': 'black',
-        'border-radius': '20px',
-        'padding': '5px',
-      };
+      const libroConColores = applyColors([this.libro])[0];
+      this.libro = libroConColores;
 
-      this.generoStyle = {
-        'background-color': '#' + this.libro.genero.color,
-        'color': 'black',
-        'border-radius': '5px',
-        'padding': '5px',
-      };
+      if (this.libro.tipo) {
+        this.tipoStyle = {
+          'background-color': '#' + this.libro.tipo.color,
+          'color': 'black',
+          'border-radius': '20px',
+          'padding': '5px',
+        };
+      }
+      if (this.libro.genero) {
+        this.generoStyle = {
+          'background-color': '#' + this.libro.genero.color,
+          'color': 'black',
+          'border-radius': '5px',
+          'padding': '5px',
+        };
+      }
     }
   }
-  
+
   fichaLibro(id: number) {
-    //TODO GET LIBRO POR ID --> obtener BOOK completo
+    //TODO GET LIBRO POR ID --> obtener BOOK completo --> PANTALLA USUARIO LECTURAS
 
     if (this.libro) {
       //this.bookService.setLibro(this.libro);
@@ -79,11 +86,11 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
 
 
   eliminarLibro(id: number) {
-    
+
   }
 
   editarLectura(id: number) {
-    //TODO GET VALORAICON LIBRO PARA MANDARLO AL MODAL --> this.modalInfo
+    //TODO GET VALORACION LIBRO PARA MANDARLO AL MODAL --> this.modalInfo --> PANTALLA USUARIO LECTURAS
     const dialogValoracion = this.dialog.open(FechasModalComponent, {
       width: '50%',
       data: {

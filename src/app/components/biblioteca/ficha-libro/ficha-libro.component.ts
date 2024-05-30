@@ -6,6 +6,7 @@ import { AutorService } from 'src/app/services/autor/autor.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { AutorData } from 'src/app/shared/models/autor/autor';
 import { Book } from 'src/app/shared/models/book/book';
+import { applyColors } from 'src/app/shared/models/combo/combo';
 
 @Component({
   selector: 'app-ficha-libro',
@@ -44,20 +45,27 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
       })
     );
     if (this.libro) {
-      this.valoracionMedia = this.libro.valoracionMedia ?? 0;
-      this.tipoStyle = {
-        'background-color': '#' + this.libro.tipo.color,
-        'color': 'black',
-        'border-radius': '20px',
-        'padding': '5px',
-      };
+      this.valoracionMedia = this.libro.calificacionMedia ?? 0;
 
-      this.generoStyle = {
-        'background-color': '#' + this.libro.genero.color,
-        'color': 'black',
-        'border-radius': '5px',
-        'padding': '5px',
-      };
+      const libroConColores = applyColors([this.libro])[0];
+      this.libro = libroConColores;
+
+      if (this.libro?.tipo) {
+        this.tipoStyle = {
+          'background-color': this.libro.tipo.color,
+          'color': 'black',
+          'border-radius': '20px',
+          'padding': '5px',
+        };
+      }
+      if (this.libro?.genero) {
+        this.generoStyle = {
+          'background-color': this.libro.genero.color,
+          'color': 'black',
+          'border-radius': '5px',
+          'padding': '5px',
+        };
+      }    
     }
   }
 
@@ -65,11 +73,10 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
     this.isExpanded = !this.isExpanded;
   }
 
-  //TODO mirar que funcione (no compro9bable hasta ficha libro hecha)
   autorLibro(id: number) {
     if (this.libro) {
       this.subscriptions.add(
-        this.autorService.getAutorById(this.libro.autor.id).subscribe(data => {
+        this.autorService.getAutorById(this.libro.idAutor).subscribe(data => {
           if (data) {
             this.autorSeleccionado = data;
             this.autorService.setAutor(this.autorSeleccionado);

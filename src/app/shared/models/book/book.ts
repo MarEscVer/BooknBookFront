@@ -3,18 +3,20 @@ import { GeneroTipo } from "../combo/combo";
 import { pageInfo } from "../paginado/paginado";
 
 export interface Book {
-    id: number;
-    imagen: any;
-    titulo: string;
-    autor: AutorNombre;
-    tipo: GeneroTipo;
-    genero: GeneroTipo;
-    fechaPublicacion: string;
-    paginasTotales: number;
-    valoracionMedia: number;
-    estado: string;
-    saga: string;
-    descripcion: string;
+    id: number,
+    titulo: string,
+    saga: string,
+    idAutor: number,
+    autor: string,
+    imagen: any,
+    paginasTotales: number,
+    anyo: string,
+    calificacionMedia: number,
+    genero: GeneroTipo,
+    tipo: GeneroTipo,
+    descripcion: string,
+    estado: string,
+    contadorComentario: number,
 }
 
 export interface BookItemList {
@@ -40,7 +42,12 @@ export interface BookImageListResponse {
 }
 
 export interface BookListResponse {
-    libros: BookItemList[];
+    libros: BookItemCard[];
+}
+
+export interface BookCardDataListResponse {
+    libros: BookItemCard[];
+    pageInfo: pageInfo;
 }
 
 export interface BookItemCard {
@@ -60,6 +67,18 @@ export interface BookData {
     tipo: number;
     saga: number;
     newSagaName: string;
+    descripcion: string;
+}
+
+export interface BookDataId {
+    id: number;
+    fechaPublicacion: string;
+    nombre: string;
+    paginas: number;
+    autor: number;
+    genero: number;
+    tipo: number;
+    saga: number;
     descripcion: string;
 }
 

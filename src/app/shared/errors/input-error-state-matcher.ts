@@ -79,6 +79,18 @@ export class InputErrorStateMatcherExample {
     nuevaSaga: this.getFormControl_texto(),
   }
 
+  editBook = {
+    nombre: this.getFormControl_nonRequired(),
+    autor: this.getFormControl_nonRequired(),
+    saga: this.getFormControl_nonRequired(),
+    tipo: this.getFormControl_nonRequired(),
+    genero: this.getFormControl_nonRequired(),
+    fechaPublicacion: this.getFormControl_nonRequired(),
+    pagTotal: this.getFormControl_nonRequired(),
+    descripcion: this.getFormControl_nonRequired(),
+  }
+
+
   addAutor = {
     pseudonimo: this.getFormControl_required(),
     localidad: this.getFormControl_required(),

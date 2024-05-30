@@ -53,7 +53,6 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
     ));
   }
 
-  //TODO URL DINÁMICAS
   getLinkForCrumb(crumb: string): string[] {
     let link: string[] = [''];
 

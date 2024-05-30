@@ -29,7 +29,6 @@ export class ListBookComponent implements OnInit, OnDestroy {
       this.subscriptions.add(this.autorService.getLibrosAutor(this.idAutor).subscribe(data => {
         if (data.libros) {
           this.listadoLibros = data.libros;
-          console.log(this.listadoLibros);
         }
       }));
     }

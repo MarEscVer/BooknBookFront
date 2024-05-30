@@ -1,7 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { PageEvent, MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ClubService } from 'src/app/services/club/club.service';
 import { ClubDataShort } from 'src/app/shared/models/club/club';

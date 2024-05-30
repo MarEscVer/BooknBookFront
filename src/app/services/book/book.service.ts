@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
-import { catchError, delay } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { Book, BookData, BookEdit, BookItemListResponse } from 'src/app/shared/models/book/book';
+import { Book, BookData, BookDataId, BookEdit, BookItemListResponse } from 'src/app/shared/models/book/book';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -37,15 +37,25 @@ export class BookService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO edit URL
-  editBook(bookData: BookData, idBook: number): Observable<void> {
-    return this.http.put<void>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, bookData, httpOptions)
+  editBook(bookData: BookDataId, idBook: number): Observable<void> {
+    bookData.id = idBook;
+
+    if (!bookData.genero) {
+      bookData.genero = 0;
+    }
+    if (!bookData.tipo) {
+      bookData.tipo = 0;
+    }
+    if (!bookData.saga) {
+      bookData.saga = 0;
+    }
+
+    return this.http.put<void>(this.baseUrl + environment.BASE_ADMIN + '/libro', bookData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  //TODO get URL
-  getBookById(idBook: number): Observable<BookEdit> {
-    return this.http.get<BookEdit>(this.baseUrl + environment.BASE_TOKEN + `/book/${idBook}`, httpOptions)
+  getBookById(idBook: number): Observable<Book> {
+    return this.http.get<Book>(this.baseUrl + '/libro/' + idBook, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

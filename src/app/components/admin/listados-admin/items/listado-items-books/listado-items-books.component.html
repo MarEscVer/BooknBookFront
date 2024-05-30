@@ -63,7 +63,7 @@
                         <button mat-icon-button color="primary" aria-label="Editar" (click)="editBook(row.id)">
                             <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
                         </button>
-                        <app-delete-button [modalInfo]="{ id: row.id, title: row.title }"
+                        <app-delete-button [modalInfo]="{ id: row.id, title: row.titulo }"
                             [deleteService]="bookServie" (actionCompleted)="handleCommentAction()"></app-delete-button>
                     </td>
                 </ng-container>

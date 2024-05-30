@@ -129,6 +129,6 @@ export class ListBookLecturaComponent implements OnInit{
     
   }
 
-  //TODO hacer llamada con el estado (PROGRESO, FAVORITO, LEIDO)
+  //TODO hacer llamada con el estado (PROGRESO, FAVORITO, LEIDO) --> obtener listado de libros del usuario
 
 }

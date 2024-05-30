@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ClubDataAll } from 'src/app/shared/models/club/club';
+import { applyColors } from 'src/app/shared/models/combo/combo';
 
 @Component({
   selector: 'app-item-club-list-all',
@@ -18,7 +19,10 @@ export class ItemClubListAllComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.club) {
-      if (this.club.tipo) {
+      const clubConColores = applyColors([this.club])[0];
+      this.club = clubConColores;
+
+      if (this.club?.tipo) {
         this.tipoStyle = {
           'background-color': this.club.tipo.color,
           'color': 'black',
@@ -26,7 +30,7 @@ export class ItemClubListAllComponent implements OnInit {
           'padding': '5px',
         };
       }
-      if (this.club.genero) {
+      if (this.club?.genero) {
         this.generoStyle = {
           'background-color': this.club.genero.color,
           'color': 'black',

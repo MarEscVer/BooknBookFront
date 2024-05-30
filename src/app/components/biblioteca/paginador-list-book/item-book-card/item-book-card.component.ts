@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
 import { Book, BookItemCard } from 'src/app/shared/models/book/book';
 import { sinDiacriticos } from 'src/app/shared/utils/acentos';
@@ -15,6 +16,7 @@ export class ItemBookCardComponent {
   imgNoData: string = '/assets/img/iconoLibro.jpg';
 
   libroSeleccionado?: Book;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private bookService: BookService,
@@ -23,22 +25,25 @@ export class ItemBookCardComponent {
   ) { }
 
   fichaLibro(id: number) {
-    //TODO GET LIBRO POR ID --> obtener BOOK completo
-    // libroSeleccionado = MOCKDATA
-    if (this.libroSeleccionado) {
-      this.bookService.setLibro(this.libroSeleccionado);
+    this.subscriptions.add(
+      this.bookService.getBookById(id).subscribe(data => {
+        if (data) {
+          this.libroSeleccionado = data;
+          this.bookService.setLibro(this.libroSeleccionado);
 
-      let genero: string = '';
-      let titulo: string = this.libroSeleccionado.titulo.toLowerCase().replaceAll(' ', '-');
+          let genero: string = '';
+          let titulo: string = this.libroSeleccionado.titulo.toLowerCase().replaceAll(' ', '-');
 
-      if (this.libroSeleccionado.genero.nombre) {
-        genero = this.libroSeleccionado.genero.nombre.toLowerCase();
-      } else {
-        genero = this.libroSeleccionado.tipo.nombre.toLowerCase();
-      }
+          if (this.libroSeleccionado.genero) {
+            genero = this.libroSeleccionado.genero.nombre.toLowerCase();
+          } else {
+            genero = this.libroSeleccionado.tipo.nombre.toLowerCase();
+          }
 
-      this.router.navigate(['/biblioteca', sinDiacriticos(genero), sinDiacriticos(titulo)]);
-    }
+          this.router.navigate(['/biblioteca', sinDiacriticos(genero), sinDiacriticos(titulo)]);
+        }
+      })
+    );
   }
 
 }

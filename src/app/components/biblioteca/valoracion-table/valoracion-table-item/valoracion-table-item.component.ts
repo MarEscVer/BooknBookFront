@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ComentarioData } from 'src/app/shared/models/comentario/comentario';
@@ -12,7 +13,7 @@ export class ValoracionTableItemComponent implements OnInit, OnDestroy {
 
   @Input() comentario!: ComentarioData;
   @Input() estiloPerfil?: string;
-  
+
   imgNoData: string = '/assets/img/iconoPerfil.jpg';
   stars = [0, 1, 2, 3, 4];
 
@@ -20,16 +21,15 @@ export class ValoracionTableItemComponent implements OnInit, OnDestroy {
   estiloBoton: string = 'DENUNCIA';
   estiloBotonComentario: string = 'EDITAR';
 
-  //CONSEGUIR DATOS PARA MODAL --> app-user-valoracion-button
+  // TODO CONSEGUIR DATOS PARA MODAL --> app-user-valoracion-button
   // modalInfo!: ValoracionData;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +38,10 @@ export class ValoracionTableItemComponent implements OnInit, OnDestroy {
         this.userRole = role;
       })
     );
+  }
+
+  goPerfil(username: string) {
+    this.router.navigate(['/usuarios/perfil', username]);
   }
 
   ngOnDestroy(): void {

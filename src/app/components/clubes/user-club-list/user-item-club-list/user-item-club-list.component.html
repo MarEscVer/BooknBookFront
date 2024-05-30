@@ -3,7 +3,7 @@
         <div class="imagen">
             <ng-container *ngIf="club.imagen !== undefined && club.imagen !== null && club.imagen !== ''; else noData">
                 <div class="circular-image">
-                    <img [src]="club.imagen" alt="Icono de club">
+                    <img [src]="'data:image;base64,' + club.imagen" alt="Icono de club">
                 </div>
             </ng-container>
             <ng-template #noData>

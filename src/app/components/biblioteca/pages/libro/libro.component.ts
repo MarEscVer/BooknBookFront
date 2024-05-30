@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, forkJoin, switchMap, tap } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
@@ -26,10 +26,6 @@ export class LibroComponent implements OnInit, OnDestroy {
 
   //TODO VALORACION NECESITO
   contadorComentario: number = 0;
-
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -40,9 +36,6 @@ export class LibroComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    //TODO LLAMADA PARA OBTENER EL ID DE VALORACION --> SI TENGO ID!=0 ABRIR MODAL
-    //ADD VALORACION SINO, MODAL DE INTERESES
-
     this.subscriptions.add(
       this.authService.userRole$.subscribe(role => {
         this.userRole = role;
@@ -53,12 +46,14 @@ export class LibroComponent implements OnInit, OnDestroy {
       this.bookService.libroSeleccionado$.subscribe(libro => {
         this.libro = libro;
         if (this.libro) {
-          this.valoracionMedia = this.libro.valoracionMedia ?? 0;
-          this.contadorComentario = 20 ?? 0;
+          this.valoracionMedia = this.libro.calificacionMedia ?? 0;
+          this.contadorComentario = this.libro.contadorComentario ?? 0;
         }
       })
     );
 
+    //TODO LLAMADA PARA OBTENER EL ID DE VALORACION --> SI TENGO ID!=0 ABRIR MODAL
+    //ADD VALORACION SINO, MODAL DE INTERESES
     this.subscriptions.add(
       this.valoracionService.getValoracion().subscribe(valoracion => {
         this.valoracion = valoracion;

@@ -45,17 +45,17 @@
                 <mat-form-field class="w-100 mt-3" *ngIf="autoresFiltrados.length > 0">
                     <mat-label>Selecciona Autor</mat-label>
                     <div class="d-flex">
-                        <mat-select formControlName="idAutor" id="idAutor" (selectionChange)="autorSeleccionado($event)">
+                        <mat-select formControlName="autor" id="autor" (selectionChange)="autorSeleccionado($event)">
                             <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.nombre }}</mat-option>
                         </mat-select>
-                        <app-add-autor-button [autorIcon]="autorIconEdit" [autorId]="formAddBook.get('idAutor')?.value"
-                            *ngIf="formAddBook.get('idAutor')?.value"
+                        <app-add-autor-button [autorIcon]="autorIconEdit" [autorId]="formAddBook.get('autor')?.value"
+                            *ngIf="formAddBook.get('autor')?.value"
                             (click)="editarAutor($event)"></app-add-autor-button>
                     </div>
                 </mat-form-field>
                 <div class="alert alert-danger"
-                    *ngIf="formAddBook.get('idAutor')?.touched && formAddBook.get('idAutor')?.errors">
-                    <div *ngIf="this.specificError('idAutor','required')">
+                    *ngIf="formAddBook.get('autor')?.touched && formAddBook.get('autor')?.errors">
+                    <div *ngIf="this.specificError('autor','required')">
                         Autor requerido.
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                             <input matInput formControlName="nuevaSaga" id="nuevaSaga"
                                 placeholder="Nombre de la nueva saga">
                         </ng-template>
-                        <button mat-icon-button color="primary" aria-label="Agregar" (click)="toggleAddingSaga()">
+                        <button *ngIf="!isEditing" mat-icon-button color="primary" aria-label="Agregar" (click)="toggleAddingSaga()">
                             <fa-icon [icon]="['fas', addingNewSaga ? 'times' : 'plus']"></fa-icon>
                         </button>
                     </div>
@@ -91,11 +91,11 @@
 
                 <mat-form-field class="w-100 mt-3">
                     <mat-label>Páginas</mat-label>
-                    <input matInput type="number" formControlName="paginas" id="paginas" />
+                    <input matInput type="number" formControlName="pagTotal" id="pagTotal" />
                 </mat-form-field>
                 <div class="alert alert-danger"
-                    *ngIf="formAddBook.get('paginas')?.touched && formAddBook.get('paginas')?.errors">
-                    <div *ngIf="this.specificError('paginas','required')">
+                    *ngIf="formAddBook.get('pagTotal')?.touched && formAddBook.get('pagTotal')?.errors">
+                    <div *ngIf="this.specificError('pagTotal','required')">
                         Páginas requeridas.
                     </div>
                 </div>
@@ -153,7 +153,7 @@
 
                     <!-- Botón de editar -->
                     <button *ngIf="isEditing" mat-raised-button (click)="submitEdit()" color="primary"
-                        [disabled]="!formAddBook.valid || this.selectedFile == null || this.selectedFile == undefined">EDITAR</button>
+                        [disabled]="!hasFormChanged()">EDITAR</button>
                 </div>
             </form>
         </div>

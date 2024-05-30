@@ -49,6 +49,7 @@ export class UserService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
+  //TODO getUser(datos para editar)
   getEditUser(): Observable<UpdatePerfilData> {
     return this.http.get<UpdatePerfilData>(this.baseUrl + environment.BASE_TOKEN + '/user/perfil')
       .pipe(catchError(this.handleError));

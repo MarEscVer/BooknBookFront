@@ -10,10 +10,9 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { AutorIcon } from 'src/app/shared/models/autor/autor';
-import { BookData, BookEdit } from 'src/app/shared/models/book/book';
+import { Book, BookDataId } from 'src/app/shared/models/book/book';
 import { Combo } from 'src/app/shared/models/combo/combo';
 
-// TODO addbook id libro para upload imagen
 @Component({
   selector: 'app-admin-page-add-book',
   templateUrl: './admin-page-add-book.component.html',
@@ -23,8 +22,8 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
 
   formAddBook!: FormGroup;
   matcher!: FormErrorStateMatcher;
-  bookData?: BookData;
-  bookEdit?: BookEdit;
+  bookData?: BookDataId;
+  bookEdit?: Book;
 
   selectedFile?: File;
   urlImagenDelServidor?: string;
@@ -47,6 +46,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   sagas: Combo[] = [];
   typeOptions: Combo[] = [];
   genderOptions: Combo[] = [];
+  initialFormValue: any;
 
   /**
   * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
@@ -70,16 +70,17 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   }
 
   createForm(fb: FormBuilder) {
-    this.formAddBook = this.formBuilder.group(this.formControl.addBook);
+    this.formAddBook = this.formBuilder.group(this.formControl.editBook);
   }
 
   ngOnInit() {
-    this.bookId = this.route.snapshot.params['id'];
-    // TODO MIRAR QUE EL FORMULARIO CUANDO SEA DE EDITAR SE VEAN LOS DATOS DEL LIBRO
+    this.bookId = +this.route.snapshot.params['id'];
     if (this.bookId) {
       this.bookService.getBookById(this.bookId).subscribe((bookEdit) => {
-        this.formAddBook.patchValue(bookEdit);
+        this.rellenarBook(bookEdit);
         this.urlImagenDelServidor = bookEdit.imagen;
+        this.bookEdit = bookEdit;
+        this.initialFormValue = this.formAddBook.value;
       });
       this.isEditing = true;
     }
@@ -95,6 +96,19 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
         this.formAddBook.controls['saga'].enable();
       }
     }));
+  }
+
+  rellenarBook(book: Book) {
+    this.formAddBook.setValue({
+      nombre: book.titulo,
+      autor: book.idAutor,
+      saga: book.saga,
+      tipo: book.tipo,
+      genero: book.genero,
+      fechaPublicacion: book.anyo,
+      pagTotal: book.paginasTotales,
+      descripcion: book.descripcion
+    });
   }
 
   submit() {
@@ -124,14 +138,14 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
         .subscribe({
           next: (bookAdded) => {
             this.notification.show(
-              'Libro añadido correctamente!',
+              'Libro editado correctamente!',
               'success'
             );
             this.uploadImage(bookData.id);
             this.router.navigate(['/admin']);
           },
           error: (error) => {
-            this.notification.show('No se ha podido añadir el libro', 'error');
+            this.notification.show('No se ha podido editar el libro', 'error');
           },
         }));
     }
@@ -234,6 +248,10 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
       (document.getElementById("autorFiltro") as HTMLInputElement).value = autor.nombre;
       this.formAddBook.get('idAutor')?.setValue(autor.id);
     }
+  }
+
+  hasFormChanged() {
+    return JSON.stringify(this.initialFormValue) !== JSON.stringify(this.formAddBook.value);
   }
 
   ngOnDestroy(): void {

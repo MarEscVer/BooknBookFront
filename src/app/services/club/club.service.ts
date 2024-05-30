@@ -31,17 +31,6 @@ export class ClubService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO edit URL
-  editClub(clubData: ClubData, idClub: number): Observable<void> {
-    return this.http.put<void>(this.baseUrl + environment.BASE_TOKEN + `/grupo/${idClub}`, clubData, httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-
-  getClubById(idClub: number): Observable<ClubEdit> {
-    return this.http.get<ClubEdit>(this.baseUrl + environment.BASE_TOKEN + `/grupo/${idClub}`, httpOptions).pipe(catchError(this.handleError));
-  }
-
   getListClubesAnonimo(pageIndex: number, size: number, filter: string): Observable<ClubItemListResponse> {
     const params: any = {
       pageIndex: pageIndex.toString(),

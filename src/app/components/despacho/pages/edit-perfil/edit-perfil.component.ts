@@ -63,7 +63,7 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
     this.obtenerGeneroTipo();
   }
 
-  //TODO PROBAR QUE FUNCIONE EL GETEDIT CUANDO ENDPOITN
+  //TODO MIRAR EL EDITAR (CONFIGURACION) PERFIL
   loadData() {
     this.subscriptions.add(this.userService.getEditUser().subscribe(data => {
       if (data) {

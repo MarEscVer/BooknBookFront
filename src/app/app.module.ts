@@ -113,6 +113,7 @@ import { EstadisticasComponent } from './components/despacho/pages/estadisticas/
 import { GoogleChartsModule } from 'angular-google-charts';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ListBookComponent } from './components/biblioteca/list-book/list-book.component';
+import { ListComentariosUsuarioComponent } from './components/despacho/list-comentarios-usuario/list-comentarios-usuario.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -195,7 +196,8 @@ import { ListBookComponent } from './components/biblioteca/list-book/list-book.c
     ListBookLecturaComponent,
     EditPerfilComponent,
     EstadisticasComponent,
-    ListBookComponent
+    ListBookComponent,
+    ListComentariosUsuarioComponent
   ],
   /* LIBRARIES */
   imports: [

@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <!-- Imagen del libro -->
         <div class="col-md-3">
-            <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
+            <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== null && libro.imagen !== ''; else noData">
                 <div>
                     <img [src]="'data:image;base64,' + libro.imagen" class="img-fluid imagen-libro"
                         alt="Imagen del libro">
@@ -32,12 +32,12 @@
                     <ng-container *ngIf="libro.saga">
                         <h4 class="detalle-saga"><em>{{libro.saga | uppercase}}</em></h4>
                     </ng-container>
-                    <a (click)="autorLibro(libro.autor.id)">
-                        <h4 class="detalle-autor enlace">{{libro.autor.pseudonimo| uppercase}}</h4>
+                    <a (click)="autorLibro(libro.idAutor)">
+                        <h4 class="detalle-autor enlace">{{libro.autor| uppercase}}</h4>
                     </a>
                 </div>
                 <div class="mb-2">
-                    <div class="detalle-fecha">Fecha de publicación: {{libro.fechaPublicacion}}</div>
+                    <div class="detalle-fecha">Fecha de publicación: {{libro.anyo}}</div>
                     <div class="detalle-paginas">Páginas totales: {{libro.paginasTotales}}</div>
                 </div>
 
@@ -55,7 +55,7 @@
 
                 <div class="d-flex gap-2 mb-3">
                     <ng-container *ngIf="libro.tipo">
-                        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
+                        <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
                     </ng-container>
                     <ng-container *ngIf="libro.genero">
                         <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre| uppercase}}</div>

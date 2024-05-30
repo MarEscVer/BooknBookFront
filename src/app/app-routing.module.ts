@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: "biblioteca/:genero", component: BibliotecaGeneroComponent },
   { path: "biblioteca/:genero/:titulo", component: LibroComponent },
   { path: "biblioteca/autores/perfil/:nombre", component: AutorComponent },
+  { path: "usuarios/perfil/:username", component: PerfilComponent },
   // REGISTRADO
   { path: "mi-despacho", component: PerfilComponent, canActivate: [appGuard] },
   { path: "mi-despacho/perfil", component: PerfilComponent, canActivate: [appGuard] },

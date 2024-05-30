@@ -83,3 +83,17 @@
         object-fit: cover;
     }
 }
+
+@mixin cuadrada-image($size: 50px, $border: 1px solid $claro-color) {
+    width: $size;
+    height: $size;
+    border: $border;
+    overflow: hidden;
+    margin: 5px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

@@ -5,7 +5,7 @@
             <div class="col-md-3">
                 <ng-container *ngIf="autor.imagen !== null && autor.imagen !== ''; else noData">
                     <img [src]="'data:image;base64,' + autor.imagen" alt="Icono de autor"
-                        class="img-fluid imagen-libro">
+                        class="img-fluid imagen-autor">
                 </ng-container>
                 <ng-template #noData>
                     <img [src]="imgNoData" alt="Icono de club" class="img-fluid imagen-autor">

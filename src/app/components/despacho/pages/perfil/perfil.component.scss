@@ -39,6 +39,27 @@
     }
 }
 
+.carousel-container {
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: $base-color;
+    }
+
+    .carousel-control-prev{
+        left: -30px;
+    }
+
+    .carousel-control-next{
+        right: -30px;
+    }
+
+    .cards-wrapper {
+        white-space: nowrap;
+    }
+}
 
 
 /* Estilos para pantallas pequeñas */

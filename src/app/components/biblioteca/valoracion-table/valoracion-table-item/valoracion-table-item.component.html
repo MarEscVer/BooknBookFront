@@ -1,20 +1,20 @@
 <div class="container-comentario">
     <div class="container-contenido">
         <div class="imagen">
-            <ng-container *ngIf="comentario.imagen !== undefined && comentario.imagen !== ''; else noData">
+            <ng-container *ngIf="comentario.imagenUsuario !== undefined && comentario.imagenUsuario !== null && comentario.imagenUsuario !== ''; else noData">
                 <div class="circular-image">
-                    <img [src]="comentario.imagen" alt="Icono de usuario" routerLink="/mi-despacho/perfil">
+                    <img [src]="'data:image;base64,' + comentario.imagenUsuario" alt="Icono de usuario" (click)="goPerfil(comentario.username)">
                 </div>
             </ng-container>
             <ng-template #noData>
                 <div class="circular-image">
-                    <img [src]="imgNoData" alt="Icono de usuario" routerLink="/mi-despacho/perfil">
+                    <img [src]="imgNoData" alt="Icono de usuario" (click)="goPerfil(comentario.username)">
                 </div>
             </ng-template>
         </div>
         <div class="detalles-usuario">
-            <div class="username" routerLink="/mi-despacho/perfil">{{ comentario.username }}</div>
-            <div class="fecha-valoracion">{{ comentario.fechaValoracion }}</div>
+            <div class="username" (click)="goPerfil(comentario.username)">{{ comentario.username }}</div>
+            <div class="fecha-valoracion">{{ comentario.fechaComentario }}</div>
         </div>
         <div class="detalles-valoracion">
             <!-- Estrellas valoracion media -->
@@ -32,14 +32,10 @@
         </div>
         <div class="detalles-denuncia">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-                <ng-container *ngIf="estiloPerfil === 'PERFILPROPIO'; else denuncia">
-                    <app-edit-valoracion-button [modalInfo]="{id: comentario.idLibro}"
-                        [titulo]="''"></app-edit-valoracion-button>
-                </ng-container>
-                <ng-template #denuncia>
-                    <app-denuncia-button [modalInfo]="{idLibro: comentario.idLibro, username: comentario.username}">
+                <ng-container *ngIf="estiloPerfil !== 'PERFILPROPIO'">
+                    <app-denuncia-button [modalInfo]="{idLibro: comentario.valoracionIdLibro, username: comentario.username}">
                     </app-denuncia-button>
-                </ng-template>
+                </ng-container>
             </ng-container>
             <ng-template #anonimoBlock>
                 <app-inicio-anonimo-boton [estilo]="estiloBoton"></app-inicio-anonimo-boton>

@@ -13,6 +13,7 @@ export class RecomendadosBookService {
 
   getListado(size: number, genero?: string): Observable<BookImageListResponse> {
     const params: any = {
+      pageIndex:0,
       size: size.toString(),
     };
 

@@ -3,7 +3,8 @@
     <div class="container-fluid vh-100">
         <div *ngIf="perfilUsuario" class="container-contenido">
             <div class="data-perfil-container">
-                <ng-container *ngIf="perfilUsuario.imagenPerfil !== null && perfilUsuario.imagenPerfil !== undefined && perfilUsuario.imagenPerfil !== ''; else noData">
+                <ng-container
+                    *ngIf="perfilUsuario.imagenPerfil !== null && perfilUsuario.imagenPerfil !== undefined && perfilUsuario.imagenPerfil !== ''; else noData">
                     <div class="circular-image">
                         <img [src]="'data:image;base64,' + perfilUsuario.imagenPerfil" alt="Icono de usuario">
                     </div>
@@ -18,10 +19,12 @@
                     <h6 class="username">{{perfilUsuario.username | uppercase}}</h6>
                     <div class="d-flex gap-2 mb-3">
                         <ng-container *ngIf="perfilUsuario.tipo">
-                            <div class="detalle-tipo" [ngStyle]="tipoStyle">{{perfilUsuario.tipo.nombre| uppercase}}</div>
+                            <div class="detalle-tipo" [ngStyle]="tipoStyle">{{perfilUsuario.tipo.nombre| uppercase}}
+                            </div>
                         </ng-container>
                         <ng-container *ngIf="perfilUsuario.genero">
-                            <div class="detalle-genero" [ngStyle]="generoStyle">{{perfilUsuario.genero.nombre| uppercase}}</div>
+                            <div class="detalle-genero" [ngStyle]="generoStyle">{{perfilUsuario.genero.nombre|
+                                uppercase}}</div>
                         </ng-container>
                     </div>
                     <ng-container *ngIf="perfilUsuario.selfPerfil; else noPerfilPropio">
@@ -41,14 +44,44 @@
             </div>
             <div class="carousel-libro mt-3">
                 <h5 class="carousel-titulo text-center m-0">FAVORITOS</h5>
-                <app-imagen-list-book-card [listadoService]="masLeidosBookService"></app-imagen-list-book-card>
+                <ng-container *ngIf="!loading">
+                    <div class="d-flex justify-content-center mt-3 carousel-container">
+                        <div class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item" *ngFor="let pagina of librosPorPagina; let i = index"
+                                    [class.active]="i === current" [@fade]>
+                                    <div class="row">
+                                        <div class="col-12 cards-wrapper d-flex flex-row flex-nowrap overflow-auto">
+                                            <div *ngFor="let libro of pagina" class="col-auto">
+                                                <app-item-book-card [libro]="libro"></app-item-book-card>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Botón de control previo -->
+                            <button class="carousel-control-prev top-50 translate-middle-y" type="button"
+                                (click)="prevCarouselItem()">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+
+                            <!-- Botón de control siguiente -->
+                            <button class="carousel-control-next top-50 translate-middle-y" type="button"
+                                (click)="nextCarouselItem()">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
             <div class="valoracion-table">
                 <ng-container *ngIf="perfilUsuario.selfPerfil; else noPropio">
-                    <app-valoracion-table [estiloPerfil]="'PERFILPROPIO'"></app-valoracion-table>
+                    <app-list-comentarios-usuario [estiloPerfil]="'PERFILPROPIO'" [username]="userUsername"></app-list-comentarios-usuario>
                 </ng-container>
                 <ng-template #noPropio>
-                    <app-valoracion-table></app-valoracion-table>
+                    <app-list-comentarios-usuario [username]="userUsername"></app-list-comentarios-usuario>
                 </ng-template>
             </div>
         </div>

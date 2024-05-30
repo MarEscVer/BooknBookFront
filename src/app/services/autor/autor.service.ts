@@ -38,14 +38,13 @@ export class AutorService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO edit URL
   editAutor(autorData: AutorData, idAutor: number): Observable<void> {
     return this.http.put<void>(this.baseUrl + environment.BASE_ADMIN + '/autor/' + idAutor, autorData, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   getAutorById(idAutor: number): Observable<AutorData> {
-    return this.http.get<AutorData>(this.baseUrl + environment.BASE_TOKEN + '/autor/' + idAutor, httpOptions)
+    return this.http.get<AutorData>(this.baseUrl + '/autor/' + idAutor, httpOptions)
     .pipe(catchError(this.handleError));
   }
 
@@ -55,7 +54,7 @@ export class AutorService implements deleteObject {
   }
 
   getLibrosAutor(idAutor: number): Observable<BookListResponse> {
-    return this.http.get<BookListResponse>(this.baseUrl + environment.BASE_TOKEN + '/autor/' + idAutor +'/libros' , httpOptions)
+    return this.http.get<BookListResponse>(this.baseUrl + '/autor/' + idAutor +'/libros' , httpOptions)
       .pipe(catchError(this.handleError));
   }
 

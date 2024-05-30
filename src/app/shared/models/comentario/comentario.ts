@@ -17,12 +17,18 @@ export interface ComentarioDenunciadoResponse {
 }
 
 export interface ComentarioData {
-    imagen: string;
+    imagenUsuario: string;
     username: string;
-    fechaValoracion: string;
+    fechaComentario: string;
     valoracion: number;
     comentario: string;
-    idLibro: number;
+    valoracionIdLibro: number;
+    valoracionIdUsuario: number;
+    estaDenunciado: boolean;
+}
+
+export interface ComentarioDataResponse {
+    valoraciones: ComentarioData[];
 }
 
 export interface ValoracionData {
