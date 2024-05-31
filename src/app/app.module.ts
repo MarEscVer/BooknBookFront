@@ -110,7 +110,6 @@ import { ItemBookLecturaComponent } from './components/despacho/list-book-lectur
 import { ListBookLecturaComponent } from './components/despacho/list-book-lectura/list-book-lectura.component';
 import { EditPerfilComponent } from './components/despacho/pages/edit-perfil/edit-perfil.component';
 import { EstadisticasComponent } from './components/despacho/pages/estadisticas/estadisticas.component';
-import { GoogleChartsModule } from 'angular-google-charts';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ListBookComponent } from './components/biblioteca/list-book/list-book.component';
 import { ListComentariosUsuarioComponent } from './components/despacho/list-comentarios-usuario/list-comentarios-usuario.component';
@@ -233,7 +232,6 @@ import { ListComentariosUsuarioComponent } from './components/despacho/list-come
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    GoogleChartsModule.forRoot(),
     MatProgressSpinnerModule,
   ],
   /* SERVICE */

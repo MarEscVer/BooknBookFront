@@ -92,25 +92,6 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
       }));
   }
 
-  submitEdit() {
-    const clubData = this.formAddClub.getRawValue()
-    return this.subscriptions.add(this.clubService
-      .editClub(clubData, this.data.clubId)
-      .subscribe({
-        next: (clubAdded) => {
-          this.notification.show(
-            'Club editado correctamente!',
-            'success'
-          );
-          this.uploadImage(clubData.id);
-          this.clubService.notifyClubAdded();
-        },
-        error: (error) => {
-          this.notification.show('No se ha podido editar el club', 'error');
-        },
-      }));
-  }
-
   private uploadImage(idGrupo: number): void {
     if (this.selectedFile) {
       this.subscriptions.add(this.uploadService.uploadGrupo(idGrupo, this.selectedFile).subscribe({

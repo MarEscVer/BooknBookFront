@@ -69,7 +69,7 @@ export class InputErrorStateMatcherExample {
 
   addBook = {
     nombre: this.getFormControl_required(),
-    idAutor: this.getFormControl_required(),
+    autor: this.getFormControl_required(),
     saga: this.getFormControl_saga(),
     tipo: this.getFormControl_type(),
     genero: this.getFormControl_nonRequired(),
@@ -78,18 +78,6 @@ export class InputErrorStateMatcherExample {
     descripcion: this.getFormControl_required(),
     nuevaSaga: this.getFormControl_texto(),
   }
-
-  editBook = {
-    nombre: this.getFormControl_nonRequired(),
-    autor: this.getFormControl_nonRequired(),
-    saga: this.getFormControl_nonRequired(),
-    tipo: this.getFormControl_nonRequired(),
-    genero: this.getFormControl_nonRequired(),
-    fechaPublicacion: this.getFormControl_nonRequired(),
-    pagTotal: this.getFormControl_nonRequired(),
-    descripcion: this.getFormControl_nonRequired(),
-  }
-
 
   addAutor = {
     pseudonimo: this.getFormControl_required(),

@@ -66,11 +66,6 @@
                 <!-- Botón de añadir -->
                 <button *ngIf="!isEditing" mat-raised-button (click)="submit()" class="w-100" color="accent"
                     [disabled]="!formAddClub.valid || this.selectedFile == null || this.selectedFile == undefined">AÑADIR</button>
-
-                <!-- Botón de editar -->
-                <button *ngIf="isEditing" mat-raised-button (click)="submitEdit()" class="w-100" color="primary"
-                    [disabled]="!formAddClub.valid || this.selectedFile == null || this.selectedFile == undefined">EDITAR</button>
-
             </form>
         </div>
     </div>

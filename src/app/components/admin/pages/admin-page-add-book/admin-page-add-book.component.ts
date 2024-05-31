@@ -70,7 +70,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   }
 
   createForm(fb: FormBuilder) {
-    this.formAddBook = this.formBuilder.group(this.formControl.editBook);
+    this.formAddBook = this.formBuilder.group(this.formControl.addBook);
   }
 
   ngOnInit() {
