@@ -1,5 +1,20 @@
 @import '../../../../../style/variables.scss';
 
+#EstadoLecturas,
+#LecturasPorGenero {
+    width: calc(50% - 10px);
+    max-width: 500px;
+    max-height: 500px;
+    margin-bottom: 20px;
+}
+
 .container-metricas {
     box-shadow: 0px 1px 5px 0px $base-color;
 }
+
+@media (max-width: $max-width) {
+    #EstadoLecturas,
+    #LecturasPorGenero {
+      width: 100%;
+    }
+  }

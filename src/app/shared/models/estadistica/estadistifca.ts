@@ -1,4 +1,4 @@
-import { GeneroTipo } from "../combo/combo";
+import { Combo, GeneroTipo } from "../combo/combo";
 
 export interface ItemEstadistica {
     titulo: string;
@@ -23,4 +23,11 @@ export interface ContadorResponse {
     librosLeidos: number;
     clubesCreados: number;
     comentariosTotales: number;
+}
+
+export interface ContadorUsuarioResponse {
+    paginasLeidas: number;
+    librosLeidos: number;
+    valoraciones: number;
+    genero: GeneroTipo;
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ContadorResponse } from 'src/app/shared/models/estadistica/estadistifca';
+import { ContadorResponse, ContadorUsuarioResponse, EstadisticaResponse } from 'src/app/shared/models/estadistica/estadistifca';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,6 +13,21 @@ export class EstadisticaService {
 
   getContador(): Observable<ContadorResponse> {
     return this.http.post<ContadorResponse>(this.baseUrl + '/contador', '')
+      .pipe(catchError(this.handleError));
+  }
+
+  getContadorUsario(): Observable<ContadorUsuarioResponse> {
+    return this.http.post<ContadorUsuarioResponse>(this.baseUrl + '/', '')
+      .pipe(catchError(this.handleError));
+  }
+
+  getLecturasEstadistica(): Observable<EstadisticaResponse> {
+    return this.http.post<EstadisticaResponse>(this.baseUrl + '/', '')
+      .pipe(catchError(this.handleError));
+  }
+
+  getGenerosEstadistica(): Observable<EstadisticaResponse> {
+    return this.http.post<EstadisticaResponse>(this.baseUrl + '/', '')
       .pipe(catchError(this.handleError));
   }
 
