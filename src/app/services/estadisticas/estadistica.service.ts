@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ContadorResponse, ContadorUsuarioResponse, EstadisticaResponse } from 'src/app/shared/models/estadistica/estadistifca';
+import { ContadorResponse, ContadorUsuarioResponse, EstadisticaResponse } from 'src/app/shared/models/estadistica/estadistica';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

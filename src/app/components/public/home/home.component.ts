@@ -7,7 +7,7 @@ import { EstadisticaService } from 'src/app/services/estadisticas/estadistica.se
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { ContadorResponse } from 'src/app/shared/models/estadistica/estadistifca';
+import { ContadorResponse } from 'src/app/shared/models/estadistica/estadistica';
 
 @Component({
   selector: 'app-home',

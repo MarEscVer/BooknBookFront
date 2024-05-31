@@ -1,4 +1,4 @@
-import { Combo, GeneroTipo } from "../combo/combo";
+import { GeneroTipo } from "../combo/combo";
 
 export interface ItemEstadistica {
     titulo: string;

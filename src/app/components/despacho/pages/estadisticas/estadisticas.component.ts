@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { EstadisticaService } from 'src/app/services/estadisticas/estadistica.service';
-import { EstadisticaGeneroResponse } from 'src/app/shared/models/estadistica/estadistifca';
+import { EstadisticaGeneroResponse } from 'src/app/shared/models/estadistica/estadistica';
 
 @Component({
   selector: 'app-estadisticas',
