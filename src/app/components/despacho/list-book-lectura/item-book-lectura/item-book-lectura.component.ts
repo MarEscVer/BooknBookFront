@@ -23,6 +23,7 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
   imgNoData: string = '/assets/img/iconoLibro.jpg';
   tipoStyle: any = {};
   generoStyle: any = {};
+  coloresGeneroTipo: boolean = false;
 
   modalInfo: ValoracionData = {
     id: 1,
@@ -49,22 +50,21 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
 
       if (this.libro.tipo) {
         this.tipoStyle = {
-          'background-color': '#' + this.libro.tipo.color,
+          'background-color': this.libro.tipo.color,
           'color': 'black',
           'border-radius': '20px',
           'padding': '5px',
         };
-        console.log('COLOR 1' + this.libro.tipo.color);
       }
       if (this.libro.genero) {
         this.generoStyle = {
-          'background-color': '#' + this.libro.genero.color,
+          'background-color': this.libro.genero.color,
           'color': 'black',
           'border-radius': '5px',
           'padding': '5px',
         };
-        console.log('COLOR 2' + this.libro.tipo.color);
       }
+      this.coloresGeneroTipo = true;
     }
   }
 

@@ -32,9 +32,7 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
 
   constructor(
     private autorService: AutorService,
-    private route: ActivatedRoute,
     private router: Router,
-    private notification: NotificationService,
     private authService: AuthService,
   ) { }
 

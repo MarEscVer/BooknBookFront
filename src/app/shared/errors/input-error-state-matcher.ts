@@ -99,8 +99,7 @@ export class InputErrorStateMatcherExample {
   }
 
   procesoLectura = {
-    inicio: this.getFormControl_required(),
-    final: null,
+    fechaLectura: null,
     paginaActual: this.getFormControl_required(),
     terminado: false,
   }

@@ -1,6 +1,9 @@
 @import '../../../../../style/variables.scss';
+.carousel-libro {
 
-.carousel-container {
+    height: 29rem;
+
+    .carousel-container {
     .carousel-control-prev,
     .carousel-control-next {
         width: 25px;
@@ -9,15 +12,16 @@
         background-color: $base-color;
     }
 
-    .carousel-control-prev{
+    .carousel-control-prev {
         left: -30px;
     }
 
-    .carousel-control-next{
+    .carousel-control-next {
         right: -30px;
     }
 
     .cards-wrapper {
         white-space: nowrap;
     }
+}
 }

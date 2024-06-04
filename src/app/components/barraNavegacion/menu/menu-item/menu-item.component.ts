@@ -1,6 +1,5 @@
-import { Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconName, IconPrefix } from '@fortawesome/fontawesome-svg-core';
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'src/app/shared/models/menu/menuItems';
 

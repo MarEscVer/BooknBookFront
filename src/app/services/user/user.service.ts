@@ -6,6 +6,7 @@ import { Login, LoginResponse, PerfilUsuarioData, Register, UserItemListResponse
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
 import { deleteObject } from '../interfaces';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
+import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,16 @@ export class UserService {
     return this.http.put<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/perfil',
       user,
       httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  vincularUsuarioLibro(idLibro: number, estado: string): Observable<ValoracionResponse> {
+    return this.http.post<ValoracionResponse>(this.baseUrl + environment.BASE_TOKEN + '/libro/' + idLibro + '/valoracion/' + estado, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  editarUsuarioLibro(comentario: ValoracionResponse): Observable<ValoracionResponse> {
+    return this.http.post<ValoracionResponse>(this.baseUrl + environment.BASE_TOKEN + '/libro/valoracion', comentario, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

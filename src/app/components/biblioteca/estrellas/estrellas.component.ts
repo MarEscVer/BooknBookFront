@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, Renderer2, forwardRef } from '@angular/core';
-import { FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseControlValueAccessor } from './BaseControlValueAccessor';
 
 @Component({

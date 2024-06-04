@@ -51,3 +51,13 @@ export interface DenunciarComentario {
     idUsuario: number;
     grupo: boolean;
 }
+
+export interface ValoracionResponse {
+    estado: string;
+    paginaActual: number;
+    calificacionPersonal: number;
+    comentario: string;
+    fechaComentario: string;
+    fechaLectura: string;
+    idLibro: number;
+}

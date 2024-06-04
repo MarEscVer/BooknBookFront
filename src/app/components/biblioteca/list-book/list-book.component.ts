@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AutorService } from 'src/app/services/autor/autor.service';
 import { BookItemCard } from 'src/app/shared/models/book/book';
 

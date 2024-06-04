@@ -81,13 +81,13 @@ export class ClubService implements deleteObject {
 
   abandonarClub(id: number): Observable<IdComboResponse> {
     const accion = 'A';
-    return this.http.get<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   pertenecerClub(id: number): Observable<IdComboResponse> {
     const accion = 'P';
-    return this.http.get<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

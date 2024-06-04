@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GeneroTipoService } from 'src/app/services/genero/genero-tipo.service';
-import { Combo, ComboGeneroResponse } from 'src/app/shared/models/combo/combo';
+import { Combo } from 'src/app/shared/models/combo/combo';
 import { MenuDesplegableItem } from 'src/app/shared/models/menu/menuItems';
 import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 import { environment } from 'src/environments/environment';

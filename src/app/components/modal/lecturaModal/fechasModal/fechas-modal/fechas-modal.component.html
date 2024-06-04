@@ -3,24 +3,11 @@
     <div class="mb-3">Ficha de lectura:</div>
     <form [formGroup]="formProceso" (submit)="$event.preventDefault()"
         class="d-flex flex-column align-items-center gap-3">
-        <mat-form-field class="w-100">
-            <mat-label>Inicio de lectura</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datepicker" formControlName="inicio"
-                id="inicio">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-                <mat-datepicker-actions>
-                    <button mat-button matDatepickerCancel>Cancelar</button>
-                    <button mat-raised-button color="primary" matDatepickerApply>Aplicar</button>
-                </mat-datepicker-actions>
-            </mat-datepicker>
-        </mat-form-field>
         <ng-container *ngIf="formProceso.get('terminado')?.value || formProceso.get('inicio')?.value">
             <mat-form-field class="w-100">
                 <mat-label>Final de lectura</mat-label>
-                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datepicker" formControlName="final"
-                    id="final">
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datepicker" formControlName="fechaLectura"
+                    id="fechaLectura">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker>
@@ -34,8 +21,7 @@
         <div class="paginasLibro">Páginas totales: {{pages}}</div>
         <mat-form-field class="w-100">
             <mat-label>Página actual de lectura</mat-label>
-            <input matInput type="number" formControlName="paginaActual" id="paginaActual"
-    />
+            <input matInput type="number" formControlName="paginaActual" id="paginaActual" />
         </mat-form-field>
         <div class="alert alert-danger w-100"
             *ngIf="formProceso.get('paginaActual')?.touched && formProceso.get('paginaActual')?.errors">

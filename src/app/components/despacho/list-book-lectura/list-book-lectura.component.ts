@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { BookService } from 'src/app/services/book/book.service';
 import { BookListadoLectura } from 'src/app/shared/models/book/book';
 
 @Component({
@@ -11,10 +13,57 @@ export class ListBookLecturaComponent implements OnInit{
   @Input() libros?: BookListadoLectura[];
   @Input() estado?: string;
 
-  constructor() { }
+  itemsPerPage = 5;
+  currentPage = 0;
+  totalItems = 0;
+  filter: string = '';
+  isLoading: boolean = true;
+
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(private bookService: BookService,) { }
 
   ngOnInit() {
-    
+    this.loadData(this.estado);
+  }
+
+  loadData(estado?: string) {
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
+    this.isLoading = true;
+    if (estado) {
+      this.subscriptions.add(this.bookService.getListadoLibrosEstado(this.currentPage, this.itemsPerPage, estado).subscribe(data => {
+        if (data) {
+          this.libros = data.libros;
+          this.totalItems = data.pageInfo.totalElements;
+          this.isLoading = false;
+        }
+      })
+      );
+    }
+  }
+
+  nextPage() {
+    const totalPages = this.totalPages();
+    if (this.currentPage < totalPages - 1) {
+      this.currentPage++;
+      this.loadData(this.estado);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadData(this.estado);
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

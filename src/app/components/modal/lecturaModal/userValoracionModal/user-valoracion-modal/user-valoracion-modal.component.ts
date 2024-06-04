@@ -2,9 +2,13 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { BookService } from 'src/app/services/book/book.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { Book } from 'src/app/shared/models/book/book';
+import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-user-valoracion-modal',
@@ -13,26 +17,25 @@ import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 })
 export class UserValoracionModalComponent implements OnInit, OnDestroy {
 
-  modalInfo: ValoracionData = {
-    id: 1,
-  };
+  modalInfo?: ValoracionResponse;
   tituloLibro: string = '';
   procedenciaModal: boolean = false;
   private submitted = false;
-
+  libro?: Book;
+  
   formValoracion!: FormGroup;
   matcher!: FormErrorStateMatcher;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionData, titulo: string, procedenciaModal?: boolean },
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, titulo: string, procedenciaModal?: boolean },
     private dialogRef: MatDialogRef<UserValoracionModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
+    private bookService: BookService,
+    private usuarioService: UserService,
+    private notification: NotificationService,
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -54,9 +57,8 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dialogRef.beforeClosed().subscribe(() => {
-      if (this.procedenciaModal && !this.submitted) {
+      if (this.procedenciaModal && !this.submitted && this.modalInfo) {
         this.sendDataToServer(this.modalInfo);
-        console.log('before closed');
       }
     });
   }
@@ -69,15 +71,24 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
       ...formValues,
     };
     this.sendDataToServer(dataToSend);
-
-    console.log('submit');
-    this.dialogRef.close();
   }
 
-  sendDataToServer(data: any) {
-    //TODO LLAMADA AL SERVIDOR CON LOS DATOS QUE HAY EN EL modalInfo: ValoracionData
-    //RELLENO SOLO CON LOS DATOS DEL MODAL ANTERIOR (TRUE) O CON TODO (SUBMIT FORMUALRIO)
-    console.log('Datos enviados exitosamente');
+  sendDataToServer(data: ValoracionResponse) {
+    if (this.modalInfo) {
+      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe({
+        next: (valoracion) => {
+          this.updateLibroSeleccionado();
+          this.notification.show(
+            'Lectura editada correctamente!',
+            'success'
+          );
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          this.notification.show('No se ha podido editada la lectura', 'error');
+        },
+      }));
+    }
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {
@@ -85,6 +96,18 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
       this.formValoracion,
       modelAttribute,
       errorAttribute
+    );
+  }
+
+  updateLibroSeleccionado() {
+    this.subscriptions.add(
+      this.bookService.libroSeleccionado$.subscribe(libro => {
+        this.libro = libro;
+        if (this.libro) {
+          this.libro.estado = 'LEIDO';
+          this.bookService.setLibro(this.libro);
+        }
+      })
     );
   }
 

@@ -4,8 +4,12 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Subscription } from 'rxjs';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
-import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 import { UserValoracionModalComponent } from '../../userValoracionModal/user-valoracion-modal/user-valoracion-modal.component';
+import { UserService } from 'src/app/services/user/user.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
+import { BookService } from 'src/app/services/book/book.service';
+import { Book } from 'src/app/shared/models/book/book';
 
 @Component({
   selector: 'app-fechas-modal',
@@ -14,28 +18,27 @@ import { UserValoracionModalComponent } from '../../userValoracionModal/user-val
 })
 export class FechasModalComponent implements OnInit, OnDestroy {
 
-  modalInfo: ValoracionData = {
-    id: 1,
-  };
+  modalInfo?: ValoracionResponse;
   pages: number = 0;
   tituloLibro: string = '';
-
+  procedenciaModal: boolean = false;
   formProceso!: FormGroup;
   matcher!: FormErrorStateMatcher;
+  libro?: Book;
 
   maxDate = new Date();
   minDate = new Date();
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionData, pages: number, titulo: string },
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, pages: number, titulo: string, procedenciaModal?: boolean },
     private dialogRef: MatDialogRef<FechasModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
+    private notification: NotificationService,
+    private usuarioService: UserService,
+    private bookService: BookService,
     private dialog: MatDialog
   ) {
     this.formControl = new InputErrorStateMatcherExample();
@@ -58,6 +61,9 @@ export class FechasModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setMinMaxDate();
+    if (this.modalInfo) {
+      this.formProceso.patchValue(this.modalInfo);
+    }
     this.subscriptions.add(this.formProceso.get('paginaActual')?.valueChanges.subscribe((value) => {
       if (value !== this.formProceso.get('paginaActual')?.value) {
         if (value > this.pages) {
@@ -73,45 +79,67 @@ export class FechasModalComponent implements OnInit, OnDestroy {
       }
     }));
   }
- 
+
   submit() {
-    const inicioDate: Date = this.formProceso.get('inicio')?.value;
-    const finalDate: Date = this.formProceso.get('final')?.value;
-    const paginaActual: number = this.formProceso.get('paginaActual')?.value;
-    const terminado: boolean = this.formProceso.get('terminado')?.value;
+    if (this.modalInfo) {
+      const finalDate: Date = this.formProceso.get('fechaLectura')?.value;
+      const paginaActual: number = this.formProceso.get('paginaActual')?.value;
+      const terminado: boolean = this.formProceso.get('terminado')?.value;
 
-    // Formatear las fechas al formato YYYY/MM/DD
-    const inicioFormatted: string = inicioDate.toISOString().split('T')[0];
-    const finalFormatted: string | null = finalDate ? finalDate.toISOString().split('T')[0] : null;
+      this.modalInfo.paginaActual = paginaActual;
 
-    // TODO METERLO AL OBJETO QUE YA TENGO modalInfo: ValoracionData
-    const dataToSend = {
-      inicio: inicioFormatted,
-      final: finalFormatted,
-      paginaActual: paginaActual,
-      terminado: terminado,
-    };
-
-    // ENVIAR FORMULARIO PROCESO LECTURA --> SI PONE QUE LO HA TERMINADO DE LEER
-    // ENVIAR DATOS A MODAL USER-VALORACION Y AY AHÍ ENVIAR TODO, SINO
-    // DESDE AQUÍ HACER LA LLAMADA
-    if(terminado) {
-      const dialogValoracion = this.dialog.open(UserValoracionModalComponent, {
-        width: '50%',
-        data: {
-          modalInfo: this.modalInfo,
-          titulo: this.tituloLibro,
-          procedenciaModal: true,
-        }
-      });
-    } else {
-      // TODO LLAMADA --> ENVIAR DATOS A MODAL USER-VALORACION Y AY AHÍ ENVIAR TODO
+      if (terminado) {
+        // Formatear las fechas al formato YYYY/MM/DD
+        const finalFormatted: string = finalDate ? finalDate.toISOString().split('T')[0] : '';
+        this.modalInfo.fechaLectura = finalFormatted;
+        this.modalInfo.estado = 'LEIDO';
+        const dialogValoracion = this.dialog.open(UserValoracionModalComponent, {
+          width: '50%',
+          data: {
+            modalInfo: this.modalInfo,
+            titulo: this.tituloLibro,
+            procedenciaModal: true,
+          }
+        });
+      } else {
+        this.updateComentario();
+      }
+      this.dialogRef.close();
     }
-    this.dialogRef.close();
+  }
+
+  updateComentario() {
+    if (this.modalInfo) {
+      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe({
+        next: (valoracion) => {
+          this.updateLibroSeleccionado();
+          this.notification.show(
+            'Lectura editada correctamente!',
+            'success'
+          );
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          this.notification.show('No se ha podido editada la lectura', 'error');
+        },
+      }));
+    }
   }
 
   setMinMaxDate() {
     this.minDate.setFullYear(this.maxDate.getFullYear() - 5);
+  }
+
+  updateLibroSeleccionado() {
+    this.subscriptions.add(
+      this.bookService.libroSeleccionado$.subscribe(libro => {
+        this.libro = libro;
+        if (this.libro) {
+          this.libro.estado = 'PROGRESO';
+          this.bookService.setLibro(this.libro);
+        }
+      })
+    );
   }
 
   updatePageInput() {
@@ -132,7 +160,8 @@ export class FechasModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
+    this.updateComentario();
     this.subscriptions.unsubscribe();
   }
 
