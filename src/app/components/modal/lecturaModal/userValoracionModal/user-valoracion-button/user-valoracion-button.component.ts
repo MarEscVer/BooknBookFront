@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UserValoracionModalComponent } from '../user-valoracion-modal/user-valoracion-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-user-valoracion-button',
@@ -9,7 +9,7 @@ import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
   styleUrls: ['./user-valoracion-button.component.scss']
 })
 export class UserValoracionButtonComponent {
-  @Input() modalInfo!: ValoracionData;
+  @Input() modalInfo!: ValoracionResponse;
   @Input() titulo!: string;
 
 
@@ -21,8 +21,7 @@ export class UserValoracionButtonComponent {
       width: '50%',
       data: {
         modalInfo: this.modalInfo,
-        titulo: this.titulo,
-        procedenciaModal: false,
+        titulo: this.titulo
       }
     });
   }

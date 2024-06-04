@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { Book } from 'src/app/shared/models/book/book';
-import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-user-valoracion-modal',
@@ -22,7 +22,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   procedenciaModal: boolean = false;
   private submitted = false;
   libro?: Book;
-  
+
   formValoracion!: FormGroup;
   matcher!: FormErrorStateMatcher;
 
@@ -45,9 +45,6 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
       if (data.titulo) {
         this.tituloLibro = data.titulo;
       }
-      if (data.procedenciaModal) {
-        this.procedenciaModal = data.procedenciaModal;
-      }
     }
   }
 
@@ -56,20 +53,18 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dialogRef.beforeClosed().subscribe(() => {
-      if (this.procedenciaModal && !this.submitted && this.modalInfo) {
-        this.sendDataToServer(this.modalInfo);
-      }
-    });
+    if (this.modalInfo) {
+      this.formValoracion.patchValue(this.modalInfo);
+    }
   }
 
   submit() {
-    this.submitted = true;
     const formValues = this.formValoracion.value;
     const dataToSend = {
       ...this.modalInfo,
       ...formValues,
     };
+    this.submitted = true;
     this.sendDataToServer(dataToSend);
   }
 
@@ -86,6 +81,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           this.notification.show('No se ha podido editada la lectura', 'error');
+          this.dialogRef.close();
         },
       }));
     }
@@ -111,7 +107,10 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
+    if (this.procedenciaModal && !this.submitted && this.modalInfo) {
+      this.sendDataToServer(this.modalInfo);
+    }
     this.subscriptions.unsubscribe();
   }
 

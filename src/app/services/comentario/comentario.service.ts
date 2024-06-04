@@ -71,11 +71,6 @@ export class ComentarioService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  getValoracion(): Observable<ValoracionData> {
-    const valoracion: ValoracionData = { id: 1 };
-    return of(valoracion);
-  }
-
   private handleError(error: HttpErrorResponse) {
     console.log(error);
     return throwError(() => error.error);

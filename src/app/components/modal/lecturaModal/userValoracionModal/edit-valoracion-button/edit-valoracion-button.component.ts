@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 import { UserValoracionModalComponent } from '../user-valoracion-modal/user-valoracion-modal.component';
 
 @Component({
@@ -9,9 +9,8 @@ import { UserValoracionModalComponent } from '../user-valoracion-modal/user-valo
   styleUrls: ['./edit-valoracion-button.component.scss']
 })
 export class EditValoracionButtonComponent {
-  @Input() modalInfo!: ValoracionData;
+  @Input() modalInfo!: ValoracionResponse;
   @Input() titulo!: string;
-
 
   constructor(private dialog: MatDialog) {
   }
@@ -22,7 +21,6 @@ export class EditValoracionButtonComponent {
       data: {
         modalInfo: this.modalInfo,
         titulo: this.titulo,
-        procedenciaModal: false,
       }
     });
   }

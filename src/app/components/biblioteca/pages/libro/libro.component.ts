@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
-import { ComentarioService } from 'src/app/services/comentario/comentario.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { Book } from 'src/app/shared/models/book/book';
-import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 
 @Component({
   selector: 'app-libro',
@@ -15,8 +15,8 @@ import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
 export class LibroComponent implements OnInit, OnDestroy {
 
   libro?: Book;
-  valoracion?: ValoracionData;
   valoracionUsuario: boolean = false;
+  modalInfoAddOpinion?: ValoracionResponse;
 
   userRole?: string | null;
   estiloBoton: string = 'VALORACION';
@@ -24,7 +24,6 @@ export class LibroComponent implements OnInit, OnDestroy {
   stars = [0, 1, 2, 3, 4];
   valoracionMedia: number = 0;
 
-  //TODO VALORACION NECESITO
   contadorComentario: number = 0;
   private subscriptions: Subscription = new Subscription();
 
@@ -32,7 +31,7 @@ export class LibroComponent implements OnInit, OnDestroy {
     public masLeidosBookService: MasLeidosBookService,
     private bookService: BookService,
     private authService: AuthService,
-    private valoracionService: ComentarioService
+    private usuarioService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -41,22 +40,19 @@ export class LibroComponent implements OnInit, OnDestroy {
         this.userRole = role;
       })
     );
-
     this.subscriptions.add(
       this.bookService.libroSeleccionado$.subscribe(libro => {
         this.libro = libro;
         if (this.libro) {
           this.valoracionMedia = this.libro.calificacionMedia ?? 0;
           this.contadorComentario = this.libro.contadorComentario ?? 0;
+          this.subscriptions.add(
+            this.usuarioService.vincularUsuarioLibro(this.libro.id, this.libro?.estado).subscribe({
+              next: (valoracion) => {
+                this.modalInfoAddOpinion = valoracion;
+              }
+            }));
         }
-      })
-    );
-
-    //TODO LLAMADA PARA OBTENER EL ID DE VALORACION --> SI TENGO ID!=0 ABRIR MODAL
-    //ADD VALORACION SINO, MODAL DE INTERESES
-    this.subscriptions.add(
-      this.valoracionService.getValoracion().subscribe(valoracion => {
-        this.valoracion = valoracion;
       })
     );
   }

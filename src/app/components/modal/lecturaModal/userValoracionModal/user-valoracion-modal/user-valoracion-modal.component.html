@@ -5,10 +5,10 @@
     <div class="mb-3">¡Escribe tu opinión ahora!</div>
     <form [formGroup]="formValoracion" (submit)="$event.preventDefault()"
         class="d-flex flex-column align-items-center gap-3 w-100">
-        <app-estrellas formControlName="estrellas"></app-estrellas>
+        <app-estrellas formControlName="calificacionPersonal"></app-estrellas>
         <mat-form-field class="comentario w-100">
             <mat-label>¿Qué te ha parecido?</mat-label>
-            <textarea matInput formControlName="textarea"></textarea>
+            <textarea matInput formControlName="comentario"></textarea>
         </mat-form-field>
         <button mat-raised-button (click)="submit()" color="accent"
             [disabled]="!formValoracion.valid || formValoracion.get('estrellas')?.value === null">PUBLICAR

@@ -86,6 +86,7 @@ export class ListadoItemsComentariosComponent implements OnInit, OnDestroy {
             width: '50%',
             data: {
               modalInfo: this.modalInfo,
+              procedenciaModal: false,
             }
           })
         }

@@ -21,10 +21,11 @@ export class FechasModalComponent implements OnInit, OnDestroy {
   modalInfo?: ValoracionResponse;
   pages: number = 0;
   tituloLibro: string = '';
-  procedenciaModal: boolean = false;
   formProceso!: FormGroup;
   matcher!: FormErrorStateMatcher;
   libro?: Book;
+  private submitted = false;
+  procedenciaModal: boolean = false;
 
   maxDate = new Date();
   minDate = new Date();
@@ -32,7 +33,7 @@ export class FechasModalComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, pages: number, titulo: string, procedenciaModal?: boolean },
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, pages: number, titulo: string, procedenciaModal?: boolean},
     private dialogRef: MatDialogRef<FechasModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
@@ -161,7 +162,9 @@ export class FechasModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.updateComentario();
+    if (this.procedenciaModal && !this.submitted && this.modalInfo) {
+      this.updateComentario();
+    }
     this.subscriptions.unsubscribe();
   }
 

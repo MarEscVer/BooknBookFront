@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FechasModalComponent } from 'src/app/components/modal/lecturaModal/fechasModal/fechas-modal/fechas-modal.component';
 import { BookService } from 'src/app/services/book/book.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { Book, BookListadoLectura } from 'src/app/shared/models/book/book';
 import { applyColors } from 'src/app/shared/models/combo/combo';
-import { ValoracionData } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 
 @Component({
@@ -25,23 +26,17 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
   generoStyle: any = {};
   coloresGeneroTipo: boolean = false;
 
-  modalInfo: ValoracionData = {
-    id: 1,
-  };
+  modalInfo?: ValoracionResponse;
 
-  /**
-* Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-*/
   private subscriptions: Subscription = new Subscription();
 
   constructor(
     private bookService: BookService,
     private route: ActivatedRoute,
     private router: Router,
+    private usuarioService: UserService,
     private dialog: MatDialog
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     if (this.libro) {
@@ -95,13 +90,25 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
   }
 
   editarLectura(id: number) {
-    //TODO GET VALORACION LIBRO PARA MANDARLO AL MODAL --> this.modalInfo --> PANTALLA USUARIO LECTURAS
+    if (this.estado) {
+      this.subscriptions.add(
+        this.usuarioService.vincularUsuarioLibro(this.libro.id, this.estado).subscribe({
+          next: (valoracion) => {
+            this.modalInfo = valoracion;
+            this.abrirModalEditarLectura();
+          }
+        }));
+    }
+  }
+
+  abrirModalEditarLectura() {
     const dialogValoracion = this.dialog.open(FechasModalComponent, {
       width: '50%',
       data: {
         modalInfo: this.modalInfo,
         titulo: this.libro.titulo,
         pages: this.libro.id,
+        procedenciaModal: false
       }
     });
   }

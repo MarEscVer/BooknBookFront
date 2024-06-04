@@ -94,8 +94,8 @@ export class InputErrorStateMatcherExample {
   }
 
   valoracionEstrellas = {
-    estrellas: null,
-    textarea: this.getFormControl_required(),
+    calificacionPersonal: null,
+    comentario: this.getFormControl_required(),
   }
 
   procesoLectura = {

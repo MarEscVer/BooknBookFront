@@ -23,9 +23,9 @@
             <h1 class="valoracion">{{this.valoracionMedia}}</h1><span>/5</span>
         </div>
         <!-- BOTON AGREGAR OPINION -->
-        <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
+        <ng-container *ngIf="modalInfoAddOpinion && modalInfoAddOpinion?.estado === 'LEIDO'; else valoracionNoExistente">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-                <app-user-valoracion-button [modalInfo]="{id: libro.id}"
+                <app-user-valoracion-button [modalInfo]="modalInfoAddOpinion"
                     [titulo]="libro.titulo"></app-user-valoracion-button>
             </ng-container>
         </ng-container>
@@ -47,9 +47,9 @@
             <h5>¿Has leído {{libro.titulo| uppercase}}?</h5>
         </div>
         <!-- BOTON AGREGAR OPINION -->
-        <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
+        <ng-container *ngIf="modalInfoAddOpinion && modalInfoAddOpinion?.estado === 'LEIDO'; else valoracionNoExistente">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-                <app-user-valoracion-button [modalInfo]="{id: libro.id}"
+                <app-user-valoracion-button [modalInfo]="modalInfoAddOpinion"
                     [titulo]="libro.titulo"></app-user-valoracion-button>
             </ng-container>
         </ng-container>
