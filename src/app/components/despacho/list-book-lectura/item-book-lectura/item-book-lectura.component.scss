@@ -17,6 +17,7 @@
 
         .rectangular-image {
             @include rectangular-image(185px, 225px);
+            cursor: pointer;
         }
 
     }

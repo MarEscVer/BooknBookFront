@@ -3,7 +3,7 @@
     <div class="mb-3">Especifica el estado de lectura:</div>
     <form [formGroup]="formularioLibro" (submit)="$event.preventDefault()">
         <mat-radio-group aria-label="Estado de lectura" formControlName="estado" class="d-flex flex-column gap-2">
-            <mat-radio-button value="LEÍDO">
+            <mat-radio-button value="LEIDO">
                 <fa-icon class="leido" [icon]="['fas', 'check']"></fa-icon>
                 Lo he leído - Lista de leídos
             </mat-radio-button>

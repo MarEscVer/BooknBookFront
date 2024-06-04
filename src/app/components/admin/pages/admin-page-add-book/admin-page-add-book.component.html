@@ -12,7 +12,7 @@
             <form [formGroup]="formAddBook" (submit)="$event.preventDefault()">
 
                 <mat-form-field class="w-100">
-                    <mat-label>Título</mat-label>
+                    <mat-label for="nombre">Título</mat-label>
                     <input matInput formControlName="nombre" id="nombre" />
                 </mat-form-field>
                 <div class="alert alert-danger"
@@ -23,7 +23,7 @@
                 </div>
 
                 <mat-form-field class="w-100 mt-3">
-                    <mat-label>Sinopsis</mat-label>
+                    <mat-label for="descripcion">Sinopsis</mat-label>
                     <textarea matInput formControlName="descripcion" id="descripcion"></textarea>
                 </mat-form-field>
                 <div class="alert alert-danger"
@@ -34,7 +34,7 @@
                 </div>
 
                 <mat-form-field class="w-100 mt-3">
-                    <mat-label>Buscar Autor</mat-label>
+                    <mat-label for="autorFiltro">Buscar Autor</mat-label>
                     <div class="d-flex">
                         <input matInput id="autorFiltro" (input)="filtrarAutores($event)">
                         <app-add-autor-button [autorIcon]="autorIconAdd"
@@ -43,7 +43,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-100 mt-3" *ngIf="autoresFiltrados.length > 0">
-                    <mat-label>Selecciona Autor</mat-label>
+                    <mat-label for="autor">Selecciona Autor</mat-label>
                     <div class="d-flex">
                         <mat-select formControlName="autor" id="autor" (selectionChange)="autorSeleccionado($event)">
                             <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor.id">{{ autor.nombre }}</mat-option>
@@ -61,7 +61,7 @@
                 </div>
 
                 <mat-form-field class="w-100 mt-3">
-                    <mat-label>Saga</mat-label>
+                    <mat-label for="saga">Saga</mat-label>
                     <div class="d-flex">
                         <ng-container *ngIf="!addingNewSaga; else newSagaInput">
                             <mat-select formControlName="saga" id="saga">
@@ -90,18 +90,18 @@
 
 
                 <mat-form-field class="w-100 mt-3">
-                    <mat-label>Páginas</mat-label>
-                    <input matInput type="number" formControlName="pagTotal" id="pagTotal" />
+                    <mat-label for="paginas">Páginas</mat-label>
+                    <input matInput type="number" formControlName="paginas" id="paginas" />
                 </mat-form-field>
                 <div class="alert alert-danger"
-                    *ngIf="formAddBook.get('pagTotal')?.touched && formAddBook.get('pagTotal')?.errors">
-                    <div *ngIf="this.specificError('pagTotal','required')">
+                    *ngIf="formAddBook.get('paginas')?.touched && formAddBook.get('paginas')?.errors">
+                    <div *ngIf="this.specificError('paginas','required')">
                         Páginas requeridas.
                     </div>
                 </div>
 
                 <mat-form-field class="w-100 mt-3">
-                    <mat-label>Año</mat-label>
+                    <mat-label for="fechaPublicacion">Año</mat-label>
                     <input matInput type="date" formControlName="fechaPublicacion" id="fechaPublicacion" />
                 </mat-form-field>
                 <div class="alert alert-danger"
@@ -113,7 +113,7 @@
 
                 <div class="row mb-3 mt-3">
                     <div class="col w-100">
-                        <label>TIPO:</label>
+                        <mat-label for="tipo">TIPO:</mat-label>
                         <mat-radio-group formControlName="tipo" id="tipo">
                             <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id"
                                 class="row">
@@ -129,7 +129,7 @@
                     </div>
 
                     <div class="col w-100">
-                        <label>GÉNERO:</label>
+                        <mat-label for="genero">GÉNERO:</mat-label>
                         <mat-radio-group formControlName="genero" id="genero">
                             <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id"
                                 class="row">

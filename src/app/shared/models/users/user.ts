@@ -46,6 +46,8 @@ export interface PerfilUsuarioData {
     imagenPerfil: any;
     username: string;
     nombre: string;
+    apellidoPrimero: string;
+    apellidoSegundo: string;
     tipo: GeneroTipo;
     genero: GeneroTipo;
     selfPerfil: boolean;
@@ -61,10 +63,10 @@ export interface UpdatePerfilData {
     imagenPerfil: any;
     username: string;
     nombre: string;
-    apellidoPrimero: string;
-    apellidoSegundo: string;
-    tipo: number;
-    genero: number;
+    apellidoUno: string;
+    apellidoDos: string;
+    tipo: GeneroTipo;
+    genero: GeneroTipo;
     email: string;
     password: string;
 }

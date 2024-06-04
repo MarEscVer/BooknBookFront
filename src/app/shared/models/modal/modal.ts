@@ -5,5 +5,5 @@ export interface ModalInfo {
 
 export interface ModalInfoDenuciaComentario {
     idLibro: number;
-    username: string;
+    idUsuario: number;
 }

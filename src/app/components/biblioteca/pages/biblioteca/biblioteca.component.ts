@@ -10,10 +10,27 @@ import { RecomendadosBookService } from 'src/app/services/book/recomendados-book
 })
 export class BibliotecaComponent {
 
+  masLeidosCargados: boolean = false;
+  recomendadosCargados: boolean = false;
+  novedadesCargados: boolean = false;
+
   constructor(
     public recomendadosBookService: RecomendadosBookService,
     public masLeidosBookService: MasLeidosBookService,
     public novedadesBookService: NovedadesBookService,
   ) {}
+
+
+  onDatosCargadosMasLeidos(event: boolean) {
+    this.masLeidosCargados = event;
+  }
+
+  onDatosCargadosRecomendados(event: boolean) {
+    this.recomendadosCargados = event;
+  }
+
+  onDatosCargadosNovedades(event: boolean) {
+    this.novedadesCargados = event;
+  }
 
 }

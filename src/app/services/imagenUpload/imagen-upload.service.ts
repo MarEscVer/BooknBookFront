@@ -30,7 +30,7 @@ export class ImagenUploadService {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + environment.BASE_ADMIN + '/book/' + idBook + '/imagen', formData, options)
+    return this.http.put(this.baseUrl + environment.BASE_ADMIN + '/libro/' + idBook + '/imagen', formData, options)
       .pipe(catchError(this.handleError));
   }
 
@@ -54,7 +54,7 @@ export class ImagenUploadService {
       headers: {}
     } as any;
 
-    return this.http.put(this.baseUrl + environment.BASE_ADMIN + '/users/' + idUser + '/imagen', formData, options)
+    return this.http.put(this.baseUrl + environment.BASE_TOKEN + '/api/user/perfil', formData, options)
       .pipe(catchError(this.handleError));
   }
 

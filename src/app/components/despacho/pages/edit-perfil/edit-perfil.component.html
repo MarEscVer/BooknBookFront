@@ -36,7 +36,7 @@
                     <div class="row mb-3">
                         <div class="col w-100">
                             <label>TIPO:</label>
-                            <mat-radio-group formControlName="tipo" id="tipo">
+                            <mat-radio-group formControlName="idTipo" id="idTipo">
                                 <mat-radio-button *ngFor="let typeOption of typeOptions" [value]="typeOption.id"
                                     class="row">
                                     {{typeOption.nombre}}
@@ -45,7 +45,7 @@
                         </div>
                         <div class="col w-100">
                             <label>GÉNERO:</label>
-                            <mat-radio-group formControlName="genero" id="genero">
+                            <mat-radio-group formControlName="idGenero" id="idGenero">
                                 <mat-radio-button *ngFor="let genderOption of genderOptions" [value]="genderOption.id"
                                     class="row">
                                     {{genderOption.nombre}}

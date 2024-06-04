@@ -62,7 +62,7 @@ export interface BookData {
     fechaPublicacion: string;
     nombre: string;
     paginas: number;
-    idAutor: number;
+    autor: number;
     genero: number;
     tipo: number;
     saga: number;
@@ -106,7 +106,11 @@ export interface BookListadoLectura {
     genero: GeneroTipo;
     paginasTotales: number;
     //datos valoracion
-    fechaInicio: string;
-    fechaFinal: string;
+    fechaLectura: string;
     paginasLeidas: number
+}
+
+export interface BookListadoLecturaResponse {
+    libros: BookListadoLectura[];
+    pageInfo: pageInfo;
 }

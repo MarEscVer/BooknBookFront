@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';import { ValoracionModalComponent } from 'src/app/components/modal/valoracionModal/valoracion-modal/valoracion-modal.component';
@@ -10,7 +10,7 @@ import { ComentarioDenunciadoItemList, ComentarioResponse } from 'src/app/shared
   templateUrl: './listado-items-comentarios.component.html',
   styleUrls: ['./listado-items-comentarios.component.scss']
 })
-export class ListadoItemsComentariosComponent implements OnInit {
+export class ListadoItemsComentariosComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['username', 'date', 'comentario', 'razon', 'actions'];
 
   dataSource: MatTableDataSource<ComentarioDenunciadoItemList>;
@@ -100,9 +100,11 @@ export class ListadoItemsComentariosComponent implements OnInit {
   handleCommentAction() {
     this.loadData();
   }
-
-  ngOnDestroy(): void {
+  
+  ngOnDestroy() {
+    if (this.dataSource) {
+      this.dataSource.disconnect();
+    }
     this.subscriptions.unsubscribe();
   }
-
 }

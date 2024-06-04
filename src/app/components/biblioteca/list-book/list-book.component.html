@@ -1,9 +1,16 @@
-<div class="table-responsive">
-    <div class="container-fluid">
-        <div class="row-flex justify-content-start flex-wrap mt-2">
-            <div class="book-card" *ngFor="let libro of listadoLibros">
-                <app-item-book-card [libro]="libro"></app-item-book-card>
+<ng-container *ngIf="!loading; else spinner">
+    <div class="table-responsive">
+        <div class="container-fluid">
+            <div class="row-flex justify-content-start flex-wrap mt-2">
+                <div class="book-card" *ngFor="let libro of listadoLibros">
+                    <app-item-book-card [libro]="libro"></app-item-book-card>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</ng-container>
+<ng-template #spinner>
+        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+            <mat-spinner></mat-spinner>
+        </div>
+</ng-template>

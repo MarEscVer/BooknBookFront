@@ -108,7 +108,10 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
     this.loadData();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
+    if (this.dataSource) {
+      this.dataSource.disconnect();
+    }
     this.subscriptions.unsubscribe();
   }
 }

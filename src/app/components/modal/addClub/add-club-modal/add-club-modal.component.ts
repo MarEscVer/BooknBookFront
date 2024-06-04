@@ -122,10 +122,12 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
   }
 
   obtenerGeneroTipo(): void {
-    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+    this.subscriptions.add(this.generoTipoService.generoTipo$.subscribe(
       (data) => {
-        this.typeOptions = data.tipo.valores;
-        this.genderOptions = data.genero.valores;
+        if (data) {
+          this.typeOptions = data.tipo.valores;
+          this.genderOptions = data.genero.valores;
+        }
       }
     ));
   }

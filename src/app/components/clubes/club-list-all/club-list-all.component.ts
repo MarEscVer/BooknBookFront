@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { ClubDataAll } from 'src/app/shared/models/club/club';
   templateUrl: './club-list-all.component.html',
   styleUrls: ['./club-list-all.component.scss'],
 })
-export class ClubListAllComponent {
+export class ClubListAllComponent implements OnInit, OnDestroy{
 
   clubes?: ClubDataAll[];
 
@@ -138,7 +138,10 @@ export class ClubListAllComponent {
     this.loadData();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
+    if (this.dataSource) {
+      this.dataSource.disconnect();
+    }
     this.subscriptions.unsubscribe();
   }
 

@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import { Combo, ComboImagen } from 'src/app/shared/models/combo/combo';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   repeatPassword!: string;
   formRegister!: FormGroup;
   firstNameAutofilled: boolean = false;
@@ -91,11 +91,13 @@ export class RegisterComponent implements OnInit {
   }
 
   obtenerGeneroTipo(): void {
-    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+    this.subscriptions.add(this.generoTipoService.generoTipo$.subscribe(
       (data) => {
-        this.typeOptions = data.tipo.valores;
-        this.genderOptions = data.genero.valores;
-        this.setImagenOpciones();
+        if (data) {
+          this.typeOptions = data.tipo.valores;
+          this.genderOptions = data.genero.valores;
+          this.setImagenOpciones();
+        }
       }
     ));
   }

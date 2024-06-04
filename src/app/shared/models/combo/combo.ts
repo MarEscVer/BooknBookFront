@@ -63,8 +63,8 @@ const coloresGenero: ColoresGenero = {
 // Función para asignar colores basados en tipo y género
 export function applyColors<T extends { tipo: GeneroTipo; genero: GeneroTipo }>(data: T[]): T[] {
     return data.map(item => {
-        const tipoColor = coloresTipo[item.tipo.nombre] || item.tipo.color;
-        const generoColor = coloresGenero[item.genero.nombre] || item.genero.color;
+        const tipoColor = item.tipo ? coloresTipo[item.tipo.nombre] || item.tipo.color : null;
+        const generoColor = item.genero ? coloresGenero[item.genero.nombre] || item.genero.color : null;
         return {
             ...item,
             tipo: {

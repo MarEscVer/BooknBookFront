@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { BookImageListResponse, BookItemCard } from 'src/app/shared/models/book/book';
 import { Observable, Subscription } from 'rxjs';
@@ -28,9 +28,11 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
   @Input() listadoService: any;
   @Input() generoObs?: Observable<string>;
   @Input() opcionSize?: boolean = false;
+  @Input() titulo?: string;
   genero!: string;
 
   private subscriptions: Subscription = new Subscription();
+  @Output() datosCargados = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -48,6 +50,7 @@ export class ImagenListBookCardComponent implements OnInit, OnDestroy {
         this.libros = data.libros;
         this.dividirLibrosPorPagina();
         this.loading = false;
+        this.datosCargados.emit(true);
       }
     },
       (error: any) => {

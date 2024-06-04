@@ -1,4 +1,4 @@
-<ng-container *ngIf="menuItemsDesplegable && menuItems">
+<ng-container *ngIf="menuItemsDesplegable && menuItems && desplegable">
   <mat-toolbar color="accent" class="d-flex justify-content-around align-items-center menu-container">
     <ng-container *ngFor="let menuItem of menuItemsDesplegable">
       <app-menu-desplegable-item [menuItem]="menuItem" [menuItemsDesplegable]="desplegable"></app-menu-desplegable-item>

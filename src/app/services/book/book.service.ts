@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { Book, BookData, BookDataId, BookEdit, BookItemListResponse } from 'src/app/shared/models/book/book';
+import { Book, BookData, BookDataId, BookEdit, BookItemListResponse, BookListadoLectura, BookListadoLecturaResponse } from 'src/app/shared/models/book/book';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class BookService implements deleteObject {
   private baseUrl: string = environment.BASE_URL;
   private libroSeleccionadoSubject: BehaviorSubject<Book | undefined> = new BehaviorSubject<Book | undefined>(undefined);
   libroSeleccionado$: Observable<Book | undefined> = this.libroSeleccionadoSubject.asObservable();
+  
   constructor(private http: HttpClient) {
     const storedBook = localStorage.getItem('selectedBook');
     const initialBook = storedBook ? JSON.parse(storedBook) : undefined;
@@ -26,9 +27,8 @@ export class BookService implements deleteObject {
     localStorage.setItem('selectedBook', JSON.stringify(libro));
   }
 
-  //TODO delete URL
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `/book/${id}`)
+    return this.http.delete<any>(this.baseUrl + environment.BASE_ADMIN + '/libro/' + id + '/desactivacion')
       .pipe(catchError(this.handleError));
   }
 
@@ -67,6 +67,28 @@ export class BookService implements deleteObject {
     };
 
     return this.http.get<BookItemListResponse>(this.baseUrl + environment.BASE_ADMIN + '/libro/gestion', { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getListGeneroBook(pageIndex: number, size: number, genero: string, filter: string): Observable<BookItemListResponse> {
+    const params: any = {
+      pageIndex: pageIndex.toString(),
+      size: size.toString(),
+      genero: genero,
+      filter: filter
+    };
+
+    return this.http.get<BookItemListResponse>(this.baseUrl + '/libros', { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getListadoLibrosEstado(pageIndex: number, size: number, estado: string): Observable<BookListadoLecturaResponse> {
+    const params: any = {
+      pageIndex: pageIndex.toString(),
+      size: size.toString()
+    };
+
+    return this.http.get<BookListadoLecturaResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/libros/' + estado, { params })
       .pipe(catchError(this.handleError));
   }
 

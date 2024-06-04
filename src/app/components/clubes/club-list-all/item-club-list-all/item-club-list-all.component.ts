@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ClubService } from 'src/app/services/club/club.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ClubDataAll } from 'src/app/shared/models/club/club';
 import { applyColors } from 'src/app/shared/models/combo/combo';
 
@@ -7,15 +10,21 @@ import { applyColors } from 'src/app/shared/models/combo/combo';
   templateUrl: './item-club-list-all.component.html',
   styleUrls: ['./item-club-list-all.component.scss']
 })
-export class ItemClubListAllComponent implements OnInit {
+export class ItemClubListAllComponent implements OnInit, OnDestroy {
 
   @Input() club?: ClubDataAll;
   @Input() userLoged?: boolean;
   imgNoData: string = '/assets/img/iconoClub.png';
   tipoStyle: any = {};
   generoStyle: any = {};
+  isMember: boolean = false;
 
-  constructor() { }
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(
+    private clubService: ClubService,
+    private notification: NotificationService
+  ) { }
 
   ngOnInit(): void {
     if (this.club) {
@@ -38,17 +47,44 @@ export class ItemClubListAllComponent implements OnInit {
           'padding': '5px',
         };
       }
+      this.isMember = this.club.perteneces;
     }
   }
 
   abandonarClub() {
-    //TODO ENVIAR DATO A SERVIDOR PARA ABANDONAR
-    console.log('ABANDONAR' + this.club?.id)
+    if (this.club) {
+      this.subscriptions.add(this.clubService.abandonarClub(this.club.id).subscribe({
+        next: (data) => {
+          if (data.message) {
+            this.notification.show(data.message, 'success');
+            this.isMember = false;
+            this.club!.miembros -= 1;
+          } else {
+            this.notification.show(data.message, 'error');
+            this.isMember = true;
+            this.club!.miembros += 1;
+          }
+        }
+      }))
+    }
   }
 
   pertenecerClub() {
-    //TODO ENVIAR DATO A SERVIDOR PARA PERTENECER
-    console.log('PERTENECER' + this.club?.id)
+    if (this.club) {
+      this.subscriptions.add(this.clubService.pertenecerClub(this.club.id).subscribe({
+        next: (data) => {
+          if (data.message) {
+            this.notification.show(data.message, 'success');
+          } else {
+            this.notification.show(data.message, 'error');
+          }
+        }
+      }))
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

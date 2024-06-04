@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,13 +26,14 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
   currentPage = 0;
   totalItems = 0;
   filter: string = '';
-  isLoading: boolean = true;
+  loading: boolean = true;
 
   @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
+  @Output() datosCargados = new EventEmitter<boolean>();
 
   constructor(
-    public bookServie: BookService,
+    public bookService: BookService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -40,35 +41,28 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.subscriptions.add(this.generoObs?.subscribe(genero => {
       this.genero = genero;
+      this.loadData();
     }));
-
-    this.loadData();
-
-    if (this.listadoLibros) {
-      this.dataSource = new MatTableDataSource<BookItemCard>(this.listadoLibros);
-      this.observable = this.dataSource.connect();
-    }
+    this.observable = this.dataSource.connect();
   }
 
   loadData() {
-    //TODO LLAMAR SERVICIO CON EL GENERO(TIPO) QUE QUIERO OBTENER LIBROS
-    // loadData() {
-    //   const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
-    //   this.currentPage = newPage;
-    //   this.isLoading = true;
-    //   this.subscriptions.add(
-    //     this.bookServie.getListBook(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
-    //       if (data.libros) {
-    //         this.dataSource.data = data.libros;
-    //         this.totalItems = data.pageInfo.totalElements;
-    //         this.isLoading = false;
-    //       }
-    //     })
-    //   );
-    // }
+    const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
+    this.currentPage = newPage;
+    this.loading = true;
+    this.subscriptions.add(
+      this.bookService.getListGeneroBook(this.currentPage, this.itemsPerPage, this.genero, this.filter).subscribe(data => {
+        this.listadoLibros = data.libros || [];
+        this.totalItems = data.pageInfo.totalElements;
+        this.dataSource.data = this.listadoLibros;
+        this.loading = false;
+        this.datosCargados.emit(true);
+      }, () => {
+        this.loading = false;
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -119,6 +113,7 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
     this.currentPage = 0;
     this.loadData();
   }
+  
   ngOnDestroy() {
     if (this.dataSource) {
       this.dataSource.disconnect();

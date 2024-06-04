@@ -2,8 +2,7 @@
 <div *ngIf="libro">
     <app-ficha-libro [libro]="libro"></app-ficha-libro>
     <div class="carousel-libro mb-4">
-        <h5 class="carousel-titulo text-center m-0">RECOMENDADOS</h5>
-        <app-imagen-list-book-card [listadoService]="masLeidosBookService"></app-imagen-list-book-card>
+        <app-imagen-list-book-card [listadoService]="masLeidosBookService" [titulo]="'RECOMENDADOS'"></app-imagen-list-book-card>
     </div>
 
     <!-- Estrellas valoracion media -->
@@ -26,8 +25,8 @@
         <!-- BOTON AGREGAR OPINION -->
         <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-                <app-user-valoracion-button
-                    [modalInfo]="{id: libro.id}" [titulo]="libro.titulo" ></app-user-valoracion-button>
+                <app-user-valoracion-button [modalInfo]="{id: libro.id}"
+                    [titulo]="libro.titulo"></app-user-valoracion-button>
             </ng-container>
         </ng-container>
         <ng-template #valoracionNoExistente>
@@ -38,7 +37,10 @@
         </ng-template>
     </div>
 
-    <app-valoracion-table></app-valoracion-table>
+    <div class="p-5">
+        <app-valoracion-table [libro]="libro"></app-valoracion-table>
+    </div>
+
 
     <div class="d-flex flex-column align-items-center mb-5 mt-4">
         <div class="d-flex flex-row align-items-baseline">
@@ -47,8 +49,8 @@
         <!-- BOTON AGREGAR OPINION -->
         <ng-container *ngIf="this.valoracion?.id != 0; else valoracionNoExistente">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
-                <app-user-valoracion-button
-                    [modalInfo]="{id: libro.id}" [titulo]="libro.titulo"></app-user-valoracion-button>
+                <app-user-valoracion-button [modalInfo]="{id: libro.id}"
+                    [titulo]="libro.titulo"></app-user-valoracion-button>
             </ng-container>
         </ng-container>
         <ng-template #valoracionNoExistente>

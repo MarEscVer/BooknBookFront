@@ -88,7 +88,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
     this.obtenerGeneroTipo();
     this.obtenerAutores();
 
-    this.subscriptions.add(this.formAddBook.get('idAutor')?.valueChanges.subscribe(value => {
+    this.subscriptions.add(this.formAddBook.get('autor')?.valueChanges.subscribe(value => {
       if (value == null || value == 0) {
         this.formAddBook.controls['saga'].disable();
         this.formAddBook.controls['saga'].reset();
@@ -103,11 +103,12 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
       nombre: book.titulo,
       autor: book.idAutor,
       saga: book.saga,
-      tipo: book.tipo,
-      genero: book.genero,
+      tipo: book.tipo ? book.tipo.id : 0,
+      genero: book.genero ? book.genero.id : 0,
       fechaPublicacion: book.anyo,
-      pagTotal: book.paginasTotales,
-      descripcion: book.descripcion
+      paginas: book.paginasTotales,
+      descripcion: book.descripcion,
+      nuevaSaga: ''
     });
   }
 
@@ -159,6 +160,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
             'Imagen subida correctamente',
             'success'
           );
+          this.router.navigate(['/admin']);
         },
       }));
     }
@@ -190,7 +192,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
       );
     } else {
       this.autoresFiltrados.length = 0;
-      this.formAddBook.get('idAutor')?.reset();
+      this.formAddBook.get('autor')?.reset();
     }
   }
 
@@ -210,10 +212,12 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
   }
 
   obtenerGeneroTipo(): void {
-    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+    this.subscriptions.add(this.generoTipoService.generoTipo$.subscribe(
       (data) => {
-        this.typeOptions = data.tipo.valores;
-        this.genderOptions = data.genero.valores;
+        if (data) {
+          this.typeOptions = data.tipo.valores;
+          this.genderOptions = data.genero.valores;
+        }
       }
     ));
   }
@@ -246,7 +250,7 @@ export class AdminPageAddBookComponent implements OnDestroy, OnInit {
       this.autores.push(autor);
       this.autoresFiltrados.push(autor);
       (document.getElementById("autorFiltro") as HTMLInputElement).value = autor.nombre;
-      this.formAddBook.get('idAutor')?.setValue(autor.id);
+      this.formAddBook.get('autor')?.setValue(autor.id);
     }
   }
 

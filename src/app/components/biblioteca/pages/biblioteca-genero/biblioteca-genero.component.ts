@@ -15,10 +15,9 @@ export class BibliotecaGeneroComponent implements OnInit, OnDestroy {
   genero$?: BehaviorSubject<string> = new BehaviorSubject<string>('');
   url?: string;
   typeOptions: Combo[] = [];
+  datosCargadosPaginador: boolean = false;
+  datosCargadosListado: boolean = false;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -35,10 +34,12 @@ export class BibliotecaGeneroComponent implements OnInit, OnDestroy {
   }
 
   obtenerGeneroTipo(): void {
-    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+    this.subscriptions.add(this.generoTipoService.generoTipo$.subscribe(
       (data) => {
-        this.typeOptions = data.tipo.valores.concat(data.genero.valores);
-        this.matchGeneroTipo();
+        if (data) {
+          this.typeOptions = data.tipo.valores.concat(data.genero.valores);
+          this.matchGeneroTipo();
+        }
       }
     ));
   }
@@ -63,6 +64,14 @@ export class BibliotecaGeneroComponent implements OnInit, OnDestroy {
       });
       this.genero$?.next(result[0].nombre);
     }
+  }
+
+  onDatosCargadosListado(event: boolean) {
+    this.datosCargadosListado = event;
+  }
+
+  onDatosCargadosPaginador(event: boolean) {
+    this.datosCargadosPaginador = event;
   }
 
   ngOnDestroy(): void {

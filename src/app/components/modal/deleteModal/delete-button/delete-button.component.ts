@@ -12,6 +12,7 @@ export class DeleteButtonComponent{
 
   @Input() modalInfo?: ModalInfo;
   @Input() deleteService: any;
+  @Input() usuario?: boolean = false;
   @Output() actionCompleted = new EventEmitter<void>();
   
   constructor(private dialog: MatDialog) {
@@ -21,7 +22,8 @@ export class DeleteButtonComponent{
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       data: {
         modalInfo: this.modalInfo,
-        deleteService: this.deleteService
+        deleteService: this.deleteService,
+        usuario: this.usuario,
       }
     });
 

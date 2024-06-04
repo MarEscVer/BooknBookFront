@@ -5,11 +5,12 @@ import { catchError, map } from 'rxjs/operators';
 import { Login, LoginResponse, PerfilUsuarioData, Register, UserItemListResponse, modifyUser, UpdatePerfilData } from 'src/app/shared/models/users/user';
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
 import { deleteObject } from '../interfaces';
+import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements deleteObject {
+export class UserService {
   private baseUrl: string = environment.BASE_URL;
   constructor(private http: HttpClient) { }
 
@@ -49,15 +50,14 @@ export class UserService implements deleteObject {
       .pipe(catchError(this.handleError));
   }
 
-  //TODO getUser(datos para editar)
-  getEditUser(): Observable<UpdatePerfilData> {
-    return this.http.get<UpdatePerfilData>(this.baseUrl + environment.BASE_TOKEN + '/user/perfil')
+  getEditUser(username: string): Observable<UpdatePerfilData> {
+    return this.http.get<UpdatePerfilData>(this.baseUrl + environment.BASE_TOKEN + '/user/' + username + '/perfil')
       .pipe(catchError(this.handleError));
   }
 
-  //TODO delete URL
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `/user/${id}`)
+  
+  deleteUser(username: string): Observable<IdComboResponse> {
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_ADMIN + '/' + username + '/desactivacion')
       .pipe(catchError(this.handleError));
   }
 
@@ -68,10 +68,8 @@ export class UserService implements deleteObject {
       .pipe(map(() => true), catchError(this.handleError));
   }
 
-  //TODO edit URL
-  editUser(user: UpdatePerfilData): Observable<any> {
-    return this.http.put<any>(this.baseUrl +
-      `/user`,
+  editUser(user: PerfilUsuarioData): Observable<IdComboResponse> {
+    return this.http.put<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/perfil',
       user,
       httpOptions)
       .pipe(catchError(this.handleError));

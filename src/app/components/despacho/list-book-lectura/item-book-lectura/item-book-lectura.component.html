@@ -1,8 +1,8 @@
 <div class="book-container container-fluid">
   <div class="imagen">
-    <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== ''; else noData">
+    <ng-container *ngIf="libro.imagen !== undefined && libro.imagen !== '' && libro.imagen !== null; else noData">
       <div class="rectangular-image" (click)="fichaLibro(libro.id)">
-        <img [src]="libro.imagen" alt="Portada libro">
+        <img [src]="'data:image;base64,' + libro.imagen" alt="Portada libro">
       </div>
     </ng-container>
     <ng-template #noData>
@@ -20,11 +20,11 @@
       <span>{{ libro.descripcion }}</span>
       <div class="d-flex gap-2 mt-2">
         <ng-container *ngIf="libro.tipo">
-          <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
-        </ng-container>
-        <ng-container *ngIf="libro.genero">
+          <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre | uppercase}}</div>
+      </ng-container>
+      <ng-container *ngIf="libro.genero">
           <div class="detalle-genero" [ngStyle]="generoStyle">{{libro.genero.nombre| uppercase}}</div>
-        </ng-container>
+      </ng-container>
       </div>
     </div>
     <div class="botones">
@@ -40,8 +40,7 @@
         <h6 class="autor">{{libro.autor| uppercase}}</h6>
       </span>
       <div>Paginas totales: {{libro.paginasTotales}}</div>
-      <div>Fecha de inicio: {{(libro.fechaInicio ? libro.fechaInicio : 'Sin datos')}}</div>
-      <div>Fecha final: {{(libro.fechaFinal ? libro.fechaFinal : 'Sin datos')}}</div>
+      <div>Fecha lectura: {{(libro.fechaLectura ? libro.fechaLectura : 'Sin datos')}}</div>
       <div class="d-flex gap-2 mt-2">
         <ng-container *ngIf="libro.tipo">
           <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>
@@ -68,7 +67,6 @@
       </span>
       <div>Paginas totales: {{libro.paginasTotales}}</div>
       <div>Paginas leidas: {{(libro.paginasLeidas ? libro.paginasLeidas : 'Sin datos')}}</div>
-      <div>Fecha de inicio: {{(libro.fechaInicio ? libro.fechaInicio : 'Sin datos')}}</div>
       <div class="d-flex gap-2 mt-2">
         <ng-container *ngIf="libro.tipo">
           <div class="detalle-tipo" [ngStyle]="tipoStyle">{{libro.tipo.nombre| uppercase}}</div>

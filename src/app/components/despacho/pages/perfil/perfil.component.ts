@@ -1,7 +1,7 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, Input, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -72,15 +72,18 @@ export class PerfilComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadData() {
-    if (this.userUsername && this.userUsername !== null) {
-      this.subscriptions.add(this.usuarioService.getUserByUsername(this.userUsername).subscribe(data => {
-        if (data) {
-          this.perfilUsuario = data;
-        }
-      })
-      );
-      this.subscriptions.add(this.masLeidosBookService.getListadoFavoritosUsuario(this.userUsername).subscribe(data => {
+  loadData(): void {
+    const username = this.userUsername ?? ''; // Si userUsername es null o undefined, asigna un string vacío
+    
+    this.subscriptions.add(
+      this.usuarioService.getUserByUsername(username).pipe(
+        switchMap(data => {
+          if (data) {
+            this.perfilUsuario = data;
+          }
+          return this.masLeidosBookService.getListadoFavoritosUsuario(username);
+        })
+      ).subscribe(data => {
         if (data.libros) {
           this.libros = data.libros;
           this.dividirLibrosPorPagina();
@@ -88,8 +91,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       })
-      );
-    }
+    );
   }
 
   setcolores() {

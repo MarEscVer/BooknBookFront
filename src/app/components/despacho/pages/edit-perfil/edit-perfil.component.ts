@@ -27,6 +27,7 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
 
   typeOptions: Combo[] = [];
   genderOptions: Combo[] = [];
+  userUsername?: string | null;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -39,6 +40,7 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
     private router: Router,
     private generoTipoService: GeneroTipoService,
     private userService: UserService,
+    private authService: AuthService,
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -51,37 +53,43 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
       nombre: [''],
       email: ['', [Validators.email]],
       password: [''],
-      tipo: [''],
-      genero: [''],
+      idTipo: [''],
+      idGenero: [''],
       apellidoPrimero: [''],
       apellidoSegundo: [''],
     });
   }
 
   ngOnInit(): void {
-    this.loadData();
-    this.obtenerGeneroTipo();
+    this.subscriptions.add(
+      this.authService.userUsername$.subscribe(username => {
+        this.userUsername = username;
+        this.loadData();
+        this.obtenerGeneroTipo();
+      })
+    );
   }
 
-  //TODO MIRAR EL EDITAR (CONFIGURACION) PERFIL
   loadData() {
-    this.subscriptions.add(this.userService.getEditUser().subscribe(data => {
-      if (data) {
-        this.perfilUsuario = data;
-        this.formeEditUser.patchValue({
-          username: data.username,
-          nombre: data.nombre,
-          apellidoPrimero: data.apellidoPrimero,
-          apellidoSegundo: data.apellidoSegundo,
-          tipo: data.tipo,
-          genero: data.genero,
-          email: data.email,
-          password: data.password
-        });
-        this.urlImagenDelServidor = data.imagenPerfil;
-      }
-    })
-    );
+    if (this.userUsername) {
+      this.subscriptions.add(this.userService.getEditUser(this.userUsername).subscribe(data => {
+        if (data) {
+          this.perfilUsuario = data;
+          this.formeEditUser.patchValue({
+            username: data.username,
+            nombre: data.nombre,
+            apellidoPrimero: data.apellidoUno,
+            apellidoSegundo: data.apellidoDos,
+            idGenero: data.genero.id,
+            idTipo: data.tipo.id,
+            email: data.email,
+            password: data.password
+          });
+          this.urlImagenDelServidor = data.imagenPerfil;
+        }
+      })
+      );
+    }
   }
 
   private uploadImage(id: number): void {
@@ -103,7 +111,7 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
       .subscribe({
         next: (user) => {
           this.notification.show(
-            'Perfil editado correctamente!',
+            user.message,
             'success'
           );
           this.uploadImage(user.id);
@@ -120,10 +128,12 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
   }
 
   obtenerGeneroTipo(): void {
-    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+    this.subscriptions.add(this.generoTipoService.generoTipo$.subscribe(
       (data) => {
-        this.typeOptions = data.tipo.valores;
-        this.genderOptions = data.genero.valores;
+        if (data) {
+          this.typeOptions = data.tipo.valores;
+          this.genderOptions = data.genero.valores;
+        }
       }
     ));
   }

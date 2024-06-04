@@ -68,7 +68,7 @@ export class InteresModalComponent implements OnInit {
             }
           });
         }
-        if (estadoMarcado === 'LEÍDO') {
+        if (estadoMarcado === 'LEIDO') {
           const dialogValoracion = this.dialog.open(UserValoracionModalComponent, {
             width: '50%',
             data: {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -9,7 +9,7 @@ import { ClubListAllComponent } from '../../club-list-all/club-list-all.componen
   templateUrl: './clubes.component.html',
   styleUrls: ['./clubes.component.scss']
 })
-export class ClubesComponent implements OnInit {
+export class ClubesComponent implements OnInit, OnDestroy {
 
   userLoged: boolean = false;
   iconoOpcion: boolean = true;
@@ -34,5 +34,9 @@ export class ClubesComponent implements OnInit {
         }
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

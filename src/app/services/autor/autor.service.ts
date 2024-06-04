@@ -10,7 +10,7 @@ import { BookListResponse } from 'src/app/shared/models/book/book';
 @Injectable({
   providedIn: 'root'
 })
-export class AutorService implements deleteObject {
+export class AutorService {
   private baseUrl: string = environment.BASE_URL;
   private autorSeleccionadoSubject: BehaviorSubject<AutorData | undefined> = new BehaviorSubject<AutorData | undefined>(undefined);
   autorSeleccionado$: Observable<AutorData | undefined> = this.autorSeleccionadoSubject.asObservable();
@@ -25,12 +25,6 @@ export class AutorService implements deleteObject {
   setAutor(autor: AutorData) {
     this.autorSeleccionadoSubject.next(autor);
     localStorage.setItem('selectedAutor', JSON.stringify(autor));
-  }
-
-  //TODO delete URL
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `/autor/${id}`)
-      .pipe(catchError(this.handleError));
   }
 
   addAutor(autorData: AutorData): Observable<IdComboResponse> {

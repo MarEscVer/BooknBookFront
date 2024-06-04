@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AutorService } from 'src/app/services/autor/autor.service';
 import { BookItemCard } from 'src/app/shared/models/book/book';
@@ -11,10 +11,11 @@ import { BookItemCard } from 'src/app/shared/models/book/book';
 export class ListBookComponent implements OnInit, OnDestroy {
 
   listadoLibros?: BookItemCard[];
+  loading: boolean = true;
 
   @Input() idAutor?: number;
-
   private subscriptions: Subscription = new Subscription();
+  @Output() datosCargados = new EventEmitter<boolean>();
 
   constructor(
     public autorService: AutorService,
@@ -29,6 +30,8 @@ export class ListBookComponent implements OnInit, OnDestroy {
       this.subscriptions.add(this.autorService.getLibrosAutor(this.idAutor).subscribe(data => {
         if (data.libros) {
           this.listadoLibros = data.libros;
+          this.loading = false;
+          this.datosCargados.emit(true);
         }
       }));
     }

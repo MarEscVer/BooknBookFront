@@ -1,12 +1,9 @@
 <div class="table-responsive">
     <div class="container-fluid">
-
         <div class="row-flex mt-3">
             <div *ngFor="let libro of libros">
                 <app-item-book-lectura [libro]="libro" [estado]="estado"></app-item-book-lectura>
             </div>
         </div>
-
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
 </div>

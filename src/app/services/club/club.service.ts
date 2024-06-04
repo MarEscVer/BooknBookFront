@@ -32,7 +32,7 @@ export class ClubService implements deleteObject {
   }
 
   getClubById(idClub: number): Observable<ClubEdit> {
-    return this.http.get<ClubEdit>(this.baseUrl + environment.BASE_TOKEN + `/grupo/${idClub}`, httpOptions).pipe(catchError(this.handleError));
+    return this.http.get<ClubEdit>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + idClub, httpOptions).pipe(catchError(this.handleError));
   }
 
   getListClubesAnonimo(pageIndex: number, size: number, filter: string): Observable<ClubItemListResponse> {
@@ -76,6 +76,18 @@ export class ClubService implements deleteObject {
     };
 
     return this.http.get<ClubShortListResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/mis-clubes', { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  abandonarClub(id: number): Observable<IdComboResponse> {
+    const accion = 'A';
+    return this.http.get<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  pertenecerClub(id: number): Observable<IdComboResponse> {
+    const accion = 'P';
+    return this.http.get<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

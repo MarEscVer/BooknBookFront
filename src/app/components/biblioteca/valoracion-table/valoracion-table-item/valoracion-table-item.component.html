@@ -33,7 +33,7 @@
         <div class="detalles-denuncia">
             <ng-container *ngIf="userRole === 'NORMAL' || userRole === 'ADMIN'; else anonimoBlock">
                 <ng-container *ngIf="estiloPerfil !== 'PERFILPROPIO'">
-                    <app-denuncia-button [modalInfo]="{idLibro: comentario.valoracionIdLibro, username: comentario.username}">
+                    <app-denuncia-button [modalInfo]="{idLibro: comentario.valoracionIdLibro, idUsuario: comentario.valoracionIdUsuario}">
                     </app-denuncia-button>
                 </ng-container>
             </ng-container>

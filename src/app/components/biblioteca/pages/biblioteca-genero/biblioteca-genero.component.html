@@ -1,10 +1,13 @@
 <app-menu-desplegable></app-menu-desplegable>
 <app-breadcumb></app-breadcumb>
 <div *ngIf="genero$">
-    <app-imagen-list-book-card [listadoService]="masLeidosBookService"
-        [generoObs]="genero$"></app-imagen-list-book-card>
-        <div class="mb-5 mt-5 ms-3">
-            <app-paginador-list-book [generoObs]="genero$"></app-paginador-list-book>
-        </div>
-    <app-footer></app-footer>
+    <app-imagen-list-book-card [listadoService]="masLeidosBookService" [generoObs]="genero$" [titulo]="'LOS MÁS LEIDOS'"
+        (datosCargados)="onDatosCargadosListado($event)"></app-imagen-list-book-card>
+    <div class="mb-5 mt-5 ms-3">
+        <app-paginador-list-book [generoObs]="genero$"
+            (datosCargados)="onDatosCargadosPaginador($event)"></app-paginador-list-book>
+    </div>
+    <ng-container *ngIf="datosCargadosListado && datosCargadosPaginador">
+        <app-footer></app-footer>
+    </ng-container>
 </div>

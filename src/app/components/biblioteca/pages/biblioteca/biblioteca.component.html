@@ -1,16 +1,17 @@
 <app-menu-desplegable></app-menu-desplegable>
 <app-breadcumb></app-breadcumb>
-<div class="carousel-libro">
-    <h5 class="carousel-titulo text-center m-0">LOS MÁS LEIDOS</h5>
-    <app-imagen-list-book-card [listadoService]="masLeidosBookService"></app-imagen-list-book-card>
-</div>
-<div class="carousel-libro mt-5">
-    <h5 class="carousel-titulo text-center m-0">RECOMENDADOS</h5>
-    <app-imagen-list-book-card [listadoService]="recomendadosBookService"></app-imagen-list-book-card>
-</div>
-<div class="carousel-libro mt-5 mb-5">
-    <h5 class="carousel-titulo text-center m-0">NOVEDADES</h5>
-    <app-imagen-list-book-card [listadoService]="novedadesBookService"></app-imagen-list-book-card>
-</div>
-<app-footer></app-footer>
+<app-imagen-list-book-card [listadoService]="masLeidosBookService" [titulo]="'LOS MÁS LEIDOS'"
+    (datosCargados)="onDatosCargadosMasLeidos($event)"></app-imagen-list-book-card>
 
+<div class="mt-5">
+    <app-imagen-list-book-card [listadoService]="recomendadosBookService" [titulo]="'RECOMENDADOS'"
+        (datosCargados)="onDatosCargadosRecomendados($event)"></app-imagen-list-book-card>
+</div>
+
+<div class="mt-5 mb-5">
+    <app-imagen-list-book-card [listadoService]="novedadesBookService" [titulo]="'NOVEDADES'"
+        (datosCargados)="onDatosCargadosNovedades($event)"></app-imagen-list-book-card>
+</div>
+<ng-container *ngIf="masLeidosCargados && recomendadosCargados && novedadesCargados">
+    <app-footer></app-footer>
+</ng-container>

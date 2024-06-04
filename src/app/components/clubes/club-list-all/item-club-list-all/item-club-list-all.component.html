@@ -29,7 +29,7 @@
         </div>
         <div class="detalles-club-usuario">
             <ng-container *ngIf="userLoged">
-                <ng-container *ngIf="club.perteneces ; else noPertenecer">
+                <ng-container *ngIf="isMember; else noPertenecer">
                     <button mat-button class="estilo-claro" (click)="abandonarClub()">ABANDONAR</button>
                 </ng-container>
                 <ng-template #noPertenecer>

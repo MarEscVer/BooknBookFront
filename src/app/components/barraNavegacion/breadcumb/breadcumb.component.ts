@@ -44,11 +44,13 @@ export class BreadcumbComponent implements OnInit, OnDestroy {
   }
 
   obtenerGeneroTipo(): void {
-    this.subscriptions.add(this.generoTipoService.getGeneroTipo().subscribe(
+    this.subscriptions.add(this.generoTipoService.generoTipo$.subscribe(
       (data) => {
-        this.genderOptions = data.genero.valores.concat(data.tipo.valores);
-        this.generos = this.genderOptions.map(value => sinDiacriticos(value.nombre.toLocaleLowerCase().replaceAll(' ', '-')));
-        this.updateBreadcrumb();
+        if (data) {
+          this.genderOptions = data.genero.valores.concat(data.tipo.valores);
+          this.generos = this.genderOptions.map(value => sinDiacriticos(value.nombre.toLocaleLowerCase().replaceAll(' ', '-')));
+          this.updateBreadcrumb();
+        }
       }
     ));
   }

@@ -31,10 +31,23 @@ export interface ComentarioDataResponse {
     valoraciones: ComentarioData[];
 }
 
+export interface ComentarioDataPaginadorResponse {
+    valoraciones: ComentarioData[];
+    pageInfo: pageInfo; 
+}
+
 export interface ValoracionData {
     id: number;
 }
 
 export interface ComentarioResponse {
     message: string;
+}
+
+export interface DenunciarComentario {
+    motivo: string;
+    texto: string;
+    idLibro: number;
+    idUsuario: number;
+    grupo: boolean;
 }

@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ComentarioService } from 'src/app/services/comentario/comentario.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { Combo } from 'src/app/shared/models/combo/combo';
+import { DenunciarComentario } from 'src/app/shared/models/comentario/comentario';
 import { ModalInfoDenuciaComentario } from 'src/app/shared/models/modal/modal';
 
 @Component({
@@ -29,6 +31,7 @@ export class DenunciaModalComponent implements OnInit, OnDestroy {
   constructor(
     public comentarioService: ComentarioService,
     private formBuilder: FormBuilder,
+    private notification: NotificationService,
     private formControl: InputErrorStateMatcherExample,
     @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ModalInfoDenuciaComentario },
     private dialogRef: MatDialogRef<DenunciaModalComponent>,
@@ -60,9 +63,26 @@ export class DenunciaModalComponent implements OnInit, OnDestroy {
   }
 
   submit(){
-    //TODO LLAMAR SERVIDOR CON LOS DATOS DE LA DENUNCIA --> ID LIBRO + USERNAME DEL COMENTARIO ESTÁN EN EL MODALINFO
-    console.log(this.formDenuncia.value);
-    this.dialogRef.close();
+    const denunciaRequest: DenunciarComentario = {
+      motivo: this.formDenuncia.get('motivo')?.value,
+      texto: this.formDenuncia.get('texto')?.value,
+      idLibro: this.modalInfo.idLibro,
+      idUsuario: this.modalInfo.idUsuario,
+      grupo: false,
+    }
+    this.subscriptions.add(this.comentarioService.denunciarComentario(denunciaRequest).subscribe({
+      next: (denuncia) => {
+        this.notification.show(
+          'Denuncia realizada con éxito',
+          'success'
+        );
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        this.notification.show('No se ha podido realizar la denuncia', 'error');
+        this.dialogRef.close(true);
+      },
+    }));
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
@@ -10,7 +10,7 @@ import { sinDiacriticos } from 'src/app/shared/utils/acentos';
   templateUrl: './item-book-card.component.html',
   styleUrls: ['./item-book-card.component.scss'],
 })
-export class ItemBookCardComponent {
+export class ItemBookCardComponent implements OnDestroy {
 
   @Input() libro!: BookItemCard;
   imgNoData: string = '/assets/img/iconoLibro.jpg';
@@ -35,15 +35,19 @@ export class ItemBookCardComponent {
           let titulo: string = this.libroSeleccionado.titulo.toLowerCase().replaceAll(' ', '-');
 
           if (this.libroSeleccionado.genero) {
-            genero = this.libroSeleccionado.genero.nombre.toLowerCase();
+            genero = this.libroSeleccionado.genero.nombre.toLowerCase().replaceAll(' ', '-');
           } else {
-            genero = this.libroSeleccionado.tipo.nombre.toLowerCase();
+            genero = this.libroSeleccionado.tipo.nombre.toLowerCase().replaceAll(' ', '-');
           }
 
           this.router.navigate(['/biblioteca', sinDiacriticos(genero), sinDiacriticos(titulo)]);
         }
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

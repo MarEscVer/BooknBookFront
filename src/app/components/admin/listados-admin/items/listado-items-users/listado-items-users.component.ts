@@ -155,7 +155,10 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
     this.loadData();
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy() {
+    if (this.dataSource) {
+      this.dataSource.disconnect();
+    }
     this.subscriptions.unsubscribe();
   }
 
