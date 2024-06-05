@@ -1,16 +1,23 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookItemCard } from 'src/app/shared/models/book/book';
 
 @Component({
   selector: 'app-paginador-list-book',
   templateUrl: './paginador-list-book.component.html',
-  styleUrls: ['./paginador-list-book.component.scss']
+  styleUrls: ['./paginador-list-book.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class PaginadorListBookComponent implements OnInit, OnDestroy {
 
@@ -27,6 +34,7 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
   totalItems = 0;
   filter: string = '';
   loading: boolean = true;
+  filterSubject: Subject<string> = new Subject<string>();
 
   @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
@@ -46,6 +54,14 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
       this.loadData();
     }));
     this.observable = this.dataSource.connect();
+
+    this.subscriptions.add(
+      this.filterSubject.pipe(debounceTime(300)).subscribe(filterValue => {
+        this.filter = filterValue;
+        this.currentPage = 0;
+        this.loadData();
+      })
+    );
   }
 
   loadData() {
@@ -74,9 +90,7 @@ export class PaginadorListBookComponent implements OnInit, OnDestroy {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filter = filterValue;
-    this.currentPage = 0;
-    this.loadData();
+    this.filterSubject.next(filterValue);
   }
 
   subscribeToSort() {

@@ -1,15 +1,22 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
 import { BookItemList } from 'src/app/shared/models/book/book';
 
 @Component({
   selector: 'app-listado-items-books',
   templateUrl: './listado-items-books.component.html',
-  styleUrls: ['./listado-items-books.component.scss']
+  styleUrls: ['./listado-items-books.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = ['img', 'title', 'author', 'tipe', 'gender', 'year', 'actions'];
@@ -23,6 +30,7 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
   totalItems = 0;
   filter: string = '';
   isLoading: boolean = true;
+  filterSubject: Subject<string> = new Subject<string>();
 
   @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
@@ -37,6 +45,14 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
 
   ngOnInit() {
     this.loadData();
+
+    this.subscriptions.add(
+      this.filterSubject.pipe(debounceTime(300)).subscribe(filterValue => {
+        this.filter = filterValue;
+        this.currentPage = 0;
+        this.loadData();
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -48,9 +64,7 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filter = filterValue;
-    this.currentPage = 0;
-    this.loadData();
+    this.filterSubject.next(filterValue);
   }
 
   subscribeToSort() {

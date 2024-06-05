@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { environment, httpOptions } from 'src/environments/environment';
-import { deleteObject } from '../interfaces';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { AutorData } from 'src/app/shared/models/autor/autor';
@@ -16,7 +15,7 @@ export class AutorService {
   autorSeleccionado$: Observable<AutorData | undefined> = this.autorSeleccionadoSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    const storedAutor = localStorage.getItem('selectedAutor');
+    const storedAutor = sessionStorage.getItem('selectedAutor');
     const initialAutor = storedAutor ? JSON.parse(storedAutor) : undefined;
     this.autorSeleccionadoSubject = new BehaviorSubject<AutorData | undefined>(initialAutor);
     this.autorSeleccionado$ = this.autorSeleccionadoSubject.asObservable();
@@ -24,7 +23,7 @@ export class AutorService {
 
   setAutor(autor: AutorData) {
     this.autorSeleccionadoSubject.next(autor);
-    localStorage.setItem('selectedAutor', JSON.stringify(autor));
+    sessionStorage.setItem('selectedAutor', JSON.stringify(autor));
   }
 
   addAutor(autorData: AutorData): Observable<IdComboResponse> {

@@ -1,6 +1,5 @@
-#for dev
-# Etapa de desarrollo
-FROM node:16-alpine
+# Etapa de construcción
+FROM node:16-alpine AS builder
 
 WORKDIR /app
 
@@ -8,19 +7,19 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+RUN npm run build -- --prod
 
-# Agregar la configuración para que Angular escuche en todas las interfaces
-CMD ["npm", "start", "--", "--host", "0.0.0.0"]
+# Etapa de producción
+FROM nginx:alpine
 
+# Copiar los archivos generados por Angular a la ubicación predeterminada de Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-#for prod
-#FROM node:16-alpine AS build
-#WORKDIR /app
+# Agregar configuraciones adicionales de Nginx si es necesario
+# COPY nginx.conf /etc/nginx/nginx.conf
 
-#COPY . .
-#RUN npm install
-#RUN npm run build
-# Serve Application using Nginx Server
-#FROM nginx:alpine
-#COPY --from=build /app/dist/project-name/ /usr/share/nginx/html
-#EXPOSE 80
+# Exponer el puerto 80 para que Nginx pueda ser accedido desde fuera del contenedor
+EXPOSE 80
+
+# Comando predeterminado para iniciar Nginx cuando se ejecute el contenedor
+CMD ["nginx", "-g", "daemon off;"]

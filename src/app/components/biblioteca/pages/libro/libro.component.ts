@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
+import { ComentarioService } from 'src/app/services/comentario/comentario.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Book } from 'src/app/shared/models/book/book';
 import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
@@ -32,9 +33,11 @@ export class LibroComponent implements OnInit, OnDestroy {
     private bookService: BookService,
     private authService: AuthService,
     private usuarioService: UserService,
+    private comentarioService: ComentarioService,
   ) { }
 
   ngOnInit(): void {
+    this.loadComboMotivoDenuncia();
     this.subscriptions.add(
       this.authService.userRole$.subscribe(role => {
         this.userRole = role;
@@ -44,7 +47,7 @@ export class LibroComponent implements OnInit, OnDestroy {
       this.bookService.libroSeleccionado$.subscribe(libro => {
         this.libro = libro;
         if (this.libro) {
-          this.valoracionMedia = this.libro.calificacionMedia ?? 0;
+          this.valoracionMedia = Math.round(this.libro.calificacionMedia ?? 0);
           this.contadorComentario = this.libro.contadorComentario ?? 0;
           this.subscriptions.add(
             this.usuarioService.vincularUsuarioLibro(this.libro.id, this.libro?.estado).subscribe({
@@ -52,6 +55,16 @@ export class LibroComponent implements OnInit, OnDestroy {
                 this.modalInfoAddOpinion = valoracion;
               }
             }));
+        }
+      })
+    );
+  }
+
+  loadComboMotivoDenuncia() {
+    this.subscriptions.add(
+      this.comentarioService.motivoDenuncia$.subscribe(motivoDenuncia => {
+        if (!motivoDenuncia) {
+          this.comentarioService.getComboMotivoDenuncia().subscribe();
         }
       })
     );

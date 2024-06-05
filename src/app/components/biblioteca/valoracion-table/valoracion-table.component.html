@@ -1,8 +1,4 @@
 <div class="table-responsive">
-    <!-- Spinner de carga -->
-    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="height: 200px;">
-        <mat-spinner></mat-spinner>
-    </div>
     <ng-container *ngIf="!isLoading">
         <div class="row-flex mt-3">
             <div *ngFor="let comentario of comentarios" class="comentario">

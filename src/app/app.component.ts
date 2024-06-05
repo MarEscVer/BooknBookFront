@@ -9,8 +9,12 @@ import { GeneroTipoService } from './services/genero/genero-tipo.service';
 export class AppComponent implements OnInit {
 
   constructor(private generoTipoService: GeneroTipoService) { }
-  
+
   ngOnInit(): void {
-    this.generoTipoService.getGeneroTipo().subscribe();
+    this.generoTipoService.generoTipo$.subscribe(generoTipo => {
+      if (!generoTipo) {
+        this.generoTipoService.getGeneroTipo().subscribe();
+      }
+    });
   }
 }

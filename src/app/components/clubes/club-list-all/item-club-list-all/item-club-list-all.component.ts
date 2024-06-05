@@ -62,7 +62,6 @@ export class ItemClubListAllComponent implements OnInit, OnDestroy {
           } else {
             this.notification.show(data.message, 'error');
             this.isMember = true;
-            this.club!.miembros += 1;
           }
         }
       }))

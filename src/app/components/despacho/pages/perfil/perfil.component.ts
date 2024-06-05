@@ -37,10 +37,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   imgNoData: string = '/assets/img/iconoPerfil.jpg';
   tipoStyle: any = {};
   generoStyle: any = {};
+  coloresGeneroTipo: boolean = false;
 
-  /**
-  * Seguimiento de las suscripciones en TS para poder cancelarlas en OnDestroy.
-  */
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -74,7 +72,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   loadData(): void {
     const username = this.userUsername ?? ''; // Si userUsername es null o undefined, asigna un string vacío
-    
+
     this.subscriptions.add(
       this.usuarioService.getUserByUsername(username).pipe(
         switchMap(data => {
@@ -115,6 +113,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
           'padding': '5px',
         };
       }
+      this.coloresGeneroTipo = true;
     }
   }
 
@@ -123,11 +122,31 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   follow() {
-    console.log('SEGUIR');
+    if (this.userUsername) {
+      this.subscriptions.add(
+        this.usuarioService.followUser(this.userUsername).subscribe(data => {
+          if (data) {
+            if(this.perfilUsuario){
+              this.perfilUsuario.seguir = true;
+            }
+          }
+        })
+      );
+    }
   }
 
   unfollow() {
-    console.log('DEJAR DE SEGUIR');
+    if (this.userUsername) {
+      this.subscriptions.add(
+        this.usuarioService.unFollowUser(this.userUsername).subscribe(data => {
+          if (data) {
+            if(this.perfilUsuario){
+              this.perfilUsuario.seguir = false;
+            }
+          }
+        })
+      );
+    }
   }
 
   @HostListener('window:resize', ['$event'])

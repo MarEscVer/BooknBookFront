@@ -1,12 +1,19 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { ClubService } from 'src/app/services/club/club.service';
 import { ClubDataShort } from 'src/app/shared/models/club/club';
 
 @Component({
   selector: 'app-user-club-list',
   templateUrl: './user-club-list.component.html',
-  styleUrls: ['./user-club-list.component.scss']
+  styleUrls: ['./user-club-list.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class UserClubListComponent implements OnInit, OnDestroy {
 
@@ -27,12 +34,13 @@ export class UserClubListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadData();
     this.subscriptions.add(
-      this.clubService.clubDeleted$.subscribe(() => {
+      this.clubService.clubAdded$.pipe(filter(added => added)).subscribe(() => {
         this.loadData();
       })
     );
+
     this.subscriptions.add(
-      this.clubService.clubAdded$.subscribe(() => {
+      this.clubService.clubDeleted$.pipe(filter(deleted => deleted)).subscribe(() => {
         this.loadData();
       })
     );

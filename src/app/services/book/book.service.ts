@@ -16,7 +16,7 @@ export class BookService implements deleteObject {
   libroSeleccionado$: Observable<Book | undefined> = this.libroSeleccionadoSubject.asObservable();
   
   constructor(private http: HttpClient) {
-    const storedBook = localStorage.getItem('selectedBook');
+    const storedBook = sessionStorage.getItem('selectedBook');
     const initialBook = storedBook ? JSON.parse(storedBook) : undefined;
     this.libroSeleccionadoSubject = new BehaviorSubject<Book | undefined>(initialBook);
     this.libroSeleccionado$ = this.libroSeleccionadoSubject.asObservable();
@@ -24,7 +24,7 @@ export class BookService implements deleteObject {
 
   setLibro(libro: Book) {
     this.libroSeleccionadoSubject.next(libro);
-    localStorage.setItem('selectedBook', JSON.stringify(libro));
+    sessionStorage.setItem('selectedBook', JSON.stringify(libro));
   }
 
   delete(id: number): Observable<any> {

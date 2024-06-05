@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
 import { ClubData, ClubEdit, ClubItemListResponse, ClubShortListResponse } from 'src/app/shared/models/club/club';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
@@ -23,12 +23,18 @@ export class ClubService implements deleteObject {
 
   delete(id: number): Observable<IdComboResponse> {
     return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + id)
-      .pipe(catchError(this.handleError));
+    .pipe(
+      tap(() => this.notifyClubDeleted()),
+      catchError(this.handleError)
+    );
   }
 
   addClub(clubData: ClubData): Observable<IdComboResponse> {
     return this.http.post<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + `/grupo`, clubData, httpOptions)
-      .pipe(catchError(this.handleError));
+    .pipe(
+      tap(() => this.notifyClubAdded()),
+      catchError(this.handleError)
+    );
   }
 
   getClubById(idClub: number): Observable<ClubEdit> {
@@ -81,13 +87,13 @@ export class ClubService implements deleteObject {
 
   abandonarClub(id: number): Observable<IdComboResponse> {
     const accion = 'A';
-    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + id + '/self/' + accion, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   pertenecerClub(id: number): Observable<IdComboResponse> {
     const accion = 'P';
-    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN  + '/grupo/' +  id + '/self/' + accion, httpOptions)
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + id + '/self/' + accion, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

@@ -84,7 +84,6 @@ export class AddClubModalComponent implements OnDestroy, OnInit {
             'success'
           );
           this.uploadImage(clubAdded.id);
-          this.clubService.notifyClubAdded();
         },
         error: (error) => {
           this.notification.show('No se ha podido añadir el club', 'error');

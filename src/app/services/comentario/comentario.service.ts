@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
 import { ComentarioDataPaginadorResponse, ComentarioDataResponse, ComentarioDenunciadoResponse, ComentarioResponse, DenunciarComentario, ValoracionData } from 'src/app/shared/models/comentario/comentario';
 import { ComboResponse } from 'src/app/shared/models/combo/combo';
@@ -12,7 +12,16 @@ import { ComboResponse } from 'src/app/shared/models/combo/combo';
 })
 export class ComentarioService implements deleteObject {
   private baseUrl: string = environment.BASE_URL;
-  constructor(private http: HttpClient) { }
+  private motivoDenunciaSubject: BehaviorSubject<ComboResponse | undefined> = new BehaviorSubject<ComboResponse | undefined>(undefined);
+  motivoDenuncia$: Observable<ComboResponse | undefined> = this.motivoDenunciaSubject.asObservable();
+  private motivoDenunciaLoaded: boolean = false;
+
+  constructor(private http: HttpClient) {
+    const storedData = sessionStorage.getItem('motivoDenuncia');
+    const initialData = storedData ? JSON.parse(storedData) : null;
+    this.motivoDenunciaSubject= new BehaviorSubject<ComboResponse | undefined>(initialData);
+    this.motivoDenuncia$ = this.motivoDenunciaSubject.asObservable();
+  }
 
   delete(id: number): Observable<any> {
     return this.http.put<any>(this.baseUrl + environment.BASE_ADMIN + '/denuncia/' + id + '/RECHAZADA', '')
@@ -52,8 +61,17 @@ export class ComentarioService implements deleteObject {
   }
 
   getComboMotivoDenuncia(): Observable<ComboResponse> {
+    const storedData = sessionStorage.getItem('motivoDenuncia');
+
     return this.http.get<ComboResponse>(this.baseUrl + '/combo/denuncia/motivo')
-      .pipe(catchError(this.handleError));
+    .pipe(
+      tap(data => {
+        sessionStorage.setItem('motivoDenuncia', JSON.stringify(data));
+        this.motivoDenunciaSubject.next(data);
+        this.motivoDenunciaLoaded = true;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   getListComentarioUsuario(username: string): Observable<ComentarioDataResponse> {

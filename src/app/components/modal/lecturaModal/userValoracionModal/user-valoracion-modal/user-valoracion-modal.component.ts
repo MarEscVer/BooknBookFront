@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -22,20 +22,23 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   procedenciaModal: boolean = false;
   private submitted = false;
   libro?: Book;
+  paginasLibro: number= 0;
 
   formValoracion!: FormGroup;
   matcher!: FormErrorStateMatcher;
+  editing: boolean = false;
 
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, titulo: string, procedenciaModal?: boolean },
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, titulo: string, paginasLibro: number, procedenciaModal?: boolean },
     private dialogRef: MatDialogRef<UserValoracionModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
     private bookService: BookService,
     private usuarioService: UserService,
     private notification: NotificationService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -44,6 +47,12 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
       this.modalInfo = data.modalInfo;
       if (data.titulo) {
         this.tituloLibro = data.titulo;
+      }
+      if (data.paginasLibro) {
+        this.paginasLibro = data.paginasLibro;
+      }
+      if (data.modalInfo.calificacionPersonal){
+        this.editing = true;
       }
     }
   }
@@ -55,22 +64,33 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.modalInfo) {
       this.formValoracion.patchValue(this.modalInfo);
+      this.cdRef.detectChanges();
     }
   }
 
   submit() {
     const formValues = this.formValoracion.value;
+    if (this.modalInfo) {
+      this.modalInfo.paginaActual = this.paginasLibro;
+      if (!this.modalInfo.fechaComentario) {
+        this.modalInfo.fechaComentario = new Date().toISOString();
+      }
+      if (!this.modalInfo.fechaLectura) {
+        this.modalInfo.fechaLectura = new Date().toISOString();
+      }
+    }
     const dataToSend = {
       ...this.modalInfo,
       ...formValues,
     };
     this.submitted = true;
     this.sendDataToServer(dataToSend);
+    this.dialogRef.close();
   }
 
   sendDataToServer(data: ValoracionResponse) {
     if (this.modalInfo) {
-      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe({
+      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe({
         next: (valoracion) => {
           this.updateLibroSeleccionado();
           this.notification.show(
@@ -102,6 +122,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
         if (this.libro) {
           this.libro.estado = 'LEIDO';
           this.bookService.setLibro(this.libro);
+          this.cdRef.detectChanges();
         }
       })
     );

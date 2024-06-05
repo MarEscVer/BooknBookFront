@@ -1,7 +1,8 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -10,7 +11,13 @@ import { UserItemList, modifyUser } from 'src/app/shared/models/users/user';
 @Component({
   selector: 'app-listado-items-users',
   templateUrl: './listado-items-users.component.html',
-  styleUrls: ['./listado-items-users.component.scss']
+  styleUrls: ['./listado-items-users.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = ['img', 'username', 'fullname', 'email', 'rol', 'actions'];
@@ -29,6 +36,7 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
   totalItems = 0;
   filter: string = '';
   isLoading: boolean = true;
+  filterSubject: Subject<string> = new Subject<string>();
 
   @ViewChild(MatSort) sort?: MatSort;
 
@@ -52,6 +60,14 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
       })
     );
     this.loadData();
+
+    this.subscriptions.add(
+      this.filterSubject.pipe(debounceTime(300)).subscribe(filterValue => {
+        this.filter = filterValue;
+        this.currentPage = 0;
+        this.loadData();
+      })
+    );
   }
 
 
@@ -64,9 +80,7 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filter = filterValue;
-    this.currentPage = 0;
-    this.loadData();
+    this.filterSubject.next(filterValue);
   }
 
   subscribeToSort() {

@@ -86,6 +86,16 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  followUser(username: string): Observable<IdComboResponse> {
+    return this.http.post<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/usuario/' + username + '/follow', httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  unFollowUser(username: string): Observable<IdComboResponse> {
+    return this.http.post<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/usuario/' + username + '/unfollow', httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error);
     return throwError(() => error.error);

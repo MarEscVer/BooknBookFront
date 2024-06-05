@@ -100,6 +100,7 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
             'Imagen subida correctamente',
             'success'
           );
+          this.router.navigate(['/mi-despacho/perfil']);
         },
       }));
     }
@@ -115,7 +116,6 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
             'success'
           );
           this.uploadImage(user.id);
-          this.router.navigate(['/mi-despacho/perfil']);
         },
         error: (error) => {
           this.notification.show('No se ha podido editar el perfil', 'error');

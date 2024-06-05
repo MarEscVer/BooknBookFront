@@ -11,7 +11,8 @@
             <textarea matInput formControlName="comentario"></textarea>
         </mat-form-field>
         <button mat-raised-button (click)="submit()" color="accent"
-            [disabled]="!formValoracion.valid || formValoracion.get('estrellas')?.value === null">PUBLICAR
-            OPINIÓN</button>
+            [disabled]="!formValoracion.valid || (!editing && formValoracion.pristine)">
+            {{ editing ? 'EDITAR' : 'PUBLICAR OPINIÓN' }}
+        </button>
     </form>
 </div>

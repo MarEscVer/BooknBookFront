@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
@@ -6,7 +7,13 @@ import { BookListadoLectura } from 'src/app/shared/models/book/book';
 @Component({
   selector: 'app-list-book-lectura',
   templateUrl: './list-book-lectura.component.html',
-  styleUrls: ['./list-book-lectura.component.scss']
+  styleUrls: ['./list-book-lectura.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class ListBookLecturaComponent implements OnInit{
 

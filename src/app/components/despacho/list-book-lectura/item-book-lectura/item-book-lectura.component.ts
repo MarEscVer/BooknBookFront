@@ -7,7 +7,7 @@ import { BookService } from 'src/app/services/book/book.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Book, BookListadoLectura } from 'src/app/shared/models/book/book';
 import { applyColors } from 'src/app/shared/models/combo/combo';
-import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
+import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 import { sinDiacriticos } from 'src/app/shared/utils/acentos';
 
 @Component({

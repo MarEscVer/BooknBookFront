@@ -54,8 +54,8 @@ export class DenunciaModalComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.subscriptions.add(
-      this.comentarioService.getComboMotivoDenuncia().subscribe(data => {
-        if (data.valores) {
+      this.comentarioService.motivoDenuncia$.subscribe(data => {
+        if (data) {
           this.datosComboMotivo = data.valores;
         }
       })

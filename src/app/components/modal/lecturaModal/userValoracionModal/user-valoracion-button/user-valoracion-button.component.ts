@@ -11,7 +11,7 @@ import { ValoracionData, ValoracionResponse } from 'src/app/shared/models/coment
 export class UserValoracionButtonComponent {
   @Input() modalInfo!: ValoracionResponse;
   @Input() titulo!: string;
-
+  @Input() paginasLibro!: number;
 
   constructor(private dialog: MatDialog) {
   }
@@ -21,7 +21,8 @@ export class UserValoracionButtonComponent {
       width: '50%',
       data: {
         modalInfo: this.modalInfo,
-        titulo: this.titulo
+        titulo: this.titulo,
+        paginasLibro: this.paginasLibro,
       }
     });
   }

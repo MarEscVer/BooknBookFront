@@ -28,7 +28,6 @@ export class UserItemClubListComponent implements OnDestroy {
       this.clubService.delete(id).subscribe(data => {
         if (data.message) {
           this.notification.show(data.message, 'success');
-          this.clubService.notifyClubDeleted();
         } else {
           this.notification.show(data.message, 'error');
         }

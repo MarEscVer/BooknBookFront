@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,7 +9,13 @@ import { ComentarioDenunciadoItemList, ComentarioResponse } from 'src/app/shared
 @Component({
   selector: 'app-listado-items-comentarios',
   templateUrl: './listado-items-comentarios.component.html',
-  styleUrls: ['./listado-items-comentarios.component.scss']
+  styleUrls: ['./listado-items-comentarios.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class ListadoItemsComentariosComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['username', 'date', 'comentario', 'razon', 'actions'];

@@ -1,7 +1,8 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, debounceTime, filter } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ClubService } from 'src/app/services/club/club.service';
 import { ClubDataAll } from 'src/app/shared/models/club/club';
@@ -10,6 +11,12 @@ import { ClubDataAll } from 'src/app/shared/models/club/club';
   selector: 'app-club-list-all',
   templateUrl: './club-list-all.component.html',
   styleUrls: ['./club-list-all.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
 export class ClubListAllComponent implements OnInit, OnDestroy{
 
@@ -25,6 +32,7 @@ export class ClubListAllComponent implements OnInit, OnDestroy{
   filter: string = '';
   isLoading: boolean = true;
   userRole?: string | null;
+  filterSubject: Subject<string> = new Subject<string>();
 
   @ViewChild(MatSort) sort?: MatSort;
   private subscriptions: Subscription = new Subscription();
@@ -44,17 +52,25 @@ export class ClubListAllComponent implements OnInit, OnDestroy{
         this.loadData();
         if (this.clubes) {
           this.dataSource = new MatTableDataSource<ClubDataAll>(this.clubes);
-          this.changeDetectorRef.detectChanges();
         }
       })
     );
     this.subscriptions.add(
-      this.clubService.clubAdded$.subscribe(() => {
+      this.clubService.clubAdded$.pipe(filter(added => added)).subscribe(() => {
         this.loadData();
       })
     );
+
     this.subscriptions.add(
-      this.clubService.clubDeleted$.subscribe(() => {
+      this.clubService.clubDeleted$.pipe(filter(deleted => deleted)).subscribe(() => {
+        this.loadData();
+      })
+    );
+
+    this.subscriptions.add(
+      this.filterSubject.pipe(debounceTime(300)).subscribe(filterValue => {
+        this.filter = filterValue;
+        this.currentPage = 0;
         this.loadData();
       })
     );
@@ -69,10 +85,9 @@ export class ClubListAllComponent implements OnInit, OnDestroy{
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filter = filterValue;
-    this.currentPage = 0;
-    this.loadData();
+    this.filterSubject.next(filterValue);
   }
+  
 
   subscribeToSort() {
     if (this.sort) {

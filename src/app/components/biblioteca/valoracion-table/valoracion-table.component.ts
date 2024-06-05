@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ComentarioService } from 'src/app/services/comentario/comentario.service';
@@ -8,9 +9,15 @@ import { ComentarioData } from 'src/app/shared/models/comentario/comentario';
 @Component({
   selector: 'app-valoracion-table',
   templateUrl: './valoracion-table.component.html',
-  styleUrls: ['./valoracion-table.component.scss']
+  styleUrls: ['./valoracion-table.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]),
+      transition('* => void', [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]),
+    ])
+  ]
 })
-export class ValoracionTableComponent implements OnInit, OnDestroy {
+export class ValoracionTableComponent implements OnInit, OnDestroy, OnChanges {
 
   comentarios?: ComentarioData[];
 
@@ -26,9 +33,6 @@ export class ValoracionTableComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private changeDetectorRef: ChangeDetectorRef,
     private comentarioService: ComentarioService,
   ) { }
 
@@ -36,9 +40,13 @@ export class ValoracionTableComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if ('libro' in changes) {
+      this.loadData();
+    }
+  }
+
   loadData() {
-    //TODO LLAMAR SERVICIO --> TENER EN CUENTA EL estiloPerfil para hacer una llamada u otra
-    // PERFILPROPIO --> PERFIL DE OTRA PERSONA QUE ESTÁ BUSCANDO
     const newPage = Math.floor((this.currentPage * this.itemsPerPage) / this.itemsPerPage);
     this.currentPage = newPage;
     this.isLoading = true;
