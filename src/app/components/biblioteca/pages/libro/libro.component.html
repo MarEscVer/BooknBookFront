@@ -1,6 +1,6 @@
 <app-breadcumb></app-breadcumb>
-<div *ngIf="libro">
-    <app-ficha-libro [libro]="libro"></app-ficha-libro>
+<div *ngIf="libro$ | async as libro">
+    <app-ficha-libro [libro$]="libro$"></app-ficha-libro>
     <div class="carousel-libro mb-4">
         <app-imagen-list-book-card [listadoService]="masLeidosBookService" [titulo]="'RECOMENDADOS'"></app-imagen-list-book-card>
     </div>

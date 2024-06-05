@@ -1,4 +1,4 @@
-import { GeneroTipo } from "../combo/combo";
+import { Combo, GeneroTipo } from "../combo/combo";
 
 export interface ItemEstadistica {
     titulo: string;
@@ -15,7 +15,7 @@ export interface EstadisticaResponse {
 
 export interface EstadisticaGeneroResponse {
     estadisticas: ItemEstadistica[];
-    genero: GeneroTipo;
+    genero: Combo;
 }
 
 export interface ContadorResponse {

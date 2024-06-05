@@ -33,11 +33,10 @@ export class FechasModalComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, pages: number, titulo: string, procedenciaModal?: boolean},
+    @Inject(MAT_DIALOG_DATA) private data: { modalInfo: ValoracionResponse, pages: number, titulo: string, procedenciaModal?: boolean },
     private dialogRef: MatDialogRef<FechasModalComponent>,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
-    private notification: NotificationService,
     private usuarioService: UserService,
     private bookService: BookService,
     private dialog: MatDialog
@@ -111,19 +110,8 @@ export class FechasModalComponent implements OnInit, OnDestroy {
 
   updateComentario() {
     if (this.modalInfo) {
-      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe({
-        next: (valoracion) => {
-          this.updateLibroSeleccionado();
-          this.notification.show(
-            'Lectura editada correctamente!',
-            'success'
-          );
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          this.notification.show('No se ha podido editada la lectura', 'error');
-        },
-      }));
+      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe());
+      this.updateLibroSeleccionado();
     }
   }
 
@@ -135,12 +123,12 @@ export class FechasModalComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.bookService.libroSeleccionado$.subscribe(libro => {
         this.libro = libro;
-        if (this.libro) {
-          this.libro.estado = 'PROGRESO';
-          this.bookService.setLibro(this.libro);
-        }
       })
     );
+    if (this.libro) {
+      this.libro.estado = 'PROGRESO';
+      this.bookService.setLibro(this.libro);
+    }
   }
 
   updatePageInput() {
@@ -162,9 +150,6 @@ export class FechasModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.procedenciaModal && !this.submitted && this.modalInfo) {
-      this.updateComentario();
-    }
     this.subscriptions.unsubscribe();
   }
 

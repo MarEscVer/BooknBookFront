@@ -1,4 +1,4 @@
-<div class="container-fluid mb-5" *ngIf="libro">
+<div class="container-fluid mb-5" *ngIf="libro$ | async as libro">
     <div class="row justify-content-center">
         <!-- Imagen del libro -->
         <div class="col-md-3">

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { BookService } from 'src/app/services/book/book.service';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
@@ -22,7 +21,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   procedenciaModal: boolean = false;
   private submitted = false;
   libro?: Book;
-  paginasLibro: number= 0;
+  paginasLibro: number = 0;
 
   formValoracion!: FormGroup;
   matcher!: FormErrorStateMatcher;
@@ -37,7 +36,6 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
     private formControl: InputErrorStateMatcherExample,
     private bookService: BookService,
     private usuarioService: UserService,
-    private notification: NotificationService,
     private cdRef: ChangeDetectorRef
   ) {
     this.formControl = new InputErrorStateMatcherExample();
@@ -51,7 +49,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
       if (data.paginasLibro) {
         this.paginasLibro = data.paginasLibro;
       }
-      if (data.modalInfo.calificacionPersonal){
+      if (data.modalInfo.calificacionPersonal) {
         this.editing = true;
       }
     }
@@ -90,21 +88,9 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
 
   sendDataToServer(data: ValoracionResponse) {
     if (this.modalInfo) {
-      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe({
-        next: (valoracion) => {
-          this.updateLibroSeleccionado();
-          this.notification.show(
-            'Lectura editada correctamente!',
-            'success'
-          );
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          this.notification.show('No se ha podido editada la lectura', 'error');
-          this.dialogRef.close();
-        },
-      }));
+      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe());
     }
+    this.updateLibroSeleccionado();
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {
@@ -119,19 +105,15 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.bookService.libroSeleccionado$.subscribe(libro => {
         this.libro = libro;
-        if (this.libro) {
-          this.libro.estado = 'LEIDO';
-          this.bookService.setLibro(this.libro);
-          this.cdRef.detectChanges();
-        }
       })
     );
+    if (this.libro) {
+      this.libro.estado = 'LEIDO';
+      this.bookService.setLibro(this.libro);
+    }
   }
 
   ngOnDestroy(): void {
-    if (this.procedenciaModal && !this.submitted && this.modalInfo) {
-      this.sendDataToServer(this.modalInfo);
-    }
     this.subscriptions.unsubscribe();
   }
 

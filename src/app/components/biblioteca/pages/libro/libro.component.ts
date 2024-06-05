@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription, take, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { MasLeidosBookService } from 'src/app/services/book/mas-leidos-book.service';
@@ -15,7 +15,7 @@ import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario'
 })
 export class LibroComponent implements OnInit, OnDestroy {
 
-  libro?: Book;
+  libro$?: Observable<Book | undefined>;
   valoracionUsuario: boolean = false;
   modalInfoAddOpinion?: ValoracionResponse;
 
@@ -34,30 +34,29 @@ export class LibroComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private usuarioService: UserService,
     private comentarioService: ComentarioService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.loadComboMotivoDenuncia();
-    this.subscriptions.add(
-      this.authService.userRole$.subscribe(role => {
-        this.userRole = role;
-      })
-    );
-    this.subscriptions.add(
-      this.bookService.libroSeleccionado$.subscribe(libro => {
-        this.libro = libro;
-        if (this.libro) {
-          this.valoracionMedia = Math.round(this.libro.calificacionMedia ?? 0);
-          this.contadorComentario = this.libro.contadorComentario ?? 0;
-          this.subscriptions.add(
-            this.usuarioService.vincularUsuarioLibro(this.libro.id, this.libro?.estado).subscribe({
+    this.libro$ = this.bookService.libroSeleccionado$.pipe(
+      tap(libro => {
+        if (libro) {
+          this.valoracionMedia = Math.round(libro.calificacionMedia ?? 0);
+          this.contadorComentario = libro.contadorComentario ?? 0;
+          if (this.userRole) {
+            this.subscriptions.add(this.usuarioService.vincularUsuarioLibro(libro.id, libro.estado).subscribe({
               next: (valoracion) => {
                 this.modalInfoAddOpinion = valoracion;
               }
             }));
+          }
         }
       })
     );
+    this.authService.userRole$.subscribe(role => {
+      this.userRole = role;
+    });
   }
 
   loadComboMotivoDenuncia() {

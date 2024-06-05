@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AutorService } from 'src/app/services/autor/autor.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
@@ -15,7 +15,7 @@ import { applyColors } from 'src/app/shared/models/combo/combo';
 })
 export class FichaLibroComponent implements OnInit, OnDestroy {
 
-  @Input() libro?: Book;
+  @Input() libro$?: Observable<Book | undefined>;
   autorSeleccionado?: AutorData;
 
   stars = [0, 1, 2, 3, 4];
@@ -42,23 +42,24 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
         this.userRole = role;
       })
     );
-    if (this.libro) {
-      this.valoracionMedia = this.libro.calificacionMedia ?? 0;
+  }
 
-      const libroConColores = applyColors([this.libro])[0];
-      this.libro = libroConColores;
-
-      if (this.libro?.tipo) {
+  applyColorsToBook(libro: Book): void {
+    if (libro) {
+      this.valoracionMedia = libro.calificacionMedia ?? 0;
+      const libroConColores = applyColors([libro])[0];
+      libro = libroConColores;
+      if (libro.tipo) {
         this.tipoStyle = {
-          'background-color': this.libro.tipo.color,
+          'background-color': libro.tipo.color,
           'color': 'black',
           'border-radius': '20px',
           'padding': '5px',
         };
       }
-      if (this.libro?.genero) {
+      if (libro.genero) {
         this.generoStyle = {
-          'background-color': this.libro.genero.color,
+          'background-color': libro.genero.color,
           'color': 'black',
           'border-radius': '5px',
           'padding': '5px',
@@ -72,9 +73,9 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
   }
 
   autorLibro(id: number) {
-    if (this.libro) {
+    if (this.libro$) {
       this.subscriptions.add(
-        this.autorService.getAutorById(this.libro.idAutor).subscribe(data => {
+        this.autorService.getAutorById(id).subscribe(data => {
           if (data) {
             this.autorSeleccionado = data;
             this.autorService.setAutor(this.autorSeleccionado);
@@ -85,6 +86,7 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
       );
     }
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

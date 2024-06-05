@@ -18,24 +18,23 @@ import { BookService } from 'src/app/services/book/book.service';
   templateUrl: './interes-modal.component.html',
   styleUrls: ['./interes-modal.component.scss']
 })
-export class InteresModalComponent implements OnInit, OnDestroy{
+export class InteresModalComponent implements OnInit, OnDestroy {
 
   modalInfo?: Book;
   libro?: Book;
-
   matcher!: FormErrorStateMatcher;
   formularioLibro!: FormGroup;
+  estadoMarcado: string = '';
+  comentarioInfo?: ValoracionResponse;
 
   private subscriptions: Subscription = new Subscription();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { modalInfo: Book },
     private dialogRef: MatDialogRef<InteresModalComponent>,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private formControl: InputErrorStateMatcherExample,
     private usuarioService: UserService,
-    private notification: NotificationService,
     private bookService: BookService,
     private dialog: MatDialog
   ) {
@@ -58,18 +57,16 @@ export class InteresModalComponent implements OnInit, OnDestroy{
   }
 
   submit() {
-    const estadoMarcado = this.formularioLibro.get('estado')?.value;
+    this.estadoMarcado = this.formularioLibro.get('estado')?.value;
     if (this.modalInfo) {
       this.subscriptions.add(
-        this.usuarioService.vincularUsuarioLibro(this.modalInfo.id, estadoMarcado).subscribe({
+        this.usuarioService.vincularUsuarioLibro(this.modalInfo.id, this.estadoMarcado).subscribe({
           next: (valoracion) => {
-            valoracion.estado = estadoMarcado;
-            this.abrirModalEstado(estadoMarcado, valoracion);
+            valoracion.estado = this.estadoMarcado;
+            this.comentarioInfo = valoracion;
+            this.abrirModalEstado();
             this.dialogRef.close();
-          },
-          error: (error) => {
-            this.notification.show('No se ha podido vincular la lectura', 'error');
-          },
+          }
         }));
     }
   }
@@ -78,51 +75,42 @@ export class InteresModalComponent implements OnInit, OnDestroy{
     this.subscriptions.add(
       this.bookService.libroSeleccionado$.subscribe(libro => {
         this.libro = libro;
-        if (this.libro) {
-          this.libro.estado = 'FAVORITO';
-          this.bookService.setLibro(this.libro);
-        }
       })
     );
+    if (this.libro) {
+      this.libro.estado = 'FAVORITO';
+      this.bookService.setLibro(this.libro);
+    }
   }
 
-  abrirModalEstado(estadoMarcado: string, valoracion: ValoracionResponse) {
+  abrirModalEstado() {
     if (this.modalInfo) {
-      if (estadoMarcado === 'PROGRESO') {
+      if (this.estadoMarcado === 'PROGRESO') {
         const dialogFechas = this.dialog.open(FechasModalComponent, {
           width: '50%',
           data: {
-            modalInfo: valoracion,
+            modalInfo: this.comentarioInfo,
             pages: this.modalInfo.paginasTotales,
             titulo: this.modalInfo.titulo,
             procedenciaModal: true,
           }
         });
       }
-      if (estadoMarcado === 'LEIDO') {
+      if (this.estadoMarcado === 'LEIDO') {
         const dialogValoracion = this.dialog.open(UserValoracionModalComponent, {
           width: '50%',
           data: {
-            modalInfo: valoracion,
+            modalInfo: this.comentarioInfo,
             titulo: this.modalInfo.titulo,
+            paginasLibro: this.modalInfo.paginasTotales,
             procedenciaModal: true,
           }
         });
       }
-      if(estadoMarcado === 'FAVORITO') {
-        if (this.modalInfo) {
-          this.subscriptions.add(this.usuarioService.editarUsuarioLibro(valoracion).subscribe({
-            next: (valoracion) => {
-              this.updateLibroSeleccionado();
-              this.notification.show(
-                'Lectura vinculada correctamente!',
-                'success'
-              );
-            },
-            error: (error) => {
-              this.notification.show('No se ha podido vincular la lectura', 'error');
-            },
-          }));
+      if (this.estadoMarcado === 'FAVORITO') {
+        if (this.comentarioInfo) {
+          this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.comentarioInfo).subscribe());
+          this.updateLibroSeleccionado();
         }
       }
     }
@@ -139,6 +127,5 @@ export class InteresModalComponent implements OnInit, OnDestroy{
   public ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 
 }

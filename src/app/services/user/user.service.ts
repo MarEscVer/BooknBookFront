@@ -1,10 +1,9 @@
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Login, LoginResponse, PerfilUsuarioData, Register, UserItemListResponse, modifyUser, UpdatePerfilData } from 'src/app/shared/models/users/user';
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
-import { deleteObject } from '../interfaces';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 

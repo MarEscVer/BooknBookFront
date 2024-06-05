@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
-import { Book, BookData, BookDataId, BookEdit, BookItemListResponse, BookListadoLectura, BookListadoLecturaResponse } from 'src/app/shared/models/book/book';
+import { Book, BookData, BookDataId, BookItemListResponse, BookListadoLecturaResponse } from 'src/app/shared/models/book/book';
 import { IdComboResponse } from 'src/app/shared/models/combo/combo';
 
 @Injectable({
