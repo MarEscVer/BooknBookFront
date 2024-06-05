@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -10,7 +11,8 @@ import { UserService } from 'src/app/services/user/user.service';
 import { FormErrorStateMatcher } from 'src/app/shared/errors/form-error-state-matcher';
 import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error-state-matcher';
 import { Combo } from 'src/app/shared/models/combo/combo';
-import { PerfilUsuarioData, UpdatePerfilData } from 'src/app/shared/models/users/user';
+import { UpdatePerfilData } from 'src/app/shared/models/users/user';
+import { ConfirmacionDesactivarModalComponent } from './confirmacion-desactivar-modal/confirmacion-desactivar-modal.component';
 
 @Component({
   selector: 'app-edit-perfil',
@@ -41,6 +43,7 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
     private generoTipoService: GeneroTipoService,
     private userService: UserService,
     private authService: AuthService,
+    private dialog: MatDialog
   ) {
     this.formControl = new InputErrorStateMatcherExample();
     this.matcher = this.formControl.matcher;
@@ -144,6 +147,12 @@ export class EditPerfilComponent implements OnDestroy, OnInit {
       modelAttribute,
       errorAttribute
     );
+  }
+
+  openConfirmationModal() {
+    const dialogValoracion = this.dialog.open(ConfirmacionDesactivarModalComponent, {
+      width: '50%'
+    });
   }
 
   ngOnDestroy(): void {

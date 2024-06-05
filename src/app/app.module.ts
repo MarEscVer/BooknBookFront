@@ -113,6 +113,7 @@ import { EstadisticasComponent } from './components/despacho/pages/estadisticas/
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ListBookComponent } from './components/biblioteca/list-book/list-book.component';
 import { ListComentariosUsuarioComponent } from './components/despacho/list-comentarios-usuario/list-comentarios-usuario.component';
+import { ConfirmacionDesactivarModalComponent } from './components/despacho/pages/edit-perfil/confirmacion-desactivar-modal/confirmacion-desactivar-modal.component';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -196,7 +197,8 @@ import { ListComentariosUsuarioComponent } from './components/despacho/list-come
     EditPerfilComponent,
     EstadisticasComponent,
     ListBookComponent,
-    ListComentariosUsuarioComponent
+    ListComentariosUsuarioComponent,
+    ConfirmacionDesactivarModalComponent
   ],
   /* LIBRARIES */
   imports: [

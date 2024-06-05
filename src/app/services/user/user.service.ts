@@ -95,6 +95,11 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  desactivarCuenta(): Observable<IdComboResponse>{
+    return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/user/self/desactivacion')
+    .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error);
     return throwError(() => error.error);
