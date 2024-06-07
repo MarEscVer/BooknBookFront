@@ -75,7 +75,7 @@
                 <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
               </button>
               <app-delete-button [modalInfo]="{ id: row.id, title: row.username }"
-                [deleteService]="userService" [usuario]="true" (actionCompleted)="handleCommentAction()"></app-delete-button>
+                [deleteService]="userService" [usuario]="true" (actionCompleted)="handleCommentAction(row.username)"></app-delete-button>
             </ng-container>
           </td>
         </ng-container>

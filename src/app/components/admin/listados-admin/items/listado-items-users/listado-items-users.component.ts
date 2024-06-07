@@ -26,6 +26,7 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
 
   imgNoData: string = '/assets/img/iconoPerfil.jpg';
   dataSource: MatTableDataSource<UserItemList>;
+  originalData: UserItemList[] = [];
   editedItems: UserItemList[] = [];
   originalRol: string = '';
   userUsername?: string | null;
@@ -100,7 +101,8 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
     this.subscriptions.add(
       this.userService.getListUser(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.usuarios) {
-          this.dataSource.data = data.usuarios;
+          this.originalData = data.usuarios;
+          this.dataSource.data = this.originalData;
           this.totalItems = data.pageInfo.totalElements;
           this.isLoading = false;
         }
@@ -164,8 +166,9 @@ export class ListadoItemsUsersComponent implements AfterViewInit, OnInit, OnDest
     }
   }
 
-  handleCommentAction() {
-    this.loadData();
+  handleCommentAction(username: string) {
+    this.originalData = this.originalData.filter(usuario => usuario.username !== username);
+    this.dataSource.data = this.originalData;
   }
 
   ngOnDestroy() {

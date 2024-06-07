@@ -21,6 +21,7 @@ export class ListadoItemsComentariosComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['username', 'date', 'comentario', 'razon', 'actions'];
 
   dataSource: MatTableDataSource<ComentarioDenunciadoItemList>;
+  originalData: ComentarioDenunciadoItemList[] = [];
 
   itemsPerPageOptions = [5, 10, 25, 50];
   itemsPerPage = 5;
@@ -76,7 +77,8 @@ export class ListadoItemsComentariosComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.comentarioService.getListComentariosDenunciados(this.currentPage, this.itemsPerPage, this.selectedFilter).subscribe(data => {
         if (data.comentariosDenunciados) {
-          this.dataSource.data = data.comentariosDenunciados;
+          this.originalData = data.comentariosDenunciados;
+          this.dataSource.data = this.originalData;
           this.totalItems = data.pageInfo.totalElements;
           this.isLoading = false;
         }
@@ -105,8 +107,9 @@ export class ListadoItemsComentariosComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  handleCommentAction() {
-    this.loadData();
+  handleCommentAction(commentId: number) {
+    this.originalData = this.originalData.filter(comment => comment.idDenuncia !== commentId);
+    this.dataSource.data = this.originalData;
   }
   
   ngOnDestroy() {

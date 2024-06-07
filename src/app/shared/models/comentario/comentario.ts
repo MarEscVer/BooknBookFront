@@ -54,10 +54,10 @@ export interface DenunciarComentario {
 
 export interface ValoracionResponse {
     estado: string;
-    paginaActual: number;
-    calificacionPersonal: number;
-    comentario: string;
-    fechaComentario: string;
-    fechaLectura: string;
+    paginaActual: number | null;
+    calificacionPersonal: number | null;
+    comentario: string | null;
+    fechaComentario: string | null;
+    fechaLectura: string | null;
     idLibro: number;
 }

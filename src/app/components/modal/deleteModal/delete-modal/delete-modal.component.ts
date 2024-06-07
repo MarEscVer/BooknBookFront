@@ -20,7 +20,7 @@ export class DeleteModalComponent implements OnDestroy {
   deleteService: any;
   usuario: boolean = false;
 
-  @Output() actionCompleted = new EventEmitter<void>();
+  @Output() actionCompleted = new EventEmitter<number | string>();
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -38,21 +38,15 @@ export class DeleteModalComponent implements OnDestroy {
     if (this.usuario) {
       this.subscriptions.add(this.deleteService.deleteUser(this.modalInfo.title).subscribe({
         next: (data: IdComboResponse) => {
-          if (data) {
-            this.dialogRef.close(true);
-            this.actionCompleted.emit();
-            this.notification.show(data.message, 'success');
-          }
+          this.actionCompleted.emit(this.modalInfo.title);
+          this.dialogRef.close(true);
         }
       }))
     } else {
       this.subscriptions.add(this.deleteService.delete(this.modalInfo.id).subscribe({
         next: (data: IdComboResponse) => {
-          if (data) {
-            this.dialogRef.close(true);
-            this.actionCompleted.emit();
-            this.notification.show(data.message, 'success');
-          }
+          this.actionCompleted.emit(this.modalInfo.id);
+          this.dialogRef.close(true);
         }
       }));
     }

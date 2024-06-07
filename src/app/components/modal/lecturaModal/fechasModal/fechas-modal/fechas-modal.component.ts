@@ -7,7 +7,6 @@ import { InputErrorStateMatcherExample } from 'src/app/shared/errors/input-error
 import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario';
 import { UserValoracionModalComponent } from '../../userValoracionModal/user-valoracion-modal/user-valoracion-modal.component';
 import { UserService } from 'src/app/services/user/user.service';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { BookService } from 'src/app/services/book/book.service';
 import { Book } from 'src/app/shared/models/book/book';
 
@@ -89,7 +88,6 @@ export class FechasModalComponent implements OnInit, OnDestroy {
       this.modalInfo.paginaActual = paginaActual;
 
       if (terminado) {
-        // Formatear las fechas al formato YYYY/MM/DD
         const finalFormatted: string = finalDate ? finalDate.toISOString().split('T')[0] : '';
         this.modalInfo.fechaLectura = finalFormatted;
         this.modalInfo.estado = 'LEIDO';
@@ -110,25 +108,12 @@ export class FechasModalComponent implements OnInit, OnDestroy {
 
   updateComentario() {
     if (this.modalInfo) {
-      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe());
-      this.updateLibroSeleccionado();
+      this.usuarioService.setModalEditarLecturaData(this.modalInfo);
     }
   }
 
   setMinMaxDate() {
     this.minDate.setFullYear(this.maxDate.getFullYear() - 5);
-  }
-
-  updateLibroSeleccionado() {
-    this.subscriptions.add(
-      this.bookService.libroSeleccionado$.subscribe(libro => {
-        this.libro = libro;
-      })
-    );
-    if (this.libro) {
-      this.libro.estado = 'PROGRESO';
-      this.bookService.setLibro(this.libro);
-    }
   }
 
   updatePageInput() {

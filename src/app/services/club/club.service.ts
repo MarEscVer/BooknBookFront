@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { environment, httpOptions } from 'src/environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { deleteObject } from '../interfaces';
@@ -15,7 +15,7 @@ export class ClubService implements deleteObject {
   private clubAddedSource = new BehaviorSubject<boolean>(false);
   clubAdded$ = this.clubAddedSource.asObservable();
 
-  private clubDeletedSource = new BehaviorSubject<boolean>(false);
+  private clubDeletedSource = new Subject<number>();
   clubDeleted$ = this.clubDeletedSource.asObservable();
 
   private baseUrl: string = environment.BASE_URL;
@@ -24,7 +24,7 @@ export class ClubService implements deleteObject {
   delete(id: number): Observable<IdComboResponse> {
     return this.http.delete<IdComboResponse>(this.baseUrl + environment.BASE_TOKEN + '/grupo/' + id)
     .pipe(
-      tap(() => this.notifyClubDeleted()),
+      tap(() => this.notifyClubDeleted(id)),
       catchError(this.handleError)
     );
   }
@@ -101,8 +101,8 @@ export class ClubService implements deleteObject {
     this.clubAddedSource.next(true);
   }
 
-  notifyClubDeleted() {
-    this.clubDeletedSource.next(true);
+  notifyClubDeleted(id: number) {
+    this.clubDeletedSource.next(id);
   }
 
   private handleError(error: HttpErrorResponse) {

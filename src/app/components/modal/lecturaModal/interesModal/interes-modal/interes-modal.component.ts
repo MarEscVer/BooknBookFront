@@ -71,18 +71,6 @@ export class InteresModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateLibroSeleccionado() {
-    this.subscriptions.add(
-      this.bookService.libroSeleccionado$.subscribe(libro => {
-        this.libro = libro;
-      })
-    );
-    if (this.libro) {
-      this.libro.estado = 'FAVORITO';
-      this.bookService.setLibro(this.libro);
-    }
-  }
-
   abrirModalEstado() {
     if (this.modalInfo) {
       if (this.estadoMarcado === 'PROGRESO') {
@@ -109,8 +97,8 @@ export class InteresModalComponent implements OnInit, OnDestroy {
       }
       if (this.estadoMarcado === 'FAVORITO') {
         if (this.comentarioInfo) {
-          this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.comentarioInfo).subscribe());
-          this.updateLibroSeleccionado();
+          this.comentarioInfo.paginaActual = 0;
+          this.usuarioService.setModalInteresData(this.comentarioInfo);
         }
       }
     }

@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FechasModalComponent } from 'src/app/components/modal/lecturaModal/fechasModal/fechas-modal/fechas-modal.component';
 import { BookService } from 'src/app/services/book/book.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Book, BookListadoLectura } from 'src/app/shared/models/book/book';
 import { applyColors } from 'src/app/shared/models/combo/combo';
@@ -19,6 +20,8 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
 
   @Input() libro!: BookListadoLectura;
   @Input() estado?: string;
+  @Output() libroEliminado = new EventEmitter<number>();
+  libroUpdate?: Book;
 
   libroSeleccionado?: Book;
   imgNoData: string = '/assets/img/iconoLibro.jpg';
@@ -35,7 +38,8 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private usuarioService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notification: NotificationService
   ) { }
 
   ngOnInit() {
@@ -61,6 +65,36 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
       }
       this.coloresGeneroTipo = true;
     }
+    this.editarModalLectura();
+    this.addModalLectura();
+  }
+
+  editarModalLectura() {
+    this.subscriptions.add(this.usuarioService.modalEditarLecturaData$.subscribe(data => {
+      if (data) {
+        this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe(
+          {
+            next: () => {
+              this.usuarioService.clearModalEditarLecturaData();
+            }
+          }
+        ));
+      }
+    }));
+  }
+
+  addModalLectura() {
+    this.subscriptions.add(this.usuarioService.modalAddValoracionData$.subscribe(data => {
+      if (data) {
+        this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe(
+          {
+            next: () => {
+              this.usuarioService.clearModalAddValoracionData();
+            }
+          }
+        ));
+      }
+    }));
   }
 
   fichaLibro(id: number) {
@@ -86,7 +120,21 @@ export class ItemBookLecturaComponent implements OnInit, OnDestroy {
   }
 
   eliminarLibro(id: number) {
-
+    this.modalInfo = {
+      estado: 'ELIMINADO',
+      paginaActual: 0,
+      calificacionPersonal: 0,
+      comentario: null,
+      fechaComentario: null,
+      fechaLectura: null,
+      idLibro: id
+    }
+    this.subscriptions.add(this.usuarioService.editarUsuarioLibro(this.modalInfo).subscribe({
+      next: () => {
+        this.libroEliminado.emit(id);
+        this.notification.show('El libro ha sido eliminado de tu lista correctamente', 'success');
+      }
+    }));
   }
 
   editarLectura(id: number) {

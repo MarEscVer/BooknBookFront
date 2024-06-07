@@ -1,5 +1,5 @@
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Component, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { ClubService } from 'src/app/services/club/club.service';
 import { ClubDataShort } from 'src/app/shared/models/club/club';
@@ -19,6 +19,7 @@ export class UserClubListComponent implements OnInit, OnDestroy {
 
   clubes?: ClubDataShort[];
   @Input() tipo?: string;
+  @Output() dataLoaded = new EventEmitter<boolean>();
 
   itemsPerPage = 4;
   currentPage = 0;
@@ -40,8 +41,8 @@ export class UserClubListComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.clubService.clubDeleted$.pipe(filter(deleted => deleted)).subscribe(() => {
-        this.loadData();
+      this.clubService.clubDeleted$.subscribe((deletedClubId) => {
+        this.eliminarClubDeLista(deletedClubId);
       })
     );
   }
@@ -57,6 +58,7 @@ export class UserClubListComponent implements OnInit, OnDestroy {
             this.clubes = data.nombreGrupos;
             this.totalItems = data.pageInfo.totalElements;
             this.isLoading = false;
+            this.dataLoaded.emit(true);
           }
         })
       );
@@ -67,9 +69,16 @@ export class UserClubListComponent implements OnInit, OnDestroy {
             this.clubes = data.nombreGrupos;
             this.totalItems = data.pageInfo.totalElements;
             this.isLoading = false;
+            this.dataLoaded.emit(true);
           }
         })
       );
+    }
+  }
+
+  eliminarClubDeLista(id: number) {
+    if (this.clubes) {
+      this.clubes = this.clubes.filter((club) => club.idGrupo !== id);
     }
   }
 

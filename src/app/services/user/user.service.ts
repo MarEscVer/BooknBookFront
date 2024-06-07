@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Login, LoginResponse, PerfilUsuarioData, Register, UserItemListResponse, modifyUser, UpdatePerfilData } from 'src/app/shared/models/users/user';
 import { endpoints, environment, httpOptions } from 'src/environments/environment';
@@ -12,7 +12,38 @@ import { ValoracionResponse } from 'src/app/shared/models/comentario/comentario'
 })
 export class UserService {
   private baseUrl: string = environment.BASE_URL;
+  private modalEditarLecturaDataSubject = new BehaviorSubject<ValoracionResponse | undefined>(undefined);
+  modalEditarLecturaData$ = this.modalEditarLecturaDataSubject.asObservable();
+  private modalAddValoracionDataSubject = new BehaviorSubject<ValoracionResponse | undefined>(undefined);
+  modalAddValoracionData$ = this.modalAddValoracionDataSubject.asObservable();
+  private modalInteresDataSubject = new BehaviorSubject<ValoracionResponse | undefined>(undefined);
+  modalInteresData$ = this.modalInteresDataSubject.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  setModalEditarLecturaData(data: ValoracionResponse) {
+    this.modalEditarLecturaDataSubject.next(data);
+  }
+
+  clearModalEditarLecturaData() {
+    this.modalEditarLecturaDataSubject.next(undefined);
+  }
+
+  setModalAddValoracionData(data: ValoracionResponse) {
+    this.modalAddValoracionDataSubject.next(data);
+  }
+
+  clearModalAddValoracionData() {
+    this.modalAddValoracionDataSubject.next(undefined);
+  }
+
+  setModalInteresData(data: ValoracionResponse) {
+    this.modalInteresDataSubject.next(data);
+  }
+
+  clearModalInteresData() {
+    this.modalInteresDataSubject.next(undefined);
+  }
 
   register(registerRequest: Register): Observable<void> {
     return this.http

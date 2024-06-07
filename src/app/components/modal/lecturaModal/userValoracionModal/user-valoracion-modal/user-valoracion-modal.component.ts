@@ -87,10 +87,7 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
   }
 
   sendDataToServer(data: ValoracionResponse) {
-    if (this.modalInfo) {
-      this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe());
-    }
-    this.updateLibroSeleccionado();
+    this.usuarioService.setModalAddValoracionData(data);
   }
 
   specificError(modelAttribute: string, errorAttribute: string) {
@@ -99,18 +96,6 @@ export class UserValoracionModalComponent implements OnInit, OnDestroy {
       modelAttribute,
       errorAttribute
     );
-  }
-
-  updateLibroSeleccionado() {
-    this.subscriptions.add(
-      this.bookService.libroSeleccionado$.subscribe(libro => {
-        this.libro = libro;
-      })
-    );
-    if (this.libro) {
-      this.libro.estado = 'LEIDO';
-      this.bookService.setLibro(this.libro);
-    }
   }
 
   ngOnDestroy(): void {

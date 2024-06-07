@@ -18,6 +18,7 @@ export class LibroComponent implements OnInit, OnDestroy {
   libro$?: Observable<Book | undefined>;
   valoracionUsuario: boolean = false;
   modalInfoAddOpinion?: ValoracionResponse;
+  libro?: Book;
 
   userRole?: string | null;
   estiloBoton: string = 'VALORACION';
@@ -54,9 +55,93 @@ export class LibroComponent implements OnInit, OnDestroy {
         }
       })
     );
+    this.editarModal();
+    this.addModal();
+    this.interesModal();
     this.authService.userRole$.subscribe(role => {
       this.userRole = role;
     });
+  }
+
+  editarModal() {
+    this.subscriptions.add(this.usuarioService.modalEditarLecturaData$.subscribe(data => {
+      if (data) {
+        this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe(
+          {
+            next: () => {
+              this.updateLibroSeleccionadoProgreso();
+              this.usuarioService.clearModalEditarLecturaData();
+            }
+          }
+        ));
+      }
+    }));
+  }
+
+  addModal() {
+    this.subscriptions.add(this.usuarioService.modalAddValoracionData$.subscribe(data => {
+      if (data) {
+        this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe(
+          {
+            next: () => {
+              this.updateLibroSeleccionadoLeido();
+              this.usuarioService.clearModalAddValoracionData();
+            }
+          }
+        ));
+      }
+    }));
+  }
+
+  interesModal() {
+    this.subscriptions.add(this.usuarioService.modalInteresData$.subscribe(data => {
+      if (data) {
+        this.subscriptions.add(this.usuarioService.editarUsuarioLibro(data).subscribe(
+          {
+            next: () => {
+              this.updateLibroSeleccionadoFavorito();
+              this.usuarioService.clearModalInteresData();
+            }
+          }
+        ));
+      }
+    }));
+  }
+
+  updateLibroSeleccionadoProgreso() {
+    this.subscriptions.add(
+      this.bookService.libroSeleccionado$.subscribe(libro => {
+        this.libro = libro;
+      })
+    );
+    if (this.libro) {
+      this.libro.estado = 'PROGRESO';
+      this.bookService.setLibro(this.libro);
+    }
+  }
+
+  updateLibroSeleccionadoLeido() {
+    this.subscriptions.add(
+      this.bookService.libroSeleccionado$.subscribe(libro => {
+        this.libro = libro;
+      })
+    );
+    if (this.libro) {
+      this.libro.estado = 'LEIDO';
+      this.bookService.setLibro(this.libro);
+    }
+  }
+
+  updateLibroSeleccionadoFavorito() {
+    this.subscriptions.add(
+      this.bookService.libroSeleccionado$.subscribe(libro => {
+        this.libro = libro;
+      })
+    );
+    if (this.libro) {
+      this.libro.estado = 'FAVORITO';
+      this.bookService.setLibro(this.libro);
+    }
   }
 
   loadComboMotivoDenuncia() {

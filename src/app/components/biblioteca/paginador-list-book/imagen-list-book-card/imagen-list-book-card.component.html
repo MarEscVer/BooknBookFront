@@ -1,4 +1,4 @@
-<ng-container *ngIf="!loading">
+<ng-container *ngIf="!loading && libros && libros.length > 0">
     <div class="carousel-libro">
         <div *ngIf="titulo">
             <h5 class="carousel-titulo text-center m-0">{{titulo}}</h5>

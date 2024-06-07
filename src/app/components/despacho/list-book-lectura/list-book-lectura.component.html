@@ -1,9 +1,11 @@
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!isLoading && libros && libros.length > 0; else noData">
     <div class="table-responsive">
         <div class="container-fluid">
             <div class="row-flex mt-3">
                 <div *ngFor="let libro of libros">
-                    <app-item-book-lectura [libro]="libro" [estado]="estado"></app-item-book-lectura>
+                    <app-item-book-lectura [libro]="libro" [estado]="estado"
+                        (libroEliminado)="onLibroEliminado($event)">
+                    </app-item-book-lectura>
                 </div>
                 <div class="mt-3 me-3 d-flex flex-row justify-content-end align-items-center gap-4">
                     <div class="d-flex flex-row align-items-center gap-2">
@@ -22,3 +24,10 @@
         </div>
     </div>
 </ng-container>
+<ng-template #noData>
+    <div class="table-responsive">
+        <div class="container-fluid">
+            No tienes libros guardados en esta lista
+        </div>
+    </div>
+</ng-template>

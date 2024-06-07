@@ -23,6 +23,7 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
 
   imgNoData: string = '/assets/img/iconoLibro.jpg';
   dataSource: MatTableDataSource<BookItemList>;
+  originalData: BookItemList[] = [];
 
   itemsPerPageOptions = [5, 10, 25, 50];
   itemsPerPage = 5;
@@ -109,7 +110,8 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
     this.subscriptions.add(
       this.bookServie.getListBook(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.libros) {
-          this.dataSource.data = data.libros;
+          this.originalData = data.libros;
+          this.dataSource.data = this.originalData;
           this.totalItems = data.pageInfo.totalElements;
           this.isLoading = false;
         }
@@ -121,10 +123,11 @@ export class ListadoItemsBooksComponent implements AfterViewInit, OnInit, OnDest
     this.router.navigate(['/admin/book', bookId]);
   }
 
-  handleCommentAction() {
-    this.loadData();
+  handleCommentAction(libroId: number) {
+    this.originalData = this.originalData.filter(libro => libro.id !== libroId);
+    this.dataSource.data = this.originalData;
   }
-  
+
   ngOnDestroy() {
     if (this.dataSource) {
       this.dataSource.disconnect();

@@ -42,12 +42,12 @@
                         <!-- Botón de aceptar -->
                         <app-accept-button *ngIf="selectedFilter !== 'ACEPTADA'"
                             [modalInfo]="{ id: row.idDenuncia, title: row.nombreUsuario }"
-                            (actionCompleted)="handleCommentAction()"></app-accept-button>
+                            (actionCompleted)="handleCommentAction(row.idDenuncia)"></app-accept-button>
                         <!-- Botón de eliminar -->
                         <app-delete-button *ngIf="selectedFilter !== 'RECHAZADA'"
                             [modalInfo]="{ id: row.idDenuncia, title: row.nombreUsuario }"
                             [deleteService]="comentarioService"
-                            (actionCompleted)="handleCommentAction()"></app-delete-button>
+                            (actionCompleted)="handleCommentAction(row.idDenuncia)"></app-delete-button>
                     </td>
                 </ng-container>
 

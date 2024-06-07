@@ -16,7 +16,7 @@ export class AcceptModalComponent implements OnDestroy{
     title: ''
   };
 
-  @Output() actionCompleted = new EventEmitter<void>();
+  @Output() actionCompleted = new EventEmitter<number>();
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -32,7 +32,7 @@ export class AcceptModalComponent implements OnDestroy{
   onConfirmClick(): void {
     this.subscriptions.add(this.comentarioService.acceptComentario(this.modalInfo.id).subscribe(() => {
       this.dialogRef.close(true);
-      this.actionCompleted.emit();
+      this.actionCompleted.emit(this.modalInfo.id);
     }));
   }
 

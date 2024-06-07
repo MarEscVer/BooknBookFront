@@ -22,6 +22,7 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
 
   imgNoData: string = '/assets/img/iconoClub.png';
   dataSource: MatTableDataSource<ClubItemList>;
+  originalData: ClubItemList[] = [];
 
   itemsPerPageOptions = [5, 10, 25, 50];
   itemsPerPage = 5;
@@ -85,7 +86,8 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
     this.subscriptions.add(
       this.clubService.getListClubes(this.currentPage, this.itemsPerPage, this.filter).subscribe(data => {
         if (data.listGroup) {
-          this.dataSource.data = data.listGroup;
+          this.originalData = data.listGroup;
+          this.dataSource.data = this.originalData;
           this.totalItems = data.pageInfo.totalElements;
           this.isLoading = false;
         }
@@ -118,8 +120,9 @@ export class ListadoItemsClubsComponent implements AfterViewInit, OnInit, OnDest
     this.loadData();
   }
 
-  handleCommentAction() {
-    this.loadData();
+  handleCommentAction(clubId: number) {
+    this.originalData = this.originalData.filter(club => club.id !== clubId);
+    this.dataSource.data = this.originalData;
   }
 
   ngOnDestroy() {

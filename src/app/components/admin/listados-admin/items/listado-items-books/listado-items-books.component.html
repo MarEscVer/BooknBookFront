@@ -58,7 +58,7 @@
                             <fa-icon [icon]="['fas', 'pen']" class="--listado-icon"></fa-icon>
                         </button>
                         <app-delete-button [modalInfo]="{ id: row.id, title: row.titulo }"
-                            [deleteService]="bookServie" (actionCompleted)="handleCommentAction()"></app-delete-button>
+                            [deleteService]="bookServie" (actionCompleted)="handleCommentAction(row.id)"></app-delete-button>
                     </td>
                 </ng-container>
 
@@ -67,7 +67,7 @@
 
                 <!-- Row shown when there is no matfching data. -->
                 <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">Ningún usuario encontrado con: "{{input.value}}"</td>
+                    <td class="mat-cell" colspan="4">Ningún libro encontrado con: "{{input.value}}"</td>
                 </tr>
             </table>
             <div class="mt-3 me-3 d-flex flex-row justify-content-end align-items-center gap-4">

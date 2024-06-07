@@ -65,6 +65,10 @@ export class ListBookLecturaComponent implements OnInit{
     }
   }
 
+  onLibroEliminado(id: number) {
+    this.libros = this.libros?.filter(libro => libro.id !== id);
+  }
+
   totalPages() {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }

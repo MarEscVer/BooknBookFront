@@ -18,7 +18,7 @@ import { ClubDataAll } from 'src/app/shared/models/club/club';
     ])
   ]
 })
-export class ClubListAllComponent implements OnInit, OnDestroy{
+export class ClubListAllComponent implements OnInit, OnDestroy {
 
   clubes?: ClubDataAll[];
 
@@ -55,15 +55,10 @@ export class ClubListAllComponent implements OnInit, OnDestroy{
         }
       })
     );
-    this.subscriptions.add(
-      this.clubService.clubAdded$.pipe(filter(added => added)).subscribe(() => {
-        this.loadData();
-      })
-    );
 
     this.subscriptions.add(
-      this.clubService.clubDeleted$.pipe(filter(deleted => deleted)).subscribe(() => {
-        this.loadData();
+      this.clubService.clubDeleted$.subscribe((deletedClubId) => {
+        this.eliminarClubDeLista(deletedClubId);
       })
     );
 
@@ -74,6 +69,12 @@ export class ClubListAllComponent implements OnInit, OnDestroy{
         this.loadData();
       })
     );
+  }
+
+  eliminarClubDeLista(id: number) {
+    if (this.clubes) {
+      this.clubes = this.clubes.filter((club) => club.id !== id);
+    }
   }
 
   ngAfterViewInit() {
@@ -87,7 +88,7 @@ export class ClubListAllComponent implements OnInit, OnDestroy{
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.filterSubject.next(filterValue);
   }
-  
+
 
   subscribeToSort() {
     if (this.sort) {
