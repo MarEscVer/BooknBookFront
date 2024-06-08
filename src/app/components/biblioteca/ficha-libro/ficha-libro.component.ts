@@ -42,6 +42,15 @@ export class FichaLibroComponent implements OnInit, OnDestroy {
         this.userRole = role;
       })
     );
+    if (this.libro$) {
+      this.subscriptions.add(
+        this.libro$.subscribe(libro => {
+          if (libro) {
+            this.applyColorsToBook(libro);
+          }
+        })
+      );
+    }
   }
 
   applyColorsToBook(libro: Book): void {
