@@ -30,21 +30,19 @@ export class ItemBookCardComponent implements OnDestroy {
         if (data) {
           this.libroSeleccionado = data;
           this.bookService.setLibro(this.libroSeleccionado);
-
-          let genero: string = '';
-          let titulo: string = this.libroSeleccionado.titulo.toLowerCase().replaceAll(' ', '-');
-
-          if (this.libroSeleccionado.genero) {
-            genero = this.libroSeleccionado.genero.nombre.toLowerCase().replaceAll(' ', '-');
-          } else {
-            genero = this.libroSeleccionado.tipo.nombre.toLowerCase().replaceAll(' ', '-');
-          }
-
-          this.router.navigate(['/biblioteca', sinDiacriticos(genero), sinDiacriticos(titulo)]);
+  
+          const genero = this.libroSeleccionado.genero ? this.libroSeleccionado.genero.nombre : this.libroSeleccionado.tipo.nombre;
+          const titulo = this.libroSeleccionado.titulo;
+          const generoUrl = sinDiacriticos(genero.toLowerCase().replace(/ /g, '-'));
+          const tituloUrl = sinDiacriticos(titulo.toLowerCase().replace(/ /g, '-'));
+  
+          const ruta = ['/biblioteca', generoUrl, tituloUrl];
+          this.router.navigate(ruta);
         }
       })
     );
   }
+  
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

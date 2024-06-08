@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <ng-container *ngIf="comentarios && comentarios.length > 0">>
+    <ng-container *ngIf="comentarios && comentarios.length > 0">
         <div class="row-flex mt-3">
             <div *ngFor="let comentario of comentarios" class="comentario">
                 <app-valoracion-table-item [comentario]="comentario"></app-valoracion-table-item>
