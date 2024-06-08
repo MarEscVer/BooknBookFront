@@ -31,3 +31,13 @@ export interface ContadorUsuarioResponse {
     valoraciones: number;
     genero: GeneroTipo;
 }
+
+export interface DiaData {
+    x: number;
+    y: number;
+}
+
+export interface MesData {
+    name: string;
+    data: DiaData[];
+}

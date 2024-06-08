@@ -2,15 +2,15 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatTabsModule} from '@angular/material/tabs';
-import { MatExpansionModule} from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/public/login/login.component';
 import { RegisterComponent } from './components/public/register/register.component';
-import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -21,14 +21,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgIf } from '@angular/common';
 import { InputErrorStateMatcherExample } from './shared/errors/input-error-state-matcher';
-import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher';import { HomeComponent } from './components/public/home/home.component';
+import { FormErrorStateMatcher } from './shared/errors/form-error-state-matcher'; import { HomeComponent } from './components/public/home/home.component';
 import { MessageErrorComponent } from './components/messages/message-error/message-error.component';
 import { GlobalErrorHandler } from './interceptors/global-error-handler';
 import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { NavbarComponent } from './components/barraNavegacion/header/navbar/navbar.component';
 import { MatTableModule } from '@angular/material/table';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from './components/barraNavegacion/header/header.component';
 import { MatListModule } from "@angular/material/list";
 import { MenuAdminComponent } from './components/admin/menu-admin/menu-admin.component';
@@ -41,7 +41,7 @@ import { ListadoItemsBooksComponent } from './components/admin/listados-admin/it
 import { ListadoItemsClubsComponent } from './components/admin/listados-admin/items/listado-items-clubs/listado-items-clubs.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { AdminPageUsersComponent } from './components/admin/pages/admin-page-users/admin-page-users.component';
 import { ListadoLibrosAdminComponent } from './components/admin/listados-admin/listado-libros-admin/listado-libros-admin.component';
 import { ListadoClubesAdminComponent } from './components/admin/listados-admin/listado-clubes-admin/listado-clubes-admin.component';
@@ -50,7 +50,7 @@ import { ListadoItemsComentariosComponent } from './components/admin/listados-ad
 import { AdminPageModeracionComponent } from './components/admin/pages/admin-page-moderacion/admin-page-moderacion.component';
 import { ListadoModeracionAdminComponent } from './components/admin/listados-admin/listado-moderacion-admin/listado-moderacion-admin.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DeleteButtonComponent } from './components/modal/deleteModal/delete-button/delete-button.component'; 
+import { DeleteButtonComponent } from './components/modal/deleteModal/delete-button/delete-button.component';
 import { DeleteModalComponent } from './components/modal/deleteModal/delete-modal/delete-modal.component';
 import { AddClubModalComponent } from './components/modal/addClub/add-club-modal/add-club-modal.component';
 import { AddClubButtonComponent } from './components/modal/addClub/add-club-button/add-club-button.component';
@@ -69,7 +69,7 @@ import { FooterComponent } from './components/barraNavegacion/footer/footer.comp
 import { QuienesSomosComponent } from './components/public/quienes-somos/quienes-somos.component';
 import { MenuDesplegableComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable.component';
 import { MenuDesplegableItemComponent } from './components/barraNavegacion/menuDesplegable/menu-desplegable/menu-desplegable-item/menu-desplegable-item.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { BibliotecaComponent } from './components/biblioteca/pages/biblioteca/biblioteca.component';
 import { ImagenListBookCardComponent } from './components/biblioteca/paginador-list-book/imagen-list-book-card/imagen-list-book-card.component';
 import { BreadcumbComponent } from './components/barraNavegacion/breadcumb/breadcumb.component';
@@ -93,9 +93,9 @@ import { InteresButtonComponent } from './components/modal/lecturaModal/interesM
 import { InteresModalComponent } from './components/modal/lecturaModal/interesModal/interes-modal/interes-modal.component';
 import { UserValoracionModalComponent } from './components/modal/lecturaModal/userValoracionModal/user-valoracion-modal/user-valoracion-modal.component';
 import { UserValoracionButtonComponent } from './components/modal/lecturaModal/userValoracionModal/user-valoracion-button/user-valoracion-button.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ItemClubListAllComponent } from './components/clubes/club-list-all/item-club-list-all/item-club-list-all.component';
 import { ClubListAllComponent } from './components/clubes/club-list-all/club-list-all.component';
 import { UserItemClubListComponent } from './components/clubes/user-club-list/user-item-club-list/user-item-club-list.component';
@@ -110,10 +110,11 @@ import { ItemBookLecturaComponent } from './components/despacho/list-book-lectur
 import { ListBookLecturaComponent } from './components/despacho/list-book-lectura/list-book-lectura.component';
 import { EditPerfilComponent } from './components/despacho/pages/edit-perfil/edit-perfil.component';
 import { EstadisticasComponent } from './components/despacho/pages/estadisticas/estadisticas.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ListBookComponent } from './components/biblioteca/list-book/list-book.component';
 import { ListComentariosUsuarioComponent } from './components/despacho/list-comentarios-usuario/list-comentarios-usuario.component';
 import { ConfirmacionDesactivarModalComponent } from './components/despacho/pages/edit-perfil/confirmacion-desactivar-modal/confirmacion-desactivar-modal.component';
+import { NgxApexchartsModule } from 'ngx-apexcharts';
 
 @NgModule({
   /* SELF COMPONENTS */
@@ -235,6 +236,7 @@ import { ConfirmacionDesactivarModalComponent } from './components/despacho/page
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    NgxApexchartsModule,
   ],
   /* SERVICE */
   providers: [
@@ -249,4 +251,4 @@ import { ConfirmacionDesactivarModalComponent } from './components/despacho/page
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

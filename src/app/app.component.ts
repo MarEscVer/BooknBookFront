@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneroTipoService } from './services/genero/genero-tipo.service';
+import * as moment from 'moment';
+import 'chartjs-adapter-moment';
 
 @Component({
   selector: 'app-root',
