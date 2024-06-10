@@ -32,7 +32,7 @@ export interface BookItemList {
 
 export interface BookItemListResponse {
     libros: BookItemList[];
-    pageInfo: pageInfo; 
+    pageInfo: pageInfo;
 }
 
 export interface BookImageListResponse {
@@ -47,6 +47,21 @@ export interface BookListResponse {
 
 export interface BookCardDataListResponse {
     libros: BookItemCard[];
+    pageInfo: pageInfo;
+}
+
+export interface BookItemCardApi {
+    id: number;
+    nombre: string;
+    fechaPublicacion: string;
+    fotoLibro: any;
+    saga: string;
+    paginasLibro: number;
+    valoracion: number;
+}
+
+export interface BookCardDataListResponseApi {
+    libros: BookItemCardApi[];
     pageInfo: pageInfo;
 }
 
@@ -82,7 +97,7 @@ export interface BookDataId {
     descripcion: string;
 }
 
-export interface BookEdit{
+export interface BookEdit {
     imagen: string;
     fechaPublicacion: string;
     nombre: string;
@@ -101,7 +116,7 @@ export interface BookListadoLectura {
     titulo: string;
     saga: string;
     autor: string;
-    descripcion:string
+    descripcion: string
     tipo: GeneroTipo;
     genero: GeneroTipo;
     paginasTotales: number;

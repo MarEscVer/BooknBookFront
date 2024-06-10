@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
-import { BookCardDataListResponse, BookImageListResponse } from 'src/app/shared/models/book/book';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { BookCardDataListResponse, BookCardDataListResponseApi, BookImageListResponse, BookItemCard, BookItemCardApi } from 'src/app/shared/models/book/book';
 import { environment, httpOptions } from 'src/environments/environment';
 
 @Injectable({
@@ -27,10 +27,30 @@ export class MasLeidosBookService {
       size: 10,
     };
 
-    return this.http.get<BookCardDataListResponse>(this.baseUrl + environment.USER_URL + '/' + usuario + '/perfil/libros', { params })
-      .pipe(catchError(this.handleError));
+    return this.http.get<BookCardDataListResponseApi>(this.baseUrl + environment.USER_URL + '/' + usuario + '/perfil/libros', { params })
+      .pipe(
+        map(response => this.transformToBookCardDataListResponse(response)),
+        catchError(this.handleError)
+      );
   }
 
+  private transformToBookCardDataListResponse(apiResponse: BookCardDataListResponseApi): BookCardDataListResponse {
+    const libros: BookItemCard[] = apiResponse.libros.map(this.transformToBookItemCard);
+    return {
+      libros,
+      pageInfo: apiResponse.pageInfo
+    };
+  }
+
+  private transformToBookItemCard(apiResponse: BookItemCardApi): BookItemCard {
+    return {
+      id: apiResponse.id,
+      imagen: apiResponse.fotoLibro,
+      titulo: apiResponse.nombre,
+      autor: '',
+      saga: apiResponse.saga
+    };
+  }
 
   private handleError(error: HttpErrorResponse) {
     console.log(error);

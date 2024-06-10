@@ -11,6 +11,6 @@
   </ng-template>
   <mat-card-content class="texto">
     <span class="titulo">{{ (libro.saga ? libro.saga + ' : ' + libro.titulo : libro.titulo) | uppercase }}</span>
-    <span class="autor">{{ libro.autor | uppercase }}</span>
+    <span class="autor" *ngIf="libro.autor !== ''">{{ libro.autor | uppercase }}</span>
   </mat-card-content>
 </mat-card>
