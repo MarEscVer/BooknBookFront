@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import * as moment from 'moment';
-import { Subscription, of } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { EstadisticaService } from 'src/app/services/estadisticas/estadistica.service';
-import { ContadorUsuarioResponse, EstadisticaResponse } from 'src/app/shared/models/estadistica/estadistica';
+import { ContadorUsuarioResponse, ItemCalendarioResponse } from 'src/app/shared/models/estadistica/estadistica';
 import { ChartComponent } from 'ngx-apexcharts';
 import {
   ApexAxisChartSeries,
@@ -12,6 +12,7 @@ import {
   ApexPlotOptions,
   ApexTooltip
 } from 'ngx-apexcharts';
+import { GeneroTipo, applyColorsToGeneroTipo } from 'src/app/shared/models/combo/combo';
 
 interface CustomChartOptions {
   series: ApexAxisChartSeries;
@@ -34,18 +35,20 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
 
   selectedYear: number = 2024;
   availableYears: number[] = [];
+  generoStyle: any = {};
 
   private estadoLecturasInfo: any;
-  private estadoLecturasLabels: any[] = [];
-  private estadoLecturasData: any[] = [];
-  private estadoLecturasColors: any[] = [];
+  private estadoLecturasLabels: string[] = [];
+  private estadoLecturasData: number[] = [];
+  private estadoLecturasColors: string[] = [];
 
   private lecturasPorGeneroInfo: any;
-  private lecturasPorGeneroLabels: any[] = [];
-  private lecturasPorGeneroData: any[] = [];
-  private lecturasPorGeneroColors: any[] = [];
+  private lecturasPorGeneroLabels: string[] = [];
+  private lecturasPorGeneroData: number[] = [];
+  private lecturasPorGeneroColors: string[] = [];
 
-  mockData?: { [year: string]: { year: number; month: number; day: number; paginasLeidas: number; }[] };
+  chartCalendario?: Map<string, ItemCalendarioResponse[]>;
+  chartYearCalendario?: number[];
 
   @ViewChild("chart")
   chart: ChartComponent = new ChartComponent;
@@ -56,94 +59,28 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
     private estadisticaService: EstadisticaService,
   ) {
     moment.locale('es');
-    this.mockData = {
-      "2022": [
-        { year: 2022, month: 1, day: 1, paginasLeidas: 5 },
-        { year: 2022, month: 1, day: 2, paginasLeidas: 10 },
-        { year: 2022, month: 1, day: 3, paginasLeidas: 20 },
-        { year: 2022, month: 2, day: 4, paginasLeidas: 15 },
-        { year: 2022, month: 2, day: 5, paginasLeidas: 25 },
-        { year: 2022, month: 3, day: 6, paginasLeidas: 30 },
-        { year: 2022, month: 4, day: 7, paginasLeidas: 35 },
-        { year: 2022, month: 3, day: 8, paginasLeidas: 40 },
-        { year: 2022, month: 2, day: 9, paginasLeidas: 45 },
-        { year: 2022, month: 6, day: 10, paginasLeidas: 50 },
-        { year: 2022, month: 7, day: 11, paginasLeidas: 55 },
-        { year: 2022, month: 7, day: 12, paginasLeidas: 60 },
-        { year: 2022, month: 7, day: 13, paginasLeidas: 65 },
-        { year: 2022, month: 8, day: 14, paginasLeidas: 70 },
-        { year: 2022, month: 9, day: 15, paginasLeidas: 75 },
-        { year: 2022, month: 12, day: 16, paginasLeidas: 80 },
-        { year: 2022, month: 11, day: 17, paginasLeidas: 85 },
-        { year: 2022, month: 11, day: 18, paginasLeidas: 90 },
-        { year: 2022, month: 9, day: 19, paginasLeidas: 95 },
-        { year: 2022, month: 9, day: 20, paginasLeidas: 100 },
-      ],
-      "2023": [
-        { year: 2023, month: 2, day: 1, paginasLeidas: 15 },
-        { year: 2023, month: 2, day: 2, paginasLeidas: 20 },
-        { year: 2023, month: 3, day: 3, paginasLeidas: 25 },
-        { year: 2023, month: 4, day: 4, paginasLeidas: 30 },
-        { year: 2023, month: 5, day: 5, paginasLeidas: 35 },
-        { year: 2023, month: 6, day: 6, paginasLeidas: 40 },
-        { year: 2023, month: 6, day: 7, paginasLeidas: 45 },
-        { year: 2023, month: 1, day: 8, paginasLeidas: 50 },
-        { year: 2023, month: 2, day: 9, paginasLeidas: 55 },
-        { year: 2023, month: 1, day: 10, paginasLeidas: 60 },
-        { year: 2023, month: 1, day: 11, paginasLeidas: 65 },
-        { year: 2023, month: 3, day: 12, paginasLeidas: 70 },
-        { year: 2023, month: 4, day: 13, paginasLeidas: 75 },
-        { year: 2023, month: 10, day: 14, paginasLeidas: 80 },
-        { year: 2023, month: 9, day: 15, paginasLeidas: 85 },
-        { year: 2023, month: 9, day: 16, paginasLeidas: 90 },
-        { year: 2023, month: 9, day: 17, paginasLeidas: 95 },
-        { year: 2023, month: 8, day: 18, paginasLeidas: 100 },
-        { year: 2023, month: 10, day: 19, paginasLeidas: 105 },
-        { year: 2023, month: 10, day: 20, paginasLeidas: 110 },
-      ],
-      "2024": [
-        { year: 2024, month: 10, day: 1, paginasLeidas: 10 },
-        { year: 2024, month: 10, day: 2, paginasLeidas: 20 },
-        { year: 2024, month: 10, day: 3, paginasLeidas: 30 },
-        { year: 2024, month: 11, day: 4, paginasLeidas: 40 },
-        { year: 2024, month: 12, day: 5, paginasLeidas: 50 },
-        { year: 2024, month: 12, day: 6, paginasLeidas: 60 },
-        { year: 2024, month: 11, day: 7, paginasLeidas: 70 },
-        { year: 2024, month: 1, day: 8, paginasLeidas: 80 },
-        { year: 2024, month: 2, day: 9, paginasLeidas: 90 },
-        { year: 2024, month: 3, day: 10, paginasLeidas: 100 },
-        { year: 2024, month: 1, day: 11, paginasLeidas: 110 },
-        { year: 2024, month: 2, day: 12, paginasLeidas: 120 },
-        { year: 2024, month: 3, day: 13, paginasLeidas: 130 },
-        { year: 2024, month: 11, day: 14, paginasLeidas: 140 },
-        { year: 2024, month: 10, day: 15, paginasLeidas: 150 },
-        { year: 2024, month: 7, day: 16, paginasLeidas: 160 },
-        { year: 2024, month: 7, day: 17, paginasLeidas: 170 },
-        { year: 2024, month: 7, day: 18, paginasLeidas: 180 },
-        { year: 2024, month: 8, day: 19, paginasLeidas: 190 },
-        { year: 2024, month: 8, day: 20, paginasLeidas: 200 },
-      ]
-    };
   }
 
   ngOnInit(): void {
-    this.calculateYears();
+    this.contadorUsuario();
     this.registerChart();
     this.createChartEstadoLectura();
     this.createChartLecturasPorGenero();
-    this.renderHeatmapChart();
+    this.getDataHeatmapChart();
   }
 
   calculateYears(): void {
-    if (this.mockData) {
+    if (this.chartYearCalendario) {
       const currentYear = new Date().getFullYear();
-      const years = Object.keys(this.mockData).map(year => parseInt(year));
-      if (!years.includes(currentYear)) {
-        this.availableYears = [...years, currentYear];
-      } else {
-        this.availableYears = years;
+      const years = this.chartYearCalendario;
+      if (years) {
+        if (!years.includes(currentYear)) {
+          this.availableYears = [...years, currentYear];
+        } else {
+          this.availableYears = years;
+        }
+        this.selectedYear = Math.max(currentYear, ...years);
       }
-      this.selectedYear = Math.max(currentYear, ...years);
     }
   }
 
@@ -157,120 +94,80 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
     Chart.register(...registerables);
   }
 
-  // createChartLecturasPorGenero() {
-  //   this.subscriptions.add(
-  //     this.estadisticaService.getLecturasEstadistica().subscribe(data => {
-  //       this.chartInfo = data.estadisticas;
-  //       if (this.chartInfo !== null && this.chartInfo) {
-  //         this.chartInfo.forEach((element: { titulo: any; dato: any; }) => {
-  //           this.labeldata.push(element.titulo);
-  //           this.realdata.push(element.dato);
-  //         });
-  //         this.colordata = [
-  //           "#FD9D9D",
-  //           "#DA9F9F",
-  //           "#C5C5C5",
-  //           "#CFFFBE",
-  //           "#FFE8AE",
-  //           "#D6B7FF",
-  //           "#C2F4FF"
-  //         ],
-  //           this.createChart(this.chartEstadoLecturas, 'LecturasPorGenero', 'LECTURAS POR GÉNERO', this.labeldata, this.realdata, this.colordata);
-  //       }
-  //     })
-  //   );
-  // }
+  applyColorsToGenero(genero: GeneroTipo): void {
+    if (genero) {
+      const generoConColores = applyColorsToGeneroTipo(genero);
+      if (generoConColores) {
+        this.generoStyle = {
+          'background-color': generoConColores.color,
+          'color': 'black',
+          'border-radius': '5px',
+          'padding': '5px',
+          'font-size': '20px',
+        };
+      }
+    }
+  }
 
-  // createChartEstadoLectura() {
-  //   this.subscriptions.add(
-  //     this.estadisticaService.getGenerosEstadistica().subscribe(data => {
-  //       this.chartInfo = data.estadisticas;
-  //       if (this.chartInfo !== null) {
-  //         this.chartInfo.forEach((element: { titulo: any; dato: any; }) => {
-  //           this.labeldata.push(element.titulo);
-  //           this.realdata.push(element.dato);
-  //         });
-  //         this.colordata = [
-  //           '#FD9D9D',
-  //           '#FFE8AE',
-  //           '#CFFFBE'
-  //         ],
-  //           this.createChart(this.chartEstadoLecturas, 'EstadoLecturas', 'ESTADOS DE LECTURA', this.labeldata, this.realdata, this.colordata);
-  //       }
-  //     })
-  //   );
-  // }
+  createChartLecturasPorGenero() {
+    this.subscriptions.add(
+      this.estadisticaService.getGenerosEstadistica().subscribe(data => {
+        this.estadoLecturasInfo = data.estadisticas;
+        if (this.estadoLecturasInfo !== null && this.estadoLecturasInfo) {
+          this.estadoLecturasInfo.forEach((element: { titulo: any; dato: any; }) => {
+            this.estadoLecturasLabels.push(element.titulo);
+            this.estadoLecturasData.push(element.dato);
+          });
+          this.estadoLecturasColors = [
+            "#FD9D9D", "#DA9F9F", "#C5C5C5", 
+            "#CFFFBE", "#FFE8AE", "#D6B7FF", 
+            "#C2F4FF"
+          ];
+          this.createChart(
+            this.chartEstadoLecturas, 
+            'LecturasPorGenero', 
+            'LECTURAS POR GÉNERO', 
+            this.estadoLecturasLabels, 
+            this.estadoLecturasData, 
+            this.estadoLecturasColors.slice(0, this.estadoLecturasData.length)
+          );
+        }
+      })
+    );
+  }
+
+  createChartEstadoLectura() {
+    this.subscriptions.add(
+      this.estadisticaService.getLecturasEstadistica().subscribe(data => {
+        this.lecturasPorGeneroInfo = data.estadisticas;
+        if (this.lecturasPorGeneroInfo !== null) {
+          this.lecturasPorGeneroInfo.forEach((element: { titulo: any; dato: any; }) => {
+            this.lecturasPorGeneroLabels.push(element.titulo);
+            this.lecturasPorGeneroData.push(element.dato);
+          });
+          this.lecturasPorGeneroColors = [
+            '#FD9D9D', '#FFE8AE', '#CFFFBE'
+          ];
+          this.createChart(
+            this.chartEstadoLecturas, 
+            'EstadoLecturas', 
+            'ESTADOS DE LECTURA', 
+            this.lecturasPorGeneroLabels, 
+            this.lecturasPorGeneroData, 
+            this.lecturasPorGeneroColors.slice(0, this.lecturasPorGeneroData.length)
+          );
+        }
+      })
+    );
+  }
 
   contadorUsuario() {
     this.subscriptions.add(
       this.estadisticaService.getContadorUsario().subscribe(data => {
         this.datosEstadisticaGenero = data;
+        this.applyColorsToGenero(this.datosEstadisticaGenero.genero);
       })
     );
-  }
-
-  createChartLecturasPorGenero() {
-    // Mock de los datos para lecturas por género
-    const mockData: EstadisticaResponse = {
-      estadisticas: [
-        { titulo: 'Ficción', dato: 50 },
-        { titulo: 'No Ficción', dato: 30 },
-        { titulo: 'Romántica', dato: 20 },
-        { titulo: 'Ciencia', dato: 20 },
-        { titulo: 'Terror', dato: 20 },
-        { titulo: 'Negra', dato: 20 },
-        { titulo: 'Infantil', dato: 20 },
-      ]
-    };
-
-    // Utilizar datos mock en lugar de llamada al servicio
-    of(mockData).subscribe(data => {
-      this.lecturasPorGeneroInfo = data.estadisticas;
-      if (this.lecturasPorGeneroInfo) {
-        this.lecturasPorGeneroInfo.forEach((element: { titulo: any; dato: any; }) => {
-          this.lecturasPorGeneroLabels.push(element.titulo);
-          this.lecturasPorGeneroData.push(element.dato);
-        });
-        this.lecturasPorGeneroColors = [
-          "#FD9D9D",
-          "#DA9F9F",
-          "#C5C5C5",
-          "#CFFFBE",
-          "#FFE8AE",
-          "#D6B7FF",
-          "#C2F4FF"
-        ];
-        this.createChart(this.chartLecturasPorGenero, 'LecturasPorGenero', 'LECTURAS POR GÉNERO', this.lecturasPorGeneroLabels, this.lecturasPorGeneroData, this.lecturasPorGeneroColors);
-      }
-    });
-  }
-
-  createChartEstadoLectura() {
-    // Mock de los datos para estados de lectura
-    const mockData: EstadisticaResponse = {
-      estadisticas: [
-        { titulo: 'Leído', dato: 50 },
-        { titulo: 'Progreso', dato: 30 },
-        { titulo: 'Favorito', dato: 20 },
-      ]
-    };
-
-    // Utilizar datos mock en lugar de llamada al servicio
-    of(mockData).subscribe(data => {
-      this.estadoLecturasInfo = data.estadisticas;
-      if (this.estadoLecturasInfo) {
-        this.estadoLecturasInfo.forEach((element: { titulo: any; dato: any; }) => {
-          this.estadoLecturasLabels.push(element.titulo);
-          this.estadoLecturasData.push(element.dato);
-        });
-        this.estadoLecturasColors = [
-          '#FD9D9D',
-          '#FFE8AE',
-          '#CFFFBE'
-        ];
-        this.createChart(this.chartEstadoLecturas, 'EstadoLecturas', 'ESTADOS DE LECTURA', this.estadoLecturasLabels, this.estadoLecturasData, this.estadoLecturasColors);
-      }
-    });
   }
 
   createChart(chart: any, idChart: any, titulo: any, labeldata: any, realdata: any, colordata: any) {
@@ -312,9 +209,20 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
     });
   }
 
+  getDataHeatmapChart() {
+    this.subscriptions.add(
+      this.estadisticaService.getCalendarioEstadistica(this.selectedYear).subscribe(data => {
+        this.chartCalendario = new Map(Object.entries(data.estadisticaPorAnio));
+        this.chartYearCalendario = data.anyos;
+        this.calculateYears();
+        this.renderHeatmapChart();
+      })
+    );
+  }
+
   renderHeatmapChart() {
-    if (this.mockData) {
-      const selectedYearData = this.mockData[this.selectedYear.toString()] || [];
+    if (this.chartCalendario) {
+      const selectedYearData = this.chartCalendario.get(this.selectedYear.toString()) || [];
       const transformedData = this.transformData(selectedYearData);
       const year = this.selectedYear;
 
@@ -357,7 +265,7 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
         },
         {
           from: 101,
-          to: 1000,
+          to: 6000,
           color: "#5A2F00",
           name: "+100 páginas"
         }
@@ -413,7 +321,7 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
     }
   }
 
-  transformData(data: { year: number; month: number; day: number; paginasLeidas: number; }[]): { name: string, data: { x: string, y: number }[] }[] {
+  transformData(data: ItemCalendarioResponse[]): ApexAxisChartSeries {
     const mesesDelAnio = moment.monthsShort();
     return mesesDelAnio.map((mes, mesIndex) => {
       let diasEnEsteMes = moment().month(mesIndex).daysInMonth();
@@ -443,5 +351,12 @@ export class EstadisticasComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe();
+    if (this.chartEstadoLecturas) {
+      this.chartEstadoLecturas.destroy();
+    }
+    if (this.chartLecturasPorGenero) {
+      this.chartLecturasPorGenero.destroy();
+    }
   }
 }

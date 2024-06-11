@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
             <h5>GÉNERO FAVORITO</h5>
-            <h2>{{(datosEstadisticaGenero?.genero ? datosEstadisticaGenero?.genero : '...' )}}</h2>
+            <span [ngStyle]="generoStyle">{{(datosEstadisticaGenero?.genero?.nombre ? datosEstadisticaGenero?.genero?.nombre : '...')}}</span>
         </div>
     </div>
 </div>

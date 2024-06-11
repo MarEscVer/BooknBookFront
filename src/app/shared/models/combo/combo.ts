@@ -78,3 +78,14 @@ export function applyColors<T extends { tipo: GeneroTipo; genero: GeneroTipo }>(
         };
     });
 }
+
+// Función para asignar colores a un solo objeto GeneroTipo
+export function applyColorsToGeneroTipo(genero: GeneroTipo): GeneroTipo {
+    const tipoColor = coloresTipo[genero.nombre] || genero.color;
+    const generoColor = coloresGenero[genero.nombre] || genero.color;
+
+    return {
+        ...genero,
+        color: tipoColor || generoColor
+    };
+}

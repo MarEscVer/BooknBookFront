@@ -18,6 +18,18 @@ export interface EstadisticaGeneroResponse {
     genero: Combo;
 }
 
+export interface EstadisticaCalendarioResponse {
+    anyos: number[];
+    estadisticaPorAnio: Map<string, ItemCalendarioResponse[]>;
+}
+
+export interface ItemCalendarioResponse {
+    year: number;
+    month: number;
+    day: number;
+    paginasLeidas: number;
+}
+
 export interface ContadorResponse {
     lectoresTotales: number;
     librosLeidos: number;
